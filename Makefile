@@ -1,11 +1,14 @@
 # figmafe demo — 常用命令
-.PHONY: build test fixture scan map catalog fonts
+.PHONY: build test plugin-test fixture scan map catalog fonts
 
 build:            ## 编译 CLI 到 bin/figmafe
 	cd cli && go build -o ../bin/figmafe ./cmd/figmafe
 
 test:             ## CLI 单元测试
 	cd cli && go vet ./... && go test ./...
+
+plugin-test:      ## 用模拟的 Figma Plugin API 跑插件，导出结果必须与 fixture 一致
+	scripts/test-plugin.sh
 
 fonts:            ## 安装 Noto Sans SC（截图与设计图对齐需要）
 	scripts/fetch-fonts.sh

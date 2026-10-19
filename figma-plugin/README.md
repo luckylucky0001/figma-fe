@@ -11,4 +11,5 @@ Figma 桌面端 → Plugins → Development → Import plugin from manifest… �
 
 导出格式见 `docs/CONTRACTS.md` §5（字段与 Figma REST API 一致）。
 
-> 说明：本仓库的 demo 环境无法访问 Figma（`api.figma.com` 被网络策略拒绝，也没有真实 Figma 文件），插件代码未在真实 Figma 中运行过；demo 用的是 `figmafe fixture` 生成的同格式数据。拿到真实文件后请先导出一次核对字段。
+> 说明：本仓库的 demo 环境无法访问 Figma（`api.figma.com` 被网络策略拒绝，也没有真实 Figma 文件），插件代码未在真实 Figma 中运行过；demo 用的是 `figmafe fixture` 生成的同格式数据。
+> 已做的验证：`make plugin-test` 用模拟的 Plugin API（按 Figma 文档的节点字段构造，frame 放在画布任意坐标上）运行真实的 `code.js`，导出的两份页面与 fixture 逐节点一致（树结构、坐标、文字、字号、填充色、实例和变体），`figmafe match` 的结果也完全相同。模拟不了的是真实 Figma 的边界情况（混合样式文字、隐藏图层、嵌套实例等），拿到真实文件后请先导出一次核对字段。

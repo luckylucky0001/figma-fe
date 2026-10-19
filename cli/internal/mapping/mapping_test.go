@@ -3,6 +3,8 @@ package mapping
 import (
 	"testing"
 
+	"gopkg.in/yaml.v3"
+
 	"github.com/luckylucky0001/figma-fe/cli/internal/figma"
 	"github.com/luckylucky0001/figma-fe/cli/internal/inventory"
 )
@@ -64,5 +66,16 @@ func TestSuggestFlagsMissing(t *testing.T) {
 	}
 	if st["Button"] != "auto" || st["CountDown"] != "missing" {
 		t.Fatalf("status=%v", st)
+	}
+}
+
+func TestFlatPropsForm(t *testing.T) {
+	var m Map
+	src := "version: 1\ncomponents:\n  - figma: Button\n    android:\n      component: DsButton\n      props:\n        Type=Primary: \"style = Primary\"\n        Size=Medium: \"size = Medium\"\n"
+	if err := yaml.Unmarshal([]byte(src), &m); err != nil {
+		t.Fatal(err)
+	}
+	if got := m.Components[0].Android.Props["Type"]["Primary"]; got != "style = Primary" {
+		t.Errorf("flat props → %v", m.Components[0].Android.Props)
 	}
 }

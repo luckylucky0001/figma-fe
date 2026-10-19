@@ -296,7 +296,11 @@ func (pc *PageCheck) Markdown() string {
 	if !pc.Pass {
 		verdict = "❌ FAIL"
 	}
-	b.WriteString("\n## 页面复用检查：" + pc.Focus + "  " + verdict + "\n\n")
+	focus := pc.Focus
+	if fs := strings.Split(focus, ","); len(fs) > 3 {
+		focus = itoa(len(fs)) + " 个文件（" + strings.Join(fs[:2], "、") + " …）"
+	}
+	b.WriteString("\n## 页面复用检查：" + focus + "  " + verdict + "\n\n")
 	b.WriteString("- 复用的现成组件（" + itoa(len(pc.Used)) + "）：" + strings.Join(pc.Used, "、") + "\n")
 	b.WriteString("- 自造轮子（" + itoa(len(pc.Reinvented)) + "）\n")
 	for _, f := range pc.Reinvented {

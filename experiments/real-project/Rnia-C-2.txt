@@ -1,0 +1,22 @@
+· 检查改动的 15 个 UI 文件（已有文件只看新增的行）
+
+## 页面复用检查：15 个文件（app/src/main/res/values/strings.xml、core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt …）  ✅ PASS
+
+- 复用的现成组件（8）：Button（组件库）、Card（组件库）、CenterAlignedTopAppBar（组件库）、DynamicAsyncImage（Composable）、HorizontalDivider（组件库）、NiaBackground（Composable）、OutlinedButton（组件库）、TextButton（组件库）
+- 自造轮子（0）
+- 有组件却没用（0）
+- 疑似手写已有组件（0）
+- 写死颜色（33）
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:51 Color(0xFFFF4D1A)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:53 Color(0xFFFFEDE8)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:54 Color(0xFF3370FF)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:55 Color(0xFFE1EAFF)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:56 Color(0xFF00B42A)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:57 Color(0xFFE8FFEA)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:58 Color(0xFFFF8F1F)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:59 Color(0xFFFFF3E8)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:60 Color(0xFFF53F3F)：写死颜色
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceColors.kt:61 Color(0xFFFFECE8)：写死颜色
+  - … 共 33 处
+
+✓ [android] 64 个资产 · 组件化率 100% · 重复概念 3 · 重复结构 0 组 · 硬编码颜色 95 → experiments/real-project/Rnia-C-2/android.md

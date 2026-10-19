@@ -132,6 +132,13 @@ func runMatch(args []string) error {
 		}
 		m := reuse.Match(exp, r)
 		md := m.Markdown()
+		if exp.Images.Frame != "" {
+			if b, err := os.ReadFile(filepath.Join(*figmaDir, exp.Images.Frame)); err == nil {
+				img := p + ".frame.png"
+				_ = os.WriteFile(filepath.Join(*out, img), b, 0o644)
+				_ = os.WriteFile(filepath.Join(*out, p+".html"), []byte(m.HTML(exp, img)), 0o644)
+			}
+		}
 		_ = os.WriteFile(filepath.Join(*out, p+".md"), []byte(md), 0o644)
 		writeJSON(filepath.Join(*out, p+".json"), m)
 		if b, err := yaml.Marshal(m.Draft()); err == nil {
@@ -199,9 +206,16 @@ func addedLines(root, ref string) map[string]map[int]bool {
 // loadConfirmed reads the project's confirmed component map, if it has one.
 func loadConfirmed(root string) *mapping.Map {
 	for _, cand := range []string{"design/component-map.yaml", ".figmafe/component-map.yaml", "component-map.yaml"} {
-		if cm, err := mapping.Load(filepath.Join(root, cand)); err == nil {
-			return cm
+		p := filepath.Join(root, cand)
+		if _, err := os.Stat(p); err != nil {
+			continue
 		}
+		cm, err := mapping.Load(p)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "⚠ %s 解析失败，本次忽略其中的已确认映射和决定：%v\n", cand, err)
+			return nil
+		}
+		return cm
 	}
 	return nil
 }

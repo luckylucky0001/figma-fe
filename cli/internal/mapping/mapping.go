@@ -14,14 +14,44 @@ import (
 	"github.com/luckylucky0001/figma-fe/cli/internal/inventory"
 )
 
+// PropMap is axis → value → code fragment. Besides that nested form it also reads the flat form
+// people (and agents) naturally write: "Type=Primary: <fragment>".
+type PropMap map[string]map[string]string
+
+func (p *PropMap) UnmarshalYAML(n *yaml.Node) error {
+	nested := map[string]map[string]string{}
+	if err := n.Decode(&nested); err == nil {
+		*p = nested
+		return nil
+	}
+	flat := map[string]string{}
+	if err := n.Decode(&flat); err != nil {
+		return fmt.Errorf("props: want axis → value → fragment, or \"Axis=Value: fragment\" (line %d)", n.Line)
+	}
+	out := PropMap{}
+	for k, v := range flat {
+		axis, val, ok := strings.Cut(k, "=")
+		if !ok {
+			axis, val = k, ""
+		}
+		axis, val = strings.TrimSpace(axis), strings.TrimSpace(val)
+		if out[axis] == nil {
+			out[axis] = map[string]string{}
+		}
+		out[axis][val] = v
+	}
+	*p = out
+	return nil
+}
+
 // Impl is one platform's implementation of a Figma component set.
 type Impl struct {
-	Component string                       `yaml:"component"`
-	Import    string                       `yaml:"import,omitempty"`
-	Props     map[string]map[string]string `yaml:"props,omitempty"` // axis → value → code fragment ("" = default, "-" = unsupported)
-	Texts     map[string]string            `yaml:"texts,omitempty"` // prop → template over Figma TEXT layer names, e.g. "{Integer}{Decimal}|num"
-	Usage     string                       `yaml:"usage,omitempty"`
-	Notes     string                       `yaml:"notes,omitempty"`
+	Component string            `yaml:"component"`
+	Import    string            `yaml:"import,omitempty"`
+	Props     PropMap           `yaml:"props,omitempty"` // axis → value → code fragment ("" = default, "-" = unsupported)
+	Texts     map[string]string `yaml:"texts,omitempty"` // prop → template over Figma TEXT layer names, e.g. "{Integer}{Decimal}|num"
+	Usage     string            `yaml:"usage,omitempty"`
+	Notes     string            `yaml:"notes,omitempty"`
 }
 
 type Entry struct {

@@ -322,7 +322,8 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 		k := l.Concept + techOf(l)
 		hasProject := false
 		for _, a := range by[k] {
-			hasProject = hasProject || a.Kind != "ui-lib"
+			// a feature component (VueImageVerify, a captcha) is not a home-made Image
+			hasProject = hasProject || a.Kind != "ui-lib" && !featureNamed(a, a.Concept)
 		}
 		if hasProject && strings.EqualFold(l.Name, conceptCanonical(l.Concept, by[k])) {
 			by[k] = append(by[k], l)
@@ -492,14 +493,26 @@ func preference(a Asset, concept string) int {
 	}
 	// a feature-specific member (@layout/feed_statistics_card: ≥2 feature words, as in match) is never the convergence
 	// target over a generic one
-	own := ConceptOf(a.Name) // NavBar.vue that is really a tab bar: judge the name by what it says
-	if own == "" {
-		own = strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）")
-	}
-	if a.Kind != "ui-lib" && !inDesignSystem(a.Source) && len(specialWords(a.Name, own)) >= 2 {
+	if a.Kind != "ui-lib" && !inDesignSystem(a.Source) && featureNamed(a, strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）")) {
 		p -= 2500
 	}
 	return p
+}
+
+// featureNamed: the name says the component is made for one feature (@layout/feed_statistics_card,
+// VueImageVerify): ≥2 words beyond its concept, or a purpose word. Judged against the concept the name
+// itself says (NavBar.vue that is really a tab bar is still a generic name).
+func featureNamed(a Asset, concept string) bool {
+	if c := ConceptOf(a.Name); c != "" {
+		concept = c
+	}
+	ws := specialWords(a.Name, concept)
+	for _, w := range ws {
+		if purposeWords[w] {
+			return true
+		}
+	}
+	return len(ws) >= 2
 }
 
 // dropSubclasses removes members built on another member: custom views extending its widget

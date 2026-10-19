@@ -621,7 +621,7 @@ func r2android(a Asset) bool {
 // OutlinedButton, FilledTonalButton are still the generic component).
 // purposeWords: a component named for one job (login, video, confirm) is not the generic one.
 var purposeWords = map[string]bool{"password": true, "confirm": true, "dismiss": true, "cancel": true, "delete": true, "login": true, "logout": true,
-	"share": true, "download": true, "upload": true, "video": true, "audio": true, "music": true, "play": true, "pause": true, "retry": true, "float": true, "link": true, "back": true}
+	"share": true, "download": true, "upload": true, "video": true, "audio": true, "music": true, "play": true, "pause": true, "retry": true, "float": true, "link": true, "back": true, "verify": true, "captcha": true}
 
 var styleWords = []string{"horizontal", "vertical", "outlined", "filled", "elevated", "tonal", "default", "basic", "simple", "standard", "normal",
 	"layout", "view", "widget", "component", "container", "wrapper", "round", "common", "custom", "base", "text", "priority"}

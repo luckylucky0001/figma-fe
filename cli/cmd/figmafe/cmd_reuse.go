@@ -265,7 +265,9 @@ func nulList(b []byte) []string {
 
 func uiFile(f string) bool {
 	ext := filepath.Ext(f)
+	// style sheets too: a hard-coded colour added in page.scss is part of the change
 	return ext == ".vue" || ext == ".nvue" || ext == ".tsx" || ext == ".jsx" || ext == ".kt" || ext == ".java" ||
+		ext == ".css" || ext == ".scss" || ext == ".less" || ext == ".sass" ||
 		ext == ".xml" && (strings.Contains("/"+f, "/res/layout") || strings.Contains("/"+f, "/res/values"))
 }
 

@@ -1265,3 +1265,15 @@ func TestAndroidColourAttributes(t *testing.T) {
 		t.Errorf("colours = %v", got)
 	}
 }
+
+// a changed shared stylesheet: tokens added there are not a page palette, hard-coded colours still count
+func TestStylesheetInPageCheck(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3"}}`)
+	write(t, root, "src/assets/scss/_var.scss", "$brand: #ff0000;\n$sub: #00ff00;\n.a { color: #123456; }\n")
+	write(t, root, "src/A.vue", `<template><div class="a"/></template>`)
+	pc := ScanH5(root).CheckFocus("src/assets/scss/_var.scss")
+	if pc.LocalTokens != 0 || len(pc.Colors) != 1 {
+		t.Errorf("localTokens=%d colors=%+v", pc.LocalTokens, pc.Colors)
+	}
+}

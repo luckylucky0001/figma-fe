@@ -144,8 +144,12 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 			return nil
 		})
 	}
-	// colour variables defined in the page are not project tokens
+	// colour variables defined in the page are not project tokens; ones added to a shared stylesheet
+	// (litemall's src/assets/scss/_var.scss) are exactly where H5 tokens belong
 	for _, f := range focusSrc {
+		if ext := filepath.Ext(f.rel); ext == ".css" || ext == ".scss" || ext == ".less" || ext == ".sass" {
+			continue
+		}
 		for _, re := range []*regexp.Regexp{cssVarDefRe, preVarDefRe, xmlColorDefRe} {
 			for _, m := range re.FindAllStringSubmatchIndex(f.src, -1) {
 				if !inLines(f.rel, lineAt(f.src, m[0])) {

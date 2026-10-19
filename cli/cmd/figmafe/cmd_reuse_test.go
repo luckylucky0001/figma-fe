@@ -115,3 +115,11 @@ func TestFocusPathMustExist(t *testing.T) {
 		t.Errorf("err = %v", err)
 	}
 }
+
+func TestUIFileIncludesStyles(t *testing.T) {
+	for f, want := range map[string]bool{"src/styles/page.scss": true, "src/a.css": true, "src/A.nvue": true, "app/src/main/res/layout/a.xml": true, "README.md": false, "src/api.ts": false} {
+		if uiFile(f) != want {
+			t.Errorf("uiFile(%q) = %v", f, !want)
+		}
+	}
+}

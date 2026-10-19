@@ -23,8 +23,10 @@ if len(x) != len(y) or bad:
 PY
   bin/figmafe match --figma "design/figma-export/$page" h5 --platform h5 -o "$tmp/m-fixture" -q >/dev/null
   bin/figmafe match --figma "$tmp/$page" h5 --platform h5 -o "$tmp/m-plugin" -q >/dev/null
-  summary='import json,sys;print([(i["figma"],i["verdict"],i["instances"],i.get("variants"),[c["name"] for c in i["candidates"]]) for i in json.load(open(sys.argv[1]))["items"]])'
-  if ! cmp -s <(python3 -c "$summary" "$tmp/m-fixture/h5.json") <(python3 -c "$summary" "$tmp/m-plugin/h5.json"); then
+  summary='import json,sys;print([(i["figma"],i["verdict"],i["instances"],i.get("variants"),[c["name"] for c in i["candidates"] or []]) for i in json.load(open(sys.argv[1]))["items"]])'
+  python3 -c "$summary" "$tmp/m-fixture/h5.json" > "$tmp/a.txt"
+  python3 -c "$summary" "$tmp/m-plugin/h5.json" > "$tmp/b.txt"
+  if ! cmp -s "$tmp/a.txt" "$tmp/b.txt"; then
     echo "✗ $page: figmafe match reads the plugin export differently"; exit 1
   fi
   echo "✓ plugin export of $page = fixture (tree, geometry, text, fills, instances; match result)"

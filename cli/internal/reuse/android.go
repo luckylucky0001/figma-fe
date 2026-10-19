@@ -257,7 +257,7 @@ func ScanAndroid(root string) *Report {
 					if concept, raw := rawAndroid[simple]; raw {
 						if alt := bestProjectAsset(assets, concept, "custom-view"); alt != nil {
 							r.Metrics.RawPrimitives++
-							r.Findings = append(r.Findings, Finding{"missed-reuse", "warn", f.rel, ln, line, "原生 " + simple + "：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
+							r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(concept), f.rel, ln, line, "原生 " + simple + "：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
 							continue
 						}
 					}
@@ -352,6 +352,14 @@ func ScanAndroid(root string) *Report {
 
 // bestProjectAsset picks the replacement for a raw widget; prefer is the kind usable in that context
 // (custom-view inside XML layouts, composable inside Compose code).
+// softSeverity: a raw image is often fine (icons, plain pictures), so it is reported but never fails a page.
+func softSeverity(concept string) string {
+	if concept == "image" {
+		return "info"
+	}
+	return "warn"
+}
+
 func bestProjectAsset(assets map[string]*Asset, concept, prefer string) *Asset {
 	var best *Asset
 	score := func(a *Asset) int {

@@ -311,7 +311,7 @@ func ScanH5(root string) *Report {
 					rawCount++
 					ln, t := at(off + m[0])
 					if alt := bestAsset(assets, concept); alt != nil {
-						r.Findings = append(r.Findings, Finding{"missed-reuse", "warn", f.rel, ln, t, "原生 <" + tag + ">：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
+						r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(concept), f.rel, ln, t, "原生 <" + tag + ">：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
 					}
 				}
 			}

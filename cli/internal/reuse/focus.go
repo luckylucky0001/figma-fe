@@ -61,7 +61,12 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 			}
 		}
 		if existing != nil {
-			pc.Reinvented = append(pc.Reinvented, Finding{"reinvented", "error", a.Source, 0, a.Name, "页面里自造了 " + a.Name + "，已有 " + existing.Name + "（" + kindLabel(existing.Kind) + " " + existing.Source + "）"})
+			// an unused library component is a suggestion; a component the project already relies on is a must
+			sev, note := "error", ""
+			if existing.Kind == "ui-lib" && existing.Usage == 0 {
+				sev, note = "warn", "（组件库标准组件，项目还没用过，请确认）"
+			}
+			pc.Reinvented = append(pc.Reinvented, Finding{"reinvented", sev, a.Source, 0, a.Name, "页面里自造了 " + a.Name + "，已有 " + existing.Name + "（" + kindLabel(existing.Kind) + " " + existing.Source + "）" + note})
 		}
 	}
 	for _, f := range r.Findings {
@@ -93,12 +98,17 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 	}
 	// colour variables defined in the page are not project tokens
 	for _, f := range focusSrc {
-		for _, re := range []*regexp.Regexp{cssVarDefRe, preVarDefRe} {
-			for _, m := range re.FindAllStringSubmatch(f.src, -1) {
+		for _, re := range []*regexp.Regexp{cssVarDefRe, preVarDefRe, xmlColorDefRe} {
+			for _, m := range re.FindAllStringSubmatchIndex(f.src, -1) {
 				pc.LocalTokens++
-				v := strings.ToUpper(expandHex(m[2]))
-				if t := tokens[v]; t == m[1] || t == "var("+m[1]+")" {
+				name := f.src[m[2]:m[3]]
+				v := strings.ToUpper(expandHex(f.src[m[4]:m[5]]))
+				t := tokens[v]
+				if t == name || t == "var("+name+")" || t == "@color/"+name {
 					delete(tokens, v)
+				} else if t != "" {
+					ln := strings.Count(f.src[:m[0]], "\n") + 1
+					pc.Colors = append(pc.Colors, Finding{"hardcoded-color", "warn", f.rel, ln, v, "新定义的颜色 " + name + " 与已有 token " + t + " 同值"})
 				}
 			}
 		}
@@ -107,11 +117,17 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 	seenHB := map[string]bool{}
 	for _, f := range focusSrc {
 		for _, m := range classAttrRe.FindAllStringSubmatchIndex(f.src, -1) {
+			if onComponent(f.src, m[0]) {
+				continue // <van-tag class="status-tag">: the class styles a component, it does not replace one
+			}
 			for _, cls := range strings.Fields(f.src[m[2]:m[3]]) {
 				checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, cls, in)
 			}
 		}
 		for _, m := range androidIDRe.FindAllStringSubmatchIndex(f.src, -1) {
+			if onComponent(f.src, m[0]) {
+				continue // <QMUIRoundButton android:id="@+id/status_tag">: a deliberate component choice
+			}
 			checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, f.src[m[2]:m[3]], in)
 		}
 		for _, m := range cssSelRe2.FindAllStringSubmatchIndex(f.src, -1) {
@@ -137,7 +153,17 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 			pc.Colors = append(pc.Colors, Finding{"hardcoded-color", "warn", rel, ln, src[m[0]:m[1]], "写死颜色"})
 		}
 	}
-	pc.Pass = len(pc.Reinvented) == 0 && len(pc.MissedReuse) == 0
+	pc.Pass = true
+	for _, f := range pc.Reinvented {
+		if f.Severity == "error" {
+			pc.Pass = false
+		}
+	}
+	for _, f := range pc.MissedReuse {
+		if f.Severity != "info" {
+			pc.Pass = false
+		}
+	}
 	for _, f := range pc.HandBuilt {
 		if f.Severity == "error" {
 			pc.Pass = false
@@ -149,8 +175,34 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 var (
 	classAttrRe = regexp.MustCompile(`\bclass(?:Name)?="([^"]+)"`)
 	cssSelRe2   = regexp.MustCompile(`(?m)^\s*\.([A-Za-z][\w-]*)[^{\n]*\{`)
-	androidIDRe = regexp.MustCompile(`android:id="@\+id/(\w+)"`)
+	// <color name="order_red">#F53F3F</color> in a values file the page adds
+	xmlColorDefRe = regexp.MustCompile(`<color\s+name="(\w+)"\s*>\s*(#[0-9a-fA-F]{3,8})\s*<`)
+	androidIDRe   = regexp.MustCompile(`android:id="@\+id/(\w+)"`)
 )
+
+var openTagRe = regexp.MustCompile(`<([A-Za-z][\w.:-]*)[^<>]*$`)
+
+// onComponent reports whether the attribute at idx sits on a component tag rather than on
+// plain markup (div/view, LinearLayout, TextView …).
+func onComponent(src string, idx int) bool {
+	start := idx - 4000
+	if start < 0 {
+		start = 0
+	}
+	m := openTagRe.FindStringSubmatch(src[start:idx])
+	if m == nil {
+		return false
+	}
+	tag := m[1]
+	if strings.Contains(tag, "-") || tag[0] >= 'A' && tag[0] <= 'Z' && !strings.Contains(tag, ".") && !sdkPlain[tag] && !containers[tag] {
+		return true
+	}
+	simple := tag[strings.LastIndex(tag, ".")+1:]
+	return strings.Contains(tag, ".") && !containers[tag] && !containers[simple] && !sdkPlain[simple]
+}
+
+// sdkPlain are framework widgets that carry no UI concept by themselves.
+var sdkPlain = map[string]bool{"TextView": true, "ImageView": true, "View": true, "LinearLayout": true, "FrameLayout": true, "RelativeLayout": true, "ConstraintLayout": true, "ScrollView": true, "NestedScrollView": true, "CardView": true, "Space": true}
 
 func lineHasVarDef(src string, idx int) bool {
 	ls := strings.LastIndex(src[:idx], "\n") + 1
@@ -159,7 +211,7 @@ func lineHasVarDef(src string, idx int) bool {
 		le = len(src) - idx
 	}
 	line := src[ls : idx+le]
-	return cssVarDefRe.MatchString(line) || preVarDefRe.MatchString(line)
+	return cssVarDefRe.MatchString(line) || preVarDefRe.MatchString(line) || xmlColorDefRe.MatchString(line)
 }
 
 func checkHandBuilt(pc *PageCheck, r *Report, pool []Asset, used, seen map[string]bool, rel string, ln int, cls string, in func(string) bool) {
@@ -183,9 +235,13 @@ func checkHandBuilt(pc *PageCheck, r *Report, pool []Asset, used, seen map[strin
 		}
 		return p
 	}
+	xmlCtx := strings.HasSuffix(rel, ".xml") || strings.HasSuffix(rel, ".java")
 	var best *Asset
 	for i := range pool {
 		b := &pool[i]
+		if xmlCtx && (b.Kind == "composable" || b.Source == "Compose Material3") {
+			continue
+		}
 		if b.Concept == concept && !in(b.Source) && b.Source != "Android SDK widgets" && (best == nil || pref(b) > pref(best) || pref(b) == pref(best) && len(b.Name) < len(best.Name)) {
 			best = b
 		}
@@ -211,11 +267,19 @@ func (pc *PageCheck) Markdown() string {
 	b.WriteString("- 复用的现成组件（" + itoa(len(pc.Used)) + "）：" + strings.Join(pc.Used, "、") + "\n")
 	b.WriteString("- 自造轮子（" + itoa(len(pc.Reinvented)) + "）\n")
 	for _, f := range pc.Reinvented {
-		b.WriteString("  - ✗ " + f.File + "：" + f.Hint + "\n")
+		mark := "✗"
+		if f.Severity != "error" {
+			mark = "·"
+		}
+		b.WriteString("  - " + mark + " " + f.File + "：" + f.Hint + "\n")
 	}
 	b.WriteString("- 有组件却没用（" + itoa(len(pc.MissedReuse)) + "）\n")
 	for _, f := range pc.MissedReuse {
-		b.WriteString("  - ✗ " + f.File + ":" + itoa(f.Line) + " `" + f.Text + "` → " + f.Hint + "\n")
+		mark := "✗"
+		if f.Severity == "info" {
+			mark = "·"
+		}
+		b.WriteString("  - " + mark + " " + f.File + ":" + itoa(f.Line) + " `" + f.Text + "` → " + f.Hint + "\n")
 	}
 	b.WriteString("- 疑似手写已有组件（" + itoa(len(pc.HandBuilt)) + "）\n")
 	for _, f := range pc.HandBuilt {

@@ -215,3 +215,40 @@ func TestUViewUniApp(t *testing.T) {
 		t.Errorf("uView assets used=%d assets=%+v", n, r.Assets)
 	}
 }
+
+func TestCheckFocusAndroidLayout(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "lib/src/main/java/com/x/CellView.java", "package com.x;\npublic class CellView extends LinearLayout {}")
+	write(t, root, "lib/src/main/java/com/x/TagView.java", "package com.x;\npublic class TagView extends TextView {}")
+	write(t, root, "lib/src/main/java/com/x/RoundButton.java", "package com.x;\npublic class RoundButton extends Button {}")
+	write(t, root, "lib/src/main/java/com/x/compose/Cell.kt", "package com.x.compose\n@Composable\nfun Cell(title: String) {}")
+	write(t, root, "app/src/main/res/values/colors.xml", `<resources><color name="white">#FFFFFF</color></resources>`)
+	write(t, root, "app/src/main/res/layout/old.xml", `<LinearLayout><com.x.CellView/><com.x.CellView/><com.x.CellView/></LinearLayout>`)
+	write(t, root, "app/src/main/res/layout/page.xml", `<LinearLayout>
+  <com.x.RoundButton android:id="@+id/status_tag"/>
+  <LinearLayout android:id="@+id/address_cell"/>
+  <ImageView android:src="@drawable/a"/>
+</LinearLayout>`)
+	write(t, root, "app/src/main/res/values/page_colors.xml", `<resources>
+<color name="page_bg">#FFFFFF</color>
+<color name="page_red">#F53F3F</color>
+</resources>`)
+	r := ScanAndroid(root)
+	pc := r.CheckFocus("app/src/main/res/layout/page.xml,app/src/main/res/values/page_colors.xml")
+	// the id on <com.x.RoundButton> is a deliberate component choice, not a hand-built tag; the one on a bare LinearLayout is, and the
+	// suggestion must be the View (an XML layout cannot host the composable)
+	if len(pc.HandBuilt) != 1 || !strings.Contains(pc.HandBuilt[0].Text, "address_cell") || !strings.Contains(pc.HandBuilt[0].Hint, "CellView") {
+		t.Errorf("handBuilt=%+v", pc.HandBuilt)
+		for _, a := range r.Assets {
+			t.Logf("%s %s %s %d %v", a.Name, a.Kind, a.Concept, a.Usage, a.UsageFiles)
+		}
+	}
+	for _, f := range pc.MissedReuse {
+		if f.Severity != "info" {
+			t.Errorf("raw ImageView must not fail the page: %+v", f)
+		}
+	}
+	if pc.LocalTokens != 2 || len(pc.Colors) != 1 || !strings.Contains(pc.Colors[0].Hint, "@color/white") {
+		t.Errorf("localTokens=%d colors=%+v", pc.LocalTokens, pc.Colors)
+	}
+}

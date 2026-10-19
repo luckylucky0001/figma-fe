@@ -1,0 +1,24 @@
+· 检查改动的 2 个 UI 文件
+
+## 页面复用检查：qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt,qmuidemo/src/main/res/layout/fragment_order_detail.xml  ❌ FAIL
+
+- 复用的现成组件（7）：QMUIRadiusImageView2（自定义 View）、QMUIRoundButton（自定义 View）、QMUIRoundFrameLayout（自定义 View）、QMUIRoundLinearLayout（自定义 View）、QMUITopBarLayout（自定义 View）、QMUIWindowInsetLayout（自定义 View）、TextView（组件库）
+- 自造轮子（0）
+- 有组件却没用（1）
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:184 `<ImageView` → 原生 ImageView：项目里已有 ShapeableImageView（组件库）
+- 疑似手写已有组件（1）
+  - ✗ qmuidemo/src/main/res/layout/fragment_order_detail.xml:148 页面手写了「cell」（.order_address_cell），已有 QMUICommonListItemView（自定义 View qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUICommonListItemView.java）（项目里已用 48 次）
+- 写死颜色（57）
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:21 #F5F6F7：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:21 #FFFFFF：写死颜色，已有同值 token @color/qmui_config_color_white
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:21 #E5E6EB：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:22 #1F2329：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:22 #646A73：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:22 #8F959E：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:23 #FF4D1A：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:23 #FF8F1F：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:23 #FFF3E8：写死颜色
+  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:23 #F53F3F：写死颜色
+  - … 共 57 处
+
+✓ [android] 162 个资产 · 组件化率 98% · 重复概念 12 · 重复结构 1 组 · 硬编码颜色 47 → experiments/real-project/Rqm-A-1/android.md

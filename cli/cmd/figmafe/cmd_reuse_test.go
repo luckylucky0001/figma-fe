@@ -40,7 +40,7 @@ func TestChangedUIFiles(t *testing.T) {
 		t.Fatal(err)
 	}
 	sort.Strings(got)
-	want := []string{"res/layout/page.xml", "src/views/New.vue", "src/views/Old.vue"}
+	want := []string{"res/layout/page.xml", "res/values/colors.xml", "src/views/New.vue", "src/views/Old.vue"}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %v want %v", got, want)
 	}

@@ -1,0 +1,493 @@
+{
+  "focus": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt,qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+  "used": [
+    "QMUIRadiusImageView2（自定义 View）",
+    "QMUIRoundButton（自定义 View）",
+    "QMUIRoundFrameLayout（自定义 View）",
+    "QMUIRoundLinearLayout（自定义 View）",
+    "QMUITopBarLayout（自定义 View）",
+    "QMUIWindowInsetLayout（自定义 View）",
+    "TextView（组件库）"
+  ],
+  "reinvented": null,
+  "missedReuse": [
+    {
+      "rule": "missed-reuse",
+      "severity": "info",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 184,
+      "text": "\u003cImageView",
+      "hint": "原生 ImageView：项目里已有 ShapeableImageView（组件库）"
+    }
+  ],
+  "handBuilt": [
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 148,
+      "text": ".order_address_cell",
+      "hint": "页面手写了「cell」（.order_address_cell），已有 QMUICommonListItemView（自定义 View qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUICommonListItemView.java）（项目里已用 48 次）"
+    }
+  ],
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 21,
+      "text": "#F5F6F7",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 21,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 21,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 22,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 22,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 22,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 23,
+      "text": "#FF4D1A",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 23,
+      "text": "#FF8F1F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 23,
+      "text": "#FFF3E8",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 23,
+      "text": "#F53F3F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 23,
+      "text": "#F2F3F5",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 30,
+      "text": "#F5F6F7",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 56,
+      "text": "#FFF3E8",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 66,
+      "text": "#FF8F1F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 78,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 98,
+      "text": "#FF8F1F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 100,
+      "text": "#FFF3E8",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 113,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 125,
+      "text": "#F53F3F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 135,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 144,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 170,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 179,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 200,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 207,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 222,
+      "text": "#F2F3F5",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 240,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 250,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 273,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 282,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 294,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 311,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 318,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 338,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 345,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 365,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 372,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 389,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 400,
+      "text": "#FF4D1A",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 413,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 420,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 440,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 447,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 468,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 475,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 495,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 502,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 516,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 521,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 540,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 542,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 543,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 556,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 558,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 559,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 573,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token @color/qmui_config_color_white"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 575,
+      "text": "#FF4D1A",
+      "hint": "写死颜色"
+    }
+  ],
+  "localTokens": 0,
+  "pass": false
+}

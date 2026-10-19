@@ -153,7 +153,7 @@ func changedUIFiles(root, ref string) ([]string, error) {
 	for _, f := range strings.Fields(string(out) + "\n" + string(untracked)) {
 		ext := filepath.Ext(f)
 		ui := ext == ".vue" || ext == ".tsx" || ext == ".jsx" || ext == ".kt" || ext == ".java" ||
-			ext == ".xml" && strings.Contains("/"+f, "/res/layout")
+			ext == ".xml" && (strings.Contains("/"+f, "/res/layout") || strings.Contains("/"+f, "/res/values"))
 		if ui && !seen[f] {
 			seen[f] = true
 			files = append(files, f)

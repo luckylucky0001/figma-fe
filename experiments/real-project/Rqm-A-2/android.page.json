@@ -1,0 +1,70 @@
+{
+  "focus": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt,qmuidemo/src/main/res/layout/fragment_order_detail.xml,qmuidemo/src/main/res/values/order_detail.xml",
+  "used": [
+    "QMUILinearLayout（自定义 View）",
+    "QMUIRadiusImageView2（自定义 View）",
+    "QMUIRoundButton（自定义 View）",
+    "QMUIRoundFrameLayout（自定义 View）",
+    "QMUIRoundLinearLayout（自定义 View）",
+    "QMUITopBarLayout（自定义 View）",
+    "QMUIWindowInsetLayout（自定义 View）",
+    "TextView（组件库）"
+  ],
+  "reinvented": null,
+  "missedReuse": [
+    {
+      "rule": "missed-reuse",
+      "severity": "info",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 165,
+      "text": "\u003cImageView",
+      "hint": "原生 ImageView：项目里已有 ShapeableImageView（组件库）"
+    }
+  ],
+  "handBuilt": [
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 132,
+      "text": ".order_detail_address_cell",
+      "hint": "页面手写了「cell」（.order_detail_address_cell），已有 QMUICommonListItemView（自定义 View qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUICommonListItemView.java）（项目里已用 48 次）"
+    }
+  ],
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/values/order_detail.xml",
+      "line": 5,
+      "text": "#FFFFFF",
+      "hint": "新定义的颜色 order_detail_card_bg 与已有 token @color/qmui_config_color_white 同值"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/values/order_detail.xml",
+      "line": 43,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/values/order_detail.xml",
+      "line": 99,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/values/order_detail.xml",
+      "line": 107,
+      "text": "#FF4D1A",
+      "hint": "写死颜色"
+    }
+  ],
+  "localTokens": 11,
+  "pass": false
+}

@@ -301,6 +301,14 @@ func ScanH5(root string) *Report {
 	}
 	rawCount := 0
 	colorHits := map[string]*Hotspot{}
+	// uni-app's built-in <input> / <button> are the platform's primitives: judged after the scan, when a
+	// toolkit component of the same concept is in real use (wd-input × 38 in jeecg)
+	type uniOcc struct {
+		a                     *Asset
+		tag, concept, rel, tx string
+		ln                    int
+	}
+	var uniRaw []uniOcc
 	// the component's own name option: litemall registers { [Field.name]: Field } and writes <md-field>
 	optName := map[string]*Asset{}
 	for _, f := range files {
@@ -386,6 +394,10 @@ func ScanH5(root string) *Report {
 					a = assets["ui-lib|uni-app 内置组件|"+kebabToPascal(tag)] // nil for view / text: plain structure
 					if a == nil {
 						continue
+					}
+					if c, raw := rawH5[tag]; raw {
+						ln, t := at(off + m[0])
+						uniRaw = append(uniRaw, uniOcc{a: a, tag: tag, concept: c, rel: f.rel, tx: t, ln: ln})
 					}
 				}
 				// an explicit import of a project file wins over a library tag prefix (mall-app-web imports
@@ -497,6 +509,13 @@ func ScanH5(root string) *Report {
 		}
 	}
 	r.Metrics.RawPrimitives = rawCount
+	for _, o := range uniRaw {
+		if alt := bestAsset(assets, o.concept); alt != nil && !builtinLib(alt.Source) && alt.Usage >= 3 {
+			r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(o.concept), o.rel, o.ln, o.tx, "原生 <" + o.tag + ">（uni-app 内置）：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "，用 " + itoa(alt.Usage) + " 次）"})
+			r.Metrics.RawPrimitives++
+			r.Metrics.ComponentUsages--
+		}
+	}
 	// design-system wrappers: a design-system component whose own markup uses a library component of
 	// the same concept (BaseButton → <van-button>); pages that use the library directly bypass it
 	defIn := map[string][]*Asset{}

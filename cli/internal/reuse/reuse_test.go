@@ -822,3 +822,26 @@ func TestWotDesignUni(t *testing.T) {
 		t.Errorf("got=%v", got)
 	}
 }
+
+// jeecg uses wd-input 38 times: a uni-app built-in <input> there is a missed reuse; without a toolkit
+// input in real use (mall-app-web) it is just the platform's input
+func TestUniBuiltinMissedReuse(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"@dcloudio/uni-app":"3","wot-design-uni":"^1.9.1"}}`)
+	write(t, root, "src/pages/a.vue", `<template><view><wd-input/><wd-input/><wd-input/><input class="raw"/></view></template>`)
+	n := 0
+	for _, f := range ScanH5(root).Findings {
+		if f.Rule == "missed-reuse" && strings.Contains(f.Hint, "uni-app 内置") {
+			n++
+		}
+	}
+	if n != 1 {
+		t.Errorf("missed-reuse findings = %d", n)
+	}
+	write(t, root, "src/pages/a.vue", `<template><view><wd-input/><input class="raw"/></view></template>`)
+	for _, f := range ScanH5(root).Findings {
+		if f.Rule == "missed-reuse" {
+			t.Errorf("toolkit input used once is not established: %+v", f)
+		}
+	}
+}

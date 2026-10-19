@@ -23,12 +23,18 @@ var libMinVersion = map[string]map[string]string{
 		"BackTop": "4.0.0", "DatePicker": "4.0.0", "TimePicker": "4.0.0", "PickerGroup": "4.0.0", "FloatingBubble": "4.0.0",
 		"FloatingPanel": "4.0.0", "Highlight": "4.0.0", "RollingText": "4.0.0", "TextEllipsis": "4.0.0", "Watermark": "4.0.0",
 		"Signature": "4.0.0", "Barrage": "4.0.0",
+		"ActionBar": "3.0.0", "ActionBarButton": "3.0.0", "ActionBarIcon": "3.0.0", // GoodsAction* before Vant 3
 	},
 }
 
 // libDeprecated: component → its replacement in the same library.
 var libDeprecated = map[string]map[string]string{
 	"Compose Material3": {"Divider": "HorizontalDivider", "SwipeToDismiss": "SwipeToDismissBox"},
+}
+
+// libRemoved: component → [first version without it, its successor] (renamed / removed).
+var libRemoved = map[string]map[string][2]string{
+	"Vant": {"GoodsAction": {"3.0.0", "ActionBar"}, "GoodsActionButton": {"3.0.0", "ActionBarButton"}, "GoodsActionIcon": {"3.0.0", "ActionBarIcon"}},
 }
 
 // materialThemed: Material Components widgets that enforce a Theme.MaterialComponents / Material3
@@ -136,6 +142,11 @@ func markCompat(assets map[string]*Asset, versions map[string]string, themeFamil
 		if min := libMinVersion[a.Source][a.Name]; min != "" && versionLess(versions[a.Source], min) {
 			a.Unavailable = true
 			a.Caveat = "需要 " + a.Source + " ≥ " + min + "，项目是 " + versions[a.Source] + "，用了会编译失败"
+			continue
+		}
+		if rm, ok := libRemoved[a.Source][a.Name]; ok && versions[a.Source] != "" && !versionLess(versions[a.Source], rm[0]) {
+			a.Unavailable = true
+			a.Caveat = a.Source + " " + rm[0] + " 起已改名为 " + rm[1]
 			continue
 		}
 		if repl := libDeprecated[a.Source][a.Name]; repl != "" {

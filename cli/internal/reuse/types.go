@@ -126,7 +126,7 @@ var concepts = []struct {
 	{"stepper", []string{"stepper", "counter"}},
 	{"countdown", []string{"countdown", "timer"}},
 	{"goods", []string{"goods", "product", "sku", "goodscard", "productcard"}},
-	{"actionbar", []string{"actionbar", "bottombar", "bottomactionbar", "footerbar"}},
+	{"actionbar", []string{"actionbar", "goodsaction", "bottombar", "bottomactionbar", "footerbar"}},
 }
 
 // noise words that never decide a concept on their own

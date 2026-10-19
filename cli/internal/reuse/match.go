@@ -325,6 +325,10 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 			why = append(why, "只在定义它的文件里用过（页面内部组件）")
 		}
 	}
+	if _, primitive := rawAndroid[a.Name]; primitive && a.Source == "Android SDK widgets" {
+		s -= 0.15 // Button / EditText / Toolbar are what projects wrap: the project's own component wins
+		why = append(why, "系统原生控件")
+	}
 	// a selectable component (FilterChip: selected / onSelectedChange) for a design element that has
 	// no selected state is the wrong interaction
 	if selectable(a.Props) && !hasAxis(variants, "selected", "checked", "active", "state", "on") {

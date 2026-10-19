@@ -23,6 +23,7 @@ PROJECTS = {
     "antdm-mobile": ("https://github.com/xmllein/react-mobile.git", "12e4276ce83962d92a86b11fa2e89c1ec94f927f", "h5"),
     # held out: first run after the rules above were tuned (see match-judgement.md for the first-pass result)
     "jetsnack": ("https://github.com/android/compose-samples.git#Jetsnack", "0bc770fd28510b5a16395349e7281f11386ac82f", "android"),
+    "litemall": ("https://github.com/linlinjava/litemall.git#litemall-vue", "a1ef964a718b7277925b19ea26afe78ea3a1d325", "h5"),
     "newpipe": ("https://github.com/TeamNewPipe/NewPipe.git", "32eb85d0fb09ef9022421751fd96bee564b9223b", "android"),
     "vant-demo-vue3": ("https://github.com/youzan/vant-demo.git#vant/vue3-ts", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
     "vant-demo-vue2": ("https://github.com/youzan/vant-demo.git#vant/vue2", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
@@ -49,6 +50,9 @@ VANT_H = {
     "持仓列表": (["List"], []), "持仓列表项": (["Cell"], []), "涨跌标签": (["Tag"], []), "收盘倒计时": (["CountDown"], []),
     "底部操作栏": (["ActionBar"], []), "买入按钮": (["Button"], []), "卖出按钮": (["Button"], []), "更多按钮": (["Button"], []),
 }
+# Vant 2 has no ActionBar: its action bar is GoodsAction (renamed in Vant 3)
+VANT2 = dict(VANT, ActionBar=(["GoodsAction"], []))
+VANT2_H = dict(VANT_H, 底部操作栏=(["GoodsAction"], []))
 EXPECTED = {
     ("newbee", "order-detail"): {
         "NavBar": (["SimpleHeader"], ["NavBar"]), "NoticeBar": (["NoticeBar"], []), "Card": (["CellGroup"], []), "Tag": (["Tag"], []),
@@ -91,17 +95,18 @@ EXPECTED = {
         "底部操作栏": (["—"], []), "买入按钮": (["JetsnackButton"], []), "卖出按钮": (["JetsnackButton"], []), "更多按钮": (["JetsnackButton"], []),
     },
     ("newpipe", "order-detail"): {
-        "NavBar": (["Toolbar", "MaterialToolbar"], []), "NoticeBar": (["—"], []), "Card": (["CardView", "MaterialCardView"], []), "Tag": (["Chip"], ["—"]),
+        "NavBar": (["Toolbar", "MaterialToolbar", "@layout/toolbar_layout"], []), "NoticeBar": (["—"], []), "Card": (["CardView", "MaterialCardView"], []), "Tag": (["Chip"], ["—"]),
         "CountDown": (["—"], []), "Divider": (["MaterialDivider", "—"], []), "Cell": (["—"], ["PreferenceRow", "ListItem"]), "ProductCard": (["CardView", "—"], []),
         "Price": (["—"], []), "ActionBar": (["—"], []), "Button": (["MaterialButton"], ["Button"]),
     },
     ("newpipe", "holdings"): {
-        "导航栏": (["Toolbar", "MaterialToolbar"], []), "公告通知栏": (["—"], []), "资产卡片": (["CardView", "MaterialCardView"], []), "标签页": (["TabLayout"], []),
+        "导航栏": (["Toolbar", "MaterialToolbar", "@layout/toolbar_layout"], []), "公告通知栏": (["—"], []), "资产卡片": (["CardView", "MaterialCardView"], []), "标签页": (["TabLayout"], []),
         "持仓列表": (["RecyclerView"], []), "持仓列表项": (["—"], ["PreferenceRow", "ListItem"]), "涨跌标签": (["Chip"], ["—"]), "收盘倒计时": (["—"], []),
         "底部操作栏": (["—"], []), "买入按钮": (["MaterialButton"], ["Button"]), "卖出按钮": (["MaterialButton"], ["Button"]), "更多按钮": (["MaterialButton"], ["Button"]),
     },
     ("vant-demo-vue3", "order-detail"): "VANT", ("vant-demo-vue3", "holdings"): "VANT_H",
-    ("vant-demo-vue2", "order-detail"): "VANT", ("vant-demo-vue2", "holdings"): "VANT_H",
+    ("vant-demo-vue2", "order-detail"): "VANT2", ("vant-demo-vue2", "holdings"): "VANT2_H",
+    ("litemall", "order-detail"): "VANT2", ("litemall", "holdings"): "VANT2_H",
     ("antdm-template", "order-detail"): ANTD, ("antdm-template", "holdings"): ANTD_H,
     ("antdm-mobile", "order-detail"): ANTD, ("antdm-mobile", "holdings"): ANTD_H,
 }

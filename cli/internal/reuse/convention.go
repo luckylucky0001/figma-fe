@@ -43,7 +43,13 @@ func conventionsAndroid(layouts map[string]string) []Asset {
 		}
 		return acc[key]
 	}
-	for rel, text := range layouts {
+	rels := make([]string, 0, len(layouts))
+	for rel := range layouts {
+		rels = append(rels, rel)
+	}
+	sort.Strings(rels) // the example shown is the first in path order, the same on every run
+	for _, rel := range rels {
+		text := layouts[rel]
 		for _, m := range hairlineViewRe.FindAllStringIndex(text, -1) {
 			get("view", "1px View 细线").add(oneLine(text[m[0]:m[1]]), rel+":"+itoa(lineAt(text, m[0])))
 		}
@@ -103,7 +109,12 @@ func pickConventions(acc map[string]*convAcc) []Asset {
 			out = append(out, Asset{Name: c.label, Kind: "convention", Source: "项目惯例", Concept: "divider", Usage: c.n, Example: c.ex, ExampleAt: c.exAt})
 		}
 	}
-	sort.Slice(out, func(i, j int) bool { return out[i].Usage > out[j].Usage })
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].Usage != out[j].Usage {
+			return out[i].Usage > out[j].Usage
+		}
+		return out[i].Name < out[j].Name
+	})
 	return out
 }
 

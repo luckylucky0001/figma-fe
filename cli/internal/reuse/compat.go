@@ -65,7 +65,7 @@ var materialThemed = map[string]bool{
 var (
 	materialDepRe   = regexp.MustCompile(`com\.google\.android\.material:material:(\d+\.\d+\.\d+)`)
 	materialTomlRe  = regexp.MustCompile(`(?m)^\s*material\s*=\s*"(\d+\.\d+\.\d+)"`)
-	postSplashRe    = regexp.MustCompile(`(?s)<style\s+name="([\w.]+)"[^>]*>(?:(?:[^<]|<(?:[^/]|/[^s]))*?)<item\s+name="postSplashScreenTheme">@style/([\w.]+)</item>`)
+	postSplashRe    = regexp.MustCompile(`(?s)<style\s+name="([\w.]+)"[^>]*[^/>]>(?:(?:[^<]|<(?:[^/]|/[^s]))*?)<item\s+name="postSplashScreenTheme">@style/([\w.]+)</item>`)
 	styleDefRe      = regexp.MustCompile(`<style\s+name="([\w.]+)"(?:\s+parent="(?:@style/|@android:style/)?([\w.]*)")?`)
 	manifestThemeRe = regexp.MustCompile(`<application[^>]*android:theme="@style/([\w.]+)"`)
 )

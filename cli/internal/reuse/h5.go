@@ -299,6 +299,11 @@ func ScanH5(root string) *Report {
 			}
 		}
 	}
+	fileRels := make([]string, 0, len(fileAsset))
+	for rel := range fileAsset {
+		fileRels = append(fileRels, rel)
+	}
+	sort.Strings(fileRels)
 	rawCount := 0
 	colorHits := map[string]*Hotspot{}
 	// uni-app's built-in <input> / <button> are the platform's primitives: judged after the scan, when a
@@ -314,7 +319,10 @@ func ScanH5(root string) *Report {
 	for _, f := range files {
 		if a := fileAsset[f.rel]; a != nil {
 			if m := vueNameOptRe.FindStringSubmatch(f.text); m != nil {
-				optName[strings.ToLower(strings.ReplaceAll(m[1], "-", ""))] = a
+				// name: 'Button' must not turn every raw <button> into a use of it
+				if k := strings.ToLower(strings.ReplaceAll(m[1], "-", "")); !htmlTags[k] && !uniTags[k] && !htmlTags[m[1]] && !uniTags[m[1]] {
+					optName[k] = a
+				}
 			}
 		}
 	}
@@ -352,11 +360,8 @@ func ScanH5(root string) *Report {
 					continue
 				}
 			}
-			base := strings.TrimSuffix(filepath.Base(m[3]), ".vue")
-			for rel, a := range fileAsset {
-				if strings.TrimSuffix(filepath.Base(rel), ".vue") == base || strings.EqualFold(filepath.Base(filepath.Dir(rel)), base) && strings.HasSuffix(rel, "index.vue") {
-					alias[strings.ToLower(m[1])] = a
-				}
+			if a := resolveImport(f.rel, m[3], fileAsset, fileRels); a != nil {
+				alias[strings.ToLower(m[1])] = a
 			}
 		}
 		lines := strings.Split(f.text, "\n")
@@ -510,7 +515,10 @@ func ScanH5(root string) *Report {
 	}
 	r.Metrics.RawPrimitives = rawCount
 	for _, o := range uniRaw {
-		if alt := bestAsset(assets, o.concept); alt != nil && !builtinLib(alt.Source) && alt.Usage >= 3 {
+		if def := fileAsset[o.rel]; def != nil && def.Concept == o.concept {
+			continue // the project's own input built on <input>
+		}
+		if alt := bestAsset(assets, o.concept); alt != nil && !builtinLib(alt.Source) && alt.Usage >= 3 && alt.Source != o.rel {
 			r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(o.concept), o.rel, o.ln, o.tx, "原生 <" + o.tag + ">（uni-app 内置）：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "，用 " + itoa(alt.Usage) + " 次）"})
 			r.Metrics.RawPrimitives++
 			r.Metrics.ComponentUsages--
@@ -532,7 +540,15 @@ func ScanH5(root string) *Report {
 			byFile[a.Source] = append(byFile[a.Source], a)
 		}
 	}
-	for lib, os := range libOcc {
+	var libsSorted []*Asset
+	for lib := range libOcc {
+		libsSorted = append(libsSorted, lib)
+	}
+	sort.Slice(libsSorted, func(i, j int) bool {
+		return libsSorted[i].Source+"|"+libsSorted[i].Name < libsSorted[j].Source+"|"+libsSorted[j].Name
+	})
+	for _, lib := range libsSorted {
+		os := libOcc[lib]
 		for _, o := range os {
 			for _, w := range byFile[o.rel] {
 				if w.Concept != "" && w.Concept == lib.Concept && w.Extends == "" {
@@ -641,6 +657,37 @@ func bestAsset(assets map[string]*Asset, concept string) *Asset {
 	return best
 }
 
+// resolveImport finds the component file an import points at: the path itself when it can be resolved
+// (@/components/field/ → src/components/field/index.vue, ./Foo.vue next to the importer), else the
+// first file in path order with that base name, so the same import always resolves the same way.
+func resolveImport(from, spec string, fileAsset map[string]*Asset, rels []string) *Asset {
+	p := strings.TrimSuffix(spec, "/")
+	switch {
+	case strings.HasPrefix(p, "@/") || strings.HasPrefix(p, "~/"):
+		p = "src/" + p[2:]
+	case strings.HasPrefix(p, "."):
+		p = filepath.ToSlash(filepath.Join(filepath.Dir(from), p))
+	default:
+		p = ""
+	}
+	if p != "" {
+		for _, rel := range rels {
+			for _, c := range []string{p, p + ".vue", p + "/index.vue"} {
+				if rel == c || strings.HasSuffix(rel, "/"+c) {
+					return fileAsset[rel]
+				}
+			}
+		}
+	}
+	base := strings.TrimSuffix(filepath.Base(spec), ".vue")
+	for _, rel := range rels {
+		if strings.TrimSuffix(filepath.Base(rel), ".vue") == base || strings.EqualFold(filepath.Base(filepath.Dir(rel)), base) && strings.HasSuffix(rel, "index.vue") {
+			return fileAsset[rel]
+		}
+	}
+	return nil
+}
+
 // finish converts maps to sorted slices and fills metrics shared by both platforms.
 func finish(r *Report, assets map[string]*Asset, colors map[string]*Hotspot) {
 	for k, a := range assets {
@@ -673,7 +720,12 @@ func finish(r *Report, assets map[string]*Asset, colors map[string]*Hotspot) {
 				used = append(used, a)
 			}
 		}
-		sort.Slice(used, func(i, j int) bool { return used[i].Usage > used[j].Usage })
+		sort.Slice(used, func(i, j int) bool {
+			if used[i].Usage != used[j].Usage {
+				return used[i].Usage > used[j].Usage
+			}
+			return used[i].Name < used[j].Name
+		})
 		for i, a := range used {
 			if i < 8 {
 				lu.Top = append(lu.Top, a.Name+"×"+itoa(a.Usage))
@@ -681,12 +733,28 @@ func finish(r *Report, assets map[string]*Asset, colors map[string]*Hotspot) {
 		}
 		r.Libraries = append(r.Libraries, *lu)
 	}
-	sort.Slice(r.Libraries, func(i, j int) bool { return r.Libraries[i].Usage > r.Libraries[j].Usage })
-	sort.Slice(r.Assets, func(i, j int) bool {
-		if r.Assets[i].Kind != r.Assets[j].Kind {
-			return rank(Asset{Kind: r.Assets[i].Kind}) > rank(Asset{Kind: r.Assets[j].Kind})
+	// every order is total: assets come from map iteration, and ties must not flip between runs
+	sort.Slice(r.Libraries, func(i, j int) bool {
+		if r.Libraries[i].Usage != r.Libraries[j].Usage {
+			return r.Libraries[i].Usage > r.Libraries[j].Usage
 		}
-		return r.Assets[i].Usage > r.Assets[j].Usage
+		return r.Libraries[i].Name < r.Libraries[j].Name
+	})
+	sort.Slice(r.Assets, func(i, j int) bool {
+		x, y := r.Assets[i], r.Assets[j]
+		if x.Kind != y.Kind {
+			if rx, ry := rank(Asset{Kind: x.Kind}), rank(Asset{Kind: y.Kind}); rx != ry {
+				return rx > ry
+			}
+			return x.Kind < y.Kind
+		}
+		if x.Usage != y.Usage {
+			return x.Usage > y.Usage
+		}
+		if x.Name != y.Name {
+			return x.Name < y.Name
+		}
+		return x.Source < y.Source
 	})
 	var libAll []Asset
 	for _, a := range assets {
@@ -694,6 +762,12 @@ func finish(r *Report, assets map[string]*Asset, colors map[string]*Hotspot) {
 			libAll = append(libAll, *a)
 		}
 	}
+	sort.Slice(libAll, func(i, j int) bool {
+		if libAll[i].Source != libAll[j].Source {
+			return libAll[i].Source < libAll[j].Source
+		}
+		return libAll[i].Name < libAll[j].Name
+	})
 	r.LibAll = libAll
 	r.Clusters = clusters(r.Assets, libAll)
 	r.Metrics.DuplicateConcepts = len(r.Clusters)
@@ -704,7 +778,12 @@ func finish(r *Report, assets map[string]*Asset, colors map[string]*Hotspot) {
 			r.Metrics.TokenizableColors += h.Count
 		}
 	}
-	sort.Slice(r.Colors, func(i, j int) bool { return r.Colors[i].Count > r.Colors[j].Count })
+	sort.Slice(r.Colors, func(i, j int) bool {
+		if r.Colors[i].Count != r.Colors[j].Count {
+			return r.Colors[i].Count > r.Colors[j].Count
+		}
+		return r.Colors[i].Value < r.Colors[j].Value
+	})
 	if t := r.Metrics.ComponentUsages + r.Metrics.RawPrimitives; t > 0 {
 		r.Metrics.Componentization = float64(r.Metrics.ComponentUsages) / float64(t)
 	}

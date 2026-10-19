@@ -16,11 +16,11 @@
         "TextView×105",
         "ImageView×11",
         "RecyclerView×6",
-        "RadioButton×5",
         "Button×5",
+        "RadioButton×5",
         "SeekBar×3",
-        "ListView×2",
-        "EditText×2"
+        "EditText×2",
+        "ListView×2"
       ]
     },
     {
@@ -28,8 +28,8 @@
       "usage": 11,
       "top": [
         "LazyColumn×9",
-        "LazyRow×1",
-        "HorizontalPager×1"
+        "HorizontalPager×1",
+        "LazyRow×1"
       ]
     },
     {
@@ -196,19 +196,6 @@
       "exampleAt": "qmuidemo/src/main/res/layout/fragment_colorhelper.xml:124"
     },
     {
-      "name": "ListView",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "concept": "list",
-      "usage": 2,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_listview.xml",
-        "qmuidemo/src/main/res/layout/fragment_swipe_delete_listview.xml"
-      ],
-      "example": "\u003cListView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_listview.xml:25"
-    },
-    {
       "name": "EditText",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
@@ -222,27 +209,17 @@
       "exampleAt": "qmuidemo/src/main/res/layout/fragment_scheme.xml:47"
     },
     {
-      "name": "ViewPager2",
+      "name": "ListView",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
-      "usage": 1,
+      "concept": "list",
+      "usage": 2,
       "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_tab_viewpager2_layout.xml"
+        "qmuidemo/src/main/res/layout/fragment_listview.xml",
+        "qmuidemo/src/main/res/layout/fragment_swipe_delete_listview.xml"
       ],
-      "example": "\u003candroidx.viewpager2.widget.ViewPager2",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_tab_viewpager2_layout.xml:39"
-    },
-    {
-      "name": "ProgressBar",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "concept": "loading",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml"
-      ],
-      "example": "\u003cProgressBar",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml:37"
+      "example": "\u003cListView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_listview.xml:25"
     },
     {
       "name": "HorizontalPager",
@@ -257,17 +234,6 @@
       "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt:39"
     },
     {
-      "name": "QMUISeekBar",
-      "kind": "ui-lib",
-      "source": "QMUI Android",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_slider.xml"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUISeekBar",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_slider.xml:44"
-    },
-    {
       "name": "LazyRow",
       "kind": "ui-lib",
       "source": "Compose Foundation",
@@ -280,6 +246,29 @@
       "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt:116"
     },
     {
+      "name": "ProgressBar",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "loading",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml"
+      ],
+      "example": "\u003cProgressBar",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml:37"
+    },
+    {
+      "name": "QMUISeekBar",
+      "kind": "ui-lib",
+      "source": "QMUI Android",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_slider.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUISeekBar",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_slider.xml:44"
+    },
+    {
       "name": "ViewPager",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
@@ -290,6 +279,50 @@
       ],
       "example": "\u003candroidx.viewpager.widget.ViewPager",
       "exampleAt": "qmuidemo/src/main/res/layout/fragment_tab_viewpager_layout.xml:39"
+    },
+    {
+      "name": "ViewPager2",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_tab_viewpager2_layout.xml"
+      ],
+      "example": "\u003candroidx.viewpager2.widget.ViewPager2",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_tab_viewpager2_layout.xml:39"
+    },
+    {
+      "name": "QMUIModal",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIModal.kt",
+      "concept": "dialog",
+      "props": [
+        "isVisible",
+        "mask",
+        "enter",
+        "exit",
+        "systemCancellable",
+        "maskTouchBehavior",
+        "doOnShow",
+        "doOnDismiss",
+        "uniqueId",
+        "modalHostProvider",
+        "content"
+      ],
+      "usage": 15,
+      "usageFiles": [
+        "compose/src/main/java/com/qmuiteam/compose/modal/ModalImpl.kt",
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt",
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIModal.kt",
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt"
+      ],
+      "example": ") : QMUIModal {",
+      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/ModalImpl.kt:27",
+      "required": [
+        "isVisible",
+        "content"
+      ]
     },
     {
       "name": "QMUIItem",
@@ -475,41 +508,39 @@
       ]
     },
     {
-      "name": "QMUITopBarWithLazyScrollState",
+      "name": "OnePx",
       "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/helper/Dimen.kt",
+      "usage": 4,
+      "usageFiles": [
+        "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt",
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt"
+      ],
+      "example": "separatorHeight: Dp = OnePx(),",
+      "exampleAt": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt:179"
+    },
+    {
+      "name": "PressWithAlphaBox",
+      "kind": "composable",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/PressWithAlphaBox.kt",
       "props": [
-        "scrollState",
-        "title",
-        "subTitle",
-        "alignTitleCenter",
-        "height",
-        "zIndex",
-        "backgroundColor",
-        "changeWithBackground",
-        "scrollAlphaChangeMaxOffset",
-        "shadowElevation",
-        "shadowAlpha",
-        "separatorHeight",
-        "separatorColor",
-        "paddingStart",
-        "paddingEnd",
-        "titleBoxPaddingHor",
-        "leftItems",
-        "rightItems",
-        "titleLayout"
+        "modifier",
+        "enable",
+        "pressAlpha",
+        "disableAlpha",
+        "onClick",
+        "content"
       ],
       "usage": 4,
       "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDComposeTipFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt"
+        "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt"
       ],
-      "example": "QMUITopBarWithLazyScrollState(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:358",
+      "example": "PressWithAlphaBox(",
+      "exampleAt": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt:111",
       "required": [
-        "scrollState"
+        "content"
       ]
     },
     {
@@ -562,26 +593,41 @@
       ]
     },
     {
-      "name": "PressWithAlphaBox",
+      "name": "QMUITopBarWithLazyScrollState",
       "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/PressWithAlphaBox.kt",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
       "props": [
-        "modifier",
-        "enable",
-        "pressAlpha",
-        "disableAlpha",
-        "onClick",
-        "content"
+        "scrollState",
+        "title",
+        "subTitle",
+        "alignTitleCenter",
+        "height",
+        "zIndex",
+        "backgroundColor",
+        "changeWithBackground",
+        "scrollAlphaChangeMaxOffset",
+        "shadowElevation",
+        "shadowAlpha",
+        "separatorHeight",
+        "separatorColor",
+        "paddingStart",
+        "paddingEnd",
+        "titleBoxPaddingHor",
+        "leftItems",
+        "rightItems",
+        "titleLayout"
       ],
       "usage": 4,
       "usageFiles": [
-        "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt"
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDComposeTipFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt"
       ],
-      "example": "PressWithAlphaBox(",
-      "exampleAt": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt:111",
+      "example": "QMUITopBarWithLazyScrollState(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:358",
       "required": [
-        "content"
+        "scrollState"
       ]
     },
     {
@@ -603,39 +649,6 @@
         "text",
         "onClick"
       ]
-    },
-    {
-      "name": "OnePx",
-      "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/helper/Dimen.kt",
-      "usage": 4,
-      "usageFiles": [
-        "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt",
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt"
-      ],
-      "example": "separatorHeight: Dp = OnePx(),",
-      "exampleAt": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt:179"
-    },
-    {
-      "name": "QMUIPhotoLoading",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/Loading.kt",
-      "concept": "loading",
-      "props": [
-        "size",
-        "duration",
-        "lineCount",
-        "lineColor"
-      ],
-      "usage": 3,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt",
-        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoViewerActivity.kt",
-        "photo/src/main/java/com/qmuiteam/photo/compose/PhotoClipper.kt"
-      ],
-      "example": "QMUIPhotoLoading(lineColor = QMUILocalPickerConfig.current.loadingColor)",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:577"
     },
     {
       "name": "BlankBox",
@@ -675,6 +688,69 @@
       ]
     },
     {
+      "name": "QMUIPhotoLoading",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/Loading.kt",
+      "concept": "loading",
+      "props": [
+        "size",
+        "duration",
+        "lineCount",
+        "lineColor"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt",
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoViewerActivity.kt",
+        "photo/src/main/java/com/qmuiteam/photo/compose/PhotoClipper.kt"
+      ],
+      "example": "QMUIPhotoLoading(lineColor = QMUILocalPickerConfig.current.loadingColor)",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:577"
+    },
+    {
+      "name": "QMUIWindowInsetsProvider",
+      "kind": "composable",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/provider/WindowInsets.kt",
+      "props": [
+        "content"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoClipActivity.kt",
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/base/ComposeBaseFragment.kt"
+      ],
+      "example": "QMUIWindowInsetsProvider {",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoClipActivity.kt:91",
+      "required": [
+        "content"
+      ]
+    },
+    {
+      "name": "CommonButton",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
+      "concept": "button",
+      "props": [
+        "modifier",
+        "enabled",
+        "text",
+        "onClick"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt",
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt"
+      ],
+      "example": "CommonButton(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt:815",
+      "required": [
+        "enabled",
+        "text",
+        "onClick"
+      ]
+    },
+    {
       "name": "CommonTextButton",
       "kind": "composable",
       "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
@@ -697,6 +773,153 @@
         "enable",
         "text",
         "onClick"
+      ]
+    },
+    {
+      "name": "LongImage",
+      "kind": "composable",
+      "source": "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt",
+      "concept": "image",
+      "props": [
+        "onSuccess",
+        "onError",
+        "openBlankColor",
+        "onSuccess",
+        "onError"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt"
+      ],
+      "example": "LongImage(onSuccess, onError, openBlankColor)",
+      "exampleAt": "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt:50",
+      "required": [
+        "onSuccess",
+        "onError",
+        "openBlankColor",
+        "onSuccess",
+        "onError"
+      ]
+    },
+    {
+      "name": "OriginOpenButton",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
+      "concept": "button",
+      "props": [
+        "modifier",
+        "isOriginOpenFlow",
+        "onToggleOrigin"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt"
+      ],
+      "example": "OriginOpenButton(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt:207",
+      "required": [
+        "isOriginOpenFlow",
+        "onToggleOrigin"
+      ]
+    },
+    {
+      "name": "QMUIBitmapRegionItem",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/BitmapRegion.kt",
+      "concept": "cell",
+      "props": [
+        "bmRegion",
+        "w",
+        "h"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt",
+        "photo-glide/src/main/java/com/qmuiteam/photo/glide/QMUIGlidePhoto.kt"
+      ],
+      "example": "QMUIBitmapRegionItem(image, maxWidth, heightDp)",
+      "exampleAt": "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt:236",
+      "required": [
+        "bmRegion",
+        "bmRegion:QMUIBitmapRegionProvider",
+        "w",
+        "h"
+      ]
+    },
+    {
+      "name": "QMUIDialogActions",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
+      "concept": "dialog",
+      "props": [
+        "modal",
+        "actions"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
+      ],
+      "example": "QMUIDialogActions(modal, actions)",
+      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt:111",
+      "required": [
+        "modal",
+        "modal:QMUIModal",
+        "actions"
+      ]
+    },
+    {
+      "name": "QMUIPhotoClipper",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/PhotoClipper.kt",
+      "props": [
+        "photoProvider",
+        "maskColor",
+        "clipFocusArea",
+        "drawClipFocusArea",
+        "bitmapClipper",
+        "clipArea",
+        "scale",
+        "operateContent"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoClipActivity.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoClipFragment.kt"
+      ],
+      "example": "QMUIPhotoClipper(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoClipActivity.kt:92",
+      "required": [
+        "photoProvider",
+        "photoProvider:QMUIPhotoProvider",
+        "bitmapClipper",
+        "clipArea",
+        "clipArea:Rect",
+        "operateContent"
+      ]
+    },
+    {
+      "name": "QMUIToast",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt",
+      "concept": "toast",
+      "props": [
+        "modal",
+        "radius",
+        "background",
+        "content"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt"
+      ],
+      "example": "QMUIToast(modal, radius, background, content)",
+      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt:116",
+      "required": [
+        "modal",
+        "modal:QMUIModal",
+        "content"
       ]
     },
     {
@@ -733,177 +956,6 @@
       ]
     },
     {
-      "name": "QMUIToast",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt",
-      "concept": "toast",
-      "props": [
-        "modal",
-        "radius",
-        "background",
-        "content"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt"
-      ],
-      "example": "QMUIToast(modal, radius, background, content)",
-      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt:116",
-      "required": [
-        "modal",
-        "modal:QMUIModal",
-        "content"
-      ]
-    },
-    {
-      "name": "OriginOpenButton",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
-      "concept": "button",
-      "props": [
-        "modifier",
-        "isOriginOpenFlow",
-        "onToggleOrigin"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt"
-      ],
-      "example": "OriginOpenButton(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt:207",
-      "required": [
-        "isOriginOpenFlow",
-        "onToggleOrigin"
-      ]
-    },
-    {
-      "name": "LongImage",
-      "kind": "composable",
-      "source": "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt",
-      "concept": "image",
-      "props": [
-        "onSuccess",
-        "onError",
-        "openBlankColor",
-        "onSuccess",
-        "onError"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt"
-      ],
-      "example": "LongImage(onSuccess, onError, openBlankColor)",
-      "exampleAt": "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt:50",
-      "required": [
-        "onSuccess",
-        "onError",
-        "openBlankColor",
-        "onSuccess",
-        "onError"
-      ]
-    },
-    {
-      "name": "QMUIPhotoClipper",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/PhotoClipper.kt",
-      "props": [
-        "photoProvider",
-        "maskColor",
-        "clipFocusArea",
-        "drawClipFocusArea",
-        "bitmapClipper",
-        "clipArea",
-        "scale",
-        "operateContent"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoClipActivity.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoClipFragment.kt"
-      ],
-      "example": "QMUIPhotoClipper(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoClipActivity.kt:92",
-      "required": [
-        "photoProvider",
-        "photoProvider:QMUIPhotoProvider",
-        "bitmapClipper",
-        "clipArea",
-        "clipArea:Rect",
-        "operateContent"
-      ]
-    },
-    {
-      "name": "CommonButton",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
-      "concept": "button",
-      "props": [
-        "modifier",
-        "enabled",
-        "text",
-        "onClick"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt",
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt"
-      ],
-      "example": "CommonButton(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt:815",
-      "required": [
-        "enabled",
-        "text",
-        "onClick"
-      ]
-    },
-    {
-      "name": "QMUIDialogActions",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
-      "concept": "dialog",
-      "props": [
-        "modal",
-        "actions"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
-      ],
-      "example": "QMUIDialogActions(modal, actions)",
-      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt:111",
-      "required": [
-        "modal",
-        "modal:QMUIModal",
-        "actions"
-      ]
-    },
-    {
-      "name": "QMUIBitmapRegionItem",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/BitmapRegion.kt",
-      "concept": "cell",
-      "props": [
-        "bmRegion",
-        "w",
-        "h"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt",
-        "photo-glide/src/main/java/com/qmuiteam/photo/glide/QMUIGlidePhoto.kt"
-      ],
-      "example": "QMUIBitmapRegionItem(image, maxWidth, heightDp)",
-      "exampleAt": "photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt:236",
-      "required": [
-        "bmRegion",
-        "bmRegion:QMUIBitmapRegionProvider",
-        "w",
-        "h"
-      ]
-    },
-    {
       "name": "PhotoBackground",
       "kind": "composable",
       "source": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt",
@@ -921,82 +973,25 @@
       ]
     },
     {
-      "name": "QMUIBottomSheet",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java",
-      "concept": "sheet",
-      "usage": 38,
+      "name": "PhotoBackgroundWithTransition",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt",
+      "props": [
+        "backgroundTargetAlpha",
+        "transition",
+        "transitionDurationMs",
+        "content"
+      ],
+      "usage": 1,
       "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDBottomSheetFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDEmptyViewFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDFloatLayoutFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDPullRefreshFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageView2ScaleTypeFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageView2UsageFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewScaleTypeFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewUsageFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDTabSegment2FixModeFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDTabSegmentFixModeFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDBaseSectionLayoutFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchTestFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScrollBaseFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDSnapHelperFragment.java"
+        "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt"
       ],
-      "example": "mDialog = new QMUIBottomSheet(mContext, style);",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java:116",
-      "extends": "QMUIBaseDialog"
-    },
-    {
-      "name": "QMUIDefaultPhotoConfigProvider",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/PhotoConfig.kt",
-      "props": [
-        "content"
-      ],
-      "usage": 0,
+      "example": "PhotoBackgroundWithTransition(backgroundTargetAlpha, transition, transitionDurationMs) {",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt:186",
       "required": [
-        "content"
-      ]
-    },
-    {
-      "name": "Compose",
-      "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
-      "props": [
-        "topBarHeight",
-        "title",
-        "subTitle",
-        "alignTitleCenter",
-        "contentScale",
-        "isContainerDimenExactly",
-        "onSuccess",
-        "onError"
-      ],
-      "usage": 0,
-      "required": [
-        "topBarHeight",
-        "title",
-        "title:CharSequence",
-        "subTitle",
-        "subTitle:CharSequence",
-        "alignTitleCenter",
-        "contentScale",
-        "contentScale:ContentScale",
-        "isContainerDimenExactly",
-        "onSuccess",
-        "onError"
-      ]
-    },
-    {
-      "name": "QMUIWindowInsetsProvider",
-      "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/provider/WindowInsets.kt",
-      "props": [
-        "content"
-      ],
-      "usage": 0,
-      "required": [
+        "backgroundTargetAlpha",
+        "transition",
+        "transitionDurationMs",
         "content"
       ]
     },
@@ -1034,6 +1029,680 @@
         "translateX",
         "translateY"
       ]
+    },
+    {
+      "name": "PhotoContentWithRectTransition",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt",
+      "props": [
+        "imageWidth",
+        "imageHeight",
+        "initRect",
+        "scale",
+        "translateX",
+        "translateY",
+        "transition",
+        "transitionDurationMs",
+        "content",
+        "scaleY",
+        "translateX",
+        "translateY"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt"
+      ],
+      "example": "PhotoContentWithRectTransition(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt:396",
+      "required": [
+        "imageWidth",
+        "imageHeight",
+        "initRect",
+        "initRect:Rect",
+        "scale",
+        "translateX",
+        "translateY",
+        "transition",
+        "transitionDurationMs",
+        "content",
+        "scaleY",
+        "translateX",
+        "translateY"
+      ]
+    },
+    {
+      "name": "PickCurrentCheckButton",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
+      "concept": "button",
+      "props": [
+        "modifier",
+        "isPicked",
+        "onPicked"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt"
+      ],
+      "example": "PickCurrentCheckButton(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt:210",
+      "required": [
+        "isPicked",
+        "onPicked"
+      ]
+    },
+    {
+      "name": "PickerResult",
+      "kind": "composable",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt"
+      ],
+      "example": "PickerResult()",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt:89"
+    },
+    {
+      "name": "QDEditor",
+      "kind": "composable",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt"
+      ],
+      "example": "QDEditor()",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:100"
+    },
+    {
+      "name": "QMUIBottomSheetList",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt",
+      "concept": "sheet",
+      "props": [
+        "modal",
+        "state",
+        "children"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
+      ],
+      "example": "QMUIBottomSheetList(it) {",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:217",
+      "required": [
+        "modal",
+        "modal:QMUIModal",
+        "children"
+      ]
+    },
+    {
+      "name": "QMUICheckBox",
+      "kind": "composable",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUIIcon.kt",
+      "concept": "checkbox",
+      "props": [
+        "size",
+        "status",
+        "isEnabled",
+        "tint",
+        "background"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt"
+      ],
+      "example": "QMUICheckBox(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt:170",
+      "required": [
+        "size",
+        "tint"
+      ]
+    },
+    {
+      "name": "QMUIDefaultPhotoConfigProvider",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/PhotoConfig.kt",
+      "props": [
+        "content"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoViewerActivity.kt"
+      ],
+      "example": "QMUIDefaultPhotoConfigProvider {",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoViewerActivity.kt:154",
+      "required": [
+        "content"
+      ]
+    },
+    {
+      "name": "QMUIDefaultPickerConfigProvider",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt",
+      "props": [
+        "content"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
+      ],
+      "example": "QMUIDefaultPickerConfigProvider {",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:212",
+      "required": [
+        "content"
+      ]
+    },
+    {
+      "name": "QMUIDialogMarkList",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
+      "concept": "dialog",
+      "props": [
+        "modal",
+        "list",
+        "markIndex",
+        "state",
+        "maxHeight",
+        "itemIndication",
+        "itemTextSize",
+        "itemTextColor",
+        "itemTextFontWeight",
+        "itemTextFontFamily",
+        "itemMarkTintColor",
+        "contentPadding",
+        "onItemClick",
+        "index"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
+      ],
+      "example": "QMUIDialogMarkList(",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:134",
+      "required": [
+        "modal",
+        "modal:QMUIModal",
+        "list",
+        "markIndex",
+        "onItemClick",
+        "index"
+      ]
+    },
+    {
+      "name": "QMUIDialogMsg",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
+      "concept": "dialog",
+      "props": [
+        "modal",
+        "title",
+        "content",
+        "actions"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
+      ],
+      "example": "QMUIDialogMsg(modal,",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:78",
+      "required": [
+        "modal",
+        "modal:QMUIModal",
+        "title",
+        "content",
+        "actions"
+      ]
+    },
+    {
+      "name": "QMUIDialogMutiCheckList",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
+      "concept": "checkbox",
+      "props": [
+        "modal",
+        "list",
+        "checked",
+        "disabled",
+        "disableAlpha",
+        "state",
+        "maxHeight",
+        "itemIndication",
+        "itemTextSize",
+        "itemTextColor",
+        "itemTextFontWeight",
+        "itemTextFontFamily",
+        "itemCheckNormalTint",
+        "itemCheckCheckedTint",
+        "contentPadding",
+        "onItemClick",
+        "index"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
+      ],
+      "example": "QMUIDialogMutiCheckList(",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:169",
+      "required": [
+        "modal",
+        "modal:QMUIModal",
+        "list",
+        "checked",
+        "onItemClick",
+        "index"
+      ]
+    },
+    {
+      "name": "QMUIDialogTitle",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
+      "concept": "dialog",
+      "props": [
+        "text",
+        "fontSize",
+        "textAlign",
+        "color",
+        "fontWeight",
+        "fontFamily",
+        "maxLines",
+        "lineHeight"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt"
+      ],
+      "example": "QMUIDialogTitle(title)",
+      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt:109",
+      "required": [
+        "text"
+      ]
+    },
+    {
+      "name": "QMUIEditor",
+      "kind": "composable",
+      "source": "editor/src/main/java/com/qmuiteam/editor/QMUIEditor.kt",
+      "props": [
+        "modifier",
+        "value",
+        "channel",
+        "hint",
+        "hintStyle",
+        "textStyle",
+        "focusRequester",
+        "cursorBrush",
+        "onValueChange"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt"
+      ],
+      "example": "QMUIEditor(",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:42",
+      "required": [
+        "value",
+        "value:TextFieldValue",
+        "channel",
+        "onValueChange"
+      ]
+    },
+    {
+      "name": "QMUIMarkIcon",
+      "kind": "composable",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUIIcon.kt",
+      "concept": "icon",
+      "props": [
+        "modifier",
+        "tint"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt"
+      ],
+      "example": "QMUIMarkIcon(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt:161"
+    },
+    {
+      "name": "QMUIPhotoBucketItem",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt",
+      "concept": "cell",
+      "props": [
+        "data",
+        "isCurrent",
+        "onBucketClick"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt"
+      ],
+      "example": "QMUIPhotoBucketItem(it, it.id == currentId, onBucketClick)",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt:87",
+      "required": [
+        "data",
+        "data:QMUIMediaPhotoBucketVO",
+        "isCurrent",
+        "onBucketClick"
+      ]
+    },
+    {
+      "name": "QMUIPhotoPickCheckBox",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
+      "concept": "checkbox",
+      "props": [
+        "pickIndex"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt"
+      ],
+      "example": "QMUIPhotoPickCheckBox(pickedIndex)",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt:163",
+      "required": [
+        "pickIndex"
+      ]
+    },
+    {
+      "name": "QMUIPhotoPickRadio",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
+      "concept": "radio",
+      "props": [
+        "checked",
+        "ratioSize",
+        "strokeWidthDp"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt"
+      ],
+      "example": "QMUIPhotoPickRadio(isOriginOpen)",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt:142",
+      "required": [
+        "checked"
+      ]
+    },
+    {
+      "name": "QMUIPhotoPickerBucketToggleArrow",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt",
+      "concept": "switch",
+      "props": [
+        "bgColor",
+        "iconColor",
+        "isFocusFlow"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt"
+      ],
+      "example": "QMUIPhotoPickerBucketToggleArrow(iconBgColor, iconColor, isFocusFlow)",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt:68",
+      "required": [
+        "bgColor",
+        "iconColor",
+        "isFocusFlow"
+      ]
+    },
+    {
+      "name": "QMUIPhotoPickerEdit",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt",
+      "props": [
+        "onBackPressedDispatcher",
+        "data",
+        "onBack"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
+      ],
+      "example": "QMUIPhotoPickerEdit(onBackPressedDispatcher, scene.current) {",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:569",
+      "required": [
+        "onBackPressedDispatcher",
+        "onBackPressedDispatcher:OnBackPressedDispatcher",
+        "data",
+        "data:QMUIMediaPhotoVO",
+        "onBack"
+      ]
+    },
+    {
+      "name": "QMUIPhotoPickerGrid",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
+      "props": [
+        "data",
+        "modifier",
+        "state",
+        "pickedItems",
+        "onPickItem",
+        "model",
+        "onPreview"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
+      ],
+      "example": "QMUIPhotoPickerGrid(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:372",
+      "required": [
+        "data",
+        "pickedItems",
+        "onPickItem",
+        "model",
+        "onPreview"
+      ]
+    },
+    {
+      "name": "QMUIPhotoPickerGridCellMask",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
+      "props": [
+        "pickedIndex"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt"
+      ],
+      "example": "QMUIPhotoPickerGridCellMask(pickedIndex)",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt:151",
+      "required": [
+        "pickedIndex"
+      ]
+    },
+    {
+      "name": "QMUIPhotoPickerGridToolBar",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
+      "concept": "navbar",
+      "props": [
+        "modifier",
+        "enableOrigin",
+        "pickedItems",
+        "isOriginOpenFlow",
+        "onToggleOrigin",
+        "onPreview"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
+      ],
+      "example": "QMUIPhotoPickerGridToolBar(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:391",
+      "required": [
+        "enableOrigin",
+        "pickedItems",
+        "isOriginOpenFlow",
+        "onToggleOrigin",
+        "onPreview"
+      ]
+    },
+    {
+      "name": "QMUIPhotoThumbnail",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt",
+      "props": [
+        "images",
+        "config",
+        "onClick",
+        "index"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt"
+      ],
+      "example": "QMUIPhotoThumbnail(images, config) { list, index -\u003e",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt:93",
+      "required": [
+        "images",
+        "onClick"
+      ]
+    },
+    {
+      "name": "TestImageCompress",
+      "kind": "composable",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt",
+      "concept": "image",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt"
+      ],
+      "example": "//                    TestImageCompress()",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt:93"
+    },
+    {
+      "name": "Compose",
+      "kind": "composable",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt",
+      "props": [
+        "topBarHeight",
+        "title",
+        "subTitle",
+        "alignTitleCenter",
+        "contentScale",
+        "isContainerDimenExactly",
+        "onSuccess",
+        "onError"
+      ],
+      "usage": 0,
+      "required": [
+        "topBarHeight",
+        "title",
+        "title:CharSequence",
+        "subTitle",
+        "subTitle:CharSequence",
+        "alignTitleCenter",
+        "contentScale",
+        "contentScale:ContentScale",
+        "isContainerDimenExactly",
+        "onSuccess",
+        "onError"
+      ]
+    },
+    {
+      "name": "QMUIChevronIcon",
+      "kind": "composable",
+      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUIIcon.kt",
+      "concept": "icon",
+      "props": [
+        "tint"
+      ],
+      "usage": 0
+    },
+    {
+      "name": "SwipeBackLayout",
+      "kind": "custom-view",
+      "source": "arch/src/main/java/com/qmuiteam/qmui/arch/SwipeBackLayout.java",
+      "props": [
+        "shadow_left",
+        "shadow_right",
+        "shadow_bottom",
+        "shadow_top"
+      ],
+      "usage": 78,
+      "usageFiles": [
+        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java",
+        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/base/BaseFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDAboutFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchNavFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchTestFragment.java"
+      ],
+      "example": "import static com.qmuiteam.qmui.arch.SwipeBackLayout.DRAG_DIRECTION_BOTTOM_TO_TOP;",
+      "exampleAt": "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java:37",
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "QMUICommonListItemView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUICommonListItemView.java",
+      "concept": "cell",
+      "props": [
+        "qmui_orientation",
+        "qmui_accessory_type",
+        "qmui_common_list_title_color",
+        "qmui_common_list_detail_color"
+      ],
+      "usage": 56,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDGroupListViewFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt"
+      ],
+      "example": "QMUICommonListItemView itemView = new QMUICommonListItemView(getContext());",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java:83",
+      "enums": {
+        "qmui_orientation": [
+          "none",
+          "chevron",
+          "switcher",
+          "custom"
+        ]
+      },
+      "extends": "QMUIConstraintLayout"
+    },
+    {
+      "name": "QMUIPullLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullLayout.java",
+      "props": [
+        "qmui_pull_enable_edge"
+      ],
+      "usage": 49,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_pull_refresh_and_load_more_test_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_pull_vertical_test_layout.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIAlwaysFollowOffsetCalculator.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUICenterOffsetCalculator.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIFixToTargetOffsetCalculator.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullLoadMoreView.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullRefreshView.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRecyclerViewDraggableScrollBarFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullHorizontalTestFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullRefreshAndLoadMoreTestFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullVerticalTestFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeDeleteWithNoActionFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeMutiActionFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeMutiActionOnlyIconFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeMutiActionWithIconFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeSingleDeleteActionFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeUpDeleteFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.pullLayout.QMUIPullLayout",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml:32",
+      "enums": {
+        "qmui_pull_enable_edge": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "extends": "FrameLayout"
     },
     {
       "name": "QMUITopBarLayout",
@@ -1094,689 +1763,291 @@
       "extends": "QMUIFrameLayout"
     },
     {
-      "name": "QMUIDialogMutiCheckList",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
-      "concept": "checkbox",
-      "props": [
-        "modal",
-        "list",
-        "checked",
-        "disabled",
-        "disableAlpha",
-        "state",
-        "maxHeight",
-        "itemIndication",
-        "itemTextSize",
-        "itemTextColor",
-        "itemTextFontWeight",
-        "itemTextFontFamily",
-        "itemCheckNormalTint",
-        "itemCheckCheckedTint",
-        "contentPadding",
-        "onItemClick",
-        "index"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
-      ],
-      "example": "QMUIDialogMutiCheckList(",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:169",
-      "required": [
-        "modal",
-        "modal:QMUIModal",
-        "list",
-        "checked",
-        "onItemClick",
-        "index"
-      ]
-    },
-    {
-      "name": "QMUIPhotoPickerGrid",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
-      "props": [
-        "data",
-        "modifier",
-        "state",
-        "pickedItems",
-        "onPickItem",
-        "model",
-        "onPreview"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
-      ],
-      "example": "QMUIPhotoPickerGrid(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:372",
-      "required": [
-        "data",
-        "pickedItems",
-        "onPickItem",
-        "model",
-        "onPreview"
-      ]
-    },
-    {
-      "name": "QMUIEditor",
-      "kind": "composable",
-      "source": "editor/src/main/java/com/qmuiteam/editor/QMUIEditor.kt",
-      "props": [
-        "modifier",
-        "value",
-        "channel",
-        "hint",
-        "hintStyle",
-        "textStyle",
-        "focusRequester",
-        "cursorBrush",
-        "onValueChange"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt"
-      ],
-      "example": "QMUIEditor(",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:42",
-      "required": [
-        "value",
-        "value:TextFieldValue",
-        "channel",
-        "onValueChange"
-      ]
-    },
-    {
-      "name": "SwipeBackLayout",
+      "name": "QMUIBottomSheet",
       "kind": "custom-view",
-      "source": "arch/src/main/java/com/qmuiteam/qmui/arch/SwipeBackLayout.java",
-      "props": [
-        "shadow_left",
-        "shadow_right",
-        "shadow_bottom",
-        "shadow_top"
-      ],
-      "usage": 78,
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java",
+      "concept": "sheet",
+      "usage": 38,
       "usageFiles": [
-        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java",
-        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/base/BaseFragment.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDBottomSheetFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDEmptyViewFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDFloatLayoutFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDPullRefreshFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageView2ScaleTypeFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageView2UsageFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewScaleTypeFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewUsageFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDTabSegment2FixModeFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDTabSegmentFixModeFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDBaseSectionLayoutFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchTestFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScrollBaseFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDSnapHelperFragment.java"
+      ],
+      "example": "mDialog = new QMUIBottomSheet(mContext, style);",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java:116",
+      "extends": "QMUIBaseDialog"
+    },
+    {
+      "name": "QMUIRoundButton",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/roundwidget/QMUIRoundButton.java",
+      "concept": "button",
+      "props": [
+        "qmui_backgroundColor",
+        "qmui_borderColor",
+        "qmui_borderWidth",
+        "qmui_isRadiusAdjustBounds",
+        "qmui_radius",
+        "qmui_radiusTopLeft",
+        "qmui_radiusTopRight",
+        "qmui_radiusBottomLeft",
+        "qmui_radiusBottomRight"
+      ],
+      "usage": 32,
+      "usageFiles": [
+        "qmui/src/main/res/layout/qmui_empty_view.xml",
+        "qmuidemo/src/main/res/layout/fragment_arch_test.xml",
+        "qmuidemo/src/main/res/layout/fragment_button.xml",
+        "qmuidemo/src/main/res/layout/fragment_drawablehelper.xml",
+        "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+        "qmuidemo/src/main/res/layout/fragment_popup.xml",
+        "qmuidemo/src/main/res/layout/fragment_progressbar.xml",
+        "qmuidemo/src/main/res/layout/fragment_scheme.xml",
+        "qmuidemo/src/main/res/layout/fragment_viewhelper_animation_show_and_hide.xml",
+        "qmuidemo/src/main/res/layout/fragment_viewhelper_background_animation.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabView.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton",
+      "exampleAt": "qmui/src/main/res/layout/qmui_empty_view.xml:75",
+      "styles": {
+        "QDRoundButtonStyle": 11,
+        "QMUI.RoundButton": 3
+      },
+      "extends": "QMUIAlphaButton"
+    },
+    {
+      "name": "QMUIQuickAction",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIQuickAction.java",
+      "usage": 31,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIPopups.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDPopupFragment.java"
+      ],
+      "example": "return new QMUIQuickAction(context, ViewGroup.LayoutParams.WRAP_CONTENT, actionHeight)",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIPopups.java:71",
+      "extends": "QMUINormalPopup"
+    },
+    {
+      "name": "QMUIGroupListView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java",
+      "concept": "card",
+      "usage": 29,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_about.xml",
+        "qmuidemo/src/main/res/layout/fragment_grouplistview.xml",
+        "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListSectionHeaderFooterView.java",
         "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDAboutFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchNavFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchTestFragment.java"
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDGroupListViewFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDTabSegmentFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFaceFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDSectionLayoutFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeActionFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/viewpager/QDViewPagerFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScrollFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDDeviceHelperFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDStatusBarHelperFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDViewHelperFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
       ],
-      "example": "import static com.qmuiteam.qmui.arch.SwipeBackLayout.DRAG_DIRECTION_BOTTOM_TO_TOP;",
-      "exampleAt": "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java:37",
-      "extends": "FrameLayout"
+      "example": "\u003ccom.qmuiteam.qmui.widget.grouplist.QMUIGroupListView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_about.xml:54",
+      "extends": "LinearLayout"
     },
     {
-      "name": "QMUIDialogTitle",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
-      "concept": "dialog",
-      "props": [
-        "text",
-        "fontSize",
-        "textAlign",
-        "color",
-        "fontWeight",
-        "fontFamily",
-        "maxLines",
-        "lineHeight"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt"
-      ],
-      "example": "QMUIDialogTitle(title)",
-      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt:109",
-      "required": [
-        "text"
-      ]
-    },
-    {
-      "name": "QMUICheckBox",
-      "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUIIcon.kt",
-      "concept": "checkbox",
-      "props": [
-        "size",
-        "status",
-        "isEnabled",
-        "tint",
-        "background"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt"
-      ],
-      "example": "QMUICheckBox(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt:170",
-      "required": [
-        "size",
-        "tint"
-      ]
-    },
-    {
-      "name": "QMUIMarkIcon",
-      "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUIIcon.kt",
-      "concept": "icon",
-      "props": [
-        "modifier",
-        "tint"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt"
-      ],
-      "example": "QMUIMarkIcon(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt:161"
-    },
-    {
-      "name": "QMUIModal",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIModal.kt",
-      "concept": "dialog",
-      "props": [
-        "isVisible",
-        "mask",
-        "enter",
-        "exit",
-        "systemCancellable",
-        "maskTouchBehavior",
-        "doOnShow",
-        "doOnDismiss",
-        "uniqueId",
-        "modalHostProvider",
-        "content"
-      ],
-      "usage": 0,
-      "required": [
-        "isVisible",
-        "content"
-      ]
-    },
-    {
-      "name": "QMUIPhotoPickerGridToolBar",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
-      "concept": "navbar",
-      "props": [
-        "modifier",
-        "enableOrigin",
-        "pickedItems",
-        "isOriginOpenFlow",
-        "onToggleOrigin",
-        "onPreview"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
-      ],
-      "example": "QMUIPhotoPickerGridToolBar(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:391",
-      "required": [
-        "enableOrigin",
-        "pickedItems",
-        "isOriginOpenFlow",
-        "onToggleOrigin",
-        "onPreview"
-      ]
-    },
-    {
-      "name": "QMUIDialogMsg",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
-      "concept": "dialog",
-      "props": [
-        "modal",
-        "title",
-        "content",
-        "actions"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
-      ],
-      "example": "QMUIDialogMsg(modal,",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:78",
-      "required": [
-        "modal",
-        "modal:QMUIModal",
-        "title",
-        "content",
-        "actions"
-      ]
-    },
-    {
-      "name": "QMUIChevronIcon",
-      "kind": "composable",
-      "source": "compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUIIcon.kt",
-      "concept": "icon",
-      "props": [
-        "tint"
-      ],
-      "usage": 0
-    },
-    {
-      "name": "TestImageCompress",
-      "kind": "composable",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt",
-      "concept": "image",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt"
-      ],
-      "example": "//                    TestImageCompress()",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt:93"
-    },
-    {
-      "name": "QMUIPullLayout",
+      "name": "QMUIWindowInsetLayout",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullLayout.java",
-      "props": [
-        "qmui_pull_enable_edge"
-      ],
-      "usage": 49,
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIWindowInsetLayout.java",
+      "usage": 26,
       "usageFiles": [
+        "qmuidemo/src/main/res/layout/activity_arch_test.xml",
+        "qmuidemo/src/main/res/layout/activity_translucent.xml",
+        "qmuidemo/src/main/res/layout/fragment_about.xml",
+        "qmuidemo/src/main/res/layout/fragment_arch_test.xml",
+        "qmuidemo/src/main/res/layout/fragment_button.xml",
+        "qmuidemo/src/main/res/layout/fragment_continuous_nested_scroll.xml",
+        "qmuidemo/src/main/res/layout/fragment_emptyview.xml",
+        "qmuidemo/src/main/res/layout/fragment_floatlayout.xml",
+        "qmuidemo/src/main/res/layout/fragment_grouplistview.xml",
+        "qmuidemo/src/main/res/layout/fragment_home.xml",
+        "qmuidemo/src/main/res/layout/fragment_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_listview.xml",
+        "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+        "qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_progressbar.xml",
+        "qmuidemo/src/main/res/layout/fragment_pull_refresh_listview.xml",
+        "qmuidemo/src/main/res/layout/fragment_radius_imageview.xml",
+        "qmuidemo/src/main/res/layout/fragment_radius_imageview2.xml",
+        "qmuidemo/src/main/res/layout/fragment_radius_imageview2_scale_type.xml",
+        "qmuidemo/src/main/res/layout/fragment_radius_imageview_scale_type.xml",
+        "qmuidemo/src/main/res/layout/fragment_section_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_slider.xml",
+        "qmuidemo/src/main/res/layout/fragment_surface_test.xml",
+        "qmuidemo/src/main/res/layout/fragment_tab_viewpager2_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_tab_viewpager_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "qmuidemo/src/main/res/layout/activity_arch_test.xml:18",
+      "extends": "QMUIFrameLayout"
+    },
+    {
+      "name": "QMUIQQFaceView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/qqface/QMUIQQFaceView.java",
+      "props": [
+        "qmui_special_drawable_padding",
+        "qmui_more_action_text",
+        "qmui_more_action_color",
+        "qmui_more_action_bg_color"
+      ],
+      "usage": 25,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUITopBar.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFaceFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDQQFacePagerView.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.qqface.QMUIQQFaceView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml:97",
+      "extends": "View"
+    },
+    {
+      "name": "QMUIPriorityLinearLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/layout/QMUIPriorityLinearLayout.java",
+      "props": [
+        "qmui_bottomDividerHeight",
+        "qmui_bottomDividerColor",
+        "qmui_bottomDividerInsetLeft",
+        "qmui_bottomDividerInsetRight",
+        "qmui_topDividerHeight",
+        "qmui_topDividerColor",
+        "qmui_topDividerInsetLeft",
+        "qmui_topDividerInsetRight",
+        "qmui_leftDividerWidth",
+        "qmui_leftDividerColor",
+        "qmui_leftDividerInsetTop",
+        "qmui_leftDividerInsetBottom",
+        "qmui_rightDividerWidth",
+        "qmui_rightDividerColor",
+        "qmui_rightDividerInsetTop",
+        "qmui_rightDividerInsetBottom",
+        "qmui_radius",
+        "qmui_borderColor",
+        "qmui_borderWidth",
+        "qmui_outerNormalColor",
+        "qmui_hideRadiusSide",
+        "qmui_showBorderOnlyBeforeL",
+        "qmui_shadowElevation",
+        "qmui_useThemeGeneralShadowElevation",
+        "qmui_shadowAlpha",
+        "qmui_outlineInsetTop",
+        "qmui_outlineInsetLeft",
+        "qmui_outlineInsetRight",
+        "qmui_outlineInsetBottom",
+        "qmui_outlineExcludePadding"
+      ],
+      "usage": 18,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDPriorityLinearLayoutFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.layout.QMUIPriorityLinearLayout",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:45",
+      "extends": "QMUILinearLayout"
+    },
+    {
+      "name": "QMUIWindowInsetLayout2",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIWindowInsetLayout2.java",
+      "usage": 16,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_animation_listview.xml",
+        "qmuidemo/src/main/res/layout/fragment_colorhelper.xml",
+        "qmuidemo/src/main/res/layout/fragment_drawablehelper.xml",
+        "qmuidemo/src/main/res/layout/fragment_link_texview_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_pagerlayoutmanager.xml",
+        "qmuidemo/src/main/res/layout/fragment_popup.xml",
         "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml",
         "qmuidemo/src/main/res/layout/fragment_pull_refresh_and_load_more_test_layout.xml",
         "qmuidemo/src/main/res/layout/fragment_pull_vertical_test_layout.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIAlwaysFollowOffsetCalculator.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUICenterOffsetCalculator.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIFixToTargetOffsetCalculator.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullLoadMoreView.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullRefreshView.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRecyclerViewDraggableScrollBarFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullHorizontalTestFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullRefreshAndLoadMoreTestFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullVerticalTestFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeDeleteWithNoActionFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeMutiActionFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeMutiActionOnlyIconFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeMutiActionWithIconFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeSingleDeleteActionFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeUpDeleteFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
+        "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_scheme.xml",
+        "qmuidemo/src/main/res/layout/fragment_spanhelper.xml",
+        "qmuidemo/src/main/res/layout/fragment_swipe_delete_listview.xml",
+        "qmuidemo/src/main/res/layout/fragment_touch_span_fix_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_viewhelper_animation_show_and_hide.xml",
+        "qmuidemo/src/main/res/layout/fragment_viewhelper_background_animation.xml"
       ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.pullLayout.QMUIPullLayout",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml:32",
-      "enums": {
-        "qmui_pull_enable_edge": [
-          "left",
-          "top",
-          "right",
-          "bottom"
-        ]
-      },
-      "extends": "FrameLayout"
-    },
-    {
-      "name": "QMUIPhotoPickerGridCellMask",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt",
-      "props": [
-        "pickedIndex"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt"
-      ],
-      "example": "QMUIPhotoPickerGridCellMask(pickedIndex)",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt:151",
-      "required": [
-        "pickedIndex"
-      ]
-    },
-    {
-      "name": "QMUIDefaultPickerConfigProvider",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt",
-      "props": [
-        "content"
-      ],
-      "usage": 0,
-      "required": [
-        "content"
-      ]
-    },
-    {
-      "name": "PhotoBackgroundWithTransition",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt",
-      "props": [
-        "backgroundTargetAlpha",
-        "transition",
-        "transitionDurationMs",
-        "content"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt"
-      ],
-      "example": "PhotoBackgroundWithTransition(backgroundTargetAlpha, transition, transitionDurationMs) {",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt:186",
-      "required": [
-        "backgroundTargetAlpha",
-        "transition",
-        "transitionDurationMs",
-        "content"
-      ]
-    },
-    {
-      "name": "QMUICommonListItemView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUICommonListItemView.java",
-      "concept": "cell",
-      "props": [
-        "qmui_orientation",
-        "qmui_accessory_type",
-        "qmui_common_list_title_color",
-        "qmui_common_list_detail_color"
-      ],
-      "usage": 56,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDGroupListViewFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt"
-      ],
-      "example": "QMUICommonListItemView itemView = new QMUICommonListItemView(getContext());",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java:83",
-      "enums": {
-        "qmui_orientation": [
-          "none",
-          "chevron",
-          "switcher",
-          "custom"
-        ]
-      },
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIWindowInsetLayout2 xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_animation_listview.xml:18",
       "extends": "QMUIConstraintLayout"
     },
     {
-      "name": "QMUIDialogMarkList",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt",
-      "concept": "dialog",
-      "props": [
-        "modal",
-        "list",
-        "markIndex",
-        "state",
-        "maxHeight",
-        "itemIndication",
-        "itemTextSize",
-        "itemTextColor",
-        "itemTextFontWeight",
-        "itemTextFontFamily",
-        "itemMarkTintColor",
-        "contentPadding",
-        "onItemClick",
-        "index"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
-      ],
-      "example": "QMUIDialogMarkList(",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:134",
-      "required": [
-        "modal",
-        "modal:QMUIModal",
-        "list",
-        "markIndex",
-        "onItemClick",
-        "index"
-      ]
-    },
-    {
-      "name": "QMUIPhotoPickRadio",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
-      "concept": "radio",
-      "props": [
-        "checked",
-        "ratioSize",
-        "strokeWidthDp"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt"
-      ],
-      "example": "QMUIPhotoPickRadio(isOriginOpen)",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt:142",
-      "required": [
-        "checked"
-      ]
-    },
-    {
-      "name": "QMUIPhotoPickCheckBox",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
-      "concept": "checkbox",
-      "props": [
-        "pickIndex"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt"
-      ],
-      "example": "QMUIPhotoPickCheckBox(pickedIndex)",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt:163",
-      "required": [
-        "pickIndex"
-      ]
-    },
-    {
-      "name": "QMUIPhotoPickerBucketToggleArrow",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt",
-      "concept": "switch",
-      "props": [
-        "bgColor",
-        "iconColor",
-        "isFocusFlow"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt"
-      ],
-      "example": "QMUIPhotoPickerBucketToggleArrow(iconBgColor, iconColor, isFocusFlow)",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/TopBarItem.kt:68",
-      "required": [
-        "bgColor",
-        "iconColor",
-        "isFocusFlow"
-      ]
-    },
-    {
-      "name": "QMUIPhotoThumbnail",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt",
-      "props": [
-        "images",
-        "config",
-        "onClick",
-        "index"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt"
-      ],
-      "example": "QMUIPhotoThumbnail(images, config) { list, index -\u003e",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt:93",
-      "required": [
-        "images",
-        "onClick"
-      ]
-    },
-    {
-      "name": "PickCurrentCheckButton",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Common.kt",
-      "concept": "button",
-      "props": [
-        "modifier",
-        "isPicked",
-        "onPicked"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt"
-      ],
-      "example": "PickCurrentCheckButton(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt:210",
-      "required": [
-        "isPicked",
-        "onPicked"
-      ]
-    },
-    {
-      "name": "QMUIPhotoPickerEdit",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Edit.kt",
-      "props": [
-        "onBackPressedDispatcher",
-        "data",
-        "onBack"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
-      ],
-      "example": "QMUIPhotoPickerEdit(onBackPressedDispatcher, scene.current) {",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:569",
-      "required": [
-        "onBackPressedDispatcher",
-        "onBackPressedDispatcher:OnBackPressedDispatcher",
-        "data",
-        "data:QMUIMediaPhotoVO",
-        "onBack"
-      ]
-    },
-    {
-      "name": "QDEditor",
-      "kind": "composable",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt"
-      ],
-      "example": "QDEditor()",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:100"
-    },
-    {
-      "name": "PickerResult",
-      "kind": "composable",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt"
-      ],
-      "example": "PickerResult()",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt:89"
-    },
-    {
-      "name": "QMUIBottomSheetList",
-      "kind": "composable",
-      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt",
-      "concept": "sheet",
-      "props": [
-        "modal",
-        "state",
-        "children"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt"
-      ],
-      "example": "QMUIBottomSheetList(it) {",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDDialogFragment.kt:217",
-      "required": [
-        "modal",
-        "modal:QMUIModal",
-        "children"
-      ]
-    },
-    {
-      "name": "QMUIPhotoBucketItem",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt",
-      "concept": "cell",
-      "props": [
-        "data",
-        "isCurrent",
-        "onBucketClick"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt"
-      ],
-      "example": "QMUIPhotoBucketItem(it, it.id == currentId, onBucketClick)",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt:87",
-      "required": [
-        "data",
-        "data:QMUIMediaPhotoBucketVO",
-        "isCurrent",
-        "onBucketClick"
-      ]
-    },
-    {
-      "name": "PhotoContentWithRectTransition",
-      "kind": "composable",
-      "source": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt",
-      "props": [
-        "imageWidth",
-        "imageHeight",
-        "initRect",
-        "scale",
-        "translateX",
-        "translateY",
-        "transition",
-        "transitionDurationMs",
-        "content",
-        "scaleY",
-        "translateX",
-        "translateY"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt"
-      ],
-      "example": "PhotoContentWithRectTransition(",
-      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt:396",
-      "required": [
-        "imageWidth",
-        "imageHeight",
-        "initRect",
-        "initRect:Rect",
-        "scale",
-        "translateX",
-        "translateY",
-        "transition",
-        "transitionDurationMs",
-        "content",
-        "scaleY",
-        "translateX",
-        "translateY"
-      ]
-    },
-    {
-      "name": "QMUIContinuousNestedTopDelegateLayout",
+      "name": "QMUISpanTouchFixTextView",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopDelegateLayout.java",
-      "usage": 4,
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/textview/QMUISpanTouchFixTextView.java",
+      "usage": 15,
       "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll5Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java"
+        "qmui/src/main/res/layout/qmui_empty_view.xml",
+        "qmuidemo/src/main/res/layout/fragment_touch_span_fix_layout.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUITopBar.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetGridItemView.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListItemView.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBlockBuilder.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogMenuItemView.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDSpanTouchFixTextViewFragment.java"
       ],
-      "example": "mTopDelegateLayout = new QMUIContinuousNestedTopDelegateLayout(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java:56",
-      "extends": "FrameLayout"
+      "example": "\u003ccom.qmuiteam.qmui.widget.textview.QMUISpanTouchFixTextView",
+      "exampleAt": "qmui/src/main/res/layout/qmui_empty_view.xml:36",
+      "styles": {
+        "QDCommonDescription": 2
+      },
+      "extends": "AppCompatTextView"
+    },
+    {
+      "name": "QMUIPopup",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIPopup.java",
+      "concept": "popup",
+      "usage": 14,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIPopups.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/QDMainActivity.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDPopupFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
+      ],
+      "example": "return new QMUIPopup(context,",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIPopups.java:30",
+      "extends": "QMUINormalPopup"
     },
     {
       "name": "QMUITipDialog",
@@ -1846,173 +2117,6 @@
       "extends": "QMUIAlphaFrameLayout"
     },
     {
-      "name": "QMUIRadiusImageView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIRadiusImageView.java",
-      "concept": "image",
-      "props": [
-        "qmui_border_width",
-        "qmui_border_color",
-        "qmui_selected_mask_color",
-        "qmui_selected_border_color",
-        "qmui_selected_border_width",
-        "qmui_corner_radius",
-        "qmui_is_oval",
-        "qmui_is_circle",
-        "qmui_is_touch_select_mode_enabled"
-      ],
-      "usage": 7,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_radius_imageview.xml",
-        "qmuidemo/src/main/res/layout/fragment_radius_imageview_scale_type.xml",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIRadiusImageView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_radius_imageview.xml:42",
-      "extends": "AppCompatImageView"
-    },
-    {
-      "name": "QMUIPriorityLinearLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/layout/QMUIPriorityLinearLayout.java",
-      "props": [
-        "qmui_bottomDividerHeight",
-        "qmui_bottomDividerColor",
-        "qmui_bottomDividerInsetLeft",
-        "qmui_bottomDividerInsetRight",
-        "qmui_topDividerHeight",
-        "qmui_topDividerColor",
-        "qmui_topDividerInsetLeft",
-        "qmui_topDividerInsetRight",
-        "qmui_leftDividerWidth",
-        "qmui_leftDividerColor",
-        "qmui_leftDividerInsetTop",
-        "qmui_leftDividerInsetBottom",
-        "qmui_rightDividerWidth",
-        "qmui_rightDividerColor",
-        "qmui_rightDividerInsetTop",
-        "qmui_rightDividerInsetBottom",
-        "qmui_radius",
-        "qmui_borderColor",
-        "qmui_borderWidth",
-        "qmui_outerNormalColor",
-        "qmui_hideRadiusSide",
-        "qmui_showBorderOnlyBeforeL",
-        "qmui_shadowElevation",
-        "qmui_useThemeGeneralShadowElevation",
-        "qmui_shadowAlpha",
-        "qmui_outlineInsetTop",
-        "qmui_outlineInsetLeft",
-        "qmui_outlineInsetRight",
-        "qmui_outlineInsetBottom",
-        "qmui_outlineExcludePadding"
-      ],
-      "usage": 18,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDPriorityLinearLayoutFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.layout.QMUIPriorityLinearLayout",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:45",
-      "extends": "QMUILinearLayout"
-    },
-    {
-      "name": "QMUILinkTextView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/textview/QMUILinkTextView.java",
-      "props": [
-        "qmui_linkBackgroundColor",
-        "qmui_linkTextColor"
-      ],
-      "usage": 5,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_link_texview_layout.xml",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLinkTextViewFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.textview.QMUILinkTextView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_link_texview_layout.xml:49",
-      "styles": {
-        "QDCommonDescription": 1
-      },
-      "extends": "QMUIAlphaTextView"
-    },
-    {
-      "name": "QMUIContinuousNestedBottomRecyclerView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedBottomRecyclerView.java",
-      "concept": "list",
-      "usage": 6,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll1Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll5Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll6Fragment.java"
-      ],
-      "example": "QMUIContinuousNestedBottomRecyclerView recyclerView = new QMUIContinuousNestedBottomRecyclerView(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java:96",
-      "extends": "RecyclerView"
-    },
-    {
-      "name": "QMUISpanTouchFixTextView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/textview/QMUISpanTouchFixTextView.java",
-      "usage": 15,
-      "usageFiles": [
-        "qmui/src/main/res/layout/qmui_empty_view.xml",
-        "qmuidemo/src/main/res/layout/fragment_touch_span_fix_layout.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUITopBar.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetGridItemView.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListItemView.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBlockBuilder.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogMenuItemView.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDSpanTouchFixTextViewFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.textview.QMUISpanTouchFixTextView",
-      "exampleAt": "qmui/src/main/res/layout/qmui_empty_view.xml:36",
-      "styles": {
-        "QDCommonDescription": 2
-      },
-      "extends": "AppCompatTextView"
-    },
-    {
-      "name": "QMUIBasicTabSegment",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUIBasicTabSegment.java",
-      "concept": "tabs",
-      "usage": 4,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabSegment.java"
-      ],
-      "example": "* Please use QMUIBasicTabSegment.OnTabClickListener for a replacement",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabSegment.java:307",
-      "extends": "HorizontalScrollView"
-    },
-    {
-      "name": "QMUIWebView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebView.java",
-      "usage": 7,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebViewContainer.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewBridgeFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFixFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFragment.java"
-      ],
-      "example": "private QMUIWebView.OnScrollChangeListener mOnScrollChangeListener;",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebViewContainer.java:34",
-      "extends": "WebView"
-    },
-    {
       "name": "QMUIPullRefreshLayout",
       "kind": "custom-view",
       "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/pullRefreshLayout/QMUIPullRefreshLayout.java",
@@ -2043,77 +2147,24 @@
       "extends": "ViewGroup"
     },
     {
-      "name": "QMUIAnimationListView",
+      "name": "QMUIDialog",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIAnimationListView.java",
-      "concept": "list",
-      "usage": 4,
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java",
+      "concept": "dialog",
+      "usage": 10,
       "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_animation_listview.xml",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDAnimationListViewFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIAnimationListView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_animation_listview.xml:32",
-      "extends": "ListView"
-    },
-    {
-      "name": "QMUIGroupListView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java",
-      "concept": "card",
-      "usage": 29,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_about.xml",
-        "qmuidemo/src/main/res/layout/fragment_grouplistview.xml",
-        "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListSectionHeaderFooterView.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDAboutFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDGroupListViewFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDTabSegmentFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/pullLayout/QDPullFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFaceFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDSectionLayoutFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/swipeAction/QDRVSwipeActionFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/viewpager/QDViewPagerFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScrollFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDDeviceHelperFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDStatusBarHelperFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDViewHelperFragment.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/QDMainActivity.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchTestFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewBridgeFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFixFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDDrawableHelperFragment.java",
         "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
       ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.grouplist.QMUIGroupListView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_about.xml:54",
-      "extends": "LinearLayout"
-    },
-    {
-      "name": "QMUIWindowInsetLayout2",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIWindowInsetLayout2.java",
-      "usage": 16,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_animation_listview.xml",
-        "qmuidemo/src/main/res/layout/fragment_colorhelper.xml",
-        "qmuidemo/src/main/res/layout/fragment_drawablehelper.xml",
-        "qmuidemo/src/main/res/layout/fragment_link_texview_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_pagerlayoutmanager.xml",
-        "qmuidemo/src/main/res/layout/fragment_popup.xml",
-        "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_pull_refresh_and_load_more_test_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_pull_vertical_test_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_scheme.xml",
-        "qmuidemo/src/main/res/layout/fragment_spanhelper.xml",
-        "qmuidemo/src/main/res/layout/fragment_swipe_delete_listview.xml",
-        "qmuidemo/src/main/res/layout/fragment_touch_span_fix_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_viewhelper_animation_show_and_hide.xml",
-        "qmuidemo/src/main/res/layout/fragment_viewhelper_background_animation.xml"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIWindowInsetLayout2 xmlns:android=\"http://schemas.android.com/apk/res/android\"",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_animation_listview.xml:18",
-      "extends": "QMUIConstraintLayout"
+      "example": "mDialog = new QMUIDialog(mContext, style);",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:343",
+      "extends": "QMUIBaseDialog"
     },
     {
       "name": "QMUILinearLayout",
@@ -2167,127 +2218,30 @@
       "extends": "QMUIAlphaLinearLayout"
     },
     {
-      "name": "QMUIContinuousNestedTopWebView",
+      "name": "QMUIRadiusImageView",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopWebView.java",
-      "usage": 4,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll1Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll5Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java"
-      ],
-      "example": "mNestedWebView = new QMUIContinuousNestedTopWebView(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll1Fragment.java:65",
-      "extends": "QMUIWebView"
-    },
-    {
-      "name": "QMUIDialogMenuItemView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogMenuItemView.java",
-      "concept": "dialog",
-      "usage": 5,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java"
-      ],
-      "example": "itemView.setListener(new QMUIDialogMenuItemView.MenuItemViewListener() {",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java:494",
-      "extends": "QMUIConstraintLayout"
-    },
-    {
-      "name": "QMUIDialog",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java",
-      "concept": "dialog",
-      "usage": 10,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/QDMainActivity.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDArchTestFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewBridgeFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFixFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/util/QDDrawableHelperFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
-      ],
-      "example": "mDialog = new QMUIDialog(mContext, style);",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:343",
-      "extends": "QMUIBaseDialog"
-    },
-    {
-      "name": "QMUIRoundButton",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/roundwidget/QMUIRoundButton.java",
-      "concept": "button",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIRadiusImageView.java",
+      "concept": "image",
       "props": [
-        "qmui_backgroundColor",
-        "qmui_borderColor",
-        "qmui_borderWidth",
-        "qmui_isRadiusAdjustBounds",
-        "qmui_radius",
-        "qmui_radiusTopLeft",
-        "qmui_radiusTopRight",
-        "qmui_radiusBottomLeft",
-        "qmui_radiusBottomRight"
+        "qmui_border_width",
+        "qmui_border_color",
+        "qmui_selected_mask_color",
+        "qmui_selected_border_color",
+        "qmui_selected_border_width",
+        "qmui_corner_radius",
+        "qmui_is_oval",
+        "qmui_is_circle",
+        "qmui_is_touch_select_mode_enabled"
       ],
-      "usage": 32,
+      "usage": 7,
       "usageFiles": [
-        "qmui/src/main/res/layout/qmui_empty_view.xml",
-        "qmuidemo/src/main/res/layout/fragment_arch_test.xml",
-        "qmuidemo/src/main/res/layout/fragment_button.xml",
-        "qmuidemo/src/main/res/layout/fragment_drawablehelper.xml",
-        "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
-        "qmuidemo/src/main/res/layout/fragment_popup.xml",
-        "qmuidemo/src/main/res/layout/fragment_progressbar.xml",
-        "qmuidemo/src/main/res/layout/fragment_scheme.xml",
-        "qmuidemo/src/main/res/layout/fragment_viewhelper_animation_show_and_hide.xml",
-        "qmuidemo/src/main/res/layout/fragment_viewhelper_background_animation.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabView.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton",
-      "exampleAt": "qmui/src/main/res/layout/qmui_empty_view.xml:75",
-      "styles": {
-        "QDRoundButtonStyle": 11,
-        "QMUI.RoundButton": 3
-      },
-      "extends": "QMUIAlphaButton"
-    },
-    {
-      "name": "QMUIWindowInsetLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIWindowInsetLayout.java",
-      "usage": 26,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/activity_arch_test.xml",
-        "qmuidemo/src/main/res/layout/activity_translucent.xml",
-        "qmuidemo/src/main/res/layout/fragment_about.xml",
-        "qmuidemo/src/main/res/layout/fragment_arch_test.xml",
-        "qmuidemo/src/main/res/layout/fragment_button.xml",
-        "qmuidemo/src/main/res/layout/fragment_continuous_nested_scroll.xml",
-        "qmuidemo/src/main/res/layout/fragment_emptyview.xml",
-        "qmuidemo/src/main/res/layout/fragment_floatlayout.xml",
-        "qmuidemo/src/main/res/layout/fragment_grouplistview.xml",
-        "qmuidemo/src/main/res/layout/fragment_home.xml",
-        "qmuidemo/src/main/res/layout/fragment_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_listview.xml",
-        "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
-        "qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_progressbar.xml",
-        "qmuidemo/src/main/res/layout/fragment_pull_refresh_listview.xml",
         "qmuidemo/src/main/res/layout/fragment_radius_imageview.xml",
-        "qmuidemo/src/main/res/layout/fragment_radius_imageview2.xml",
-        "qmuidemo/src/main/res/layout/fragment_radius_imageview2_scale_type.xml",
         "qmuidemo/src/main/res/layout/fragment_radius_imageview_scale_type.xml",
-        "qmuidemo/src/main/res/layout/fragment_section_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_slider.xml",
-        "qmuidemo/src/main/res/layout/fragment_surface_test.xml",
-        "qmuidemo/src/main/res/layout/fragment_tab_viewpager2_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_tab_viewpager_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml"
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDRadiusImageViewFragment.java"
       ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"",
-      "exampleAt": "qmuidemo/src/main/res/layout/activity_arch_test.xml:18",
-      "extends": "QMUIFrameLayout"
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIRadiusImageView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_radius_imageview.xml:42",
+      "extends": "AppCompatImageView"
     },
     {
       "name": "QMUIRadiusImageView2",
@@ -2314,6 +2268,40 @@
       "example": "\u003ccom.qmuiteam.qmui.widget.QMUIRadiusImageView2",
       "exampleAt": "qmuidemo/src/main/res/layout/fragment_radius_imageview2.xml:42",
       "extends": "AppCompatImageView"
+    },
+    {
+      "name": "QMUIWebView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebView.java",
+      "usage": 7,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebViewContainer.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewBridgeFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFixFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDWebViewFragment.java"
+      ],
+      "example": "private QMUIWebView.OnScrollChangeListener mOnScrollChangeListener;",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebViewContainer.java:34",
+      "extends": "WebView"
+    },
+    {
+      "name": "QMUIContinuousNestedBottomRecyclerView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedBottomRecyclerView.java",
+      "concept": "list",
+      "usage": 6,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll1Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll5Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll6Fragment.java"
+      ],
+      "example": "QMUIContinuousNestedBottomRecyclerView recyclerView = new QMUIContinuousNestedBottomRecyclerView(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java:96",
+      "extends": "RecyclerView"
     },
     {
       "name": "QMUIProgressBar",
@@ -2346,121 +2334,6 @@
         ]
       },
       "extends": "View"
-    },
-    {
-      "name": "QMUIQQFaceView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/qqface/QMUIQQFaceView.java",
-      "props": [
-        "qmui_special_drawable_padding",
-        "qmui_more_action_text",
-        "qmui_more_action_color",
-        "qmui_more_action_bg_color"
-      ],
-      "usage": 25,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUITopBar.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFaceFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDQQFacePagerView.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/manager/UpgradeTipTask.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.qqface.QMUIQQFaceView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml:97",
-      "extends": "View"
-    },
-    {
-      "name": "QMUIContinuousNestedTopRecyclerView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopRecyclerView.java",
-      "concept": "list",
-      "usage": 4,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java"
-      ],
-      "example": "mTopRecyclerView = new QMUIContinuousNestedTopRecyclerView(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java:51",
-      "extends": "RecyclerView"
-    },
-    {
-      "name": "QMUIVerticalTextView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIVerticalTextView.java",
-      "usage": 5,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml",
-        "qmuidemo/src/main/res/layout/fragment_verticaltextview.xml",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDVerticalTextViewFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIVerticalTextView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml:48",
-      "extends": "AppCompatTextView"
-    },
-    {
-      "name": "QMUISlider",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUISlider.java",
-      "props": [
-        "qmui_slider_bar_height",
-        "qmui_slider_bar_normal_color",
-        "qmui_slider_bar_progress_color",
-        "qmui_slider_bar_record_progress_color",
-        "qmui_slider_bar_tick_count",
-        "qmui_slider_bar_thumb_size",
-        "qmui_slider_bar_thumb_style_attr",
-        "qmui_slider_bar_use_clip_children_by_developer",
-        "qmui_slider_bar_padding_hor_for_thumb_shadow",
-        "qmui_slider_bar_padding_ver_for_thumb_shadow",
-        "qmui_slider_bar_constraint_thumb_in_moving"
-      ],
-      "usage": 5,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_slider.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/skin/handler/QMUISkinRuleBorderHandler.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDSliderFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUISlider",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_slider.xml:35",
-      "extends": "FrameLayout"
-    },
-    {
-      "name": "QMUILoadingView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUILoadingView.java",
-      "concept": "loading",
-      "props": [
-        "qmui_loading_view_size"
-      ],
-      "usage": 5,
-      "usageFiles": [
-        "qmui/src/main/res/layout/qmui_empty_view.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullLoadMoreView.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDGroupListViewFragment.kt",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDLoadingItemView.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUILoadingView",
-      "exampleAt": "qmui/src/main/res/layout/qmui_empty_view.xml:22",
-      "extends": "View"
-    },
-    {
-      "name": "QMUIContinuousNestedScrollLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedScrollLayout.java",
-      "usage": 5,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_continuous_nested_scroll.xml",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScrollFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.nestedScroll.QMUIContinuousNestedScrollLayout",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_continuous_nested_scroll.xml:31",
-      "extends": "CoordinatorLayout"
     },
     {
       "name": "QMUITopBar",
@@ -2507,6 +2380,188 @@
       "extends": "QMUIRelativeLayout"
     },
     {
+      "name": "QMUIContinuousNestedScrollLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedScrollLayout.java",
+      "usage": 5,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_continuous_nested_scroll.xml",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScrollFragment.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.nestedScroll.QMUIContinuousNestedScrollLayout",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_continuous_nested_scroll.xml:31",
+      "extends": "CoordinatorLayout"
+    },
+    {
+      "name": "QMUIDialogMenuItemView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogMenuItemView.java",
+      "concept": "dialog",
+      "usage": 5,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java"
+      ],
+      "example": "itemView.setListener(new QMUIDialogMenuItemView.MenuItemViewListener() {",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java:494",
+      "extends": "QMUIConstraintLayout"
+    },
+    {
+      "name": "QMUILinkTextView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/textview/QMUILinkTextView.java",
+      "props": [
+        "qmui_linkBackgroundColor",
+        "qmui_linkTextColor"
+      ],
+      "usage": 5,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_link_texview_layout.xml",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLinkTextViewFragment.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.textview.QMUILinkTextView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_link_texview_layout.xml:49",
+      "styles": {
+        "QDCommonDescription": 1
+      },
+      "extends": "QMUIAlphaTextView"
+    },
+    {
+      "name": "QMUILoadingView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUILoadingView.java",
+      "concept": "loading",
+      "props": [
+        "qmui_loading_view_size"
+      ],
+      "usage": 5,
+      "usageFiles": [
+        "qmui/src/main/res/layout/qmui_empty_view.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullLoadMoreView.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDGroupListViewFragment.kt",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDLoadingItemView.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUILoadingView",
+      "exampleAt": "qmui/src/main/res/layout/qmui_empty_view.xml:22",
+      "extends": "View"
+    },
+    {
+      "name": "QMUISlider",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUISlider.java",
+      "props": [
+        "qmui_slider_bar_height",
+        "qmui_slider_bar_normal_color",
+        "qmui_slider_bar_progress_color",
+        "qmui_slider_bar_record_progress_color",
+        "qmui_slider_bar_tick_count",
+        "qmui_slider_bar_thumb_size",
+        "qmui_slider_bar_thumb_style_attr",
+        "qmui_slider_bar_use_clip_children_by_developer",
+        "qmui_slider_bar_padding_hor_for_thumb_shadow",
+        "qmui_slider_bar_padding_ver_for_thumb_shadow",
+        "qmui_slider_bar_constraint_thumb_in_moving"
+      ],
+      "usage": 5,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_slider.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/skin/handler/QMUISkinRuleBorderHandler.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDSliderFragment.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUISlider",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_slider.xml:35",
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "QMUIVerticalTextView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIVerticalTextView.java",
+      "usage": 5,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml",
+        "qmuidemo/src/main/res/layout/fragment_verticaltextview.xml",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDVerticalTextViewFragment.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIVerticalTextView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml:48",
+      "extends": "AppCompatTextView"
+    },
+    {
+      "name": "QMUIAnimationListView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIAnimationListView.java",
+      "concept": "list",
+      "usage": 4,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_animation_listview.xml",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDAnimationListViewFragment.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIAnimationListView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_animation_listview.xml:32",
+      "extends": "ListView"
+    },
+    {
+      "name": "QMUIBasicTabSegment",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUIBasicTabSegment.java",
+      "concept": "tabs",
+      "usage": 4,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabSegment.java"
+      ],
+      "example": "* Please use QMUIBasicTabSegment.OnTabClickListener for a replacement",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabSegment.java:307",
+      "extends": "HorizontalScrollView"
+    },
+    {
+      "name": "QMUIContinuousNestedTopDelegateLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopDelegateLayout.java",
+      "usage": 4,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll5Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java"
+      ],
+      "example": "mTopDelegateLayout = new QMUIContinuousNestedTopDelegateLayout(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java:56",
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "QMUIContinuousNestedTopRecyclerView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopRecyclerView.java",
+      "concept": "list",
+      "usage": 4,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java"
+      ],
+      "example": "mTopRecyclerView = new QMUIContinuousNestedTopRecyclerView(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java:51",
+      "extends": "RecyclerView"
+    },
+    {
+      "name": "QMUIContinuousNestedTopWebView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopWebView.java",
+      "usage": 4,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll1Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll5Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java"
+      ],
+      "example": "mNestedWebView = new QMUIContinuousNestedTopWebView(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll1Fragment.java:65",
+      "extends": "QMUIWebView"
+    },
+    {
       "name": "QMUIFloatLayout",
       "kind": "custom-view",
       "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIFloatLayout.java",
@@ -2527,18 +2582,44 @@
       "extends": "ViewGroup"
     },
     {
-      "name": "QMUIStickySectionLayout",
+      "name": "EmojiEditText",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/section/QMUIStickySectionLayout.java",
+      "source": "type/src/main/java/com/qmuiteam/qmui/type/view/EmojiEditText.kt",
+      "concept": "input",
       "usage": 3,
       "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_section_layout.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/recyclerView/QMUIRVDraggableScrollBar.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDSectionLayoutFragment.java"
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEmojiInputFragment.kt",
+        "type/src/main/java/com/qmuiteam/qmui/type/emoji/EmojiSpan.kt"
       ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.section.QMUIStickySectionLayout",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_section_layout.xml:34",
-      "extends": "QMUIFrameLayout"
+      "example": "val editText = EmojiEditText(context).apply {",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEmojiInputFragment.kt:38",
+      "extends": "AppCompatEditText"
+    },
+    {
+      "name": "QDContinuousBottomView",
+      "kind": "custom-view",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java",
+      "usage": 3,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java"
+      ],
+      "example": "mBottomView = new QDContinuousBottomView(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java:48",
+      "extends": "QMUIContinuousNestedBottomDelegateLayout"
+    },
+    {
+      "name": "QMUIBottomSheetGridLineLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetGridLineLayout.java",
+      "usage": 3,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java"
+      ],
+      "example": "private QMUIBottomSheetGridLineLayout.ItemWidthCalculator mItemWidthCalculator = null;",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java:521",
+      "extends": "LinearLayout"
     },
     {
       "name": "QMUICollapsingTopBarLayout",
@@ -2612,91 +2693,18 @@
       "extends": "QMUIConstraintLayout"
     },
     {
-      "name": "QDContinuousBottomView",
+      "name": "QMUIStickySectionLayout",
       "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/section/QMUIStickySectionLayout.java",
       "usage": 3,
       "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll7Fragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll8Fragment.java"
+        "qmuidemo/src/main/res/layout/fragment_section_layout.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/recyclerView/QMUIRVDraggableScrollBar.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDSectionLayoutFragment.java"
       ],
-      "example": "mBottomView = new QDContinuousBottomView(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java:48",
-      "extends": "QMUIContinuousNestedBottomDelegateLayout"
-    },
-    {
-      "name": "QMUIBottomSheetGridLineLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetGridLineLayout.java",
-      "usage": 3,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java"
-      ],
-      "example": "private QMUIBottomSheetGridLineLayout.ItemWidthCalculator mItemWidthCalculator = null;",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java:521",
-      "extends": "LinearLayout"
-    },
-    {
-      "name": "EmojiEditText",
-      "kind": "custom-view",
-      "source": "type/src/main/java/com/qmuiteam/qmui/type/view/EmojiEditText.kt",
-      "concept": "input",
-      "usage": 3,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEmojiInputFragment.kt",
-        "type/src/main/java/com/qmuiteam/qmui/type/emoji/EmojiSpan.kt"
-      ],
-      "example": "val editText = EmojiEditText(context).apply {",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEmojiInputFragment.kt:38",
-      "extends": "AppCompatEditText"
-    },
-    {
-      "name": "SwipeBackgroundView",
-      "kind": "custom-view",
-      "source": "arch/src/main/java/com/qmuiteam/qmui/arch/SwipeBackgroundView.java",
-      "concept": "carousel",
-      "usage": 2,
-      "usageFiles": [
-        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java",
-        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIFragment.java"
-      ],
-      "example": "mSwipeBackgroundView = new SwipeBackgroundView(QMUIActivity.this, forceDisableHardwareAcceleratedForSwipeBackground());",
-      "exampleAt": "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java:99",
-      "extends": "View"
-    },
-    {
-      "name": "QMUITipDialogView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialogView.java",
-      "concept": "toast",
-      "usage": 2,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java"
-      ],
-      "example": "QMUITipDialogView dialogView = new QMUITipDialogView(dialogContext);",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java:159",
-      "extends": "QMUILinearLayout"
-    },
-    {
-      "name": "QMUIEmptyView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIEmptyView.java",
-      "concept": "empty",
-      "props": [
-        "qmui_show_loading",
-        "qmui_title_text",
-        "qmui_detail_text",
-        "qmui_btn_text"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_emptyview.xml",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDEmptyViewFragment.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIEmptyView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_emptyview.xml:23",
-      "extends": "ConstraintLayout"
+      "example": "\u003ccom.qmuiteam.qmui.widget.section.QMUIStickySectionLayout",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_section_layout.xml:34",
+      "extends": "QMUIFrameLayout"
     },
     {
       "name": "EmojiLayout",
@@ -2711,86 +2719,28 @@
       "extends": "ConstraintLayout"
     },
     {
-      "name": "QMUITabView",
+      "name": "EmojiconTextView",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabView.java",
-      "concept": "tabs",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/emojicon/EmojiconTextView.java",
       "usage": 2,
       "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabAdapter.java"
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDEmojiconPagerView.java"
       ],
-      "example": "public class QMUITabAdapter extends QMUIItemViewsAdapter\u003cQMUITab, QMUITabView\u003e implements QMUITabView.Callback {",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabAdapter.java:23",
-      "extends": "FrameLayout"
+      "example": "EmojiconTextView(1);",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java:153",
+      "extends": "QMUISpanTouchFixTextView"
     },
     {
-      "name": "QMUIDialogRootLayout",
+      "name": "HomeController",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogRootLayout.java",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/home/HomeController.java",
       "usage": 2,
       "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java"
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/home/HomeFragment.java"
       ],
-      "example": "mRootView = new QMUIDialogRootLayout(dialogContext, mDialogView, onCreateDialogLayoutParams());",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:347",
-      "extends": "ViewGroup"
-    },
-    {
-      "name": "QMUIConstraintLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/layout/QMUIConstraintLayout.java",
-      "props": [
-        "qmui_bottomDividerHeight",
-        "qmui_bottomDividerColor",
-        "qmui_bottomDividerInsetLeft",
-        "qmui_bottomDividerInsetRight",
-        "qmui_topDividerHeight",
-        "qmui_topDividerColor",
-        "qmui_topDividerInsetLeft",
-        "qmui_topDividerInsetRight",
-        "qmui_leftDividerWidth",
-        "qmui_leftDividerColor",
-        "qmui_leftDividerInsetTop",
-        "qmui_leftDividerInsetBottom",
-        "qmui_rightDividerWidth",
-        "qmui_rightDividerColor",
-        "qmui_rightDividerInsetTop",
-        "qmui_rightDividerInsetBottom",
-        "qmui_radius",
-        "qmui_borderColor",
-        "qmui_borderWidth",
-        "qmui_outerNormalColor",
-        "qmui_hideRadiusSide",
-        "qmui_showBorderOnlyBeforeL",
-        "qmui_shadowElevation",
-        "qmui_useThemeGeneralShadowElevation",
-        "qmui_shadowAlpha",
-        "qmui_outlineInsetTop",
-        "qmui_outlineInsetLeft",
-        "qmui_outlineInsetRight",
-        "qmui_outlineInsetBottom",
-        "qmui_outlineExcludePadding"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_verticaltextview.xml",
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.layout.QMUIConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_verticaltextview.xml:18",
-      "extends": "QMUIAlphaConstraintLayout"
-    },
-    {
-      "name": "QMUIGroupListSectionHeaderFooterView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListSectionHeaderFooterView.java",
-      "concept": "navbar",
-      "usage": 2,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java"
-      ],
-      "example": "return new QMUIGroupListSectionHeaderFooterView(mContext, titleText);",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java:359",
+      "example": "HomeController.HomeControlListener listener = new HomeController.HomeControlListener() {",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/home/HomeFragment.java:181",
       "extends": "LinearLayout"
     },
     {
@@ -2810,18 +2760,6 @@
       "example": "QMUIAlphaImageButton imageButton = new QMUIAlphaImageButton(getContext());",
       "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUITopBar.java:656",
       "extends": "AppCompatImageButton"
-    },
-    {
-      "name": "HomeController",
-      "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/home/HomeController.java",
-      "usage": 2,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/home/HomeFragment.java"
-      ],
-      "example": "HomeController.HomeControlListener listener = new HomeController.HomeControlListener() {",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/home/HomeFragment.java:181",
-      "extends": "LinearLayout"
     },
     {
       "name": "QMUIButton",
@@ -2870,17 +2808,146 @@
       "extends": "QMUIAlphaButton"
     },
     {
-      "name": "EmojiconTextView",
+      "name": "QMUIConstraintLayout",
       "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/emojicon/EmojiconTextView.java",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/layout/QMUIConstraintLayout.java",
+      "props": [
+        "qmui_bottomDividerHeight",
+        "qmui_bottomDividerColor",
+        "qmui_bottomDividerInsetLeft",
+        "qmui_bottomDividerInsetRight",
+        "qmui_topDividerHeight",
+        "qmui_topDividerColor",
+        "qmui_topDividerInsetLeft",
+        "qmui_topDividerInsetRight",
+        "qmui_leftDividerWidth",
+        "qmui_leftDividerColor",
+        "qmui_leftDividerInsetTop",
+        "qmui_leftDividerInsetBottom",
+        "qmui_rightDividerWidth",
+        "qmui_rightDividerColor",
+        "qmui_rightDividerInsetTop",
+        "qmui_rightDividerInsetBottom",
+        "qmui_radius",
+        "qmui_borderColor",
+        "qmui_borderWidth",
+        "qmui_outerNormalColor",
+        "qmui_hideRadiusSide",
+        "qmui_showBorderOnlyBeforeL",
+        "qmui_shadowElevation",
+        "qmui_useThemeGeneralShadowElevation",
+        "qmui_shadowAlpha",
+        "qmui_outlineInsetTop",
+        "qmui_outlineInsetLeft",
+        "qmui_outlineInsetRight",
+        "qmui_outlineInsetBottom",
+        "qmui_outlineExcludePadding"
+      ],
       "usage": 2,
       "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDEmojiconPagerView.java"
+        "qmuidemo/src/main/res/layout/fragment_verticaltextview.xml",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java"
       ],
-      "example": "EmojiconTextView(1);",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java:153",
-      "extends": "QMUISpanTouchFixTextView"
+      "example": "\u003ccom.qmuiteam.qmui.layout.QMUIConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_verticaltextview.xml:18",
+      "extends": "QMUIAlphaConstraintLayout"
+    },
+    {
+      "name": "QMUIDialogRootLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogRootLayout.java",
+      "usage": 2,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java"
+      ],
+      "example": "mRootView = new QMUIDialogRootLayout(dialogContext, mDialogView, onCreateDialogLayoutParams());",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:347",
+      "extends": "ViewGroup"
+    },
+    {
+      "name": "QMUIDraggableScrollBar",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIDraggableScrollBar.java",
+      "usage": 2,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedScrollLayout.java"
+      ],
+      "example": "QMUIContinuousNestedTopAreaBehavior.Callback, QMUIDraggableScrollBar.Callback {",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedScrollLayout.java:38",
+      "extends": "View"
+    },
+    {
+      "name": "QMUIEmptyView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIEmptyView.java",
+      "concept": "empty",
+      "props": [
+        "qmui_show_loading",
+        "qmui_title_text",
+        "qmui_detail_text",
+        "qmui_btn_text"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_emptyview.xml",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDEmptyViewFragment.java"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIEmptyView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_emptyview.xml:23",
+      "extends": "ConstraintLayout"
+    },
+    {
+      "name": "QMUIGroupListSectionHeaderFooterView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListSectionHeaderFooterView.java",
+      "concept": "navbar",
+      "usage": 2,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java"
+      ],
+      "example": "return new QMUIGroupListSectionHeaderFooterView(mContext, titleText);",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java:359",
+      "extends": "LinearLayout"
+    },
+    {
+      "name": "QMUITabView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabView.java",
+      "concept": "tabs",
+      "usage": 2,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabAdapter.java"
+      ],
+      "example": "public class QMUITabAdapter extends QMUIItemViewsAdapter\u003cQMUITab, QMUITabView\u003e implements QMUITabView.Callback {",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabAdapter.java:23",
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "QMUITipDialogView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialogView.java",
+      "concept": "toast",
+      "usage": 2,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java"
+      ],
+      "example": "QMUITipDialogView dialogView = new QMUITipDialogView(dialogContext);",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUITipDialog.java:159",
+      "extends": "QMUILinearLayout"
+    },
+    {
+      "name": "SwipeBackgroundView",
+      "kind": "custom-view",
+      "source": "arch/src/main/java/com/qmuiteam/qmui/arch/SwipeBackgroundView.java",
+      "concept": "carousel",
+      "usage": 2,
+      "usageFiles": [
+        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java",
+        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIFragment.java"
+      ],
+      "example": "mSwipeBackgroundView = new SwipeBackgroundView(QMUIActivity.this, forceDisableHardwareAcceleratedForSwipeBackground());",
+      "exampleAt": "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java:99",
+      "extends": "View"
     },
     {
       "name": "Test",
@@ -2899,28 +2966,152 @@
       "extends": "TextView"
     },
     {
-      "name": "QMUIDraggableScrollBar",
+      "name": "QDEmojiconPagerView",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIDraggableScrollBar.java",
-      "usage": 2,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedScrollLayout.java"
-      ],
-      "example": "QMUIContinuousNestedTopAreaBehavior.Callback, QMUIDraggableScrollBar.Callback {",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedScrollLayout.java:38",
-      "extends": "View"
-    },
-    {
-      "name": "QMUIWrapContentScrollView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIWrapContentScrollView.java",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDEmojiconPagerView.java",
       "usage": 1,
       "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java"
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java"
       ],
-      "example": "QMUIWrapContentScrollView scrollView = new QMUIWrapContentScrollView(view.getContext());",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:498",
-      "extends": "QMUIObservableScrollView"
+      "example": "view = new QDEmojiconPagerView(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java:144",
+      "extends": "QDQQFaceBasePagerView"
+    },
+    {
+      "name": "QDLoadingItemView",
+      "kind": "custom-view",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDLoadingItemView.java",
+      "concept": "loading",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java"
+      ],
+      "example": "return new ViewHolder(new QDLoadingItemView(viewGroup.getContext()));",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java:72",
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "QDQQFacePagerView",
+      "kind": "custom-view",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDQQFacePagerView.java",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java"
+      ],
+      "example": "view = new QDQQFacePagerView(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java:142",
+      "extends": "QDQQFaceBasePagerView"
+    },
+    {
+      "name": "QDSectionHeaderView",
+      "kind": "custom-view",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDSectionHeaderView.java",
+      "concept": "navbar",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java"
+      ],
+      "example": "return new ViewHolder(new QDSectionHeaderView(viewGroup.getContext()));",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java:51",
+      "extends": "LinearLayout"
+    },
+    {
+      "name": "QDShadowAdjustLayout",
+      "kind": "custom-view",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDShadowAdjustLayout.java",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_layout.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmuidemo.view.QDShadowAdjustLayout",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_layout.xml:23",
+      "extends": "QMUIFrameLayout"
+    },
+    {
+      "name": "QDWebView",
+      "kind": "custom-view",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDWebView.java",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java"
+      ],
+      "example": "mWebView = new QDWebView(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java:123",
+      "extends": "QMUIWebView"
+    },
+    {
+      "name": "QMUIAppBarLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIAppBarLayout.java",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIAppBarLayout",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml:26",
+      "extends": "AppBarLayout"
+    },
+    {
+      "name": "QMUIBottomSheetGridItemView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetGridItemView.java",
+      "concept": "sheet",
+      "usage": 1,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java"
+      ],
+      "example": "QMUIBottomSheetGridItemView itemView = new QMUIBottomSheetGridItemView(bottomSheet.getContext());",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java:511",
+      "extends": "QMUIConstraintLayout"
+    },
+    {
+      "name": "QMUIBottomSheetListItemView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListItemView.java",
+      "concept": "cell",
+      "usage": 1,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListAdapter.java"
+      ],
+      "example": "final VH vh = new VH(new QMUIBottomSheetListItemView(",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListAdapter.java:94",
+      "extends": "QMUIConstraintLayout"
+    },
+    {
+      "name": "QMUIBottomSheetRootLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetRootLayout.java",
+      "usage": 1,
+      "usageFiles": [
+        "qmui/src/main/res/layout/qmui_bottom_sheet_dialog.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.dialog.QMUIBottomSheetRootLayout",
+      "exampleAt": "qmui/src/main/res/layout/qmui_bottom_sheet_dialog.xml:38",
+      "extends": "QMUIPriorityLinearLayout"
+    },
+    {
+      "name": "QMUIContinuousNestedTopLinearLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopLinearLayout.java",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll6Fragment.java"
+      ],
+      "example": "mTopLinearLayout = new QMUIContinuousNestedTopLinearLayout(getContext());",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll6Fragment.java:55",
+      "extends": "QMUILinearLayout"
+    },
+    {
+      "name": "QMUINotchConsumeLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUINotchConsumeLayout.java",
+      "usage": 1,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_notch.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.widget.QMUINotchConsumeLayout",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_notch.xml:24",
+      "extends": "FrameLayout"
     },
     {
       "name": "QMUIPullLoadMoreView",
@@ -2948,65 +3139,28 @@
       "extends": "ConstraintLayout"
     },
     {
-      "name": "QMUIContinuousNestedTopLinearLayout",
+      "name": "QMUIPullRefreshView",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedTopLinearLayout.java",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullRefreshView.java",
       "usage": 1,
       "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll6Fragment.java"
+        "qmuidemo/src/main/res/layout/fragment_pull_refresh_and_load_more_test_layout.xml"
       ],
-      "example": "mTopLinearLayout = new QMUIContinuousNestedTopLinearLayout(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll6Fragment.java:55",
-      "extends": "QMUILinearLayout"
+      "example": "\u003ccom.qmuiteam.qmui.widget.pullLayout.QMUIPullRefreshView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_pull_refresh_and_load_more_test_layout.xml:47",
+      "extends": "AppCompatImageView"
     },
     {
-      "name": "QDEmojiconPagerView",
+      "name": "QMUIWebViewContainer",
       "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDEmojiconPagerView.java",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebViewContainer.java",
       "usage": 1,
       "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java"
+        "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml"
       ],
-      "example": "view = new QDEmojiconPagerView(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java:144",
-      "extends": "QDQQFaceBasePagerView"
-    },
-    {
-      "name": "QMUIBottomSheetGridItemView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetGridItemView.java",
-      "concept": "sheet",
-      "usage": 1,
-      "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java"
-      ],
-      "example": "QMUIBottomSheetGridItemView itemView = new QMUIBottomSheetGridItemView(bottomSheet.getContext());",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java:511",
-      "extends": "QMUIConstraintLayout"
-    },
-    {
-      "name": "QDWebView",
-      "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDWebView.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java"
-      ],
-      "example": "mWebView = new QDWebView(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java:123",
-      "extends": "QMUIWebView"
-    },
-    {
-      "name": "QMUIBottomSheetRootLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetRootLayout.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmui/src/main/res/layout/qmui_bottom_sheet_dialog.xml"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.dialog.QMUIBottomSheetRootLayout",
-      "exampleAt": "qmui/src/main/res/layout/qmui_bottom_sheet_dialog.xml:38",
-      "extends": "QMUIPriorityLinearLayout"
+      "example": "\u003ccom.qmuiteam.qmui.widget.webview.QMUIWebViewContainer",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml:24",
+      "extends": "QMUIFrameLayout"
     },
     {
       "name": "QMUIWrapContentListView",
@@ -3022,122 +3176,42 @@
       "extends": "ListView"
     },
     {
-      "name": "QMUIBottomSheetListItemView",
+      "name": "QMUIWrapContentScrollView",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListItemView.java",
-      "concept": "cell",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIWrapContentScrollView.java",
       "usage": 1,
       "usageFiles": [
-        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListAdapter.java"
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java"
       ],
-      "example": "final VH vh = new VH(new QMUIBottomSheetListItemView(",
-      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListAdapter.java:94",
-      "extends": "QMUIConstraintLayout"
+      "example": "QMUIWrapContentScrollView scrollView = new QMUIWrapContentScrollView(view.getContext());",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:498",
+      "extends": "QMUIObservableScrollView"
     },
     {
-      "name": "QDShadowAdjustLayout",
+      "name": "BaseTypeView",
       "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDShadowAdjustLayout.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_layout.xml"
-      ],
-      "example": "\u003ccom.qmuiteam.qmuidemo.view.QDShadowAdjustLayout",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_layout.xml:23",
-      "extends": "QMUIFrameLayout"
+      "source": "type/src/main/java/com/qmuiteam/qmui/type/view/BaseTypeView.kt",
+      "usage": 0,
+      "extends": "View"
     },
     {
-      "name": "QDSectionHeaderView",
+      "name": "QDQQFaceBasePagerView",
       "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDSectionHeaderView.java",
-      "concept": "navbar",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java"
-      ],
-      "example": "return new ViewHolder(new QDSectionHeaderView(viewGroup.getContext()));",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java:51",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDQQFaceBasePagerView.java",
+      "usage": 0,
       "extends": "LinearLayout"
     },
     {
-      "name": "QMUIAppBarLayout",
+      "name": "QMUIAlphaButton",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIAppBarLayout.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml"
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaButton.java",
+      "concept": "button",
+      "props": [
+        "qmui_alpha_pressed",
+        "qmui_alpha_disabled"
       ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUIAppBarLayout",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml:26",
-      "extends": "AppBarLayout"
-    },
-    {
-      "name": "QMUIPullRefreshView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/pullLayout/QMUIPullRefreshView.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_pull_refresh_and_load_more_test_layout.xml"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.pullLayout.QMUIPullRefreshView",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_pull_refresh_and_load_more_test_layout.xml:47",
-      "extends": "AppCompatImageView"
-    },
-    {
-      "name": "QMUINotchConsumeLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUINotchConsumeLayout.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_notch.xml"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.QMUINotchConsumeLayout",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_notch.xml:24",
-      "extends": "FrameLayout"
-    },
-    {
-      "name": "QDLoadingItemView",
-      "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/view/QDLoadingItemView.java",
-      "concept": "loading",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java"
-      ],
-      "example": "return new ViewHolder(new QDLoadingItemView(viewGroup.getContext()));",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java:72",
-      "extends": "FrameLayout"
-    },
-    {
-      "name": "QMUIWebViewContainer",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebViewContainer.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml"
-      ],
-      "example": "\u003ccom.qmuiteam.qmui.widget.webview.QMUIWebViewContainer",
-      "exampleAt": "qmuidemo/src/main/res/layout/fragment_webview_explorer.xml:24",
-      "extends": "QMUIFrameLayout"
-    },
-    {
-      "name": "QDQQFacePagerView",
-      "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDQQFacePagerView.java",
-      "usage": 1,
-      "usageFiles": [
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java"
-      ],
-      "example": "view = new QDQQFacePagerView(getContext());",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/QDQQFacePerformanceTestFragment.java:142",
-      "extends": "QDQQFaceBasePagerView"
-    },
-    {
-      "name": "QMUIObservableScrollView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIObservableScrollView.java",
       "usage": 0,
-      "extends": "ScrollView"
+      "extends": "AppCompatButton"
     },
     {
       "name": "QMUIAlphaConstraintLayout",
@@ -3162,59 +3236,15 @@
       "extends": "FrameLayout"
     },
     {
-      "name": "BaseTypeView",
+      "name": "QMUIAlphaLinearLayout",
       "kind": "custom-view",
-      "source": "type/src/main/java/com/qmuiteam/qmui/type/view/BaseTypeView.kt",
-      "usage": 0,
-      "extends": "View"
-    },
-    {
-      "name": "QMUIRoundRelativeLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/roundwidget/QMUIRoundRelativeLayout.java",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaLinearLayout.java",
       "props": [
-        "qmui_backgroundColor",
-        "qmui_borderColor",
-        "qmui_borderWidth",
-        "qmui_isRadiusAdjustBounds",
-        "qmui_radius",
-        "qmui_radiusTopLeft",
-        "qmui_radiusTopRight",
-        "qmui_radiusBottomLeft",
-        "qmui_radiusBottomRight"
+        "qmui_alpha_pressed",
+        "qmui_alpha_disabled"
       ],
-      "usage": 0,
-      "extends": "RelativeLayout"
-    },
-    {
-      "name": "QDQQFaceBasePagerView",
-      "kind": "custom-view",
-      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/qqface/pageView/QDQQFaceBasePagerView.java",
       "usage": 0,
       "extends": "LinearLayout"
-    },
-    {
-      "name": "QMUIAlphaButton",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaButton.java",
-      "concept": "button",
-      "props": [
-        "qmui_alpha_pressed",
-        "qmui_alpha_disabled"
-      ],
-      "usage": 0,
-      "extends": "AppCompatButton"
-    },
-    {
-      "name": "QMUIAlphaTextView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaTextView.java",
-      "props": [
-        "qmui_alpha_pressed",
-        "qmui_alpha_disabled"
-      ],
-      "usage": 0,
-      "extends": "QMUISpanTouchFixTextView"
     },
     {
       "name": "QMUIAlphaRelativeLayout",
@@ -3228,6 +3258,17 @@
       "extends": "RelativeLayout"
     },
     {
+      "name": "QMUIAlphaTextView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaTextView.java",
+      "props": [
+        "qmui_alpha_pressed",
+        "qmui_alpha_disabled"
+      ],
+      "usage": 0,
+      "extends": "QMUISpanTouchFixTextView"
+    },
+    {
       "name": "QMUIBaseDialog",
       "kind": "custom-view",
       "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBaseDialog.java",
@@ -3236,22 +3277,29 @@
       "extends": "AppCompatDialog"
     },
     {
-      "name": "QMUIRoundLinearLayout",
+      "name": "QMUIContinuousNestedBottomDelegateLayout",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/roundwidget/QMUIRoundLinearLayout.java",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedBottomDelegateLayout.java",
+      "usage": 0,
+      "extends": "QMUIFrameLayout"
+    },
+    {
+      "name": "QMUIFontFitTextView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIFontFitTextView.java",
       "props": [
-        "qmui_backgroundColor",
-        "qmui_borderColor",
-        "qmui_borderWidth",
-        "qmui_isRadiusAdjustBounds",
-        "qmui_radius",
-        "qmui_radiusTopLeft",
-        "qmui_radiusTopRight",
-        "qmui_radiusBottomLeft",
-        "qmui_radiusBottomRight"
+        "qmui_minTextSize",
+        "qmui_maxTextSize"
       ],
       "usage": 0,
-      "extends": "LinearLayout"
+      "extends": "AppCompatTextView"
+    },
+    {
+      "name": "QMUIObservableScrollView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIObservableScrollView.java",
+      "usage": 0,
+      "extends": "ScrollView"
     },
     {
       "name": "QMUIRelativeLayout",
@@ -3293,28 +3341,6 @@
       "extends": "QMUIAlphaRelativeLayout"
     },
     {
-      "name": "QMUIFontFitTextView",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/QMUIFontFitTextView.java",
-      "props": [
-        "qmui_minTextSize",
-        "qmui_maxTextSize"
-      ],
-      "usage": 0,
-      "extends": "AppCompatTextView"
-    },
-    {
-      "name": "QMUIAlphaLinearLayout",
-      "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaLinearLayout.java",
-      "props": [
-        "qmui_alpha_pressed",
-        "qmui_alpha_disabled"
-      ],
-      "usage": 0,
-      "extends": "LinearLayout"
-    },
-    {
       "name": "QMUIRoundFrameLayout",
       "kind": "custom-view",
       "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/roundwidget/QMUIRoundFrameLayout.java",
@@ -3333,11 +3359,40 @@
       "extends": "FrameLayout"
     },
     {
-      "name": "QMUIContinuousNestedBottomDelegateLayout",
+      "name": "QMUIRoundLinearLayout",
       "kind": "custom-view",
-      "source": "qmui/src/main/java/com/qmuiteam/qmui/nestedScroll/QMUIContinuousNestedBottomDelegateLayout.java",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/roundwidget/QMUIRoundLinearLayout.java",
+      "props": [
+        "qmui_backgroundColor",
+        "qmui_borderColor",
+        "qmui_borderWidth",
+        "qmui_isRadiusAdjustBounds",
+        "qmui_radius",
+        "qmui_radiusTopLeft",
+        "qmui_radiusTopRight",
+        "qmui_radiusBottomLeft",
+        "qmui_radiusBottomRight"
+      ],
       "usage": 0,
-      "extends": "QMUIFrameLayout"
+      "extends": "LinearLayout"
+    },
+    {
+      "name": "QMUIRoundRelativeLayout",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/roundwidget/QMUIRoundRelativeLayout.java",
+      "props": [
+        "qmui_backgroundColor",
+        "qmui_borderColor",
+        "qmui_borderWidth",
+        "qmui_isRadiusAdjustBounds",
+        "qmui_radius",
+        "qmui_radiusTopLeft",
+        "qmui_radiusTopRight",
+        "qmui_radiusBottomLeft",
+        "qmui_radiusBottomRight"
+      ],
+      "usage": 0,
+      "extends": "RelativeLayout"
     }
   ],
   "clusters": [
@@ -3345,8 +3400,8 @@
       "concept": "button（Compose）",
       "members": [
         "CommonImageButton（Composable，用 6 次）",
-        "CommonTextButton（Composable，用 2 次）",
         "CommonButton（Composable，用 2 次）",
+        "CommonTextButton（Composable，用 2 次）",
         "OriginOpenButton（Composable，用 2 次）",
         "PickCurrentCheckButton（Composable，用 1 次）"
       ],
@@ -3396,11 +3451,20 @@
     {
       "concept": "dialog（Compose）",
       "members": [
-        "QMUIDialogAction（Composable，用 8 次）",
-        "QMUIModal（Composable，用 0 次）"
+        "QMUIModal（Composable，用 15 次）",
+        "QMUIDialogAction（Composable，用 8 次）"
       ],
-      "recommend": "QMUIDialogAction",
-      "totalUsage": 8
+      "recommend": "QMUIModal",
+      "totalUsage": 23
+    },
+    {
+      "concept": "popup（View）",
+      "members": [
+        "QMUIPopup（自定义 View，用 14 次）",
+        "QMUIFloatLayout（自定义 View，用 4 次）"
+      ],
+      "recommend": "QMUIPopup",
+      "totalUsage": 18
     },
     {
       "concept": "button（View）",
@@ -3452,6 +3516,14 @@
   "clones": null,
   "colors": [
     {
+      "value": "#0000FF",
+      "count": 2,
+      "sample": [
+        "qmuidemo/src/main/res/layout/fragment_layout.xml",
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLayoutFragment.java"
+      ]
+    },
+    {
       "value": "#333333",
       "count": 2,
       "sample": [
@@ -3467,14 +3539,6 @@
       ]
     },
     {
-      "value": "#0000FF",
-      "count": 2,
-      "sample": [
-        "qmuidemo/src/main/res/layout/fragment_layout.xml",
-        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLayoutFragment.java"
-      ]
-    },
-    {
       "value": "#00A8E1",
       "count": 1,
       "token": "@color/app_color_blue",
@@ -3483,7 +3547,14 @@
       ]
     },
     {
-      "value": "#CCCCCC",
+      "value": "#222222",
+      "count": 1,
+      "sample": [
+        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt"
+      ]
+    },
+    {
+      "value": "#666666",
       "count": 1,
       "sample": [
         "compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt"
@@ -3497,26 +3568,19 @@
       ]
     },
     {
-      "value": "#666666",
+      "value": "#CCCCCC",
       "count": 1,
       "sample": [
         "compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt"
-      ]
-    },
-    {
-      "value": "#222222",
-      "count": 1,
-      "sample": [
-        "photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt"
       ]
     }
   ],
   "metrics": {
     "files": 554,
-    "componentUsages": 912,
+    "componentUsages": 977,
     "rawPrimitives": 0,
     "componentization": 1,
-    "duplicateConcepts": 11,
+    "duplicateConcepts": 12,
     "cloneGroups": 0,
     "hardcodedColors": 11,
     "tokenizableColors": 1,

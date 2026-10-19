@@ -14,7 +14,9 @@ var (
 	viewClassKtRe = regexp.MustCompile(`(?m)^\s*(?:open\s+|abstract\s+|internal\s+)?class\s+([A-Z]\w*)\b[^{:]*?(?:\([^)]*\))?\s*:\s*([A-Z][\w.]*)\s*\(`)
 	// a class that inflates a layout for one UI concept (AntennaPod's EmptyViewHandler): the project's way
 	// to show that concept, though it is not a View itself
-	classDeclRe    = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+|abstract\s+|final\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)`)
+	// a class declared with no supertype at all (Java: no extends; Kotlin: no ":" before the body)
+	plainClassJvRe = regexp.MustCompile(`(?m)^\s*(?:public\s+|abstract\s+|final\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:implements\s+[^{]*)?\{`)
+	plainClassKtRe = regexp.MustCompile(`(?m)^\s*(?:internal\s+|open\s+|abstract\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:\([^)]*\))?\s*\{`)
 	helperClassRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
 	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*public\s+(?:abstract\s+)?class\s+([A-Z]\w*)\s+extends\s+([A-Z][\w.]*)`)
 	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+([A-Z]\w*)\s*\(`)
@@ -33,7 +35,7 @@ var viewBases = regexp.MustCompile(`(View|Layout|Button|TextView|ImageView|EditT
 
 // layout containers are structure, not reusable components
 var containers = map[string]bool{"LinearLayout": true, "FrameLayout": true, "RelativeLayout": true, "ConstraintLayout": true, "androidx.constraintlayout.widget.ConstraintLayout": true, "merge": true, "include": true, "layout": true, "data": true, "variable": true, "ScrollView": true, "androidx.core.widget.NestedScrollView": true, "androidx.coordinatorlayout.widget.CoordinatorLayout": true, "Space": true, "View": true, "ViewStub": true, "requestFocus": true, "tag": true, "import": true, "fragment": true, "androidx.fragment.app.FragmentContainerView": true,
-	"DrawerLayout": true, "SwipeRefreshLayout": true, "SmartRefreshLayout": true, "MotionLayout": true, "Barrier": true, "Guideline": true}
+	"DrawerLayout": true, "SwipeRefreshLayout": true, "SmartRefreshLayout": true, "MotionLayout": true, "Barrier": true, "Guideline": true, "Placeholder": true, "Group": true, "Flow": true, "Layer": true}
 
 // Detect returns the platforms present under root.
 func Detect(root string) []string {
@@ -200,6 +202,11 @@ func ScanAndroid(root string) *Report {
 	}
 	custom := map[string]*Asset{}
 	compos := map[string]*Asset{}
+	type composDef struct {
+		line int
+		name string
+	}
+	composDefs := map[string][]composDef{} // file → composables in definition order (overloads included)
 	for _, f := range code {
 		for _, re := range []*regexp.Regexp{viewClassKtRe, viewClassJvRe} {
 			for _, m := range re.FindAllStringSubmatch(f.text, -1) {
@@ -238,6 +245,7 @@ func ScanAndroid(root string) *Report {
 				continue // previews, screens and their sections are not reusable components
 			}
 			a := get("composable", name, f.rel)
+			composDefs[f.rel] = append(composDefs[f.rel], composDef{strings.Count(f.text[:m[0]], "\n") + 1, name})
 			if end := matchParen(f.text, m[1]-1); end > m[1] {
 				for _, prm := range strings.Split(f.text[m[1]:end], ",") {
 					if kv := strings.SplitN(strings.TrimSpace(prm), ":", 2); len(kv) == 2 {
@@ -263,12 +271,14 @@ func ScanAndroid(root string) *Report {
 			compos[name] = a
 		}
 	}
-	// DownloadActionButton extends ItemActionButton, a plain project class: a name ending in Button
-	// does not make a View. Drop custom "views" whose base is a project class that is not a View.
-	declared := map[string]bool{}
+	// DownloadActionButton extends ItemActionButton, a plain project class with no supertype: a name
+	// ending in Button does not make a View. Drop custom "views" whose base is such a class.
+	declared := map[string]bool{} // only classes known to have no supertype: BaseItemView<T> extends FrameLayout stays a View
 	for _, f := range code {
-		for _, m := range classDeclRe.FindAllStringSubmatch(f.text, -1) {
-			declared[m[1]] = true
+		for _, re := range []*regexp.Regexp{plainClassJvRe, plainClassKtRe} {
+			for _, m := range re.FindAllStringSubmatch(f.text, -1) {
+				declared[m[1]] = true
+			}
 		}
 	}
 	for changed := true; changed; {
@@ -423,7 +433,7 @@ func ScanAndroid(root string) *Report {
 	}
 	var composRe, customRe *regexp.Regexp
 	if len(compos) > 0 {
-		composRe = regexp.MustCompile(`(?:^|[^\w.])(` + alt(compos) + `)\s*\(`)
+		composRe = regexp.MustCompile(`(?:^|[^\w.])(` + alt(compos) + `)\s*[({]`) // NiaButton(…) and NiaButton { … }
 	}
 	if len(custom) > 0 {
 		customRe = regexp.MustCompile(`\b(` + alt(custom) + `)\b[(.]`)
@@ -432,7 +442,7 @@ func ScanAndroid(root string) *Report {
 		lines := strings.Split(f.text, "\n")
 		if composRe != nil {
 			for _, m := range composRe.FindAllStringSubmatchIndex(f.text, -1) {
-				if strings.Contains(f.text[max(0, m[0]-5):m[0]+1], "fun ") {
+				if declaredAt(f.text, m[0]) {
 					continue
 				}
 				name := f.text[m[2]:m[3]]
@@ -502,7 +512,10 @@ func ScanAndroid(root string) *Report {
 				if compos[c] != nil && !strings.Contains(f.text, "import "+l.Import[0]+c) && !strings.Contains(f.text, "import "+l.Import[0]+"*") {
 					continue
 				}
-				for _, m := range regexp.MustCompile(`(?:^|[^\w.])`+c+`\s*\(`).FindAllStringIndex(f.text, -1) {
+				for _, m := range regexp.MustCompile(`(?:^|[^\w.])`+c+`\s*[({]`).FindAllStringIndex(f.text, -1) {
+					if declaredAt(f.text, m[0]) {
+						continue
+					}
 					ln := strings.Count(f.text[:m[0]], "\n") + 1
 					calls = append(calls, call{f, c, ln, strings.TrimSpace(lines[ln-1])})
 				}
@@ -514,14 +527,17 @@ func ScanAndroid(root string) *Report {
 			if lib == nil || lib.WrappedBy != "" || !inDesignSystem(k.f.rel) {
 				continue
 			}
+			// the composable whose body holds the call: the nearest one defined above it in that file
+			// (HelpDialog calls AlertDialog; SealDialog, further down, is built on BasicAlertDialog)
 			var best *Asset
-			for _, a := range compos {
-				if a.Source != k.f.rel || a.Concept != lib.Concept && !strings.HasSuffix(a.Name, k.c) {
-					continue
+			for _, d := range composDefs[k.f.rel] {
+				if d.line > k.at {
+					break
 				}
-				if best == nil || strings.HasSuffix(a.Name, k.c) && !strings.HasSuffix(best.Name, k.c) || len(a.Name) < len(best.Name) && strings.HasSuffix(a.Name, k.c) == strings.HasSuffix(best.Name, k.c) {
-					best = a
-				}
+				best = compos[d.name]
+			}
+			if best != nil && best.Concept != lib.Concept && !strings.HasSuffix(best.Name, k.c) {
+				best = nil
 			}
 			if best != nil && best.Name != k.c {
 				lib.WrappedBy = best.Name
@@ -543,16 +559,18 @@ func ScanAndroid(root string) *Report {
 	for _, a := range assets {
 		if w := a.WrappedBy; w != "" && a.Kind == "ui-lib" {
 			if wa := compos[w]; wa != nil && wa.Usage*2 < a.Usage {
-				a.WrappedBy, dropped[w] = "", true
+				a.WrappedBy, dropped[a.Name+"|"+w] = "", true
 			} else if wa := custom[w]; wa != nil && wa.Usage*2 < a.Usage {
-				a.WrappedBy, dropped[w] = "", true
+				a.WrappedBy, dropped[a.Name+"|"+w] = "", true
 			}
 		}
 	}
 	if len(dropped) > 0 { // the bypass findings raised for it during the scan go too
 		kept := r.Findings[:0]
 		for _, f := range r.Findings {
-			if i, j := strings.LastIndex(f.Hint, "封装为 "), strings.LastIndex(f.Hint, "，应使用封装"); f.Rule == "bypass" && i >= 0 && j > i && dropped[f.Hint[i+len("封装为 "):j]] {
+			i, j := strings.LastIndex(f.Hint, "封装为 "), strings.LastIndex(f.Hint, "，应使用封装")
+			k, e := strings.Index(f.Hint, "直接用了 "), strings.Index(f.Hint, "（")
+			if f.Rule == "bypass" && i >= 0 && j > i && k >= 0 && e > k && dropped[strings.TrimSpace(f.Hint[k+len("直接用了 "):e])+"|"+f.Hint[i+len("封装为 "):j]] {
 				continue
 			}
 			kept = append(kept, f)
@@ -673,12 +691,26 @@ func pkgRoot(pkg string) string {
 func catalogued(tag string) bool {
 	for _, l := range uiLibs {
 		for _, imp := range l.Import {
-			if ps := strings.Split(strings.TrimSuffix(imp, "."), "."); len(ps) >= 3 && strings.HasPrefix(tag, strings.Join(ps[:3], ".")+".") {
+			if root := libRoot(imp); root != "" && strings.HasPrefix(tag, root+".") {
 				return true
 			}
 		}
 	}
 	return false
+}
+
+// libRoot: a library's package up to its first distinctive segment (com.google.android.material,
+// com.qmuiteam), so com.google.android.exoplayer2 is not mistaken for Material.
+func libRoot(imp string) string {
+	ps := strings.Split(strings.TrimSuffix(imp, "."), ".")
+	for i, p := range ps {
+		switch p {
+		case "com", "org", "io", "net", "me", "cn", "google", "android", "androidx":
+			continue
+		}
+		return strings.Join(ps[:i+1], ".")
+	}
+	return ""
 }
 
 // androidConcept: on Android an "action bar" is the top app bar (ActionBarCommon, ActionBarEx).
@@ -714,13 +746,20 @@ func refineConcept(a *Asset) {
 }
 
 // isComposeLib: a Jetpack Compose library catalog (composables, not Views).
+// declaredAt: the name at idx is being declared (fun / class / object / interface X), not called.
+func declaredAt(src string, idx int) bool {
+	return declKwRe.MatchString(src[max(0, idx-16) : idx+1])
+}
+
+var declKwRe = regexp.MustCompile(`\b(?:fun|class|object|interface)\s+$`)
+
 func isComposeLib(source string) bool { return strings.HasPrefix(source, "Compose ") }
 
 // domainType: a parameter type that is an app data model (Snack, Topic, Order) rather than UI
 // plumbing (String, Color, Modifier, ImageVector, lambdas, generics).
 func domainType(t string) bool {
 	if i := strings.IndexByte(t, '.'); i > 0 && !strings.ContainsAny(t, "()<>-") && t[0] >= 'A' && t[0] <= 'Z' && t[i+1:] != "" && t[i+1] >= 'A' && t[i+1] <= 'Z' {
-		return true // a nested model type (Task.DownloadState): Compose's own types are not referenced that way
+		return domainType(t[:i]) // Task.DownloadState is a model; Alignment.Horizontal is Compose's own
 	}
 	if t == "" || t[0] < 'A' || t[0] > 'Z' || strings.ContainsAny(t, "()<>-.") {
 		return false

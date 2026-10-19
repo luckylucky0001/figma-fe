@@ -246,10 +246,18 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			if ci.Usage != cj.Usage {
 				return ci.Usage > cj.Usage // tie: what this project already uses keeps it consistent
 			}
-			return len(ci.Name) < len(cj.Name) // generic before specialised (List before AddressList)
+			if len(ci.Name) != len(cj.Name) {
+				return len(ci.Name) < len(cj.Name) // generic before specialised (List before AddressList)
+			}
+			return ci.Name+"|"+ci.Source < cj.Name+"|"+cj.Source
+		})
+		// a component the project cannot use (wrong theme / version) stays listed as a warning, after the
+		// usable ones, and never decides the verdict: with nothing else the element needs a new component
+		sort.SliceStable(item.Candidates, func(i, j int) bool {
+			return !strings.Contains(item.Candidates[i].Why, "⚠") && strings.Contains(item.Candidates[j].Why, "⚠")
 		})
 		// no component fits well: the project's established way of drawing it (1px View, hairline class)
-		if len(item.Candidates) == 0 || item.Candidates[0].Score < 0.7 {
+		if len(item.Candidates) == 0 || item.Candidates[0].Score < 0.7 || strings.Contains(item.Candidates[0].Why, "⚠") {
 			for _, cv := range r.Conventions {
 				if cv.Concept == fc && fc != "" {
 					sc := 0.72 + math.Min(0.2, 0.05*math.Log2(float64(cv.Usage)+1))
@@ -286,14 +294,10 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 				item.Candidates = append([]Candidate{{best.Name, best.Kind, best.Source, 0.75, best.Usage, best.Example, best.ExampleAt, "没有分割线组件；这个容器自带分割线属性（" + strings.Join(attrs, "、") + " …），项目里已用 " + itoa(best.Usage) + " 次", nil}}, item.Candidates...)
 			}
 		}
+		// the fallbacks above prepend usable entries, so the usable-first order still holds
 		if len(item.Candidates) > 4 {
 			item.Candidates = item.Candidates[:4]
 		}
-		// a component the project cannot use (wrong theme / version) stays listed as a warning, after the
-		// usable ones, and never decides the verdict: with nothing else the element needs a new component
-		sort.SliceStable(item.Candidates, func(i, j int) bool {
-			return !strings.Contains(item.Candidates[i].Why, "⚠") && strings.Contains(item.Candidates[j].Why, "⚠")
-		})
 		switch {
 		case len(item.Candidates) == 0 || strings.Contains(item.Candidates[0].Why, "⚠"):
 			item.Verdict = "new"

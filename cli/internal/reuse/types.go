@@ -364,7 +364,13 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 		out = append(out, cl)
 	}
 	sort.Slice(out, func(i, j int) bool {
-		return len(out[i].Members) > len(out[j].Members) || len(out[i].Members) == len(out[j].Members) && out[i].TotalUsage > out[j].TotalUsage
+		if len(out[i].Members) != len(out[j].Members) {
+			return len(out[i].Members) > len(out[j].Members)
+		}
+		if out[i].TotalUsage != out[j].TotalUsage {
+			return out[i].TotalUsage > out[j].TotalUsage
+		}
+		return out[i].Concept < out[j].Concept
 	})
 	return out
 }
@@ -482,6 +488,8 @@ func oneFamily(as []Asset) bool {
 // preference orders alternatives of one concept: what the project has established (≥3 uses), then
 // anything it uses, then the concept's canonical component (Cell, Tag, NavBar), then kind rank.
 func preference(a Asset, concept string) int {
+	// clusters key Android concepts by technology (button（Compose）): compare on the bare concept
+	concept = strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）")
 	p := rank(a)
 	switch {
 	case a.Usage >= 3:
@@ -490,20 +498,20 @@ func preference(a Asset, concept string) int {
 		p += 1000
 	}
 	for _, c := range concepts {
-		if c.Name == concept && normName(a.Name) == c.Words[0] {
+		if c.Name == concept && normName(a.Name) == c.Words[0] && !builtinLib(a.Source) { // ListView is not the list to converge on
 			p += 1500
 		}
 	}
 	// a project component named for nothing but the concept (QMUILoadingView, CommonButton) is the generic
 	// one; QMUIProgressBar / CommonImageButton are variants
 	if a.Kind != "ui-lib" {
-		if c := strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）"); ConceptOf(a.Name) == c && len(specialWords(a.Name, c)) == 0 {
+		if c := concept; ConceptOf(a.Name) == c && len(specialWords(a.Name, c)) == 0 {
 			p += 800
 		}
 	}
 	// a feature-specific member (@layout/feed_statistics_card: ≥2 feature words, as in match) is never the convergence
 	// target over a generic one
-	if a.Kind != "ui-lib" && !inDesignSystem(a.Source) && featureNamed(a, strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）")) {
+	if a.Kind != "ui-lib" && !inDesignSystem(a.Source) && featureNamed(a, concept) {
 		p -= 2500
 	}
 	return p

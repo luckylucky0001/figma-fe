@@ -905,3 +905,138 @@ func TestOwnPackageAndGenericClusterLead(t *testing.T) {
 		t.Errorf("generic QMUILoadingView should lead QMUIProgressBar")
 	}
 }
+
+// review: name: 'Button' must not turn raw <button> tags into uses of that component
+func TestNameOptionDoesNotShadowHTMLTags(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3"}}`)
+	write(t, root, "src/components/Button.vue", "<template><button class=\"btn\"><slot/></button></template>\n<script>\nexport default {\n  name: 'Button',\n}\n</script>")
+	write(t, root, "src/views/Order.vue", `<template><div><button>a</button><button>b</button></div></template>`)
+	n := 0
+	for _, f := range ScanH5(root).Findings {
+		if f.Rule == "missed-reuse" {
+			n++
+		}
+	}
+	if n != 2 {
+		t.Errorf("missed-reuse findings = %d, want 2", n)
+	}
+}
+
+// review: a base view the regexes cannot read (generics, Kotlin secondary constructors) is still a View
+func TestUnreadableBaseViewKeepsSubclass(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/java/a/BaseItemView.java", "package a;\npublic abstract class BaseItemView<T> extends FrameLayout {\n}")
+	write(t, root, "app/src/main/java/a/GoodsItemView.java", "package a;\npublic class GoodsItemView extends BaseItemView<Goods> {\n}")
+	write(t, root, "app/src/main/java/a/RoundView.kt", "package a\n\nopen class RoundView : FrameLayout {\n    constructor(c: Context) : super(c)\n}")
+	write(t, root, "app/src/main/java/a/AvatarView.kt", "package a\n\nclass AvatarView(c: Context) : RoundView(c)")
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><a.GoodsItemView/><a.GoodsItemView/><a.AvatarView/></LinearLayout>`)
+	names := map[string]bool{}
+	for _, a := range ScanAndroid(root).Assets {
+		names[a.Name] = true
+	}
+	if !names["GoodsItemView"] || !names["AvatarView"] {
+		t.Errorf("assets=%v", names)
+	}
+}
+
+// review: a self-closing <style/> before the splash style must not swallow its postSplashScreenTheme
+func TestSplashThemeAfterSelfClosingStyle(t *testing.T) {
+	values := []string{`<resources>
+<style name="Theme.Other" parent="Theme.AppCompat.Light" />
+<style name="Theme.App.Starting" parent="Theme.SplashScreen"><item name="postSplashScreenTheme">@style/Theme.App</item></style>
+<style name="Theme.App" parent="Theme.MaterialComponents.DayNight"/>
+</resources>`}
+	if f, _ := appThemeFamily([]string{`<application android:theme="@style/Theme.App.Starting">`}, values); f != "material" {
+		t.Errorf("family = %q", f)
+	}
+}
+
+// review: a project input built on uni-app's <input> is not a missed reuse of itself
+func TestUniComponentBuiltOnPrimitive(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"@dcloudio/uni-app":"3"}}`)
+	write(t, root, "src/components/MyInput.vue", `<template><view class="my-input"><input class="inner"/></view></template>`)
+	write(t, root, "src/pages/a.vue", `<template><view><my-input/><my-input/><my-input/></view></template>`)
+	for _, f := range ScanH5(root).Findings {
+		if f.Rule == "missed-reuse" {
+			t.Errorf("%+v", f)
+		}
+	}
+}
+
+func TestReviewSmallFixes(t *testing.T) {
+	if domainType("Alignment.Horizontal") || domainType("Arrangement.Vertical") || !domainType("Task.DownloadState") {
+		t.Error("nested types: only a model's nested type is a model")
+	}
+	if catalogued("com.google.android.exoplayer2.ui.PlayerView") || !catalogued("com.google.android.material.internal.Foo") || !catalogued("com.qmuiteam.qmui.type.view.LineTypeView") {
+		t.Error("catalogued uses the library's real package root")
+	}
+	root := t.TempDir()
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><androidx.constraintlayout.widget.Placeholder/><androidx.constraintlayout.helper.widget.Flow/></LinearLayout>`)
+	for _, a := range ScanAndroid(root).Assets {
+		if a.Name == "Placeholder" || a.Name == "Flow" {
+			t.Errorf("layout helper became an asset: %+v", a)
+		}
+	}
+}
+
+// Seal: HelpDialog calls AlertDialog, SealDialog (same file, same name length) is built on BasicAlertDialog;
+// NiaButton has overloads and the second call belongs to NiaOutlinedButton defined in between
+func TestComposeWrapperIsTheEnclosingComposable(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/build.gradle", `dependencies { implementation("androidx.compose.material3:material3:1.2.0") }`)
+	write(t, root, "core/designsystem/src/main/java/a/Dialogs.kt", `package a
+import androidx.compose.material3.*
+
+@Composable
+fun HelpDialog(text: String) {
+    AlertDialog(onDismissRequest = {}, text = { Text(text) })
+}
+
+@Composable
+fun SealDialog(content: @Composable () -> Unit) {
+    BasicAlertDialog(onDismissRequest = {}) { content() }
+}
+`)
+	write(t, root, "core/designsystem/src/main/java/a/Buttons.kt", `package a
+import androidx.compose.material3.*
+
+@Composable
+fun NiaButton(onClick: () -> Unit) {
+    Button(onClick = onClick) {}
+}
+
+@Composable
+fun NiaOutlinedButton(onClick: () -> Unit) {
+    OutlinedButton(onClick = onClick) {}
+}
+
+@Composable
+fun NiaButton(text: String, onClick: () -> Unit) {
+    NiaButton(onClick)
+}
+`)
+	write(t, root, "feature/src/main/java/b/Screen.kt", `package b
+import a.*
+
+@Composable
+internal fun Screen() {
+    HelpDialog("x")
+    HelpDialog("y")
+    NiaOutlinedButton {}
+    NiaOutlinedButton {}
+    NiaButton {}
+    NiaButton {}
+}
+`)
+	wrapped := map[string]string{}
+	for _, a := range ScanAndroid(root).LibAll {
+		if a.WrappedBy != "" {
+			wrapped[a.Name] = a.WrappedBy
+		}
+	}
+	if wrapped["AlertDialog"] == "SealDialog" || wrapped["Button"] != "NiaButton" || wrapped["OutlinedButton"] != "NiaOutlinedButton" {
+		t.Errorf("wrapped=%v", wrapped)
+	}
+}

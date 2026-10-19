@@ -1,8 +1,8 @@
 # 存量项目流程（没有 figmafe.yaml / 没有整理好的组件映射时）
 
 适用于常见技术栈，自动识别：
-- H5：Vue 2 / 3（SFC）、React（TSX / JSX）；三方组件库支持 Vant、NutUI、antd-mobile、TDesign Mobile
-- Android：XML View（layout、自定义 View、`attrs.xml`）、Jetpack Compose；三方库支持 Material Components、QMUI、Compose Material3
+- H5：Vue 2 / 3（SFC）、React（TSX / JSX）、uni-app；三方组件库支持 Vant、React Vant、NutUI、antd-mobile、TDesign Mobile、uView、Element Plus
+- Android：XML View（layout、自定义 View、`attrs.xml`）、Jetpack Compose；三方库支持 Material Components、QMUI、Compose Material3；自动识别项目自己的设计系统模块（`designsystem` / `ds` / `uikit` 目录）
 
 核心思路：**先知道项目里已经有什么，再看新设计稿里哪些可以直接复用，只有真的没有的才新建。**
 
@@ -18,14 +18,18 @@ bin/figmafe reuse <项目目录>                  # 输出到 <项目>/.figmafe/
 - 有组件却没用的地方
 - 复制粘贴出来的重复结构
 - 写死的颜色
+- **设计系统封装**：哪些组件库组件被项目封装过（如 `Button` → `NiaButton`）。新代码一律用封装，直接用组件库会被判为「绕过封装」
+- **不能直接用的组件**：组件库里有，但项目的依赖版本里没有（如 Material 1.4 没有 `MaterialDivider`），或者和 App 主题不兼容（AppCompat 主题下用 `Chip` 会崩溃）
+- **项目惯例写法**：没有组件、但项目里固定这么写的（1px View 细线、`van-hairline--*` 类）
 
 ## 2. 新设计稿 → 复用清单（这一步是方案闸门）
 ```
 bin/figmafe match --figma <Figma 导出目录> <项目目录>   # 输出到 <项目>/.figmafe/match/
-# Android 要说明新页面用什么写：--target xml（布局 XML + View）或 --target compose
+# Android：新页面用 XML 还是 Compose 写，用 --target xml|compose 指定；不传时按项目主流写法推断，并在输出里说明
 ```
 - 设计稿没组件化、或者图层是中文名（「按钮」「标签」「倒计时」）也能识别，这类会标成「（未组件化）」。
 - `<platform>.md`：每个 Figma 组件给出一个结论，「✅ 直接复用」「❓ 需确认」或「🆕 需新建」，同时附上推荐组件、判断依据，以及**项目里的真实用法**。
+- 推荐已经排除了「不能直接用的组件」和废弃组件；没有对应组件时，会优先推荐「项目惯例写法」，再考虑新建。
 - `component-map.draft.<platform>.yaml`：映射初稿。确认之后，可以合并成项目长期使用的 `component-map.yaml`。
 
 **规则**：
@@ -33,14 +37,16 @@ bin/figmafe match --figma <Figma 导出目录> <项目目录>   # 输出到 <项
 2. 结论为「❓ 需确认」的组件，在方案里写明你的选择和理由，交给用户确认。
 3. 结论为「🆕 需新建」的组件，才允许新建。新建的组件要放进项目的组件目录（如 `src/components`），不要写在页面文件里，并在方案里列出来。
 4. 不要照抄某个旧页面的写法，因为旧页面本身可能就在自己造轮子。以复用清单为准。
-5. 颜色、间距用项目已有的 token：体检报告里的「写死颜色」一节会列出同值 token。
+5. 颜色、间距用项目已有的 token：体检报告里的「写死颜色」一节会列出同值 token。新增颜色时先查有没有同值 token。
+6. 项目设计系统封装过的组件，用封装，不要直接用组件库。
 
 ## 3. 实现完成后：页面复用检查
 ```
 bin/figmafe reuse <项目目录> --focus <新页面文件或目录> -q     # 退出码 0 表示通过，3 表示未通过
+bin/figmafe reuse <项目目录> --changed HEAD -q                 # 或者：检查相对某个 git 版本改动过的全部 UI 文件（PR 闸门用 origin/main），已有文件只看新增的行
 ```
 - **自造轮子**：页面里定义的组件，项目或组件库里已经有了。必须改成复用。
-- **有组件却没用**：用原生元素代替了现成组件。改成对应组件。
+- **有组件却没用**：用原生元素代替了现成组件，或者绕过了设计系统封装。改成对应组件。
 - **写死颜色**：报告里标了「已有同值 token」的，改用 token。
 
 最后在交付回复里写清楚：复用了哪些组件、新建了哪些组件（以及原因），并贴上页面复用检查的结果。

@@ -152,6 +152,9 @@ func ScanAndroid(repoRoot, aRoot, dsRel, dsViewRel, appRel string) (*Inventory, 
 			src := readFile(f)
 			for _, loc := range viewClassRe.FindAllStringSubmatchIndex(src, -1) {
 				name := src[loc[2]:loc[3]]
+				if pre := src[max(0, loc[0]-12):loc[0]]; strings.Contains(pre, "enum") || strings.Contains(pre, "data") || strings.Contains(pre, "private") {
+					continue // nested enums / data classes are not view components
+				}
 				pkg := regexp.MustCompile(`package\s+([\w.]+)`).FindStringSubmatch(src)
 				fq := name
 				if pkg != nil {

@@ -49,7 +49,7 @@ func NewBrowser(timeout time.Duration) (*Browser, error) {
 		opts = append(opts, chromedp.ExecPath(p))
 	}
 	actx, c1 := chromedp.NewExecAllocator(context.Background(), opts...)
-	ctx, c2 := chromedp.NewContext(actx)
+	ctx, c2 := chromedp.NewContext(actx, chromedp.WithErrorf(func(string, ...any) {}))
 	ctx, c3 := context.WithTimeout(ctx, timeout)
 	if err := chromedp.Run(ctx); err != nil {
 		c3()

@@ -1,219 +1,263 @@
-# Plan：Figma → 代码的组件复用与视觉还原（痛点 4 验证 Demo）
+# Plan v2：先盘资产，再识别复用 —— Figma → H5 / Android 双端组件复用
 
-## 1. 目标
+> v1 → v2 变化：
+> 1. 目标端从单一 Web 改为 **H5 + Android 两端**，各自基于自己的组件库实现
+> 2. 新增 **Phase 0：资产扫描**。先把两端「已有什么组件、什么 token、长什么样、用了多少次」扫描成结构化清单，之后才做映射和复用识别
+> 3. 每一步都对应到业界的 best practice 出处（见第 2 节）
 
-用一个可复现的 Demo 证明下面这套做法有效，并且能直接推广：
+---
 
-> 梳理 Figma ↔ 代码组件映射并放进 Agent 的 Context → 开发前先识别要复用的组件、确认方案 → 开发后检查实际用了哪些组件，并拿截图和 Figma 对比 → 把偏差交给 Agent 修正 → 沉淀成规则。
-
-交付物有三个：
+## 1. 目标与交付物
 
 | 交付物 | 说明 |
 |---|---|
-| **Skill** `figma-to-code` | 规定 Agent 的工作流程：先 Plan，等确认，再实现、验证、修正、沉淀 |
-| **CLI** `figmafe`（Go） | 给 Skill 提供可执行、可量化的工具：sync / plan / audit / diff / report |
-| **Demo** | 组件库、一个典型页面、A/B/C 对照实验、结论报告 |
-
-说服力靠**数据对照**，不靠展示一个效果好的样例。
+| **Skill** `figma-to-code` | Agent 的强制流程：扫描资产 → 映射 → 页面复用方案（等人确认）→ 实现 → 审计和视觉对比 → 修正 → 沉淀规则；H5 和 Android 两端通用，按 `--platform` 切换 |
+| **CLI** `figmafe`（Go） | 把每一步做成可执行、可量化的命令；两端的差异由各自的 adapter 处理 |
+| **Demo** | H5 组件库、Android 组件库、同一个 Figma 页面、两端 A/B/C 对照实验、结论报告 |
 
 ---
 
-## 2. 实验设计
+## 2. Best practice 调研结论 → 设计决策
 
-### 2.1 分组（消融实验，确认每一部分各自贡献了多少）
-
-| 组 | Agent 能拿到的东西 | 验证的假设 |
+| 业界做法 | 出处 | 在本方案里怎么落地 |
 |---|---|---|
-| **A 基线** | 任务描述、Figma 导出图、节点 JSON、组件库源码（现状：组件在仓库里，但没人告诉它） | 现状复现 |
-| **B 加 Context** | A 的全部，再加 component-map 和 catalog（组件位置、示例、约束） | 只补 Context 能提升多少 |
-| **C 完整 Skill** | B 的全部，再加 Plan 闸门和 audit/diff 修正闭环（最多 3 轮） | 完整流程的效果 |
-
-- 每组跑 3 次，用同一个模型、同一个任务描述，各自在全新的 worktree 里跑，互相隔离
-- 三组拿到的设计信息完全一样，唯一的变量是 Context 和流程
-- 实验里的 Plan 确认环节：把 Plan 落盘后自动批准，同时记录 Plan 本身的准确率（Plan 识别出的组件和 Figma 实际实例的吻合度）
-
-### 2.2 指标（全部由 CLI 自动计算，以 Figma 为准，不需要参考实现）
-
-| 指标 | 计算方式 | 达标线 |
-|---|---|---|
-| 组件复用率 | 被正确实现成映射组件的 Figma INSTANCE 数 ÷ 已映射的 INSTANCE 总数 | ≥ 95% |
-| 违规数 | 原生 `<button>`/`<input>`/`<select>`/`<table>`、硬编码 hex/rgb、不在 token 内的 px | 0 |
-| 像素偏差 | 截图与 Figma PNG 不一致的像素占比（带抗锯齿容差） | ≤ 3% |
-| 节点级偏差 | 按 `data-figma-id` 逐个节点比较尺寸、padding、gap、圆角、字号、字重、颜色，超出容差的条目数 | 0 条严重偏差 |
-| Plan 准确率（仅 C 组） | Plan 列出的组件与 Figma 实例的 F1 | ≥ 0.95 |
-| 修正轮数（仅 C 组） | 达标前一共跑了几轮 audit/diff | 记录即可 |
-
-### 2.3 预期结论的形式
-
-```
-            复用率   违规   像素偏差   节点偏差
-A 基线       ~50%     10+     10%+      20+
-B +Context   ~85%     3~5     5~8%      8~12
-C 完整Skill  ≥95%      0      ≤3%       0
-```
-
-（以上是预期量级，最终以实测为准，如实写进报告。）
+| **先做 Interface Inventory**：建设计系统或做复用之前，先把现有 UI 部件全部盘点、分类 | Brad Frost「Interface Inventory」 | **Phase 0 资产扫描**，产出 `inventory.json` 和可视化目录 |
+| **组件清单要做成结构化 Manifest**，Agent 读 manifest（接口、变体、示例），不去扫整个源码树，token 消耗少得多，准确度也更高 | Storybook MCP / Component Manifest | 扫描结果统一成 manifest 格式（名称、路径、props、变体、示例、预览图、使用次数） |
+| **用使用量数据衡量组件采用率**（静态分析统计组件和 props 的使用情况） | react-scanner、Omlet、Productboard 实践 | 扫描时顺带统计每个组件在业务代码里的使用次数；Agent 优先用高频组件，同时作为复用率指标的基线 |
+| **Figma 组件 ↔ 代码组件建立显式映射**；一个 Figma 组件可以按平台分别映射，每个平台一个 label（React / Compose / …） | Figma Code Connect（CLI 和 UI）、多平台 label | `component-map.yaml` 每条记录带 `h5` 和 `android` 两个实现；可以导出成 Code Connect（label 用 `H5` / `Compose`） |
+| **生成代码前先查映射**，有映射就复用，不重新生成 | Figma MCP `get_code_connect_map`、`create_design_system_rules` | Skill 的 Plan 闸门：`figmafe plan` 先给出复用清单，人确认后才写代码 |
+| **先拿轻量结构（metadata），再按节点取细节**；token 用 variables 取，不从截图里猜 | Figma MCP：`get_metadata` → `get_design_context`、`get_variable_defs`、`get_screenshot` | `figmafe sync` 先拉节点树，再按需拉 variables 和导出图；token 对齐靠 variables |
+| **设计 token 用统一格式管理，再生成各端产物** | W3C DTCG Format 2025.10（稳定版）、Style Dictionary | token 统一成 DTCG JSON，生成 H5 的 CSS 变量和 Android 的 Compose Theme / XML 资源；扫描时校验两端 token 和 Figma variables 是否一致 |
+| **实现完要和 Figma 截图对照验证** | Figma MCP server guide 的工作流最后一步 | Phase 4 视觉对比：像素级加节点级 |
+| **Android 用 JVM 截图测试**（不需要模拟器，支持 Compose Preview） | Roborazzi（兼容 Robolectric，支持 Compose 和 View） | Android 端用 Roborazzi 截图，以 Figma 导出图作为对比基准 |
+| **节点级位置和尺寸取 semantics 树** | Compose `SemanticsNode`（size、positionInRoot）、`testTag` / `testTagsAsResourceId` | Android 用 `testTag = figma 节点 id` 导出 bounds；H5 用 `data-figma-id` 加 `getBoundingClientRect` |
+| **用 lint 强制「只能用设计系统组件」**（禁止直接用 Material 或原生元素，并给出替换建议） | 社区自建 Compose lint、DuckDuckGo 设计系统 lint、Slack compose-lints | `figmafe audit` 做静态检查；长期建议沉淀为 Android Lint 和 ESLint 规则，接入 CI |
+| **Skill 写法**：SKILL.md 保持精简，细节放 references 按需读取，确定性的步骤做成脚本，用有/无 Skill 的 A/B 评测验证效果 | Agent Skills 规范（progressive disclosure）、skill-creator 的评测方法 | SKILL.md ≤ 200 行；确定性步骤全部交给 CLI；用 A/B/C 实验证明效果 |
 
 ---
 
-## 3. 仓库结构
+## 3. 整体流程
 
 ```
-figma-fe/
-├── CLAUDE.md                        # 只写项目基本信息，不包含 Skill 内容（保证 A 组干净）
-├── apps/demo/                       # Vite + React + TS
-│   ├── src/tokens.css               # 颜色 / 间距 / 圆角 / 字号 / 阴影
-│   ├── src/components/              # 组件库（见 4.1）
-│   ├── src/pages/Orders/            # 目标页面（各组产出放在 experiments/ 里，跑分时挂载）
-│   └── src/mock/orders.ts           # 页面数据，文案和 Figma 完全一致
-├── design/
-│   ├── figma/orders.nodes.json      # Figma REST API /v1/files/:key/nodes 的原始格式
-│   ├── figma/orders@2x.png          # Figma /v1/images 导出（scale=2）
-│   └── component-map.yaml           # ★ Figma 组件 ↔ 代码组件 映射
-├── cli/                             # Go：figmafe
-│   ├── cmd/figmafe/
-│   └── internal/{figma,mapping,plan,audit,shot,diff,report}/
-├── .claude/skills/figma-to-code/
-│   ├── SKILL.md
-│   └── references/
-│       ├── catalog.md               # 由 `figmafe catalog` 生成
-│       └── rules.md                 # 沉淀下来的规则（会持续更新）
-├── experiments/
-│   ├── prompts/{A,B,C}.md
-│   └── runs/{A1..C3}/{Orders.tsx, plan.md, shot.png, diff.png, report.json}
-└── docs/
-    ├── PLAN.md
-    └── report.md                    # 最终报告（另外发布成可分享的页面）
+             ┌──────────────────────── Phase 0：资产扫描（Inventory）────────────────────────┐
+H5 组件库 ──▶│ figmafe scan --platform h5      → 组件/props/变体/示例/预览图/使用次数/token  │
+Android 库 ─▶│ figmafe scan --platform android → @Composable 或 View/参数/Preview/截图/token │
+Figma 库  ──▶│ figmafe sync --library          → Figma 组件集/变体属性/variables            │
+             └───────────────────────────────────────┬──────────────────────────────────────┘
+                                                     ▼
+             ┌──────────────────────── Phase 1：映射（Mapping）───────────────────────────────┐
+             │ figmafe map suggest  名称 + 变体/props 结构 + 预览图视觉相似度 → 候选映射       │
+             │ 人工确认 → component-map.yaml（每条都有 h5 和 android 两个实现）                 │
+             │ figmafe map check    缺口报告：Figma 有但代码没有 / 代码有但 Figma 没有 / 两端不一致 │
+             └───────────────────────────────────────┬──────────────────────────────────────┘
+                                                     ▼  （Phase 0、1 是一次性的，组件库变化时增量更新）
+             ┌──────────────────────── Phase 2：页面复用方案（每个页面）────────────────────────┐
+Figma 页面 ─▶│ figmafe plan --platform h5|android → 节点树 → 组件 → props → 建议代码；待决项   │
+             │ ⛔ 闸门：人确认方案后才进入下一步                                                │
+             └───────────────────────────────────────┬──────────────────────────────────────┘
+                                                     ▼
+                                    Phase 3：Agent 按方案实现
+                                                     ▼
+             ┌──────────────────────── Phase 4：验证闭环（≤3 轮）──────────────────────────────┐
+             │ figmafe audit  静态检查：实际用到的组件 vs 方案；直接用 Material/原生元素；硬编码值 │
+             │ figmafe diff   截图 vs Figma：像素差异 + 节点级尺寸/间距/颜色/字号偏差          │
+             │ figmafe report 结构化偏差清单 → Agent 修正 → 再跑                               │
+             └───────────────────────────────────────┬──────────────────────────────────────┘
+                                                     ▼
+                                    Phase 5：沉淀 → rules.md 和 map 的 constraints
 ```
 
 ---
 
 ## 4. 各部分详细设计
 
-### 4.1 组件库与典型页面
+### 4.1 Phase 0：资产扫描
 
-**页面：订单管理（Orders）**，1440 × 1024，基本覆盖中后台的常见元素：
+**H5 adapter**（以 React + TS 为例；如果是 Vue + Vant 类组件库，换成 SFC 解析）
 
-- Sidebar（导航，带选中态）
-- PageHeader（标题、面包屑、主操作 Button）
-- StatCard × 4（指标数值、环比 Badge）
-- FilterBar（Input 搜索框、Select × 2、Button 次级按钮）
-- Tabs（全部 / 待发货 / 已发货 / 已完成）
-- Table（订单行，状态列用 Badge，客户列用 Avatar）
-- Pagination
+| 扫描项 | 方法 |
+|---|---|
+| 组件清单 | 从组件库入口（`index.ts`）沿 export 解析，得到组件名和文件路径 |
+| Props / 变体 | tree-sitter 解析 Props 类型：联合字面量类型（如 `'primary' \| 'secondary'`）识别为变体轴 |
+| 示例 | 读 `*.stories.tsx` 或 `demo/`；如果都没有，就从业务代码里取一处真实用法 |
+| 预览图 | 用 chromedp 渲染每个组件的每个变体（移动端视口，例如 375 宽，DPR 2）并截图 |
+| 使用次数 | 统计业务代码里每个组件和每个 props 组合的出现次数（类似 react-scanner） |
+| Token | 解析 CSS 变量 / Less 变量 → 统一成 DTCG 格式 |
 
-**组件**：Button、Input、Select、Badge、Avatar、Card、StatCard、Tabs、Table、Pagination、PageHeader、Sidebar。
+**Android adapter**（Compose 优先；兼容 XML 自定义 View）
 
-- 所有组件只用 token，并且把 `data-*` 属性透传到根节点（让 `data-figma-id` 能挂上去）
-- 故意设置几个「容易用错」的点，模拟真实项目，例如 Badge 有 `tone` 语义（success/warning/…），不能直接传颜色；StatCard 内置了 padding 24，Agent 自己用 div 拼就容易写成 16
+| 扫描项 | 方法 |
+|---|---|
+| 组件清单 | tree-sitter-kotlin 扫描设计系统模块里的 `public @Composable` 函数；XML 体系则扫描 `View` 子类和 `attrs.xml` 里的 `declare-styleable` |
+| 参数 / 变体 | 函数参数里的 enum / sealed class 识别为变体轴，`Modifier` 和 slot 参数单独标记 |
+| 示例 | 读 `@Preview` 函数（也兼容 Showkase 的 `@ShowkaseComposable`） |
+| 预览图 | 用 Roborazzi 给所有 `@Preview` 截图（JVM 上跑，不需要模拟器） |
+| 使用次数 | 统计 app 模块里的调用次数；同时统计「绕开设计系统直接用 Material3」的次数（作为现状基线） |
+| Token | 解析 `Color.kt` / `Theme.kt` / `colors.xml` / `dimens.xml` → DTCG |
 
-### 4.2 Figma 设计数据
+**统一产物**：`assets/inventory.json`（manifest），外加一个人能看的可视化目录页（每个组件、每个变体、每个平台一张预览图）。
 
-- **首选**：你提供真实 Figma 文件（file key 和 `FIGMA_TOKEN`），通过 `figmafe sync` 拉取
-- **兜底**：按 Figma REST API 的真实结构手工构造 `nodes.json`（FRAME / INSTANCE / TEXT，含 `componentId`、`componentProperties`、`absoluteBoundingBox`、`padding*`、`itemSpacing`、`cornerRadius`、`fills`、`style`），连同导出图一起入库。CLI 读这份数据和读 API 的代码路径完全一样
-- 为了避免「自己出题、自己答题」：**先定稿设计数据，再写组件库**，实验过程中设计数据不再改动
+### 4.2 Phase 1：映射
 
-### 4.3 component-map.yaml（核心 Context）
+`figmafe map suggest` 给每个 Figma 组件集，在每个平台上找候选实现，综合打分：
+
+1. **名称相似度**（归一化后计算编辑距离，再加同义词表，例如 Tag ≈ Badge、Cell ≈ ListItem）
+2. **变体结构相似度**（Figma 的 variant 属性和值，对比代码的 props / enum）
+3. **视觉相似度**（Figma 组件导出图 vs 代码预览图，用感知哈希或 SSIM）
+
+输出候选和置信度，**人工确认后**写进 `component-map.yaml`：
 
 ```yaml
-version: 1
-components:
-  - figma: { name: "Button", key: "btn_key" }
-    code:  { import: "@/components/Button", export: "Button" }
-    variants:                         # Figma variant → props
-      "Type=Primary":   'variant="primary"'
-      "Type=Secondary": 'variant="secondary"'
-      "Size=Large":     'size="lg"'
-      "State=Disabled": "disabled"
-    usage: '<Button variant="primary" size="md" icon={<Plus/>}>新建订单</Button>'
-    constraints:
-      - 一个页面最多 1 个 primary 按钮
-      - 禁止用原生 <button> 加 className 自己拼
-  - figma: { name: "Badge" }
-    code:  { import: "@/components/Badge", export: "Badge" }
-    variants: { "Status=Success": 'tone="success"', ... }
-    constraints:
-      - 状态色只能通过 tone 表达，禁止传 color/style
-ignore:                               # 纯装饰节点，不需要映射
-  - "Divider/*"
+- figma: { set: "Button", key: "…" }
+  variants: [Type: [Primary, Secondary, Text], Size: [L, M, S], State: [Default, Disabled]]
+  h5:
+    import: "@ds/h5/Button"
+    props: { "Type=Primary": 'type="primary"', "Size=L": 'size="large"', "State=Disabled": "disabled" }
+    usage: '<Button type="primary" size="large">提交订单</Button>'
+  android:
+    call: "com.xx.ds.button.DsButton"
+    props: { "Type=Primary": "style = DsButtonStyle.Primary", "Size=L": "size = DsButtonSize.Large", "State=Disabled": "enabled = false" }
+    usage: 'DsButton(text = "提交订单", style = DsButtonStyle.Primary, onClick = {})'
+  constraints:
+    - 一屏最多一个 Primary
+    - Android 禁止直接用 material3.Button；H5 禁止用原生 <button>
 ```
 
-### 4.4 CLI `figmafe`（Go）
+`figmafe map check` 输出**缺口报告**，这本身就是很有价值的产出：
 
-| 命令 | 输入 → 输出 | 实现要点 |
+- Figma 有、某一端没有的组件 → 需要补组件，或明确降级方案
+- 代码有、Figma 没有的组件 → 设计侧缺口，或者已经废弃
+- 两端变体不一致（例如 Android 少了 Size=S）
+- token 值不一致（Figma variables vs H5 vs Android）
+
+可选：如果有 Figma Organization / Enterprise 席位，导出为 Code Connect（label 为 `H5` 和 `Compose`），这样 Figma Dev Mode 和 Figma MCP 也能直接用这份映射。
+
+### 4.3 Phase 2：页面复用方案（闸门）
+
+`figmafe plan <frame> --platform h5|android` 的输出：
+
+- 页面结构树：每个节点标注**复用哪个组件、props 是什么、对应的 Figma 节点 id**
+- 布局容器和间距对应的 token（不允许出现裸数值）
+- **待决项**：没有映射的节点，给出建议方案（扩展现有组件 / 新建组件 / 用基础布局拼）
+- Skill 规定：**方案必须经人确认**；实验里自动批准，但记录方案准确率
+
+### 4.4 Phase 4：验证闭环
+
+| | H5 | Android |
 |---|---|---|
-| `sync` | file key / node id → `nodes.json` 和 `@2x.png` | Figma REST：`GET /v1/files/:key/nodes`、`GET /v1/images/:key?scale=2`；支持 `--offline` 读本地 |
-| `catalog` | component-map 和组件源码 → `catalog.md` | 解析组件的 Props 类型，生成「位置 / 示例 / 约束 / props 表」，交给 Skill 引用 |
-| `plan <frame>` | nodes.json 和 map → `plan.md`/`plan.json` | 遍历 INSTANCE，按 key/name 匹配 map，结合 variant 推导 props；输出「Figma 节点 → 组件 → 建议 JSX」清单，未映射的列为待决项 |
-| `audit <file.tsx>` | TSX 和 plan → 违规列表 | tree-sitter TSX 解析 import 和 JSX；检查组件覆盖、原生元素、硬编码颜色和尺寸、constraints 中能静态检查的规则 |
-| `diff --url` | 页面 URL 和 nodes.json / png → `diff.png` 和节点偏差 | chromedp 驱动 Chromium（viewport 1440，DPR 2）；像素对比用 Go 实现 pixelmatch（YIQ 加抗锯齿检测）；节点级：执行 JS 读取 `[data-figma-id]` 的 `getBoundingClientRect` 和 `getComputedStyle`，和 Figma 节点属性逐项比较；差异像素聚类后归到对应 Figma 节点 |
-| `report` | 以上全部 → `report.json`/`report.md` | 汇总指标；不达标时返回非零退出码（可接 CI） |
+| 静态审计 | tree-sitter TSX：实际用到的组件 vs 方案；原生 `<button>` / `<input>` 等；硬编码 hex / px | tree-sitter-kotlin：实际用到的组件 vs 方案；直接 import `androidx.compose.material3.*` 的组件；`Color(0x…)`、裸 `.dp` / `.sp` |
+| 截图 | chromedp，视口和 DPR 与 Figma 导出对齐 | Roborazzi 截取页面 Composable，dp 和 density 与 Figma 导出对齐 |
+| 节点级 | `[data-figma-id]` → `getBoundingClientRect` 和 `getComputedStyle` | `Modifier.testTag(figmaId)` → semantics 树（`useUnmergedTree`）导出 bounds 和颜色 |
+| 像素对比 | Go 实现 pixelmatch（YIQ 加抗锯齿检测），输出 diff 图，差异区域归到对应的 Figma 节点 | 同左 |
 
-`diff` 的输出要能直接交给 Agent 修正：
+输出给 Agent 的是**结构化偏差清单**：
 
 ```
-✗ [12:88] StatCard「本月订单」 padding: 16px → 期望 24px
-✗ [12:91] Badge「已发货」      未使用 <Badge>，检测到 <span style="color:#16a34a">
-✗ [14:02] Table 行高           48px → 期望 56px
-  pixel mismatch 7.8%（阈值 3%），最集中区域：StatCard 行（见 diff.png）
+[android] ✗ 12:88 OrderCard 内边距 12dp → 期望 16dp（token: space/lg）
+[android] ✗ 12:91 状态标签   使用了 material3.AssistChip，应使用 DsTag(tone = Success)
+[h5]      ✗ 14:02 列表行高   48px → 期望 56px
+[h5]      pixel mismatch 6.1%（阈值 3%），主要集中在：OrderCard 区域
 ```
 
-工程要求：每个 internal 包都有单元测试（table-driven）；`go vet` 通过；`Makefile` 提供 `make build / test`。
+### 4.5 Skill 结构
 
-### 4.5 Skill `figma-to-code`
+```
+.claude/skills/figma-to-code/
+├── SKILL.md                     # 流程和闸门；≤200 行
+└── references/
+    ├── workflow-h5.md           # H5 端的命令、截图参数、常见坑
+    ├── workflow-android.md      # Android 端的命令、Roborazzi、testTag 约定
+    ├── catalog-h5.md            # 由 inventory 和 map 自动生成：组件 / 示例 / 约束
+    ├── catalog-android.md       # 同上
+    └── rules.md                 # 沉淀下来的规则（持续增长）
+```
 
-**触发**：用户要求按 Figma 实现、还原页面或组件。
+SKILL.md 的硬性规则：
 
-**流程（SKILL.md 写死，不允许跳步）**：
+1. 没有 inventory 和 component-map，或者它们比组件库源码旧 → 先跑 `scan` 和 `map check`，**不允许直接写页面**
+2. 写页面之前必须产出 plan 并得到确认
+3. 只能使用 catalog 里的组件和 token；需要新增组件时走待决项流程，不能就地自己拼
+4. 交付前 `report` 必须达标，或者在 3 轮之后如实汇报剩下的偏差
+5. 每完成一个页面，把新发现的问题写进 rules.md
 
-1. **加载 Context**：读 `references/catalog.md` 和 `rules.md`；拿到 Figma 链接或 frame 后执行 `figmafe sync`
-2. **Plan（闸门）**：执行 `figmafe plan` → 整理成「页面结构树、每个区块用哪个组件、props、未映射项及处理方案（扩展现有组件 / 新建 / 用基础元素）」→ **停下来等用户确认**
-3. **实现**：只用 Plan 里确认的组件和 token；每个对应 Figma 实例的根节点必须加 `data-figma-id`；文案和数据取自 mock
-4. **验证闭环**：`figmafe audit` 加 `figmafe diff` → 按报告逐条修正 → 重复，直到 report 达标或满 3 轮；满 3 轮仍不达标就向用户汇报剩下的偏差和原因，不硬凑
-5. **沉淀**：本次发现的新问题（例如「Table 默认行高与设计不符」）以规则形式写进 `rules.md` 或 map 的 constraints，并附上来源页面
+### 4.6 CLI `figmafe`（Go）命令
 
-**SKILL.md 本身**：保持精简（≤ 150 行），细节放在 references 里按需读取；description 写清楚触发条件。
+| 命令 | 作用 |
+|---|---|
+| `sync [--library] <figma-url>` | Figma REST：nodes / components / component_sets / variables / images；支持 `--offline` |
+| `scan --platform h5\|android` | Phase 0 资产扫描 → `inventory.json`、预览图、目录页 |
+| `map suggest` / `map check` / `map export-code-connect` | Phase 1 映射 |
+| `catalog` | 由 inventory 和 map 生成给 Skill 用的 catalog-*.md |
+| `plan <frame> --platform` | Phase 2 页面复用方案 |
+| `audit <path> --platform` | 静态审计 |
+| `diff <frame> --platform` | 截图（H5 用 chromedp；Android 调用 Gradle Roborazzi 任务）、像素对比、节点对比 |
+| `report` | 汇总指标；不达标时返回非零退出码（可接 CI） |
+
+代码结构：`internal/figma`、`internal/inventory`、`internal/platform/{h5,android}`（实现同一个 `Adapter` 接口：Scan / Audit / Capture / Nodes）、`internal/mapping`、`internal/diff`、`internal/report`。各包都有 table-driven 单元测试。
 
 ---
 
-## 5. 里程碑
+## 5. Demo 与对照实验
+
+### 5.1 Demo 素材
+
+- **组件库**：最好直接用你们真实的 H5 组件库和 Android 组件库（哪怕是裁剪版）。拿不到的话，我搭两个小型库（各 10～12 个组件：Button、Tag、Cell/ListItem、Card、NavBar、Tabs、Input、Price、Stepper、Dialog、Toast、Avatar），并故意做出常见的不一致：命名不同（Tag vs Badge）、一端少某个变体、token 有偏差
+- **Figma**：最好用真实文件。没有的话，我按 Figma REST 的真实结构手工构造 fixture（组件库文件和页面文件），**先定稿设计，再写组件**，避免自己出题自己答
+- **典型页面**：移动端「订单详情」或「订单列表」页（NavBar、状态卡片、商品 Cell、价格、Tag、底部操作栏、Dialog）
+
+### 5.2 实验分组（两端各做一次）
+
+| 组 | Agent 拿到的东西 |
+|---|---|
+| A 现状 | Figma 数据、导出图、组件库源码（组件就在仓库里，但没有清单和映射） |
+| B 加资产 Context | A，加上 inventory、component-map、catalog |
+| C 完整 Skill | B，加上 Plan 闸门和 audit/diff 修正闭环 |
+
+每组跑 3 次，两端合计 18 次（只做 A 和 C 的话是 12 次）。指标：组件复用率、违规数、像素偏差、节点级偏差、Plan 准确率、修正轮数。
+
+B 组和 A 组对比，可以单独证明「先扫描资产」这一步的价值；C 组和 B 组对比，证明闭环的价值。
+
+### 5.3 产出
+
+`docs/report.md`，同时发布成一个可分享的页面，内容包括：
+
+- 指标表
+- 两端 A/B/C 截图和 diff 图并排
+- 缺口报告
+- 沉淀出的规则
+- 推广步骤：每个组件库接入 `scan` 和 `map` → Skill 进各端仓库 → `report` 接入 PR CI
+
+---
+
+## 6. 里程碑
 
 | # | 内容 | 完成标准 |
 |---|---|---|
-| M1 | Figma 设计数据定稿（真实文件或 fixture） | nodes.json 和 png 入库 |
-| M2 | token、组件库、mock 数据、component-map | 组件 storybook 风格的预览页能跑起来 |
-| M3 | CLI 六个命令和单元测试 | `make test` 全绿；用一份手写的「标准答案页面」跑 report 全部达标（证明 CLI 准确） |
-| M4 | Skill 和 catalog/rules | 人工走一遍 C 流程跑通 |
-| M5 | A/B/C × 3 实验 | 9 份产出和报告入库 |
-| M6 | 结论报告 | `docs/report.md`，加上可分享的页面（指标表、三组截图和 diff 图并排、规则清单、推广步骤） |
-
-M3 里的「标准答案页面」只用来校准 CLI，不参与实验。
+| M1 | 确定素材：真实组件库 / Figma 还是 fixture | 素材入库 |
+| M2 | CLI：sync 和 scan（两个 adapter） | 两端 inventory 和目录页生成正确；单元测试通过 |
+| M3 | CLI：map suggest/check 和 catalog | 映射建议的准确率可以人工核对；缺口报告输出 |
+| M4 | CLI：plan / audit / diff / report | 用一份手写的标准实现跑出达标结果，以此校准阈值 |
+| M5 | Skill | 人工把 C 流程两端各走通一遍 |
+| M6 | 对照实验 | 所有运行的产出都入库到 `experiments/` |
+| M7 | 报告 | 报告和分享页面完成 |
 
 ---
 
-## 6. 风险与对策
+## 7. 风险与对策
 
 | 风险 | 对策 |
 |---|---|
-| 用 fixture 时设计数据是自己造的，说服力打折 | 优先用真实 Figma；用 fixture 时先定稿再写组件，并公开数据 |
-| 字体和渲染差异导致像素噪声 | 本地打包同一种字体（Inter），截图前等字体加载完；pixelmatch 开启抗锯齿容差；阈值经 M3 校准 |
-| LLM 输出波动 | 每组 3 次，报告给出均值和区间 |
-| A 组被仓库里的线索「污染」 | CLAUDE.md 不提 Skill；A/B 的 worktree 删掉 `.claude/skills` 和 `design/component-map.yaml` |
-| `data-figma-id` 依赖 Agent 自觉加 | audit 检查覆盖率；漏挂的节点退回到按文本内容和位置匹配 |
-
----
-
-## 7. 推广路径（报告结尾部分）
-
-1. 每个业务组件库维护一份 component-map（由组件 owner 负责）
-2. Skill 和 CLI 放进各前端仓库，`figmafe report` 接入 PR CI
-3. 每做完一个页面，把 `rules.md` 新增的规则回收到共享规则库
+| Android 截图需要 JDK、Android SDK 和 Gradle；当前云端环境可能没有，或下载受网络限制 | M1 先验证环境；不行的话，Android 截图在你本地或 CI 跑，CLI 只负责编排和对比 |
+| Code Connect 需要 Figma 付费席位，Compose 支持也有已知坑（例如 library module 解析失败） | 以自有的 component-map 为主，Code Connect 只作为可选导出 |
+| Figma MCP 的 `get_design_context` 输出固定是 React + Tailwind，不适合 Android | 不依赖它生成代码，只取结构、variables 和截图 |
+| 字体和渲染差异带来像素噪声 | 两端用同一种字体；开启抗锯齿容差；在 M4 校准阈值 |
+| 自己构造素材，说服力打折 | 优先用真实素材；用 fixture 时先定稿设计、数据公开 |
 
 ---
 
 ## 8. 需要你确认
 
-1. **Figma 来源**：有真实 Figma 文件和 token 吗？没有就用 fixture。
-2. **前端栈**：默认 React + TS + Vite 加自建组件库；如果真实项目用 antd、MUI 或 Vue，我对齐那个。
-3. **典型页面**：默认「订单管理」列表页；你们有更典型的页面可以换。
-4. **实验规模**：默认 A/B/C × 3 共 9 次；想省时间可以只做 A 和 C。
+1. **你说的两点，我的理解是**：同一份 Figma 设计，H5 端基于 H5 组件库实现，Android 端基于 Android 组件库实现，两端都要先盘点资产。还是说 **H5 组件本身就是参照 Android 组件做的**，要以 Android 组件为基准去对齐 H5？
+2. **技术栈**：H5 是 React 还是 Vue（有没有基于 Vant / NutUI 之类的库）？Android 是 Compose 还是 XML View？
+3. **素材**：能提供真实组件库（可以裁剪）和 Figma 文件 + token 吗？
+4. **实验规模**：两端 A/B/C 共 18 次，还是只做 A 和 C 共 12 次？

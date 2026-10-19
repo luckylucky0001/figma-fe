@@ -162,7 +162,7 @@ func runVerify(args []string) error {
 	if !a.quiet {
 		fmt.Print(md)
 	}
-	fmt.Printf("\n✓ → %s/{report.md,report.json,screen.png,diff.png}\n", relTo(cfg, out))
+	fmt.Printf("\n→ %s/{report.md,report.json,screen.png,diff.png}\n", relTo(cfg, out))
 	if d == nil {
 		return exitError{4, "capture failed: page did not render"}
 	}

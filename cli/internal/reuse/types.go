@@ -25,9 +25,10 @@ type Asset struct {
 	Example    string   `json:"example,omitempty"` // a real usage snippet from the project
 	ExampleAt  string   `json:"exampleAt,omitempty"`
 	// compatibility with the project as it is (see compat.go)
-	Caveat      string `json:"caveat,omitempty"`
-	Unavailable bool   `json:"unavailable,omitempty"` // the installed library version does not ship it
-	WrappedBy   string `json:"wrappedBy,omitempty"`   // the design-system component that wraps this library component
+	Caveat      string              `json:"caveat,omitempty"`
+	Unavailable bool                `json:"unavailable,omitempty"` // the installed library version does not ship it
+	WrappedBy   string              `json:"wrappedBy,omitempty"`
+	Enums       map[string][]string `json:"enums,omitempty"` // enum-like props → allowed values   // the design-system component that wraps this library component
 }
 
 type Finding struct {

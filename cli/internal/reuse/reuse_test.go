@@ -332,3 +332,27 @@ export default function Profile() {
 		t.Errorf("app shell listed as a component")
 	}
 }
+
+func TestPropHints(t *testing.T) {
+	vant := Asset{Name: "Button", Kind: "ui-lib", Source: "Vant"}
+	got := strings.Join(PropHints([]string{"Size=Medium", "Type=Primary", "Type=Default"}, vant), " | ")
+	if !strings.Contains(got, `size="normal"`) || !strings.Contains(got, `type="primary"`) || !strings.Contains(got, `type="default"`) {
+		t.Errorf("vant button: %s", got)
+	}
+	cell := Asset{Name: "Cell", Kind: "ui-lib", Source: "Vant"}
+	if got := strings.Join(PropHints([]string{"Arrow=On", "Arrow=Off"}, cell), ""); !strings.Contains(got, "is-link") {
+		t.Errorf("vant cell: %s", got)
+	}
+	enums := kotlinEnums("enum class Tone(val c: Color) { Info(Color(0xFF1677FF)), Warning(Color(0xFFFF8F1F));\n val x = 1 }")
+	if strings.Join(enums["Tone"], ",") != "Tone.Info,Tone.Warning" {
+		t.Errorf("kotlin enums: %v", enums)
+	}
+	banner := Asset{Name: "DsBanner", Kind: "composable", Enums: map[string][]string{"tone": enums["Tone"]}, Props: []string{"text", "showChevron"}}
+	got = strings.Join(PropHints([]string{"Tone=Warning", "Arrow=On", "Arrow=Off"}, banner), " | ")
+	if !strings.Contains(got, "tone = Tone.Warning") || !strings.Contains(got, "showChevron") {
+		t.Errorf("compose: %s", got)
+	}
+	if p := tsProps("export interface CellProps extends X {\n  title: string;\n  arrow?: boolean;\n}\n"); strings.Join(p, ",") != "title,arrow" {
+		t.Errorf("ts props: %v", p)
+	}
+}

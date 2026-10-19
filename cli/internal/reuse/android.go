@@ -168,8 +168,18 @@ func ScanAndroid(root string) *Report {
 	markCompat(assets, map[string]string{"Material Components": materialVersion(verTexts...)}, family, theme)
 	// custom Views + attrs
 	styleable := map[string][]string{}
+	styleEnums := map[string]map[string][]string{}
+	ktEnums := map[string][]string{}
+	for _, f := range code {
+		if strings.Contains(f.text, "enum class") {
+			for k, v := range kotlinEnums(f.text) {
+				ktEnums[k] = v
+			}
+		}
+	}
 	for _, f := range values {
 		for _, m := range styleableRe2.FindAllStringSubmatch(f.text, -1) {
+			styleEnums[m[1]] = styleableEnums(m[2])
 			for _, a := range attrNameRe.FindAllStringSubmatch(m[2], -1) {
 				styleable[m[1]] = append(styleable[m[1]], a[1])
 			}
@@ -189,6 +199,7 @@ func ScanAndroid(root string) *Report {
 					lib.WrappedBy = m[1] // class DsButton : MaterialButton
 				}
 				a.Props = styleable[m[1]]
+				a.Enums = styleEnums[m[1]]
 				refineConcept(a)
 				custom[m[1]] = a
 			}
@@ -203,7 +214,15 @@ func ScanAndroid(root string) *Report {
 			if end := matchParen(f.text, m[1]-1); end > m[1] {
 				for _, prm := range strings.Split(f.text[m[1]:end], ",") {
 					if kv := strings.SplitN(strings.TrimSpace(prm), ":", 2); len(kv) == 2 {
-						a.Props = append(a.Props, strings.TrimSpace(strings.TrimPrefix(kv[0], "@")))
+						pn := strings.TrimSpace(strings.TrimPrefix(kv[0], "@"))
+						a.Props = append(a.Props, pn)
+						typ := strings.TrimSuffix(strings.TrimSpace(strings.SplitN(kv[1], "=", 2)[0]), "?")
+						if vals := ktEnums[typ]; len(vals) > 0 {
+							if a.Enums == nil {
+								a.Enums = map[string][]string{}
+							}
+							a.Enums[pn] = vals
+						}
 					}
 				}
 			}

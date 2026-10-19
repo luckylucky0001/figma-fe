@@ -14,14 +14,15 @@ import (
 // matching every Figma component (instance) against the project's inventoried assets.
 
 type Candidate struct {
-	Name      string  `json:"name"`
-	Kind      string  `json:"kind"`
-	Source    string  `json:"source"`
-	Score     float64 `json:"score"`
-	Usage     int     `json:"usage"`
-	Example   string  `json:"example,omitempty"`
-	ExampleAt string  `json:"exampleAt,omitempty"`
-	Why       string  `json:"why"`
+	Name      string   `json:"name"`
+	Kind      string   `json:"kind"`
+	Source    string   `json:"source"`
+	Score     float64  `json:"score"`
+	Usage     int      `json:"usage"`
+	Example   string   `json:"example,omitempty"`
+	ExampleAt string   `json:"exampleAt,omitempty"`
+	Why       string   `json:"why"`
+	Props     []string `json:"props,omitempty"` // how to configure it for the Figma variants
 }
 
 type MatchItem struct {
@@ -185,7 +186,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			if ex == "" && as.Kind == "ui-lib" {
 				ex, at = libSnippet(as), "（"+as.Source+" 标准用法，项目未用过）"
 			}
-			item.Candidates = append(item.Candidates, Candidate{as.Name, as.Kind, as.Source, round2(sc), as.Usage, ex, at, why})
+			item.Candidates = append(item.Candidates, Candidate{as.Name, as.Kind, as.Source, round2(sc), as.Usage, ex, at, why, PropHints(item.Variants, as)})
 		}
 		sort.SliceStable(item.Candidates, func(i, j int) bool {
 			ci, cj := item.Candidates[i], item.Candidates[j]
@@ -202,7 +203,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			for _, cv := range r.Conventions {
 				if cv.Concept == fc && fc != "" {
 					sc := 0.72 + math.Min(0.2, 0.05*math.Log2(float64(cv.Usage)+1))
-					item.Candidates = append([]Candidate{{cv.Name, cv.Kind, cv.Source, round2(sc), cv.Usage, cv.Example, cv.ExampleAt, "没有对应组件，项目里惯用这种写法（" + itoa(cv.Usage) + " 处）"}}, item.Candidates...)
+					item.Candidates = append([]Candidate{{cv.Name, cv.Kind, cv.Source, round2(sc), cv.Usage, cv.Example, cv.ExampleAt, "没有对应组件，项目里惯用这种写法（" + itoa(cv.Usage) + " 处）", nil}}, item.Candidates...)
 					break
 				}
 			}
@@ -231,7 +232,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 				if len(attrs) > 2 {
 					attrs = attrs[:2]
 				}
-				item.Candidates = append([]Candidate{{best.Name, best.Kind, best.Source, 0.75, best.Usage, best.Example, best.ExampleAt, "没有分割线组件；这个容器自带分割线属性（" + strings.Join(attrs, "、") + " …），项目里已用 " + itoa(best.Usage) + " 次"}}, item.Candidates...)
+				item.Candidates = append([]Candidate{{best.Name, best.Kind, best.Source, 0.75, best.Usage, best.Example, best.ExampleAt, "没有分割线组件；这个容器自带分割线属性（" + strings.Join(attrs, "、") + " …），项目里已用 " + itoa(best.Usage) + " 次", nil}}, item.Candidates...)
 			}
 		}
 		if len(item.Candidates) > 4 {
@@ -398,6 +399,15 @@ func (m *MatchResult) Markdown() string {
 		}
 		fmt.Fprintf(&b, "| %s | %d | %s | `%s`（%s %s） | %.2f：%s | %s |\n", it.Figma, it.Instances, verdict, c.Name, kindLabel(c.Kind), c.Source, c.Score, c.Why, ex)
 	}
+	var cfg []string
+	for _, it := range m.Items {
+		if it.Verdict != "new" && len(it.Candidates) > 0 && len(it.Candidates[0].Props) > 0 {
+			cfg = append(cfg, "- **"+it.Figma+"** → `"+it.Candidates[0].Name+"`：\n  - "+strings.Join(it.Candidates[0].Props, "\n  - "))
+		}
+	}
+	if len(cfg) > 0 {
+		b.WriteString("\n## 变体 → 属性（推荐组件怎么配置）\n\n" + strings.Join(cfg, "\n") + "\n")
+	}
 	b.WriteString("\n## 候选明细\n\n")
 	for _, it := range m.Items {
 		if len(it.Candidates) < 2 {
@@ -461,7 +471,9 @@ func (m *MatchResult) Draft() *mapping.Map {
 		} else {
 			e.H5 = im
 		}
-		if len(it.Variants) > 0 {
+		if len(c.Props) > 0 {
+			e.Constraints = append(e.Constraints, "变体 → 属性建议（确认后写进 props）："+strings.Join(c.Props, "；"))
+		} else if len(it.Variants) > 0 {
 			e.Constraints = append(e.Constraints, "TODO：补齐变体 → props 映射："+strings.Join(it.Variants, "、"))
 		}
 		d.Components = append(d.Components, e)

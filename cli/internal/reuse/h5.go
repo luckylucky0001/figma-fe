@@ -188,6 +188,7 @@ func ScanH5(root string) *Report {
 			}
 			a := get(kind, name, f.rel)
 			a.Props = vueProps(f.text)
+			a.Enums = unionEnums(f.text)
 			if fixedBottomRe.MatchString(f.text) && fixedRe.MatchString(f.text) && (a.Concept == "navbar" || a.Concept == "") {
 				a.Concept = "tabs" // a bar pinned to the bottom is a tab bar / action bar, whatever its name says
 				if regexp.MustCompile(`(?i)button|btn|submit`).MatchString(f.markup) {
@@ -204,6 +205,14 @@ func ScanH5(root string) *Report {
 					k = "page-local"
 				}
 				a := get(k, name, f.rel)
+				a.Props = tsProps(f.text)
+				if a.Enums = unionEnums(f.text); len(a.Enums) > 0 {
+					for p := range a.Enums {
+						if !contains(a.Props, p) {
+							a.Props = append(a.Props, p)
+						}
+					}
+				}
 				projByName[name] = a
 			}
 		}

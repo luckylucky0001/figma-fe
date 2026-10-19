@@ -83,8 +83,27 @@ func runReuse(args []string) error {
 			defer func() { os.Exit(3) }()
 		}
 		m := r.Metrics
-		fmt.Printf("\n✓ [%s] %d 个资产 · 组件化率 %.0f%% · 重复概念 %d · 重复结构 %d 组 · 硬编码颜色 %d → %s\n",
-			p, len(r.Assets), m.Componentization*100, m.DuplicateConcepts, m.CloneGroups, m.HardcodedColors, filepath.Join(*out, p+".md"))
+		wraps, blocked := 0, 0
+		for i := range r.LibAll {
+			if r.LibAll[i].WrappedBy != "" {
+				wraps++
+			}
+			if r.LibAll[i].Unavailable || r.LibAll[i].Caveat != "" && r.LibAll[i].Usage == 0 {
+				blocked++
+			}
+		}
+		extra := ""
+		if wraps > 0 {
+			extra += fmt.Sprintf(" · 设计系统封装 %d", wraps)
+		}
+		if blocked > 0 {
+			extra += fmt.Sprintf(" · 不能直接用的库组件 %d", blocked)
+		}
+		if len(r.Conventions) > 0 {
+			extra += fmt.Sprintf(" · 项目惯例 %d", len(r.Conventions))
+		}
+		fmt.Printf("\n✓ [%s] %d 个资产 · 组件化率 %.0f%% · 重复概念 %d · 重复结构 %d 组 · 硬编码颜色 %d%s → %s\n",
+			p, len(r.Assets), m.Componentization*100, m.DuplicateConcepts, m.CloneGroups, m.HardcodedColors, extra, filepath.Join(*out, p+".md"))
 	}
 	return nil
 }

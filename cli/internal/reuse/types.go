@@ -314,9 +314,10 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 		}
 	}
 	var out []Cluster
+	setFamilyPrefixes(assets)
 	for c, as := range by {
 		as = collapseFamilies(as)
-		if len(as) < 2 {
+		if len(as) < 2 || oneFamily(as) {
 			continue
 		}
 		projects := 0
@@ -439,4 +440,21 @@ func featureOnly(a Asset) bool {
 		return true
 	}
 	return false
+}
+
+// oneFamily: every member is a design-system variant of one family (NiaButton / NiaTextButton /
+// NiaOutlinedButton) — deliberate styles, not duplicates.
+func oneFamily(as []Asset) bool {
+	prefix := ""
+	for _, a := range as {
+		ws := splitWords(a.Name)
+		if a.Kind == "ui-lib" || len(ws) < 2 || !famPrefixes[ws[0]] || !inDesignSystem(a.Source) {
+			return false
+		}
+		if prefix != "" && ws[0] != prefix {
+			return false
+		}
+		prefix = ws[0]
+	}
+	return true
 }

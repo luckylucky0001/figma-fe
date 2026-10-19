@@ -211,8 +211,10 @@ func ScanAndroid(root string) *Report {
 			}
 			name := f.text[m[2]:m[3]]
 			pre := f.text[max(0, m[0]-12):m[0]]
-			if strings.Contains(pre, "private") || strings.HasSuffix(name, "Preview") || strings.HasSuffix(name, "Screen") || strings.HasSuffix(name, "App") || strings.HasSuffix(name, "Theme") {
-				continue
+			ann := annotationsBefore(f.text, m[0])
+			if strings.Contains(pre, "private") || strings.Contains(name, "Preview") || strings.Contains(ann, "Preview") || strings.Contains(name, "Screen") ||
+				strings.HasSuffix(name, "App") || strings.HasSuffix(name, "Theme") || strings.HasSuffix(name, "Content") || strings.HasSuffix(name, "Route") {
+				continue // previews, screens and their sections are not reusable components
 			}
 			a := get("composable", name, f.rel)
 			if end := matchParen(f.text, m[1]-1); end > m[1] {
@@ -555,4 +557,21 @@ func domainType(t string) bool {
 		return false
 	}
 	return !strings.HasSuffix(t, "Colors") && !strings.HasSuffix(t, "State") && !strings.HasSuffix(t, "Style") && !strings.HasSuffix(t, "Tone") && !strings.HasSuffix(t, "Size") && !strings.HasSuffix(t, "Type") && !strings.HasSuffix(t, "Variant")
+}
+
+// annotationsBefore returns the annotation lines directly above a declaration (@Preview, @ThemePreviews …).
+func annotationsBefore(src string, at int) string {
+	lines := strings.Split(src[max(0, at-400):at], "\n")
+	var ann []string
+	for i := len(lines) - 1; i >= 0; i-- {
+		l := strings.TrimSpace(lines[i])
+		if l == "" && i == len(lines)-1 {
+			continue
+		}
+		if !strings.HasPrefix(l, "@") {
+			break
+		}
+		ann = append(ann, l)
+	}
+	return strings.Join(ann, " ")
 }

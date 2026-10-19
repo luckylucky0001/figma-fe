@@ -57,7 +57,7 @@ func runReuse(args []string) error {
 			fmt.Println("✓ 没有改动 UI 文件，跳过页面复用检查")
 			return nil
 		}
-		*focus = strings.Join(files, ",")
+		*focus = strings.Join(files, reuse.FocusSep)
 		lines = addedLines(root, *changed)
 		fmt.Printf("· 检查改动的 %d 个 UI 文件（已有文件只看新增的行）\n", len(files))
 	}

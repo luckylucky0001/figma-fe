@@ -1,5 +1,5 @@
 
-## 页面复用检查：qmuidemo/src/main/res/values/colors.xml,qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt,qmuidemo/src/main/res/layout/fragment_order_detail.xml  ❌ FAIL
+## 页面复用检查：qmuidemo/src/main/res/values/colors.xml、qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt、qmuidemo/src/main/res/layout/fragment_order_detail.xml  ❌ FAIL
 
 - 复用的现成组件（6）：ImageView（组件库）、QMUIRoundButton（自定义 View）、QMUIRoundLinearLayout（自定义 View）、QMUITopBarLayout（自定义 View）、QMUIWindowInsetLayout（自定义 View）、TextView（组件库）
 - 自造轮子（0）

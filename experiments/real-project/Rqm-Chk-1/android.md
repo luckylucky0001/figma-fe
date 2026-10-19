@@ -1,5 +1,5 @@
 
-## 页面复用检查：qmuidemo/src/main/res/values/colors.xml,qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt,qmuidemo/src/main/res/layout/fragment_order_detail.xml  ✅ PASS
+## 页面复用检查：qmuidemo/src/main/res/values/colors.xml、qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt、qmuidemo/src/main/res/layout/fragment_order_detail.xml  ✅ PASS
 
 - 复用的现成组件（8）：QMUICommonListItemView（自定义 View）、QMUIFrameLayout（自定义 View）、QMUIGroupListView（自定义 View）、QMUILinearLayout（自定义 View）、QMUIRoundButton（自定义 View）、QMUITopBarLayout（自定义 View）、QMUIWindowInsetLayout（自定义 View）、TextView（组件库）
 - 自造轮子（0）

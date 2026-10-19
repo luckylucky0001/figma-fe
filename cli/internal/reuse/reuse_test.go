@@ -1064,3 +1064,13 @@ func TestReviewPlausibleFixes(t *testing.T) {
 		t.Errorf("hints=%v", hints)
 	}
 }
+
+// review: a changed file whose name has a comma is one file; a user's --focus stays comma-separated
+func TestFocusListKeepsCommas(t *testing.T) {
+	if got := strings.Join(focusList("a,b.vue"+FocusSep+"c.vue"), "|"); got != "a,b.vue|c.vue" {
+		t.Errorf("--changed list: %q", got)
+	}
+	if got := strings.Join(focusList("a.xml,B.kt"), "|"); got != "a.xml|B.kt" {
+		t.Errorf("--focus list: %q", got)
+	}
+}

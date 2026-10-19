@@ -27,13 +27,24 @@ func (r *Report) CheckFocus(focus string) *PageCheck { return r.CheckFocusLines(
 
 // CheckFocusLines is CheckFocus restricted, per file, to the given lines (a PR's added lines);
 // files not in lines are judged whole.
+// FocusSep joins the files of a --changed check: git paths can contain commas, never newlines.
+const FocusSep = "\n"
+
+// focusList splits a focus: --changed joins with FocusSep, a user's --focus is comma-separated.
+func focusList(focus string) []string {
+	if strings.Contains(focus, FocusSep) {
+		return strings.Split(focus, FocusSep)
+	}
+	return strings.Split(focus, ",")
+}
+
 func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *PageCheck {
 	inLines := func(rel string, ln int) bool {
 		set, ok := lines[rel]
 		return !ok || set[ln]
 	}
-	var focuses []string // comma-separated: a page is often several files (Fragment + layout)
-	for _, f := range strings.Split(focus, ",") {
+	var focuses []string // a page is often several files (Fragment + layout)
+	for _, f := range focusList(focus) {
 		if f = filepath.ToSlash(strings.TrimSuffix(strings.TrimSpace(f), "/")); f != "" {
 			focuses = append(focuses, f)
 		}
@@ -385,8 +396,9 @@ func (pc *PageCheck) Markdown() string {
 	if !pc.Pass {
 		verdict = "❌ FAIL"
 	}
-	focus := pc.Focus
-	if fs := strings.Split(focus, ","); len(fs) > 3 {
+	fs := focusList(pc.Focus)
+	focus := strings.Join(fs, "、")
+	if len(fs) > 3 {
 		focus = itoa(len(fs)) + " 个文件（" + strings.Join(fs[:2], "、") + " …）"
 	}
 	b.WriteString("\n## 页面复用检查：" + focus + "  " + verdict + "\n\n")

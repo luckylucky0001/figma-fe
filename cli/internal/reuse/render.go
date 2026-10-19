@@ -38,6 +38,10 @@ func (r *Report) Markdown() string {
 	if len(r.Libraries) > 0 {
 		b.WriteString("\n## 1. 三方组件库使用\n\n| 组件库 | 使用次数 | 最常用 |\n|---|---|---|\n")
 		for _, l := range r.Libraries {
+			if l.Usage == 0 {
+				fmt.Fprintf(&b, "| %s | 0 | 已在依赖里，但项目还没用过 |\n", l.Name)
+				continue
+			}
 			fmt.Fprintf(&b, "| %s | %d | %s |\n", l.Name, l.Usage, strings.Join(l.Top, "、"))
 		}
 		var bad []string

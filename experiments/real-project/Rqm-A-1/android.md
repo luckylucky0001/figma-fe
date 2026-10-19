@@ -77,11 +77,11 @@
 | `EditText` | 组件库 | input | 2 | `<EditText` qmuidemo/src/main/res/layout/fragment_scheme.xml:47 |
 | `ListView` | 组件库 | list | 2 | `<ListView` qmuidemo/src/main/res/layout/fragment_listview.xml:25 |
 | `HorizontalPager` | 组件库 | carousel | 1 | `HorizontalPager(` photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt:39 |
-| `ProgressBar` | 组件库 | loading | 1 | `<ProgressBar` qmuidemo/src/main/res/layout/fragment_webview_explorer.xml:37 |
-| `LazyRow` | 组件库 | list | 1 | `LazyRow(` photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt:116 |
 | `QMUISeekBar` | 组件库 |  | 1 | `<com.qmuiteam.qmui.widget.QMUISeekBar` qmuidemo/src/main/res/layout/fragment_slider.xml:44 |
+| `ProgressBar` | 组件库 | loading | 1 | `<ProgressBar` qmuidemo/src/main/res/layout/fragment_webview_explorer.xml:37 |
 | `ViewPager2` | 组件库 |  | 1 | `<androidx.viewpager2.widget.ViewPager2` qmuidemo/src/main/res/layout/fragment_tab_viewpager2_layout.xml:39 |
 | `ViewPager` | 组件库 | carousel | 1 | `<androidx.viewpager.widget.ViewPager` qmuidemo/src/main/res/layout/fragment_tab_viewpager_layout.xml:39 |
+| `LazyRow` | 组件库 | list | 1 | `LazyRow(` photo/src/main/java/com/qmuiteam/photo/compose/picker/Preview.kt:116 |
 | `SwipeBackLayout` | 自定义 View |  | 78 | `import static com.qmuiteam.qmui.arch.SwipeBackLayout.DRAG_DIRECTION_BOTTOM_TO_TOP;` arch/src/main/java/com/qmuiteam/qmui/arch/QMUIActivity.java:37 |
 | `QMUIPullLayout` | 自定义 View |  | 49 | `<com.qmuiteam.qmui.widget.pullLayout.QMUIPullLayout` qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml:32 |
 | `QMUICommonListItemView` | 自定义 View | cell | 48 | `QMUICommonListItemView itemView = new QMUICommonListItemView(getContext());` qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java:83 |
@@ -90,8 +90,8 @@
 | `QMUIRoundButton` | 自定义 View | button | 33 | `<com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton` qmui/src/main/res/layout/qmui_empty_view.xml:75 |
 | `QMUIQuickAction` | 自定义 View |  | 31 | `return new QMUIQuickAction(context, ViewGroup.LayoutParams.WRAP_CONTENT, actionHeight)` qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIPopups.java:71 |
 | `QMUIWindowInsetLayout` | 自定义 View |  | 26 | `<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"` qmuidemo/src/main/res/layout/activity_arch_test.xml:18 |
-| `QMUIGroupListView` | 自定义 View | card | 25 | `<com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView` qmuidemo/src/main/res/layout/fragment_about.xml:54 |
 | `QMUIQQFaceView` | 自定义 View |  | 25 | `<com.qmuiteam.qmui.qqface.QMUIQQFaceView` qmuidemo/src/main/res/layout/fragment_qqface_layout.xml:97 |
+| `QMUIGroupListView` | 自定义 View | card | 25 | `<com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView` qmuidemo/src/main/res/layout/fragment_about.xml:54 |
 | `QMUIPriorityLinearLayout` | 自定义 View |  | 18 | `<com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout` qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:45 |
 | `QMUIWindowInsetLayout2` | 自定义 View |  | 16 | `<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout2 xmlns:android="http://schemas.android.com/apk/res/android"` qmuidemo/src/main/res/layout/fragment_animation_listview.xml:18 |
 | `QMUISpanTouchFixTextView` | 自定义 View |  | 15 | `<com.qmuiteam.qmui.widget.textview.QMUISpanTouchFixTextView` qmui/src/main/res/layout/qmui_empty_view.xml:36 |
@@ -101,38 +101,38 @@
 | `QMUIDialog` | 自定义 View | dialog | 10 | `mDialog = new QMUIDialog(mContext, style);` qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:343 |
 | `QMUIFrameLayout` | 自定义 View |  | 10 | `<com.qmuiteam.qmui.layout.QMUIFrameLayout` qmuidemo/src/main/res/layout/fragment_button.xml:39 |
 | `QMUIRadiusImageView2` | 自定义 View | image | 8 | `<com.qmuiteam.qmui.widget.QMUIRadiusImageView2` qmuidemo/src/main/res/layout/fragment_order_detail.xml:218 |
-| `QMUIRadiusImageView` | 自定义 View | image | 7 | `<com.qmuiteam.qmui.widget.QMUIRadiusImageView` qmuidemo/src/main/res/layout/fragment_radius_imageview.xml:42 |
 | `QMUIWebView` | 自定义 View |  | 7 | `private QMUIWebView.OnScrollChangeListener mOnScrollChangeListener;` qmui/src/main/java/com/qmuiteam/qmui/widget/webview/QMUIWebViewContainer.java:34 |
-| `QMUIContinuousNestedBottomRecyclerView` | 自定义 View | list | 6 | `QMUIContinuousNestedBottomRecyclerView recyclerView = new QMUIContinuousNestedBottomRecyclerView(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java:96 |
-| `RowImages` | Composable | image | 2 | `RowImages(images, renderInfo, config, maxWidth, 2, 0, onClick)` photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt:255 |
-| `QMUITopBarWithLazyScrollState` | Composable |  | 4 | `QMUITopBarWithLazyScrollState(` photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:358 |
-| `BlankBox` | Composable |  | 3 | `BlankBox()` photo-coil/src/main/java/com/qmuiteam/photo/coil/QMUICoilPhoto.kt:80 |
-| `QMUIAlphaConstraintLayout` | 自定义 View |  | 0 | qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaConstraintLayout.java |
-| `QMUIGroupListSectionHeaderFooterView` | 自定义 View | navbar | 2 | `return new QMUIGroupListSectionHeaderFooterView(mContext, titleText);` qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUIGroupListView.java:359 |
-| `QMUIDialogMenuItemView` | 自定义 View | dialog | 5 | `itemView.setListener(new QMUIDialogMenuItemView.MenuItemViewListener() {` qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java:494 |
-| `QMUIBottomSheetListItemView` | 自定义 View | cell | 1 | `final VH vh = new VH(new QMUIBottomSheetListItemView(` qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetListAdapter.java:94 |
-| `QMUIGesturePhoto` | Composable |  | 4 | `QMUIGesturePhoto(` photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoViewerActivity.kt:185 |
-| `QMUIPhotoLoading` | Composable | loading | 3 | `QMUIPhotoLoading(lineColor = QMUILocalPickerConfig.current.loadingColor)` photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:577 |
-| `QMUIWrapContentScrollView` | 自定义 View |  | 1 | `QMUIWrapContentScrollView scrollView = new QMUIWrapContentScrollView(view.getContext());` qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:498 |
-| `QMUIAlphaRelativeLayout` | 自定义 View |  | 0 | qmui/src/main/java/com/qmuiteam/qmui/alpha/QMUIAlphaRelativeLayout.java |
-| `QMUIAnimationListView` | 自定义 View | list | 4 | `<com.qmuiteam.qmui.widget.QMUIAnimationListView` qmuidemo/src/main/res/layout/fragment_animation_listview.xml:32 |
-| `QDSectionHeaderView` | 自定义 View | navbar | 1 | `return new ViewHolder(new QDSectionHeaderView(viewGroup.getContext()));` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/section/QDGridSectionAdapter.java:51 |
-| `QMUIToast` | Composable | toast | 2 | `QMUIToast(modal, radius, background, content)` compose/src/main/java/com/qmuiteam/compose/modal/QMUIToast.kt:116 |
-| `QMUIContinuousNestedTopRecyclerView` | 自定义 View | list | 4 | `mTopRecyclerView = new QMUIContinuousNestedTopRecyclerView(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java:51 |
-| `QMUIFloatLayout` | 自定义 View |  | 4 | `<com.qmuiteam.qmui.widget.QMUIFloatLayout` qmuidemo/src/main/res/layout/fragment_floatlayout.xml:37 |
+| `QMUIRadiusImageView` | 自定义 View | image | 7 | `<com.qmuiteam.qmui.widget.QMUIRadiusImageView` qmuidemo/src/main/res/layout/fragment_radius_imageview.xml:42 |
 | `QMUIProgressBar` | 自定义 View | loading | 6 | `<com.qmuiteam.qmui.widget.QMUIProgressBar` qmuidemo/src/main/res/layout/fragment_progressbar.xml:38 |
+| `QMUIContinuousNestedBottomRecyclerView` | 自定义 View | list | 6 | `QMUIContinuousNestedBottomRecyclerView recyclerView = new QMUIContinuousNestedBottomRecyclerView(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java:96 |
+| `QMUITopBar` | 自定义 View | navbar | 6 | `<com.qmuiteam.qmui.widget.QMUITopBar` qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml:54 |
+| `QMUILinearLayout` | 自定义 View |  | 6 | `<com.qmuiteam.qmui.layout.QMUILinearLayout style="@style/button_wrapper_style"` qmuidemo/src/main/res/layout/fragment_button.xml:112 |
+| `QMUISlider` | 自定义 View |  | 5 | `<com.qmuiteam.qmui.widget.QMUISlider` qmuidemo/src/main/res/layout/fragment_slider.xml:35 |
+| `QMUIDialogMenuItemView` | 自定义 View | dialog | 5 | `itemView.setListener(new QMUIDialogMenuItemView.MenuItemViewListener() {` qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialog.java:494 |
+| `QMUIVerticalTextView` | 自定义 View |  | 5 | `<com.qmuiteam.qmui.widget.QMUIVerticalTextView` qmuidemo/src/main/res/layout/fragment_pull_horizontal_test_layout.xml:48 |
+| `QMUIContinuousNestedScrollLayout` | 自定义 View |  | 5 | `<com.qmuiteam.qmui.nestedScroll.QMUIContinuousNestedScrollLayout` qmuidemo/src/main/res/layout/fragment_continuous_nested_scroll.xml:31 |
+| `QMUILinkTextView` | 自定义 View |  | 5 | `<com.qmuiteam.qmui.widget.textview.QMUILinkTextView` qmuidemo/src/main/res/layout/fragment_link_texview_layout.xml:49 |
+| `QMUILoadingView` | 自定义 View | loading | 5 | `<com.qmuiteam.qmui.widget.QMUILoadingView` qmui/src/main/res/layout/qmui_empty_view.xml:22 |
+| `QMUIBasicTabSegment` | 自定义 View | tabs | 4 | `* Please use QMUIBasicTabSegment.OnTabClickListener for a replacement` qmui/src/main/java/com/qmuiteam/qmui/widget/tab/QMUITabSegment.java:307 |
+| `QMUIContinuousNestedTopDelegateLayout` | 自定义 View |  | 4 | `mTopDelegateLayout = new QMUIContinuousNestedTopDelegateLayout(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll4Fragment.java:56 |
+| `QMUIFloatLayout` | 自定义 View |  | 4 | `<com.qmuiteam.qmui.widget.QMUIFloatLayout` qmuidemo/src/main/res/layout/fragment_floatlayout.xml:37 |
+| `QMUIAnimationListView` | 自定义 View | list | 4 | `<com.qmuiteam.qmui.widget.QMUIAnimationListView` qmuidemo/src/main/res/layout/fragment_animation_listview.xml:32 |
+| `QMUIContinuousNestedTopRecyclerView` | 自定义 View | list | 4 | `mTopRecyclerView = new QMUIContinuousNestedTopRecyclerView(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll3Fragment.java:51 |
+| `QMUIContinuousNestedTopWebView` | 自定义 View |  | 4 | `mNestedWebView = new QMUIContinuousNestedTopWebView(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll1Fragment.java:65 |
 | `QMUIRoundLinearLayout` | 自定义 View |  | 3 | `<com.qmuiteam.qmui.widget.roundwidget.QMUIRoundLinearLayout` qmuidemo/src/main/res/layout/fragment_order_detail.xml:72 |
-| `QMUIBaseDialog` | 自定义 View | dialog | 0 | qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBaseDialog.java |
-| `QDWebView` | 自定义 View |  | 1 | `mWebView = new QDWebView(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/QDWebExplorerFragment.java:123 |
-| `QMUIDialogAction` | Composable | dialog | 8 | `QMUIDialogAction(` compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt:90 |
-| `QMUIWebViewContainer` | 自定义 View |  | 1 | `<com.qmuiteam.qmui.widget.webview.QMUIWebViewContainer` qmuidemo/src/main/res/layout/fragment_webview_explorer.xml:24 |
+| `EmojiEditText` | 自定义 View | input | 3 | `val editText = EmojiEditText(context).apply {` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEmojiInputFragment.kt:38 |
+| `QMUIBottomSheetGridLineLayout` | 自定义 View |  | 3 | `private QMUIBottomSheetGridLineLayout.ItemWidthCalculator mItemWidthCalculator = null;` qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java:521 |
+| `QMUIFullScreenPopup` | 自定义 View | popup | 3 | `return new QMUIFullScreenPopup(context);` qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIPopups.java:67 |
+| `QMUICollapsingTopBarLayout` | 自定义 View |  | 3 | `<com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout` qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml:31 |
+| `QMUIDialogView` | 自定义 View | dialog | 3 | `private QMUIDialogView.OnDecorationListener mOnDecorationListener;` qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIDialogBuilder.java:94 |
+| `QDContinuousBottomView` | 自定义 View |  | 3 | `mBottomView = new QDContinuousBottomView(getContext());` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousNestedScroll2Fragment.java:48 |
 | … | | | | 共 161 个，见 reuse.json |
 
 ## 3. 重复资产（同一概念多个实现 → 收敛到推荐组件）
 
 | 概念 | 实现 | 推荐统一为 |
 |---|---|---|
-| button | Button（组件库，用 5 次）<br>QMUIRoundButton（自定义 View，用 33 次）<br>CommonImageButton（Composable，用 6 次）<br>QMUIButton（自定义 View，用 2 次）<br>CommonButton（Composable，用 2 次）<br>OriginOpenButton（Composable，用 2 次）<br>CommonTextButton（Composable，用 2 次）<br>QMUIAlphaImageButton（自定义 View，用 2 次）<br>PickCurrentCheckButton（Composable，用 1 次）<br>QMUIAlphaButton（自定义 View，用 0 次） | `Button` |
+| button | Button（组件库，用 5 次）<br>QMUIRoundButton（自定义 View，用 33 次）<br>CommonImageButton（Composable，用 6 次）<br>QMUIButton（自定义 View，用 2 次）<br>QMUIAlphaImageButton（自定义 View，用 2 次）<br>CommonButton（Composable，用 2 次）<br>OriginOpenButton（Composable，用 2 次）<br>CommonTextButton（Composable，用 2 次）<br>PickCurrentCheckButton（Composable，用 1 次）<br>QMUIAlphaButton（自定义 View，用 0 次） | `Button` |
 | list | LazyColumn（组件库，用 9 次）<br>QMUIContinuousNestedBottomRecyclerView（自定义 View，用 6 次）<br>QMUIAnimationListView（自定义 View，用 4 次）<br>QMUIContinuousNestedTopRecyclerView（自定义 View，用 4 次）<br>RecyclerView（组件库，用 6 次）<br>LazyRow（组件库，用 1 次）<br>ListView（组件库，用 2 次）<br>QMUIWrapContentListView（自定义 View，用 1 次） | `LazyColumn` |
 | loading | QMUILoadingView（自定义 View，用 5 次）<br>QMUIProgressBar（自定义 View，用 6 次）<br>QMUIPhotoLoading（Composable，用 3 次）<br>QDLoadingItemView（自定义 View，用 1 次）<br>ProgressBar（组件库，用 1 次） | `QMUILoadingView` |
 | dialog | QMUIDialog（自定义 View，用 10 次）<br>QMUITipDialog（自定义 View，用 14 次）<br>QMUIBaseDialog（自定义 View，用 0 次）<br>QMUIModal（Composable，用 0 次） | `QMUIDialog` |
@@ -154,11 +154,11 @@
 | #646A73 | 6 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #8F959E | 4 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #E5E6EB | 3 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
-| #FFFFFF | 2 | `@color/qmui_config_color_white` | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
-| #333333 | 2 | — | photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt |
-| #FF8F1F | 2 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #0000FF | 2 | — | qmuidemo/src/main/res/layout/fragment_layout.xml、qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLayoutFragment.java |
+| #FF8F1F | 2 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
+| #333333 | 2 | — | photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt |
 | #FF0000 | 2 | — | qmuidemo/src/main/res/layout/fragment_layout.xml、qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLayoutFragment.java |
+| #FFFFFF | 2 | `@color/qmui_config_color_white` | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #F53F3F | 1 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
-| #FF4D1A | 1 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #00A8E1 | 1 | `@color/app_color_blue` | compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt |
+| #777777 | 1 | — | compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt |

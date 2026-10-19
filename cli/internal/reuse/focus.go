@@ -226,17 +226,18 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 				isRow, minRows = htmlTextRow, 3 // markup is freer: ask for a clearer repetition
 			}
 			var rows []int
-			var walk func(ns []*mnode)
-			walk = func(ns []*mnode) {
+			var walk func(ns []*mnode, depth int)
+			walk = func(ns []*mnode, depth int) {
 				for _, n := range ns {
-					if isRow(n) && inLines(f.rel, n.line) {
+					// a layout whose root is the row is a reusable item layout (info_cell.xml), not a hand-built one
+					if depth > 0 && isRow(n) && inLines(f.rel, n.line) {
 						rows = append(rows, n.line)
 						continue
 					}
-					walk(n.children)
+					walk(n.children, depth+1)
 				}
 			}
-			walk(parseMarkup(f.src))
+			walk(parseMarkup(f.src), 0)
 			if len(rows) >= minRows {
 				pref := func(a *Asset) int { return preference(*a, "cell") }
 				var best *Asset

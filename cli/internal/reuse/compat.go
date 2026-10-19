@@ -52,6 +52,7 @@ var materialThemed = map[string]bool{
 	"MaterialButton": true, "Chip": true, "ChipGroup": true, "MaterialCardView": true, "TextInputLayout": true,
 	"BottomNavigationView": true, "Slider": true, "MaterialButtonToggleGroup": true, "ExtendedFloatingActionButton": true,
 	"CircularProgressIndicator": true, "LinearProgressIndicator": true, "MaterialSwitch": true,
+	"MaterialDivider": true, // colours come from ?attr/colorOnSurface / colorOutline (Material theme attributes)
 }
 
 var (

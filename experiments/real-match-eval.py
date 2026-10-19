@@ -143,7 +143,7 @@ EXPECTED = {
     },
     ("newpipe", "order-detail"): {
         "NavBar": (["Toolbar", "MaterialToolbar", "@layout/toolbar_layout"], []), "NoticeBar": (["—"], []), "Card": (["CardView", "MaterialCardView"], []), "Tag": (["Chip"], ["—"]),
-        "CountDown": (["—"], []), "Divider": (["MaterialDivider", "—"], []), "Cell": (["—"], ["PreferenceRow", "ListItem"]), "ProductCard": (["CardView", "—"], []),
+        "CountDown": (["—"], []), "Divider": (["1px View 细线", "—"], ["MaterialDivider"]), "Cell": (["—"], ["PreferenceRow", "ListItem"]), "ProductCard": (["CardView", "—"], []),
         "Price": (["—"], []), "ActionBar": (["—"], []), "Button": (["MaterialButton", "Button[Android SDK widgets]"], ["Button"]),
     },
     ("newpipe", "holdings"): {

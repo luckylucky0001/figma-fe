@@ -9,6 +9,7 @@ PROJECTS = {
     "Rnb": ("newbee-mall-vue3-app（Vue 3 + Vant）", "h5", "新建 `src/views/OrderDetailV2.vue`；打分：`figmafe reuse <项目> --focus src/views/OrderDetailV2.vue`"),
     "Rqm": ("QMUI_Android（XML View + QMUI）", "android", "新建 Fragment + layout；打分：`figmafe reuse <项目> --changed HEAD`（新文件整份判，已有文件只看新增行）"),
     "Rlm": ("litemall-vue（Vue 2 + Vant 2，留出项目）", "h5", "新建 `src/views/order/order-detail-v2.vue`；打分：`figmafe reuse <项目> --changed HEAD`"),
+    "Rnp": ("NewPipe（大型开源 App，XML + AppCompat，留出项目）", "android", "新建 Fragment + layout；打分：`figmafe reuse <项目> --changed HEAD`"),
     "Rnia": ("Now in Android（Jetpack Compose + Material3 + 自有设计系统 Nia*）", "android", "新建 `OrderDetailScreen.kt`，通用组件放哪由 agent 决定；打分：`figmafe reuse <项目> --changed HEAD`"),
 }
 GROUP = {"A": "A 只给任务（Opus）", "Ahk": "A 只给任务（Haiku）", "C": "C 用 Skill（Opus）", "Chk": "C 用 Skill（Haiku）"}
@@ -24,6 +25,8 @@ NEW = {
     "Rqm-Chk-1": "无（Tag / Price / CountDown / 商品行用 QMUICommonListItemView 的标题、描述、accessory 和 span 实现，决定写进 component-map.yaml）",
     "Rlm-A-1": "Price.vue",
     "Rlm-C-1": "Price.vue（md-price；决定写进 component-map.yaml）",
+    "Rnp-A-1": "@layout/order_detail_cell + 6 个 drawable 背景（认为项目里没有卡片 / 单元格组件，没用 CardView）",
+    "Rnp-C-1": "PriceTextView、CountDownTextView、@layout/info_cell（决定写进 component-map.yaml）",
     "Rnia-C-2": "NiaStatusTag、NiaCell、NiaNoticeBar、NiaCountDown、NiaPriceText、NiaBottomActionBar、ProductItem（每个都在 component-map.yaml 记录了决定和理由）",
     "Rnia-C-1": "NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard",
 }
@@ -59,6 +62,7 @@ for p, (name, plat, how) in PROJECTS.items():
         md.append(f"| {r['run']} | {grp} | {'✅ PASS' if r['pass'] else '❌ FAIL'} | {r['used']} | {r['reinvented']} / {r['reinventedWarn']} | {r['missed']} | {r['handBuiltError']} / {r['handBuiltWarn']} | {r['localTokens']} | {r['colors']} | {r['new']} |")
     md.append("")
 md += ["## 说明", "",
+       "- NewPipe：C 组 agent 发现 `MaterialDivider` 在 AppCompat 主题下取不到颜色属性，改用了项目里 14 处的 1px View 细线；这条已做进工具（MaterialDivider 也算需要 Material 主题的组件），现在 match 直接推荐这个项目惯例。",
        "- **实验的局限**：A 组和 C 组都在同一个会话里以子 agent 运行，A 组也能看到本仓库的 Skill（实验环境所限）。Rnia-A-1、Rnia-A-2、Rqm-Ahk-1 读到了 Skill 但没按它做；Rlm-A-1 自己运行了 figmafe，已标为无效。这种「泄漏」只会让 A 组更好，所以 A / C 的差距是保守估计。",
        "- newbee：A 组页面里手写了商品卡、分割线、底部操作栏，还自建了 10 个颜色变量；C 组直接用 Vant 的 Card / Divider / ActionBar 和项目已有的 SimpleHeader，缺的 Price 放进组件目录。",
        "- Haiku 不带 Skill 时一个现成组件都没用（0 个），带 Skill 后复用 10 个、检查通过：Skill 把「先查再写」变成了固定流程，模型能力弱时收益更大。",

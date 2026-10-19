@@ -356,6 +356,11 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s -= 0.15
 		why = append(why, "项目几乎不用 "+a.Source)
 	}
+	// the name links to the concept only through a weak word (swipeactions_row, InterestsItem): less sure
+	if a.Kind != "ui-lib" && a.Concept != "" && weakOnly(a.Name, a.Concept) && fn != an {
+		s -= 0.08
+		why = append(why, "名称只以 row / item 之类的泛称对上")
+	}
 	// a selectable component (FilterChip: selected / onSelectedChange) for a design element that has
 	// no selected state is the wrong interaction
 	if selectable(a.Props) && !hasAxis(variants, "selected", "checked", "active", "state", "on") {
@@ -741,4 +746,36 @@ func hasModelParam(req []string) bool {
 		}
 	}
 	return false
+}
+
+// weakOnly: the name reaches the concept only through an ambiguous structural word (row, item,
+// panel …); "header" for a top bar is a fair name and does not count.
+func weakOnly(name, concept string) bool {
+	ws := splitWords(name)
+	ambiguous := false
+	for _, w := range ws {
+		switch w {
+		case "row", "rows", "item", "items", "panel", "box", "line":
+			ambiguous = true
+		}
+	}
+	if !ambiguous {
+		return false
+	}
+	for _, c := range concepts {
+		if c.Name != concept {
+			continue
+		}
+		for i := range ws {
+			for k := 1; k <= 3 && i+k <= len(ws); k++ {
+				g := strings.Join(ws[i:i+k], "")
+				for _, w := range c.Words {
+					if (g == w || strings.TrimSuffix(g, "s") == w) && !weak[w] {
+						return false
+					}
+				}
+			}
+		}
+	}
+	return true
 }

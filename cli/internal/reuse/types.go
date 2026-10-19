@@ -502,8 +502,9 @@ func preference(a Asset, concept string) int {
 	return p
 }
 
-// dropSubclasses removes custom views that extend another member's widget (SquareImageView extends
-// AppCompatImageView, a member ImageView): a specialisation by inheritance, not a second implementation.
+// dropSubclasses removes members built on another member: custom views extending its widget
+// (SquareImageView extends AppCompatImageView, a member ImageView) and H5 components whose markup is
+// that library component (GhostButton → <van-button plain>). Specialisations, not second implementations.
 func dropSubclasses(as []Asset) []Asset {
 	var out []Asset
 	for _, a := range as {
@@ -511,7 +512,7 @@ func dropSubclasses(as []Asset) []Asset {
 		if a.Extends != "" {
 			base := strings.TrimPrefix(a.Extends, "AppCompat")
 			for _, b := range as {
-				if b.Name != a.Name && (b.Name == a.Extends || b.Name == base) {
+				if (b.Name != a.Name || b.Kind != a.Kind) && (b.Name == a.Extends || b.Name == base) {
 					sub = true
 				}
 			}

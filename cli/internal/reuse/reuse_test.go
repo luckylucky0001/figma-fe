@@ -739,3 +739,33 @@ func TestUncataloguedThirdPartyViews(t *testing.T) {
 		t.Errorf("QMUI internals are not components: %v", got)
 	}
 }
+
+// vue3-vant-mobile's GhostButton is <van-button plain>: a preset built on Vant's Button, not a duplicate
+func TestH5PresetIsNotADuplicate(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","vant":"4.8.0"}}`)
+	write(t, root, "src/components/GhostButton.vue", `<template><van-button size="small" plain type="primary"><slot /></van-button></template>`)
+	write(t, root, "src/pages/a.vue", `<template><div><GhostButton/><GhostButton/><GhostButton/><van-button/><van-button/></div></template>`)
+	for _, c := range ScanH5(root).Clusters {
+		if c.Concept == "button" {
+			t.Errorf("cluster %+v", c)
+		}
+	}
+}
+
+// unplugin-vue-components' VantResolver lets templates write <VanNavBar>: still Vant's NavBar
+func TestPascalCaseLibraryTag(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","vant":"4.8.0"}}`)
+	write(t, root, "src/components/NavBar.vue", `<template><VanNavBar :title="title" left-arrow /></template>`)
+	write(t, root, "src/App.vue", `<template><div><nav-bar /><VanButton type="primary">ok</VanButton></div></template>`)
+	used := map[string]int{}
+	for _, a := range ScanH5(root).Assets {
+		if a.Kind == "ui-lib" {
+			used[a.Name] = a.Usage
+		}
+	}
+	if used["NavBar"] != 1 || used["Button"] != 1 {
+		t.Errorf("used=%v", used)
+	}
+}

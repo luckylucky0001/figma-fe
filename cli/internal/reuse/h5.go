@@ -396,6 +396,10 @@ func ScanH5(root string) *Report {
 							a = assets["ui-lib|"+h.lib.Name+"|"+n]
 						}
 					}
+					// <VanNavBar> / <NutButton>: the PascalCase form auto-import resolvers register
+					if pp := kebabToPascal(strings.TrimSuffix(h.lib.TagPrefix, "-")); a == nil && len(pp) >= 2 && strings.HasPrefix(tag, pp) && h.names[tag[len(pp):]] {
+						a = assets["ui-lib|"+h.lib.Name+"|"+tag[len(pp):]]
+					}
 					pascal := kebabToPascal(tag)
 					if a == nil && h.names[pascal] {
 						if src, ok := imported[pascal]; ok && contains(h.lib.Import, src) {
@@ -486,6 +490,23 @@ func ScanH5(root string) *Report {
 	for _, a := range assets {
 		if a.Kind == "design-system" {
 			defIn[a.Source] = append(defIn[a.Source], a)
+		}
+	}
+	// a project component whose own markup uses the library component of its concept is built on it
+	// (GhostButton → <van-button plain>): a preset, not a second implementation
+	byFile := map[string][]*Asset{}
+	for _, a := range assets {
+		if a.Kind == "business" || a.Kind == "design-system" {
+			byFile[a.Source] = append(byFile[a.Source], a)
+		}
+	}
+	for lib, os := range libOcc {
+		for _, o := range os {
+			for _, w := range byFile[o.rel] {
+				if w.Concept != "" && w.Concept == lib.Concept && w.Extends == "" {
+					w.Extends = lib.Name
+				}
+			}
 		}
 	}
 	var libs2 []*Asset

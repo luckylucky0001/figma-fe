@@ -31,7 +31,8 @@ type Asset struct {
 	Enums       map[string][]string `json:"enums,omitempty"`       // enum-like props → allowed values
 	Required    []string            `json:"required,omitempty"`    // parameters without a default (composables)
 	Styles      map[string]int      `json:"styles,omitempty"`      // XML style="@style/…" applied with it, by count
-	Attrs       map[string]int      `json:"attrs,omitempty"`       // H5 static props the project passes, by count (round, color="#1baeae")
+	Attrs       map[string]int      `json:"attrs,omitempty"`
+	Extends     string              `json:"extends,omitempty"` // Android custom view: its base class (SquareImageView → AppCompatImageView)       // H5 static props the project passes, by count (round, color="#1baeae")
 }
 
 type Finding struct {
@@ -330,7 +331,7 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 	var out []Cluster
 	setFamilyPrefixes(assets)
 	for c, as := range by {
-		as = collapseFamilies(as)
+		as = collapseFamilies(dropSubclasses(as))
 		if len(as) < 2 || oneFamily(as) {
 			continue
 		}
@@ -489,7 +490,37 @@ func preference(a Asset, concept string) int {
 			p += 1500
 		}
 	}
+	// a feature-specific member (@layout/feed_statistics_card: ≥2 feature words, as in match) is never the convergence
+	// target over a generic one
+	own := ConceptOf(a.Name) // NavBar.vue that is really a tab bar: judge the name by what it says
+	if own == "" {
+		own = strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）")
+	}
+	if a.Kind != "ui-lib" && !inDesignSystem(a.Source) && len(specialWords(a.Name, own)) >= 2 {
+		p -= 2500
+	}
 	return p
+}
+
+// dropSubclasses removes custom views that extend another member's widget (SquareImageView extends
+// AppCompatImageView, a member ImageView): a specialisation by inheritance, not a second implementation.
+func dropSubclasses(as []Asset) []Asset {
+	var out []Asset
+	for _, a := range as {
+		sub := false
+		if a.Extends != "" {
+			base := strings.TrimPrefix(a.Extends, "AppCompat")
+			for _, b := range as {
+				if b.Name != a.Name && (b.Name == a.Extends || b.Name == base) {
+					sub = true
+				}
+			}
+		}
+		if !sub {
+			out = append(out, a)
+		}
+	}
+	return out
 }
 
 // techOf separates Android View and Compose implementations: they are not interchangeable, so a

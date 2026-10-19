@@ -46,6 +46,9 @@ var libRemoved = map[string]map[string][2]string{
 	"Vant": {"GoodsAction": {"3.0.0", "ActionBar"}, "GoodsActionButton": {"3.0.0", "ActionBarButton"}, "GoodsActionIcon": {"3.0.0", "ActionBarIcon"}},
 }
 
+// materialInflated: platform widgets MaterialComponentsViewInflater replaces with their Material version.
+var materialInflated = map[string]bool{"Button": true, "CheckBox": true, "RadioButton": true, "TextView": true, "AutoCompleteTextView": true}
+
 // material3Only: Material Components widgets that need a Theme.Material3 ancestor.
 var material3Only = map[string]bool{"SearchBar": true, "SearchView": true, "MaterialSwitch": true}
 
@@ -62,6 +65,7 @@ var materialThemed = map[string]bool{
 var (
 	materialDepRe   = regexp.MustCompile(`com\.google\.android\.material:material:(\d+\.\d+\.\d+)`)
 	materialTomlRe  = regexp.MustCompile(`(?m)^\s*material\s*=\s*"(\d+\.\d+\.\d+)"`)
+	postSplashRe    = regexp.MustCompile(`(?s)<style\s+name="([\w.]+)"[^>]*>(?:(?:[^<]|<(?:[^/]|/[^s]))*?)<item\s+name="postSplashScreenTheme">@style/([\w.]+)</item>`)
 	styleDefRe      = regexp.MustCompile(`<style\s+name="([\w.]+)"(?:\s+parent="(?:@style/|@android:style/)?([\w.]*)")?`)
 	manifestThemeRe = regexp.MustCompile(`<application[^>]*android:theme="@style/([\w.]+)"`)
 )
@@ -135,16 +139,52 @@ func appThemeFamily(manifests, values []string) (family, theme string) {
 			}
 		}
 	}
-	for cur, i := theme, 0; cur != "" && i < 30; i++ {
-		switch {
-		case strings.HasPrefix(cur, "Theme.Material3"):
-			return "material3", theme
-		case strings.HasPrefix(cur, "Theme.MaterialComponents"):
-			return "material", theme
-		case strings.HasPrefix(cur, "Theme.AppCompat"):
-			return "appcompat", theme
+	// androidx SplashScreen: the application theme is Theme.SplashScreen and the real theme is its
+	// postSplashScreenTheme item
+	post := map[string]string{}
+	for _, v := range values {
+		for _, m := range postSplashRe.FindAllStringSubmatch(v, -1) {
+			post[m[1]] = m[2]
 		}
-		cur = parent[cur]
+	}
+	resolve := func(cur string) string {
+		splash := ""
+		for i := 0; cur != "" && i < 30; i++ {
+			if p := post[cur]; p != "" && splash == "" {
+				splash = p
+			}
+			if strings.HasPrefix(cur, "Theme.SplashScreen") && splash != "" {
+				cur, splash = splash, "-" // follow once
+			}
+			switch {
+			case strings.HasPrefix(cur, "Theme.Material3"):
+				return "material3"
+			case strings.HasPrefix(cur, "Theme.MaterialComponents"):
+				return "material"
+			case strings.HasPrefix(cur, "Theme.AppCompat"):
+				return "appcompat"
+			}
+			cur = parent[cur]
+		}
+		return ""
+	}
+	if f := resolve(theme); f != "" {
+		return f, theme
+	}
+	// unresolved (a splash theme switched in code, as AntennaPod does): use the family every one of
+	// the project's own Theme.* styles agrees on
+	seen := map[string]bool{}
+	for name := range parent {
+		if strings.HasPrefix(name, "Theme.") {
+			if f := resolve(name); f != "" {
+				seen[f] = true
+			}
+		}
+	}
+	if len(seen) == 1 {
+		for f := range seen {
+			return f, theme
+		}
 	}
 	return "", theme
 }

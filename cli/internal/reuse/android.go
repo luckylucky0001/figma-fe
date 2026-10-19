@@ -206,6 +206,7 @@ func ScanAndroid(root string) *Report {
 					continue
 				}
 				a := get("custom-view", m[1], f.rel)
+				a.Extends = base
 				if lib := libOf[base]; lib != nil && lib.Source != "Android SDK widgets" && inDesignSystem(f.rel) && lib.WrappedBy == "" {
 					lib.WrappedBy = m[1] // class DsButton : MaterialButton
 				}
@@ -422,7 +423,13 @@ func ScanAndroid(root string) *Report {
 	for _, o := range raws {
 		// the alternative must be a generic component of the concept (QMUIRoundButton), not a
 		// specialised one (FloatingActionButton is no replacement for a Button)
-		if alt := bestProjectAsset(assets, o.concept, "custom-view"); alt != nil && (alt.Kind != "ui-lib" || alt.Usage > 0) && len(specialWords(alt.Name, alt.Concept)) == 0 {
+		alt := bestProjectAsset(assets, o.concept, "custom-view")
+		// under a Material theme the inflater already turns <Button> / <CheckBox> / <RadioButton> into
+		// MaterialButton / MaterialCheckBox / MaterialRadioButton: nothing was bypassed
+		if alt != nil && alt.Source == "Material Components" && (family == "material" || family == "material3") && materialInflated[o.simple] {
+			alt = nil
+		}
+		if alt != nil && (alt.Kind != "ui-lib" || alt.Usage > 0) && len(specialWords(alt.Name, alt.Concept)) == 0 {
 			r.Metrics.RawPrimitives++
 			r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(o.concept), o.rel, o.ln, o.line, "原生 " + o.simple + "：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
 			continue

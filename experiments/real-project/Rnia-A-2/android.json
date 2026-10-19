@@ -13,12 +13,12 @@
       "top": [
         "HorizontalDivider×3",
         "TextButton×3",
-        "CircularProgressIndicator×2",
         "Card×2",
-        "ListItem×1",
-        "NavigationBar×1",
-        "AlertDialog×1",
-        "TextField×1"
+        "CircularProgressIndicator×2",
+        "OutlinedButton×1",
+        "TextField×1",
+        "RadioButton×1",
+        "CenterAlignedTopAppBar×1"
       ]
     },
     {
@@ -91,19 +91,6 @@
       "wrappedBy": "CommerceDivider"
     },
     {
-      "name": "Card",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "card",
-      "usage": 2,
-      "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-        "feature/interests/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/interests/impl/InterestsDetailPlaceholder.kt"
-      ],
-      "example": "Card(",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:113"
-    },
-    {
       "name": "CircularProgressIndicator",
       "kind": "ui-lib",
       "source": "Compose Material3",
@@ -117,67 +104,17 @@
       "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/DynamicAsyncImage.kt:72"
     },
     {
-      "name": "OutlinedButton",
+      "name": "Card",
       "kind": "ui-lib",
       "source": "Compose Material3",
-      "concept": "button",
-      "usage": 1,
+      "concept": "card",
+      "usage": 2,
       "usageFiles": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt"
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+        "feature/interests/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/interests/impl/InterestsDetailPlaceholder.kt"
       ],
-      "example": "OutlinedButton(",
-      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt:124",
-      "wrappedBy": "NiaOutlinedButton"
-    },
-    {
-      "name": "RadioButton",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "radio",
-      "usage": 1,
-      "usageFiles": [
-        "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt"
-      ],
-      "example": "RadioButton(",
-      "exampleAt": "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt:242"
-    },
-    {
-      "name": "AlertDialog",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "dialog",
-      "usage": 1,
-      "usageFiles": [
-        "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt"
-      ],
-      "example": "AlertDialog(",
-      "exampleAt": "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt:106"
-    },
-    {
-      "name": "FilterChip",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "tag",
-      "usage": 1,
-      "usageFiles": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Chip.kt"
-      ],
-      "example": "FilterChip(",
-      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Chip.kt:52",
-      "wrappedBy": "NiaFilterChip"
-    },
-    {
-      "name": "CenterAlignedTopAppBar",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "navbar",
-      "usage": 1,
-      "usageFiles": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt"
-      ],
-      "example": "CenterAlignedTopAppBar(",
-      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt:52",
-      "wrappedBy": "NiaTopAppBar"
+      "example": "Card(",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:113"
     },
     {
       "name": "ListItem",
@@ -190,30 +127,6 @@
       ],
       "example": "ListItem(",
       "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/InterestsItem.kt:55"
-    },
-    {
-      "name": "LazyHorizontalGrid",
-      "kind": "ui-lib",
-      "source": "Compose Foundation",
-      "usage": 1,
-      "usageFiles": [
-        "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt"
-      ],
-      "example": "LazyHorizontalGrid(",
-      "exampleAt": "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt:333"
-    },
-    {
-      "name": "Tab",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "tabs",
-      "usage": 1,
-      "usageFiles": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt"
-      ],
-      "example": "Tab(",
-      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt:55",
-      "wrappedBy": "NiaTab"
     },
     {
       "name": "TabRow",
@@ -229,6 +142,17 @@
       "wrappedBy": "NiaTabRow"
     },
     {
+      "name": "LazyHorizontalGrid",
+      "kind": "ui-lib",
+      "source": "Compose Foundation",
+      "usage": 1,
+      "usageFiles": [
+        "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt"
+      ],
+      "example": "LazyHorizontalGrid(",
+      "exampleAt": "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt:333"
+    },
+    {
       "name": "Button",
       "kind": "ui-lib",
       "source": "Compose Material3",
@@ -242,6 +166,69 @@
       "wrappedBy": "NiaButton"
     },
     {
+      "name": "Tab",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "tabs",
+      "usage": 1,
+      "usageFiles": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt"
+      ],
+      "example": "Tab(",
+      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt:55",
+      "wrappedBy": "NiaTab"
+    },
+    {
+      "name": "CenterAlignedTopAppBar",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "navbar",
+      "usage": 1,
+      "usageFiles": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt"
+      ],
+      "example": "CenterAlignedTopAppBar(",
+      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt:52",
+      "wrappedBy": "NiaTopAppBar"
+    },
+    {
+      "name": "OutlinedButton",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "button",
+      "usage": 1,
+      "usageFiles": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt"
+      ],
+      "example": "OutlinedButton(",
+      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt:124",
+      "wrappedBy": "NiaOutlinedButton"
+    },
+    {
+      "name": "AlertDialog",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "dialog",
+      "usage": 1,
+      "usageFiles": [
+        "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt"
+      ],
+      "example": "AlertDialog(",
+      "exampleAt": "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt:106"
+    },
+    {
+      "name": "RadioButton",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "radio",
+      "usage": 1,
+      "usageFiles": [
+        "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt"
+      ],
+      "example": "RadioButton(",
+      "exampleAt": "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt:242"
+    },
+    {
       "name": "NavigationBar",
       "kind": "ui-lib",
       "source": "Compose Material3",
@@ -253,6 +240,19 @@
       "example": "NavigationBar(",
       "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Navigation.kt:101",
       "wrappedBy": "NiaNavigationBar"
+    },
+    {
+      "name": "FilterChip",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "tag",
+      "usage": 1,
+      "usageFiles": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Chip.kt"
+      ],
+      "example": "FilterChip(",
+      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Chip.kt:52",
+      "wrappedBy": "NiaFilterChip"
     },
     {
       "name": "TextField",
@@ -327,6 +327,27 @@
       ]
     },
     {
+      "name": "NiaBackground",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Background.kt",
+      "props": [
+        "modifier",
+        "content"
+      ],
+      "usage": 8,
+      "usageFiles": [
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Background.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Chip.kt"
+      ],
+      "example": "NiaBackground(modifier = modifier) {",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt:98",
+      "required": [
+        "content"
+      ]
+    },
+    {
       "name": "NiaButton",
       "kind": "composable",
       "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt",
@@ -356,27 +377,6 @@
         "content",
         "onClick",
         "text"
-      ]
-    },
-    {
-      "name": "NiaBackground",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Background.kt",
-      "props": [
-        "modifier",
-        "content"
-      ],
-      "usage": 8,
-      "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt",
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Background.kt",
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt",
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Chip.kt"
-      ],
-      "example": "NiaBackground(modifier = modifier) {",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt:98",
-      "required": [
-        "content"
       ]
     },
     {
@@ -457,6 +457,37 @@
       ]
     },
     {
+      "name": "NiaOutlinedButton",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt",
+      "concept": "button",
+      "props": [
+        "onClick",
+        "modifier",
+        "enabled",
+        "contentPadding",
+        "content",
+        "onClick",
+        "modifier",
+        "enabled",
+        "text",
+        "leadingIcon"
+      ],
+      "usage": 6,
+      "usageFiles": [
+        "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt"
+      ],
+      "example": "NiaOutlinedButton(onClick = {}) {",
+      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:84",
+      "required": [
+        "onClick",
+        "content",
+        "onClick",
+        "text"
+      ]
+    },
+    {
       "name": "NiaLoadingWheel",
       "kind": "composable",
       "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/LoadingWheel.kt",
@@ -505,63 +536,6 @@
       ]
     },
     {
-      "name": "NiaOutlinedButton",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt",
-      "concept": "button",
-      "props": [
-        "onClick",
-        "modifier",
-        "enabled",
-        "contentPadding",
-        "content",
-        "onClick",
-        "modifier",
-        "enabled",
-        "text",
-        "leadingIcon"
-      ],
-      "usage": 6,
-      "usageFiles": [
-        "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt"
-      ],
-      "example": "NiaOutlinedButton(onClick = {}) {",
-      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:84",
-      "required": [
-        "onClick",
-        "content",
-        "onClick",
-        "text"
-      ]
-    },
-    {
-      "name": "NiaTopicTag",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tag.kt",
-      "concept": "tag",
-      "props": [
-        "modifier",
-        "followed",
-        "onClick",
-        "enabled",
-        "text"
-      ],
-      "usage": 5,
-      "usageFiles": [
-        "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tag.kt",
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
-      ],
-      "example": "NiaTopicTag(",
-      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:302",
-      "required": [
-        "followed",
-        "onClick",
-        "text"
-      ]
-    },
-    {
       "name": "NiaViewToggleButton",
       "kind": "composable",
       "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/ViewToggle.kt",
@@ -589,28 +563,29 @@
       ]
     },
     {
-      "name": "DynamicAsyncImage",
+      "name": "NiaTopicTag",
       "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/DynamicAsyncImage.kt",
-      "concept": "image",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tag.kt",
+      "concept": "tag",
       "props": [
-        "imageUrl",
-        "contentDescription",
         "modifier",
-        "placeholder"
+        "followed",
+        "onClick",
+        "enabled",
+        "text"
       ],
-      "usage": 4,
+      "usage": 5,
       "usageFiles": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceProductCard.kt",
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/InterestsItem.kt",
-        "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt",
-        "feature/topic/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/topic/impl/TopicScreen.kt"
+        "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tag.kt",
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
       ],
-      "example": "DynamicAsyncImage(",
-      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceProductCard.kt:71",
+      "example": "NiaTopicTag(",
+      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:302",
       "required": [
-        "imageUrl",
-        "contentDescription"
+        "followed",
+        "onClick",
+        "text"
       ]
     },
     {
@@ -655,6 +630,31 @@
       ]
     },
     {
+      "name": "DynamicAsyncImage",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/DynamicAsyncImage.kt",
+      "concept": "image",
+      "props": [
+        "imageUrl",
+        "contentDescription",
+        "modifier",
+        "placeholder"
+      ],
+      "usage": 4,
+      "usageFiles": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceProductCard.kt",
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/InterestsItem.kt",
+        "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt",
+        "feature/topic/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/topic/impl/TopicScreen.kt"
+      ],
+      "example": "DynamicAsyncImage(",
+      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceProductCard.kt:71",
+      "required": [
+        "imageUrl",
+        "contentDescription"
+      ]
+    },
+    {
       "name": "SettingsDialog",
       "kind": "composable",
       "source": "feature/settings/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/settings/impl/SettingsDialog.kt",
@@ -686,39 +686,35 @@
       ]
     },
     {
-      "name": "CommerceButton",
+      "name": "NewsResourceCardExpanded",
       "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceButton.kt",
-      "concept": "button",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "concept": "card",
       "props": [
-        "text",
+        "userNewsResource",
+        "isBookmarked",
+        "hasBeenViewed",
+        "onToggleBookmark",
         "onClick",
-        "modifier",
-        "type",
-        "size",
-        "enabled"
+        "onTopicClick",
+        "modifier"
       ],
       "usage": 3,
       "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsFeed.kt",
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCardList.kt"
       ],
-      "example": "CommerceButton(",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:109",
-      "enums": {
-        "size": [
-          "CommerceButtonSize.Large",
-          "CommerceButtonSize.Medium",
-          "CommerceButtonSize.Small"
-        ],
-        "type": [
-          "CommerceButtonType.Primary",
-          "CommerceButtonType.Default",
-          "CommerceButtonType.Text"
-        ]
-      },
+      "example": "NewsResourceCardExpanded(",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsFeed.kt:66",
       "required": [
-        "text",
-        "onClick"
+        "userNewsResource",
+        "userNewsResource:UserNewsResource",
+        "isBookmarked",
+        "hasBeenViewed",
+        "onToggleBookmark",
+        "onClick",
+        "onTopicClick"
       ]
     },
     {
@@ -759,122 +755,90 @@
       ]
     },
     {
-      "name": "NewsResourceCardExpanded",
+      "name": "CommerceButton",
       "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-      "concept": "card",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceButton.kt",
+      "concept": "button",
       "props": [
-        "userNewsResource",
-        "isBookmarked",
-        "hasBeenViewed",
-        "onToggleBookmark",
+        "text",
         "onClick",
-        "onTopicClick",
-        "modifier"
+        "modifier",
+        "type",
+        "size",
+        "enabled"
       ],
       "usage": 3,
       "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsFeed.kt",
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCardList.kt"
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
       ],
-      "example": "NewsResourceCardExpanded(",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsFeed.kt:66",
+      "example": "CommerceButton(",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:109",
+      "enums": {
+        "size": [
+          "CommerceButtonSize.Large",
+          "CommerceButtonSize.Medium",
+          "CommerceButtonSize.Small"
+        ],
+        "type": [
+          "CommerceButtonType.Primary",
+          "CommerceButtonType.Default",
+          "CommerceButtonType.Text"
+        ]
+      },
       "required": [
-        "userNewsResource",
-        "userNewsResource:UserNewsResource",
-        "isBookmarked",
-        "hasBeenViewed",
-        "onToggleBookmark",
-        "onClick",
-        "onTopicClick"
+        "text",
+        "onClick"
       ]
     },
     {
-      "name": "NiaTopAppBar",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt",
-      "concept": "navbar",
-      "props": [
-        "StringRes titleRes",
-        "navigationIcon",
-        "navigationIconContentDescription",
-        "actionIcon",
-        "actionIconContentDescription",
-        "modifier",
-        "colors",
-        "onNavigationClick",
-        "onActionClick"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt",
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt"
-      ],
-      "example": "NiaTopAppBar(",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt:229",
-      "required": [
-        "StringRes titleRes",
-        "navigationIcon",
-        "navigationIconContentDescription",
-        "actionIcon",
-        "actionIconContentDescription"
-      ]
-    },
-    {
-      "name": "NiaTabRow",
+      "name": "NiaTab",
       "kind": "composable",
       "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt",
       "concept": "tabs",
       "props": [
-        "selectedTabIndex",
+        "selected",
+        "onClick",
         "modifier",
-        "tabs"
+        "enabled",
+        "text"
       ],
       "usage": 2,
       "usageFiles": [
         "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt"
       ],
-      "example": "NiaTabRow(selectedTabIndex = selectedTabIndex) {",
-      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:324",
+      "example": "NiaTab(",
+      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:326",
       "required": [
-        "selectedTabIndex",
-        "tabs"
+        "selected",
+        "onClick",
+        "text"
       ]
     },
     {
-      "name": "CommercePrice",
+      "name": "Scrollbar",
       "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommercePrice.kt",
-      "concept": "price",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/Scrollbar.kt",
       "props": [
-        "amountInCents",
+        "orientation",
+        "state",
         "modifier",
-        "size",
-        "tone",
-        "currencySymbol"
+        "interactionSource",
+        "minThumbSize",
+        "onThumbMoved",
+        "thumb"
       ],
       "usage": 2,
       "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt",
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceProductCard.kt"
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/AppScrollbars.kt"
       ],
-      "example": "CommercePrice(",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:212",
-      "enums": {
-        "size": [
-          "CommercePriceSize.Large",
-          "CommercePriceSize.Medium",
-          "CommercePriceSize.Small"
-        ],
-        "tone": [
-          "CommercePriceTone.Primary",
-          "CommercePriceTone.Default"
-        ]
-      },
+      "example": "Scrollbar(",
+      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/AppScrollbars.kt:84",
       "required": [
-        "amountInCents"
+        "orientation",
+        "orientation:Orientation",
+        "state",
+        "thumb"
       ]
     },
     {
@@ -954,54 +918,313 @@
       ]
     },
     {
-      "name": "Scrollbar",
+      "name": "CommercePrice",
       "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/Scrollbar.kt",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommercePrice.kt",
+      "concept": "price",
       "props": [
-        "orientation",
-        "state",
+        "amountInCents",
         "modifier",
-        "interactionSource",
-        "minThumbSize",
-        "onThumbMoved",
-        "thumb"
+        "size",
+        "tone",
+        "currencySymbol"
       ],
       "usage": 2,
       "usageFiles": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/AppScrollbars.kt"
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceProductCard.kt"
       ],
-      "example": "Scrollbar(",
-      "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/AppScrollbars.kt:84",
+      "example": "CommercePrice(",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:212",
+      "enums": {
+        "size": [
+          "CommercePriceSize.Large",
+          "CommercePriceSize.Medium",
+          "CommercePriceSize.Small"
+        ],
+        "tone": [
+          "CommercePriceTone.Primary",
+          "CommercePriceTone.Default"
+        ]
+      },
       "required": [
-        "orientation",
-        "orientation:Orientation",
-        "state",
-        "thumb"
+        "amountInCents"
       ]
     },
     {
-      "name": "NiaTab",
+      "name": "NiaTabRow",
       "kind": "composable",
       "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt",
       "concept": "tabs",
       "props": [
-        "selected",
-        "onClick",
+        "selectedTabIndex",
         "modifier",
-        "enabled",
-        "text"
+        "tabs"
       ],
       "usage": 2,
       "usageFiles": [
         "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Tabs.kt"
       ],
-      "example": "NiaTab(",
-      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:326",
+      "example": "NiaTabRow(selectedTabIndex = selectedTabIndex) {",
+      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:324",
       "required": [
-        "selected",
-        "onClick",
+        "selectedTabIndex",
+        "tabs"
+      ]
+    },
+    {
+      "name": "NiaTopAppBar",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt",
+      "concept": "navbar",
+      "props": [
+        "StringRes titleRes",
+        "navigationIcon",
+        "navigationIconContentDescription",
+        "actionIcon",
+        "actionIconContentDescription",
+        "modifier",
+        "colors",
+        "onNavigationClick",
+        "onActionClick"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt"
+      ],
+      "example": "NiaTopAppBar(",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt:229",
+      "required": [
+        "StringRes titleRes",
+        "navigationIcon",
+        "navigationIconContentDescription",
+        "actionIcon",
+        "actionIconContentDescription"
+      ]
+    },
+    {
+      "name": "CommerceNoticeBar",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceNoticeBar.kt",
+      "concept": "notice",
+      "props": [
+        "text",
+        "modifier",
+        "tone"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
+      ],
+      "example": "CommerceNoticeBar(text = order.notice, tone = CommerceNoticeTone.Warning)",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:103",
+      "enums": {
+        "tone": [
+          "CommerceNoticeTone.Info",
+          "CommerceNoticeTone.Warning"
+        ]
+      },
+      "required": [
         "text"
+      ]
+    },
+    {
+      "name": "NiaCatalog",
+      "kind": "composable",
+      "source": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
+      "usage": 1,
+      "usageFiles": [
+        "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/NiaCatalogActivity.kt"
+      ],
+      "example": "setContent { NiaCatalog() }",
+      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/NiaCatalogActivity.kt:31"
+    },
+    {
+      "name": "TrackJank",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt",
+      "props": [
+        "vararg keys",
+        "reportMetric"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt"
+      ],
+      "example": "TrackJank(scrollableState) { metricsHolder -\u003e",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt:82",
+      "required": [
+        "vararg keys",
+        "reportMetric"
+      ]
+    },
+    {
+      "name": "NewsResourceMetaData",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "props": [
+        "publishDate",
+        "resourceType"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
+      ],
+      "example": "NewsResourceMetaData(userNewsResource.publishDate, userNewsResource.type)",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:163",
+      "required": [
+        "publishDate",
+        "publishDate:Instant",
+        "resourceType"
+      ]
+    },
+    {
+      "name": "DebugVisibleWindowInsets",
+      "kind": "composable",
+      "source": "app/src/testDemo/kotlin/com/google/samples/apps/nowinandroid/ui/SnackbarInsetsScreenshotTests.kt",
+      "props": [
+        "modifier",
+        "debugColor"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "app/src/testDemo/kotlin/com/google/samples/apps/nowinandroid/ui/SnackbarInsetsScreenshotTests.kt"
+      ],
+      "example": "DebugVisibleWindowInsets()",
+      "exampleAt": "app/src/testDemo/kotlin/com/google/samples/apps/nowinandroid/ui/SnackbarInsetsScreenshotTests.kt:267"
+    },
+    {
+      "name": "NotificationDot",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "concept": "badge",
+      "props": [
+        "color",
+        "modifier"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
+      ],
+      "example": "NotificationDot(",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:157",
+      "required": [
+        "color"
+      ]
+    },
+    {
+      "name": "NewsResourceShortDescription",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "props": [
+        "newsResourceShortDescription"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
+      ],
+      "example": "NewsResourceShortDescription(userNewsResource.content)",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:166",
+      "required": [
+        "newsResourceShortDescription"
+      ]
+    },
+    {
+      "name": "NewsResourceTitle",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "props": [
+        "newsResourceTitle",
+        "modifier"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
+      ],
+      "example": "NewsResourceTitle(",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:137",
+      "required": [
+        "newsResourceTitle"
+      ]
+    },
+    {
+      "name": "NewsResourceTopics",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "props": [
+        "topics",
+        "onTopicClick",
+        "modifier"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
+      ],
+      "example": "NewsResourceTopics(",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:168",
+      "required": [
+        "topics",
+        "onTopicClick"
+      ]
+    },
+    {
+      "name": "NewsResourceHeaderImage",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "concept": "image",
+      "props": [
+        "headerImageUrl"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
+      ],
+      "example": "NewsResourceHeaderImage(userNewsResource.headerImageUrl)",
+      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:128",
+      "required": [
+        "headerImageUrl"
+      ]
+    },
+    {
+      "name": "TrackDisposableJank",
+      "kind": "composable",
+      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt",
+      "props": [
+        "vararg keys",
+        "reportMetric"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaAppState.kt"
+      ],
+      "example": "TrackDisposableJank(navigationState.currentKey) { metricsHolder -\u003e",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaAppState.kt:115",
+      "required": [
+        "vararg keys",
+        "reportMetric"
+      ]
+    },
+    {
+      "name": "CommerceCountDown",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceCountDown.kt",
+      "concept": "countdown",
+      "props": [
+        "remainingMillis",
+        "modifier",
+        "prefix",
+        "onFinish"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
+      ],
+      "example": "CommerceCountDown(",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:149",
+      "required": [
+        "remainingMillis"
       ]
     },
     {
@@ -1038,20 +1261,25 @@
       ]
     },
     {
-      "name": "NewsResourceShortDescription",
+      "name": "CommerceNavBar",
       "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceNavBar.kt",
+      "concept": "navbar",
       "props": [
-        "newsResourceShortDescription"
+        "title",
+        "modifier",
+        "onBackClick",
+        "backContentDescription",
+        "windowInsets"
       ],
       "usage": 1,
       "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
       ],
-      "example": "NewsResourceShortDescription(userNewsResource.content)",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:166",
+      "example": "CommerceNavBar(",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:90",
       "required": [
-        "newsResourceShortDescription"
+        "title"
       ]
     },
     {
@@ -1082,61 +1310,44 @@
       ]
     },
     {
-      "name": "NewsResourceHeaderImage",
+      "name": "NiaNavigationSuiteScaffold",
       "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-      "concept": "image",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Navigation.kt",
+      "concept": "tabbar",
       "props": [
-        "headerImageUrl"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
-      ],
-      "example": "NewsResourceHeaderImage(userNewsResource.headerImageUrl)",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:128",
-      "required": [
-        "headerImageUrl"
-      ]
-    },
-    {
-      "name": "TrackJank",
-      "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt",
-      "props": [
-        "vararg keys",
-        "reportMetric"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt"
-      ],
-      "example": "TrackJank(scrollableState) { metricsHolder -\u003e",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt:82",
-      "required": [
-        "vararg keys",
-        "reportMetric"
-      ]
-    },
-    {
-      "name": "CommerceCountDown",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceCountDown.kt",
-      "concept": "countdown",
-      "props": [
-        "remainingMillis",
+        "navigationSuiteItems",
         "modifier",
-        "prefix",
-        "onFinish"
+        "windowAdaptiveInfo",
+        "content"
       ],
       "usage": 1,
       "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
+        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt"
       ],
-      "example": "CommerceCountDown(",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:149",
+      "example": "NiaNavigationSuiteScaffold(",
+      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt:162",
       "required": [
-        "remainingMillis"
+        "navigationSuiteItems",
+        "content"
+      ]
+    },
+    {
+      "name": "TopicIcon",
+      "kind": "composable",
+      "source": "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt",
+      "concept": "icon",
+      "props": [
+        "imageUrl",
+        "modifier"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt"
+      ],
+      "example": "TopicIcon(",
+      "exampleAt": "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt:400",
+      "required": [
+        "imageUrl"
       ]
     },
     {
@@ -1167,213 +1378,17 @@
       ]
     },
     {
-      "name": "NotificationDot",
+      "name": "CommerceActionBar",
       "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-      "concept": "badge",
-      "props": [
-        "color",
-        "modifier"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
-      ],
-      "example": "NotificationDot(",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:157",
-      "required": [
-        "color"
-      ]
-    },
-    {
-      "name": "CommerceNoticeBar",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceNoticeBar.kt",
-      "concept": "notice",
-      "props": [
-        "text",
-        "modifier",
-        "tone"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
-      ],
-      "example": "CommerceNoticeBar(text = order.notice, tone = CommerceNoticeTone.Warning)",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:103",
-      "enums": {
-        "tone": [
-          "CommerceNoticeTone.Info",
-          "CommerceNoticeTone.Warning"
-        ]
-      },
-      "required": [
-        "text"
-      ]
-    },
-    {
-      "name": "CommerceNavBar",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceNavBar.kt",
-      "concept": "navbar",
-      "props": [
-        "title",
-        "modifier",
-        "onBackClick",
-        "backContentDescription",
-        "windowInsets"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt"
-      ],
-      "example": "CommerceNavBar(",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:90",
-      "required": [
-        "title"
-      ]
-    },
-    {
-      "name": "NiaCatalog",
-      "kind": "composable",
-      "source": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
-      "usage": 1,
-      "usageFiles": [
-        "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/NiaCatalogActivity.kt"
-      ],
-      "example": "setContent { NiaCatalog() }",
-      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/NiaCatalogActivity.kt:31"
-    },
-    {
-      "name": "TrackDisposableJank",
-      "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt",
-      "props": [
-        "vararg keys",
-        "reportMetric"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaAppState.kt"
-      ],
-      "example": "TrackDisposableJank(navigationState.currentKey) { metricsHolder -\u003e",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaAppState.kt:115",
-      "required": [
-        "vararg keys",
-        "reportMetric"
-      ]
-    },
-    {
-      "name": "NewsResourceMetaData",
-      "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-      "props": [
-        "publishDate",
-        "resourceType"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
-      ],
-      "example": "NewsResourceMetaData(userNewsResource.publishDate, userNewsResource.type)",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:163",
-      "required": [
-        "publishDate",
-        "publishDate:Instant",
-        "resourceType"
-      ]
-    },
-    {
-      "name": "NewsResourceTitle",
-      "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-      "props": [
-        "newsResourceTitle",
-        "modifier"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
-      ],
-      "example": "NewsResourceTitle(",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:137",
-      "required": [
-        "newsResourceTitle"
-      ]
-    },
-    {
-      "name": "TopicIcon",
-      "kind": "composable",
-      "source": "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt",
-      "concept": "icon",
-      "props": [
-        "imageUrl",
-        "modifier"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt"
-      ],
-      "example": "TopicIcon(",
-      "exampleAt": "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt:400",
-      "required": [
-        "imageUrl"
-      ]
-    },
-    {
-      "name": "DebugVisibleWindowInsets",
-      "kind": "composable",
-      "source": "app/src/testDemo/kotlin/com/google/samples/apps/nowinandroid/ui/SnackbarInsetsScreenshotTests.kt",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceButton.kt",
+      "concept": "actionbar",
       "props": [
         "modifier",
-        "debugColor"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "app/src/testDemo/kotlin/com/google/samples/apps/nowinandroid/ui/SnackbarInsetsScreenshotTests.kt"
-      ],
-      "example": "DebugVisibleWindowInsets()",
-      "exampleAt": "app/src/testDemo/kotlin/com/google/samples/apps/nowinandroid/ui/SnackbarInsetsScreenshotTests.kt:267"
-    },
-    {
-      "name": "NewsResourceTopics",
-      "kind": "composable",
-      "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt",
-      "props": [
-        "topics",
-        "onTopicClick",
-        "modifier"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt"
-      ],
-      "example": "NewsResourceTopics(",
-      "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:168",
-      "required": [
-        "topics",
-        "onTopicClick"
-      ]
-    },
-    {
-      "name": "NiaNavigationSuiteScaffold",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Navigation.kt",
-      "concept": "tabbar",
-      "props": [
-        "navigationSuiteItems",
-        "modifier",
-        "windowAdaptiveInfo",
+        "windowInsets",
         "content"
       ],
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt"
-      ],
-      "example": "NiaNavigationSuiteScaffold(",
-      "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt:162",
+      "usage": 0,
       "required": [
-        "navigationSuiteItems",
         "content"
       ]
     },
@@ -1399,21 +1414,6 @@
       "concept": "tabbar",
       "props": [
         "modifier",
-        "content"
-      ],
-      "usage": 0,
-      "required": [
-        "content"
-      ]
-    },
-    {
-      "name": "CommerceActionBar",
-      "kind": "composable",
-      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CommerceButton.kt",
-      "concept": "actionbar",
-      "props": [
-        "modifier",
-        "windowInsets",
         "content"
       ],
       "usage": 0,
@@ -1529,177 +1529,9 @@
       ]
     },
     {
-      "value": "#B7CCB8",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FFA9FE",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#F53F3F",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#4F6352",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#2F312E",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#003919",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#414941",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#8B418F",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FF8F1F",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#D3E8D3",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#1A1C1A",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#201A1B",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#362F30",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#3A656F",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#A2CED9",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#E5E6EB",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#006780",
+      "value": "#FCFCFC",
       "count": 1,
       "token": "@color/ic_launcher_foreground_tint",
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#00210B",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#5AFF9D",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#702776",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#E8FFEA",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#001F28",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#5DD5FC",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#00B42A",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#223526",
-      "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
@@ -1712,98 +1544,14 @@
       ]
     },
     {
-      "value": "#BEEAF6",
+      "value": "#D0C3CC",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#E8F3FF",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#394B3C",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FAEEEF",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FFDAD6",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#36003C",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#998D96",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#410002",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#BA1A1A",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FFB4AB",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#02363F",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#3370FF",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#1F2329",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#F0F1EC",
+      "value": "#214D56",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
@@ -1817,7 +1565,42 @@
       ]
     },
     {
-      "value": "#004D61",
+      "value": "#D3E8D3",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#02363F",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#E8FFEA",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#F2F3F5",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#B8EAFF",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#E2E3DE",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
@@ -1838,84 +1621,14 @@
       ]
     },
     {
+      "value": "#FFDBCF",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
       "value": "#FFD6FA",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#214D56",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#F5F6F7",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#F2F3F5",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#E2E3DE",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#380D00",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#001F26",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FF4D1A",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
-      ]
-    },
-    {
-      "value": "#003544",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#8B938A",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#DDE5DB",
-      "count": 1,
-      "sample": [
-        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#560A5D",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
@@ -1929,21 +1642,28 @@
       ]
     },
     {
-      "value": "#FFF3E8",
+      "value": "#FF8F1F",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
       ]
     },
     {
-      "value": "#0D1F12",
+      "value": "#001F28",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#ECDFE0",
+      "value": "#003544",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FFDAD6",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
@@ -1957,28 +1677,77 @@
       ]
     },
     {
-      "value": "#5B1A00",
+      "value": "#93000A",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#812800",
+      "value": "#001F26",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#FFDBCF",
+      "value": "#E8F3FF",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#5DD5FC",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#D0C3CC",
+      "value": "#560A5D",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FFB4AB",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#1F2329",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#362F30",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#006D36",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#8B938A",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#998D96",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
@@ -1992,6 +1761,147 @@
       ]
     },
     {
+      "value": "#8F959E",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#223526",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#36003C",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FF4D1A",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#004D61",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#00210B",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#812800",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#3A656F",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#0D1F12",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#006780",
+      "count": 1,
+      "token": "@color/ic_launcher_foreground_tint",
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#702776",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FFA9FE",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#4D444C",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#BA1A1A",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#BEEAF6",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#3370FF",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#E5E6EB",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#4F6352",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FAEEEF",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#414941",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
       "value": "#727971",
       "count": 1,
       "sample": [
@@ -1999,21 +1909,63 @@
       ]
     },
     {
-      "value": "#7F747C",
+      "value": "#A2CED9",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#0EE37C",
+      "value": "#FFF3E8",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#00B42A",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#B7CCB8",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#006D36",
+      "value": "#1A1C1A",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#201A1B",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#ECDFE0",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#5AFF9D",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#5B1A00",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
@@ -2028,37 +1980,85 @@
       ]
     },
     {
-      "value": "#4D444C",
+      "value": "#003919",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#93000A",
+      "value": "#0EE37C",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#8F959E",
+      "value": "#DDE5DB",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#380D00",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#8B418F",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#7F747C",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#410002",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F53F3F",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
       ]
     },
     {
-      "value": "#B8EAFF",
+      "value": "#2F312E",
       "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]
     },
     {
-      "value": "#FCFCFC",
+      "value": "#F0F1EC",
       "count": 1,
-      "token": "@color/ic_launcher_foreground_tint",
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F5F6F7",
+      "count": 1,
+      "sample": [
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt"
+      ]
+    },
+    {
+      "value": "#394B3C",
+      "count": 1,
       "sample": [
         "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/Color.kt"
       ]

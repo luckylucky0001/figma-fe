@@ -58,7 +58,7 @@ var uiLibs = []uiLib{
 var rawH5 = map[string]string{"button": "button", "input": "input", "select": "input", "textarea": "input", "img": "image"}
 
 // rawAndroid are framework widgets that projects usually wrap (only flagged when the project has a component of that concept).
-var rawAndroid = map[string]string{"Button": "button", "ImageButton": "button", "EditText": "input", "ImageView": "image", "CheckBox": "switch", "Switch": "switch", "ProgressBar": "loading", "Toolbar": "navbar"}
+var rawAndroid = map[string]string{"Button": "button", "ImageButton": "button", "EditText": "input", "ImageView": "image", "CheckBox": "checkbox", "RadioButton": "radio", "Switch": "switch", "ProgressBar": "loading", "Toolbar": "navbar"}
 
 // libConcept overrides the name-derived concept where a library uses a misleading name.
 var libConcept = map[string]string{

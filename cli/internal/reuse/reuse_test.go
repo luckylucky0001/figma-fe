@@ -633,3 +633,46 @@ public class EmptyViewHandler {
 		t.Errorf("Empty → %+v", it.Candidates)
 	}
 }
+
+// AntennaPod: the manifest theme is a splash theme switched in code; every Theme.* style of the app is
+// Material3, so <Button> / <CheckBox> are inflated as Material widgets and are not missed reuse
+func TestMaterialInflatedWidgetsAndSplashTheme(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "gradle/libs.versions.toml", `material = { module = "com.google.android.material:material", version = "1.14.0" }`)
+	write(t, root, "app/src/main/AndroidManifest.xml", `<manifest><application android:theme="@style/Theme.App.Splash"/></manifest>`)
+	write(t, root, "app/src/main/res/values/styles.xml", `<resources>
+<style name="Theme.App.Splash" parent="Theme.SplashScreen"><item name="android:statusBarColor">#000</item></style>
+<style name="Theme.Base.App" parent="Theme.Material3.DynamicColors.Light"/>
+<style name="Theme.App.Light" parent="Theme.Base.App"/>
+</resources>`)
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><Button/><CheckBox/><com.google.android.material.button.MaterialButton/><com.google.android.material.checkbox.MaterialCheckBox/></LinearLayout>`)
+	r := ScanAndroid(root)
+	for _, f := range r.Findings {
+		if f.Rule == "missed-reuse" {
+			t.Errorf("Material theme inflates platform widgets: %+v", f)
+		}
+	}
+	// without the Material theme the same layout bypasses MaterialCheckBox, which is a checkbox (not a switch)
+	write(t, root, "app/src/main/res/values/styles.xml", `<resources><style name="Theme.App.Splash" parent="Theme.AppCompat.Light"/></resources>`)
+	var hints []string
+	for _, f := range ScanAndroid(root).Findings {
+		if f.Rule == "missed-reuse" {
+			hints = append(hints, f.Hint)
+		}
+	}
+	if s := strings.Join(hints, "|"); !strings.Contains(s, "原生 CheckBox：项目里已有 MaterialCheckBox") || !strings.Contains(s, "原生 Button") {
+		t.Errorf("hints=%v", hints)
+	}
+}
+
+// SquareImageView extends AppCompatImageView: a specialisation, not a second image implementation
+func TestSubclassIsNotADuplicate(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/java/a/SquareImageView.java", "package a;\npublic class SquareImageView extends AppCompatImageView {}")
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><a.SquareImageView/><a.SquareImageView/><a.SquareImageView/><ImageView/><ImageView/><ImageView/><ImageView/></LinearLayout>`)
+	for _, c := range ScanAndroid(root).Clusters {
+		if strings.HasPrefix(c.Concept, "image") {
+			t.Errorf("cluster %+v", c)
+		}
+	}
+}

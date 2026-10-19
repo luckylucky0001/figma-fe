@@ -27,6 +27,7 @@ PROJECTS = {
     "hello-uniapp": ("https://github.com/dcloudio/hello-uniapp.git", "ab80c34681013d844be2a9feb362bf96ffeca3ee", "h5"),
     "taro-ui-demo": ("https://github.com/NervJS/taro-ui-demo.git", "8d87bb2e3da32fe5577b1f7daebaa6261b5b3f72", "h5"),
     "nutui-vite": ("https://github.com/jdf2e/nutui-demo.git#vite", "e84f77511f2f5b81eba56763829990dfd1a579b8", "h5"),
+    "sunflower": ("https://github.com/android/sunflower.git", "2a357a31551bb53f3fe80382a9ce6d30bcc8b960", "android"),
     "pokedex": ("https://github.com/skydoves/Pokedex.git", "769eb47af4a4a98222253a67026ba42b99e2fc32", "android"),
     "newpipe": ("https://github.com/TeamNewPipe/NewPipe.git", "32eb85d0fb09ef9022421751fd96bee564b9223b", "android"),
     "vant-demo-vue3": ("https://github.com/youzan/vant-demo.git#vant/vue3-ts", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
@@ -189,6 +190,16 @@ EXPECTED_TO = {
                   R("MaterialButton", "Button[Android SDK widgets]"), R("@layout/list_empty_view")),
 }
 EXPECTED_TO["antdm-mobile"] = EXPECTED_TO["antdm-template"]
+EXPECTED_TO["sunflower"] = TO(R("TopAppBar", "CenterAlignedTopAppBar"), R("SearchBar"), R("TabRow"), R("ListItem"), NEW, R("TextField", "OutlinedTextField"),
+                              R("Switch"), R("Checkbox"), R("Button"), NEW)
+EXPECTED[("sunflower", "order-detail")] = {
+    "NavBar": R("TopAppBar", "CenterAlignedTopAppBar"), "NoticeBar": NEW, "Card": R("Card"), "Tag": RA(["—"], ["InputChip", "AssistChip", "SuggestionChip"]),
+    "CountDown": NEW, "Divider": R("HorizontalDivider"), "Cell": R("ListItem"), "ProductCard": RA(["Card", "—"], []),
+    "Price": NEW, "ActionBar": NEW, "Button": R("Button")}
+EXPECTED[("sunflower", "holdings")] = {
+    "导航栏": R("TopAppBar", "CenterAlignedTopAppBar"), "公告通知栏": NEW, "资产卡片": R("Card"), "标签页": R("TabRow"),
+    "持仓列表": R("LazyColumn"), "持仓列表项": R("ListItem"), "涨跌标签": RA(["—"], ["InputChip", "AssistChip", "SuggestionChip"]), "收盘倒计时": NEW,
+    "底部操作栏": NEW, "买入按钮": R("Button"), "卖出按钮": R("Button"), "更多按钮": R("Button")}
 for _k, _v in EXPECTED_TO.items():
     EXPECTED[(_k, "trade-order")] = _v
 
@@ -246,7 +257,7 @@ def main():
     print(f"合计 ✓{total['✓']} △{total['△']} ✗{total['✗']}")
     if not only:  # a partial run must not overwrite the full results
         json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
-        held = {"pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite"}
+        held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
@@ -254,7 +265,7 @@ def main():
         stack = {"newbee": "Vue 3 + Vant", "qmui": "XML + QMUI", "nia": "Compose + 自有设计系统", "antdm-template": "React + antd-mobile",
                  "antdm-mobile": "React + antd-mobile", "jetsnack": "Compose + 自有设计系统", "litemall": "Vue 2 + Vant 2",
                  "hello-uniapp": "uni-app + uni-ui", "taro-ui-demo": "Taro + taro-ui", "nutui-vite": "Vue 3 + NutUI",
-                 "newpipe": "XML（AppCompat）+ 少量 Compose", "pokedex": "XML + Material（MaterialComponents 主题）", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2"}
+                 "newpipe": "XML（AppCompat）+ 少量 Compose", "pokedex": "XML + Material（MaterialComponents 主题）", "sunflower": "Compose + Material3（无自有设计系统）", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2"}
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""

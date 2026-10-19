@@ -110,6 +110,7 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 | taro-ui-demo（NervJS 官方，Taro + taro-ui，React 写在 .js 里） | 两份设计稿推荐的组件都对，但全部只到「需确认」，体检显示 0 个资产 | ① 没有 taro-ui 组件库目录；② React 组件写在普通 `.js` 文件里（不是 .jsx / .tsx），没被当成有标记的文件，用法一次都没统计到 | 加入 taro-ui 目录，`.js` 里有 JSX 且引用 react / @tarojs 时按 JSX 处理。资产 49 个、组件化率 100%，两份设计稿全部 ✓ |
 | nutui-demo（京东官方，Vue 3 + NutUI 4，vite / taro 两套） | 23 项里 22 ✓ / **1 ✗** | 商品卡推荐了 `Sku`（规格选择弹窗），NutUI 的商品卡其实叫 `Card` | 补上 NutUI 的概念覆盖（Card = 商品卡，Sku 不是卡片）。全部 ✓，价格直接复用 NutUI 自带的 `Price` |
 | Pokedex（skydoves，XML + Material Components 1.14，MaterialComponents 主题） | 两份设计稿第一次跑就全部 ✓ | — | 与 QMUI / NewPipe 相反，这里 MaterialButton / Chip / MaterialDivider 都能用，工具也照常推荐，说明版本和主题检查不是一刀切 |
+| Sunflower（android 官方示例，Compose + Material3，没有自有设计系统） | 三份设计稿第一次跑就没有 ✗（31 ✓ / 2 △） | — | Material3 没有纯展示的标签组件，Tag 给的是「需确认」的 InputChip，算 △ |
 | NewPipe（大型开源 App，XML View 为主，部分 Compose） | 订单详情 8 ✓ / 2 △ / **1 ✗**，我的持仓 5 ✓ / 5 △ / **2 ✗** | ① AppCompat `Toolbar` 等标准控件被当成「有组件却没用」（只因组件库目录里有 MaterialToolbar，而项目根本没用过），也就没算进项目资产，导航栏推荐成了 Compose 的 TopAppBar；② `TabLayout` 这类「概念 + Layout」的两词名字没识别出概念；③ `@layout/error_panel` 按 panel 当成了卡片；④ XML 页面里 Compose 的 Button 仍可能得到「直接复用」 | 订单详情 9 ✓ / 2 △，我的持仓 8 ✓ / 4 △，无 ✗。剩下的 △ 都是「项目里只有 Compose 版的按钮 / 列表行、XML 页面没有现成可用的」，工具给的是「需确认」 |
 
 修正的都是通用规则（组件库版本、识别 Glance、学习项目前缀、按参数判断底部导航、`ui/components` 算设计系统、必填参数里有业务数据模型的算业务组件），不是针对 Jetsnack 的特判。之后 `python3 experiments/real-match-eval.py` 会同时跑调参集和留出集，作为回归测试。

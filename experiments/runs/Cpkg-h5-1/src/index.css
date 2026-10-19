@@ -1,0 +1,69 @@
+/* 订单详情：页面级容器 / 文本只用 --ds-* token */
+
+.od-page {
+  min-height: 100vh;
+  background: var(--ds-color-bg-page);
+}
+
+/* 内容区：12 内边距、卡片间距 12；底部额外留出 ActionBar 的 56 高度 */
+.od-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-md);
+  padding: var(--ds-space-md);
+  padding-bottom: calc(var(--ds-space-md) + var(--ds-space-xl) * 2 + var(--ds-space-sm));
+}
+
+/* 状态卡：StatusRow 横向，间距 8 */
+.od-status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-sm);
+}
+
+.od-status-title {
+  font-size: var(--ds-font-title-size);
+  line-height: var(--ds-font-title-line-height);
+  font-weight: var(--ds-font-title-weight);
+  color: var(--ds-color-text-primary);
+}
+
+/* CountDown：暂无组件，按 component-map gaps 用普通文本（font.caption + color.danger） */
+.od-countdown {
+  margin-left: auto;
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+  color: var(--ds-color-danger);
+}
+
+.od-status-desc {
+  margin-top: var(--ds-space-xs);
+  margin-bottom: var(--ds-space-md);
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+  color: var(--ds-color-text-tertiary);
+}
+
+/* 商品卡：ProductCard 与 Divider 间距 12 */
+.od-product {
+  margin-bottom: var(--ds-space-md);
+}
+
+/* TotalRow：右对齐、间距 8、高 32，与上方 Cell 间距 4 */
+.od-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ds-space-sm);
+  min-height: calc(var(--ds-space-xl) + var(--ds-space-sm));
+  margin-top: var(--ds-space-xs);
+}
+
+.od-total-label {
+  font-size: var(--ds-font-body-size);
+  line-height: var(--ds-font-body-line-height);
+  font-weight: var(--ds-font-body-weight);
+  color: var(--ds-color-text-primary);
+}

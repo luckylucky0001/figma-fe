@@ -1,0 +1,236 @@
+{
+  "page": "OrderDetail",
+  "platform": "android",
+  "pass": false,
+  "failed": [
+    "节点级严重偏差 2 处 \u003e 0"
+  ],
+  "metrics": {
+    "reuseRate": 1,
+    "runtimeReuse": 1,
+    "violations": 0,
+    "warnings": 4,
+    "pixelMismatch": 0.04003925925925926,
+    "nodeErrors": 2,
+    "nodeWarnings": 6,
+    "textCoverage": 1,
+    "figmaIds": 0
+  },
+  "audit": {
+    "platform": "android",
+    "files": [
+      "android/app/src/main/kotlin/com/demo/app/screens/OrderDetail/OrderDetailScreen.kt"
+    ],
+    "usage": [
+      {
+        "component": "DsBadge",
+        "expected": 1,
+        "actual": 1
+      },
+      {
+        "component": "DsBanner",
+        "expected": 1,
+        "actual": 1
+      },
+      {
+        "component": "DsBottomBar",
+        "expected": 1,
+        "actual": 1
+      },
+      {
+        "component": "DsButton",
+        "expected": 3,
+        "actual": 3
+      },
+      {
+        "component": "DsCard",
+        "expected": 3,
+        "actual": 3
+      },
+      {
+        "component": "DsDivider",
+        "expected": 2,
+        "actual": 2
+      },
+      {
+        "component": "DsGoodsCard",
+        "expected": 1,
+        "actual": 1
+      },
+      {
+        "component": "DsListItem",
+        "expected": 7,
+        "actual": 7
+      },
+      {
+        "component": "DsPriceText",
+        "expected": 1,
+        "actual": 1
+      },
+      {
+        "component": "DsTopBar",
+        "expected": 1,
+        "actual": 1
+      }
+    ],
+    "reuseRate": 1,
+    "figmaIds": 0,
+    "violations": 0,
+    "findings": [
+      {
+        "rule": "lookalike",
+        "severity": "warn",
+        "file": "android/app/src/main/kotlin/com/demo/app/screens/OrderDetail/OrderDetailScreen.kt",
+        "line": 70,
+        "text": "@Composable",
+        "hint": "页面里自定义了 StatusCard：组件库里有对应组件时应直接复用"
+      },
+      {
+        "rule": "lookalike",
+        "severity": "warn",
+        "file": "android/app/src/main/kotlin/com/demo/app/screens/OrderDetail/OrderDetailScreen.kt",
+        "line": 88,
+        "text": "@Composable",
+        "hint": "页面里自定义了 GoodsCard：组件库里有对应组件时应直接复用"
+      },
+      {
+        "rule": "lookalike",
+        "severity": "warn",
+        "file": "android/app/src/main/kotlin/com/demo/app/screens/OrderDetail/OrderDetailScreen.kt",
+        "line": 109,
+        "text": "@Composable",
+        "hint": "页面里自定义了 InfoCard：组件库里有对应组件时应直接复用"
+      },
+      {
+        "rule": "raw-number",
+        "severity": "warn",
+        "file": "android/app/src/main/kotlin/com/demo/app/screens/OrderDetail/OrderDetailScreen.kt",
+        "line": 0,
+        "text": "",
+        "hint": "出现 1 处裸 dp/sp 数值；优先用 DsSpacing / DsTypography"
+      }
+    ]
+  },
+  "diff": {
+    "platform": "android",
+    "pixelMismatch": 0.04003925925925926,
+    "sizeOk": true,
+    "texts": 35,
+    "textsMatched": 35,
+    "instances": 21,
+    "instancesByDs": 21,
+    "deviations": [
+      {
+        "severity": "error",
+        "kind": "size",
+        "figmaId": "1:41",
+        "target": "Price「¥ 269 .00」",
+        "expected": "68×26",
+        "actual": "68×32",
+        "delta": 5.6
+      },
+      {
+        "severity": "error",
+        "kind": "position",
+        "figmaId": "1:23",
+        "target": "文本「米白色 / M」",
+        "expected": "(120, 361)",
+        "actual": "(120, 366)",
+        "delta": 4.6
+      },
+      {
+        "severity": "warn",
+        "kind": "position",
+        "figmaId": "1:41",
+        "target": "Price「¥ 269 .00」",
+        "expected": "(279, 553)",
+        "actual": "(279, 550)",
+        "delta": 2.8
+      },
+      {
+        "severity": "warn",
+        "kind": "position",
+        "figmaId": "1:57",
+        "target": "Button「联系客服」",
+        "expected": "(75, 856)",
+        "actual": "(79, 856)",
+        "delta": 4
+      },
+      {
+        "severity": "warn",
+        "kind": "line-height",
+        "figmaId": "1:5",
+        "target": "文本「商家已接单，预计 10月22…」",
+        "expected": "行高 36",
+        "actual": "高 18.0",
+        "delta": 18
+      },
+      {
+        "severity": "warn",
+        "kind": "position",
+        "figmaId": "1:22",
+        "target": "文本「轻薄羽绒服 女款 短款连帽 …」",
+        "expected": "(120, 321)",
+        "actual": "(120, 321)",
+        "delta": 2.3
+      },
+      {
+        "severity": "warn",
+        "kind": "line-height",
+        "figmaId": "1:22",
+        "target": "文本「轻薄羽绒服 女款 短款连帽 …」",
+        "expected": "行高 20",
+        "actual": "高 41.0",
+        "delta": 21
+      },
+      {
+        "severity": "warn",
+        "kind": "position",
+        "figmaId": "1:58",
+        "target": "文本「联系客服」",
+        "expected": "(92, 862)",
+        "actual": "(95, 862)",
+        "delta": 3
+      }
+    ],
+    "regions": [
+      {
+        "figmaId": "1:11",
+        "target": "CountDown「剩余 23:59:59」",
+        "mismatch": 0.292
+      },
+      {
+        "figmaId": "1:8",
+        "target": "Tag「待发货」",
+        "mismatch": 0.239
+      },
+      {
+        "figmaId": "1:57",
+        "target": "Button「联系客服」",
+        "mismatch": 0.165
+      },
+      {
+        "figmaId": "1:59",
+        "target": "Button「修改地址」",
+        "mismatch": 0.14
+      },
+      {
+        "figmaId": "1:41",
+        "target": "Price「¥ 269 .00」",
+        "mismatch": 0.132
+      },
+      {
+        "figmaId": "1:61",
+        "target": "Button「提醒发货」",
+        "mismatch": 0.097
+      },
+      {
+        "figmaId": "1:20",
+        "target": "ProductCard「轻薄羽绒服 女款 短款连…」",
+        "mismatch": 0.085
+      }
+    ],
+    "Errors": 2,
+    "Warns": 6
+  }
+}

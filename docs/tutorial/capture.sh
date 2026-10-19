@@ -104,6 +104,28 @@ md 11-report-android "Android verify 报告" .figmafe/android/OrderDetail/report
 cp .figmafe/android/OrderDetail/screen.png "$img/11-screen-android.png"
 cp .figmafe/android/OrderDetail/diff.png "$img/11-diff-android.png"
 
+echo "Step 10b 三联对比图"
+# compare <img-name> <title> <img1> <label1> <img2> <label2> <img3> <label3>
+compare() {
+  local name=$1 title=$2; shift 2
+  local cells=""
+  while [ $# -gt 0 ]; do cells+="<figure><img src=\"$img/$1\"><figcaption>$2</figcaption></figure>"; shift 2; done
+  cat > "$t/$name.html" <<HTML
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;padding:20px;background:#eef0f3;font-family:'Noto Sans SC',sans-serif}
+.doc{display:inline-block;background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 8px 28px rgba(0,0,0,.15)}
+h3{margin:0 0 12px;font-size:16px;color:#1f2329} .row{display:flex;gap:16px}
+figure{margin:0;text-align:center} img{width:300px;border:1px solid #e5e6eb;border-radius:6px;display:block}
+figcaption{margin-top:6px;font-size:13px;color:#646a73}
+</style></head><body><div class="doc"><h3>$title</h3><div class="row">$cells</div></div></body></html>
+HTML
+  shoot html "$t/$name.html" "$img/$name.png"
+  echo "  📸 $name"
+}
+compare 09-compare "第 1 轮：设计稿 / 实现 / 差异（红色为不一致像素）" 02-design.png "Figma 设计稿" 09-screen-fail.png "第一版实现" 09-diff-fail.png "差异图"
+compare 10-compare "第 2 轮：修正后" 02-design.png "Figma 设计稿" 10-screen-pass.png "修正后（H5）" 10-diff-pass.png "差异图"
+compare 11-compare "Android（Compose）" 02-design.png "Figma 设计稿" 11-screen-android.png "Android 实现" 11-diff-android.png "差异图"
+
 echo "Step 11 沉淀规则"
 md 12-rules "沉淀规则（references/rules.md）" .claude/skills/figma-to-code/references/rules.md
 

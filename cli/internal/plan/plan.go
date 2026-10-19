@@ -129,7 +129,7 @@ func Build(exp *figma.Export, m *mapping.Map, tok *Tokens, page, platform string
 	walk = func(n *figma.Node, depth int, inComponent bool) {
 		ind := strings.Repeat("  ", depth)
 		b := exp.Rel(n)
-		geo := fmt.Sprintf("(%g,%g %g×%g)", b.X, b.Y, b.Width, b.Height)
+		geo := fmt.Sprintf("(%g,%g %g×%g)", r1(b.X), r1(b.Y), r1(b.Width), r1(b.Height))
 		switch n.Type {
 		case "INSTANCE":
 			set := exp.SetName(n)
@@ -152,7 +152,7 @@ func Build(exp *figma.Export, m *mapping.Map, tok *Tokens, page, platform string
 				p.Expected = append(p.Expected, Expected{FigmaID: n.ID, Set: set, Variant: n.Variant(), Text: n.Text(), Box: b})
 				return
 			}
-			code := codeFor(platform, im, n)
+			code := codeFor(platform, im, n, e.Slot)
 			p.Lines = append(p.Lines, fmt.Sprintf("%s- [%s] **%s** → `%s` %s", ind, n.ID, set, code, geo))
 			p.Expected = append(p.Expected, Expected{FigmaID: n.ID, Set: set, Component: im.Component, Variant: n.Variant(), Code: code, Text: n.Text(), Box: b})
 			p.Counts[im.Component]++
@@ -303,7 +303,7 @@ func sortedProps(m map[string]string) []string {
 	return keys
 }
 
-func codeFor(platform string, im *mapping.Impl, n *figma.Node) string {
+func codeFor(platform string, im *mapping.Impl, n *figma.Node, slot bool) string {
 	var args []string
 	children := ""
 	for _, prop := range sortedProps(im.Texts) {
@@ -348,9 +348,15 @@ func codeFor(platform string, im *mapping.Impl, n *figma.Node) string {
 		if children != "" {
 			return s + ">" + children + "</" + im.Component + ">"
 		}
+		if slot {
+			return s + ">…</" + im.Component + ">"
+		}
 		return s + " />"
 	}
 	args = append(args, fmt.Sprintf(`modifier = Modifier.figmaId("%s")`, n.ID))
+	if slot {
+		return im.Component + "(" + strings.Join(args, ", ") + ") { … }"
+	}
 	return im.Component + "(" + strings.Join(args, ", ") + ")"
 }
 
@@ -415,3 +421,5 @@ func (p *Plan) Markdown(m *mapping.Map) string {
 	}
 	return b.String()
 }
+
+func r1(f float64) float64 { return math.Round(f*10) / 10 }

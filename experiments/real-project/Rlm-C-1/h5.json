@@ -16,8 +16,8 @@
         "Icon×18",
         "Card×14",
         "Col×12",
-        "List×11",
-        "Field×11"
+        "Field×11",
+        "List×11"
       ]
     },
     {
@@ -193,25 +193,6 @@
       }
     },
     {
-      "name": "Field",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "input",
-      "usage": 11,
-      "usageFiles": [
-        "src/views/order/checkout.vue",
-        "src/views/user/module-feedback/index.vue",
-        "src/views/user/user-information-set/set-mobile/index.vue",
-        "src/views/user/user-information-set/set-nickname/index.vue",
-        "src/views/user/user-information-set/set-password/index.vue"
-      ],
-      "example": "\u003cvan-field v-model=\"message\" placeholder=\"请输入备注\" label=\"订单备注\"\u003e",
-      "exampleAt": "src/views/order/checkout.vue:59",
-      "attrs": {
-        "size=\"large\"": 1
-      }
-    },
-    {
       "name": "List",
       "kind": "ui-lib",
       "source": "Vant",
@@ -232,6 +213,25 @@
       ],
       "example": "\u003cvan-list v-model=\"loading\"",
       "exampleAt": "src/views/items/brand-list/index.vue:3"
+    },
+    {
+      "name": "Field",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "input",
+      "usage": 11,
+      "usageFiles": [
+        "src/views/order/checkout.vue",
+        "src/views/user/module-feedback/index.vue",
+        "src/views/user/user-information-set/set-mobile/index.vue",
+        "src/views/user/user-information-set/set-nickname/index.vue",
+        "src/views/user/user-information-set/set-password/index.vue"
+      ],
+      "example": "\u003cvan-field v-model=\"message\" placeholder=\"请输入备注\" label=\"订单备注\"\u003e",
+      "exampleAt": "src/views/order/checkout.vue:59",
+      "attrs": {
+        "size=\"large\"": 1
+      }
     },
     {
       "name": "Tag",
@@ -274,6 +274,22 @@
       }
     },
     {
+      "name": "VueCountdown",
+      "kind": "ui-lib",
+      "source": "@chenfengyuan/vue-countdown",
+      "concept": "countdown",
+      "usage": 5,
+      "usageFiles": [
+        "src/views/login/forget/index.vue",
+        "src/views/login/register-status/index.vue",
+        "src/views/login/register-submit/index.vue",
+        "src/views/user/user-information-set/set-mobile/index.vue",
+        "src/views/user/user-information-set/set-password/index.vue"
+      ],
+      "example": "\u003ccountdown v-if=\"counting\" :time=\"60000\" @end=\"countdownend\"\u003e",
+      "exampleAt": "src/views/login/forget/index.vue:14"
+    },
+    {
       "name": "Popup",
       "kind": "ui-lib",
       "source": "Vant",
@@ -291,22 +307,6 @@
       "attrs": {
         "position=\"bottom\"": 4
       }
-    },
-    {
-      "name": "VueCountdown",
-      "kind": "ui-lib",
-      "source": "@chenfengyuan/vue-countdown",
-      "concept": "countdown",
-      "usage": 5,
-      "usageFiles": [
-        "src/views/login/forget/index.vue",
-        "src/views/login/register-status/index.vue",
-        "src/views/login/register-submit/index.vue",
-        "src/views/user/user-information-set/set-mobile/index.vue",
-        "src/views/user/user-information-set/set-password/index.vue"
-      ],
-      "example": "\u003ccountdown v-if=\"counting\" :time=\"60000\" @end=\"countdownend\"\u003e",
-      "exampleAt": "src/views/login/forget/index.vue:14"
     },
     {
       "name": "Tabs",
@@ -343,20 +343,6 @@
       "exampleAt": "src/views/items/category/index.vue:5"
     },
     {
-      "name": "Search",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "search",
-      "usage": 3,
-      "usageFiles": [
-        "src/views/home/tabbar-home.vue",
-        "src/views/items/search/index.vue",
-        "src/views/items/tabbar-catalog.vue"
-      ],
-      "example": "\u003cvan-search placeholder=\"点击前往搜索\"",
-      "exampleAt": "src/views/home/tabbar-home.vue:4"
-    },
-    {
       "name": "NavBar",
       "kind": "ui-lib",
       "source": "Vant",
@@ -374,53 +360,18 @@
       }
     },
     {
-      "name": "Checkbox",
+      "name": "Search",
       "kind": "ui-lib",
       "source": "Vant",
-      "concept": "checkbox",
-      "usage": 2,
+      "concept": "search",
+      "usage": 3,
       "usageFiles": [
-        "src/views/order/tabbar-cart.vue"
+        "src/views/home/tabbar-home.vue",
+        "src/views/items/search/index.vue",
+        "src/views/items/tabbar-catalog.vue"
       ],
-      "example": "\u003cvan-checkbox :key=\"item.id\" :name=\"item.id\" v-model=\"item.checked\"\u003e\u003c/van-checkbox\u003e",
-      "exampleAt": "src/views/order/tabbar-cart.vue:9"
-    },
-    {
-      "name": "GoodsActionIcon",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/items/detail/index.vue"
-      ],
-      "example": "\u003cvan-goods-action-icon @click=\"toCart\" icon=\"cart-o\" :info=\"(cartInfo \u003e",
-      "exampleAt": "src/views/items/detail/index.vue:55"
-    },
-    {
-      "name": "Grid",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/home/tabbar-home.vue"
-      ],
-      "example": "\u003cvan-grid clickable",
-      "exampleAt": "src/views/home/tabbar-home.vue:86",
-      "attrs": {
-        "clickable": 2
-      }
-    },
-    {
-      "name": "Divider",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "divider",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/order/order-detail-v2.vue"
-      ],
-      "example": "\u003cvan-divider class=\"order-detail-v2__divider\"",
-      "exampleAt": "src/views/order/order-detail-v2.vue:30"
+      "example": "\u003cvan-search placeholder=\"点击前往搜索\"",
+      "exampleAt": "src/views/home/tabbar-home.vue:4"
     },
     {
       "name": "Radio",
@@ -435,20 +386,15 @@
       "exampleAt": "src/views/order/payment/index.vue:24"
     },
     {
-      "name": "GoodsActionButton",
+      "name": "GoodsActionIcon",
       "kind": "ui-lib",
       "source": "Vant",
-      "concept": "button",
       "usage": 2,
       "usageFiles": [
         "src/views/items/detail/index.vue"
       ],
-      "example": "\u003cvan-goods-action-button type=\"warning\" @click=\"skuClick\" text=\"加入购物车\"/\u003e",
-      "exampleAt": "src/views/items/detail/index.vue:57",
-      "attrs": {
-        "type=\"danger\"": 1,
-        "type=\"warning\"": 1
-      }
+      "example": "\u003cvan-goods-action-icon @click=\"toCart\" icon=\"cart-o\" :info=\"(cartInfo \u003e",
+      "exampleAt": "src/views/items/detail/index.vue:55"
     },
     {
       "name": "GridItem",
@@ -461,18 +407,6 @@
       ],
       "example": "\u003cvan-grid-item v-for=\"(brand ,index) in shopInfos.brandList\"",
       "exampleAt": "src/views/home/tabbar-home.vue:88"
-    },
-    {
-      "name": "Picker",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/user/module-feedback/index.vue",
-        "src/views/user/user-information-set/index.vue"
-      ],
-      "example": "\u003cvan-picker :columns=\"types\" @change=\"onType\" /\u003e",
-      "exampleAt": "src/views/user/module-feedback/index.vue:26"
     },
     {
       "name": "Swipe",
@@ -491,17 +425,70 @@
       }
     },
     {
-      "name": "SwipeItem",
+      "name": "Picker",
       "kind": "ui-lib",
       "source": "Vant",
-      "concept": "carousel",
       "usage": 2,
       "usageFiles": [
-        "src/views/home/tabbar-home.vue",
+        "src/views/user/module-feedback/index.vue",
+        "src/views/user/user-information-set/index.vue"
+      ],
+      "example": "\u003cvan-picker :columns=\"types\" @change=\"onType\" /\u003e",
+      "exampleAt": "src/views/user/module-feedback/index.vue:26"
+    },
+    {
+      "name": "GoodsActionButton",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "button",
+      "usage": 2,
+      "usageFiles": [
         "src/views/items/detail/index.vue"
       ],
-      "example": "\u003cvan-swipe-item v-for=\"(banner, index) in shopInfos.banner\"",
-      "exampleAt": "src/views/home/tabbar-home.vue:10"
+      "example": "\u003cvan-goods-action-button type=\"warning\" @click=\"skuClick\" text=\"加入购物车\"/\u003e",
+      "exampleAt": "src/views/items/detail/index.vue:57",
+      "attrs": {
+        "type=\"danger\"": 1,
+        "type=\"warning\"": 1
+      }
+    },
+    {
+      "name": "Checkbox",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "checkbox",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/order/tabbar-cart.vue"
+      ],
+      "example": "\u003cvan-checkbox :key=\"item.id\" :name=\"item.id\" v-model=\"item.checked\"\u003e\u003c/van-checkbox\u003e",
+      "exampleAt": "src/views/order/tabbar-cart.vue:9"
+    },
+    {
+      "name": "Divider",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "divider",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/order/order-detail-v2.vue"
+      ],
+      "example": "\u003cvan-divider class=\"order-detail-v2__divider\"",
+      "exampleAt": "src/views/order/order-detail-v2.vue:30"
+    },
+    {
+      "name": "Grid",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/home/tabbar-home.vue"
+      ],
+      "example": "\u003cvan-grid clickable",
+      "exampleAt": "src/views/home/tabbar-home.vue:86",
+      "attrs": {
+        "clickable": 2
+      }
     },
     {
       "name": "GoodsAction",
@@ -517,6 +504,19 @@
       "exampleAt": "src/views/order/order-detail-v2.vue:95"
     },
     {
+      "name": "SwipeItem",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "carousel",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/home/tabbar-home.vue",
+        "src/views/items/detail/index.vue"
+      ],
+      "example": "\u003cvan-swipe-item v-for=\"(banner, index) in shopInfos.banner\"",
+      "exampleAt": "src/views/home/tabbar-home.vue:10"
+    },
+    {
       "name": "SubmitBar",
       "kind": "ui-lib",
       "source": "Vant",
@@ -530,6 +530,54 @@
       "exampleAt": "src/views/order/checkout.vue:64"
     },
     {
+      "name": "AddressList",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "list",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/user/module-address/index.vue"
+      ],
+      "example": "\u003cvan-address-list v-model=\"chosenAddressId\" :list=\"addressList\" @add=\"onAdd\" @edit=\"onEdit\" @select=\"onSelect\"/\u003e",
+      "exampleAt": "src/views/user/module-address/index.vue:3"
+    },
+    {
+      "name": "RadioGroup",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "radio",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/order/payment/index.vue"
+      ],
+      "example": "\u003cvan-radio-group v-model=\"payWay\"\u003e",
+      "exampleAt": "src/views/order/payment/index.vue:18"
+    },
+    {
+      "name": "Tabbar",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "tabbar",
+      "usage": 1,
+      "usageFiles": [
+        "src/components/Tabbar/index.vue"
+      ],
+      "example": "\u003cvan-tabbar v-model=\"active\" style=\"z-index: 1999\"\u003e",
+      "exampleAt": "src/components/Tabbar/index.vue:2"
+    },
+    {
+      "name": "CollapseItem",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "cell",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/user/module-help/index.vue"
+      ],
+      "example": "\u003cvan-collapse-item :title=\"issue.question\" :name=\"index\" v-for=\"(issue, index) in issueList\" :key=\"index\"\u003e",
+      "exampleAt": "src/views/user/module-help/index.vue:4"
+    },
+    {
       "name": "CheckboxGroup",
       "kind": "ui-lib",
       "source": "Vant",
@@ -540,6 +588,18 @@
       ],
       "example": "\u003cvan-checkbox-group @change=\"toggle\" class=\"card-goods\" v-model=\"checkedGoods\"\u003e",
       "exampleAt": "src/views/order/tabbar-cart.vue:7"
+    },
+    {
+      "name": "NoticeBar",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "notice",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/order/order-detail-v2.vue"
+      ],
+      "example": "\u003cvan-notice-bar class=\"order-detail-v2__notice\"",
+      "exampleAt": "src/views/order/order-detail-v2.vue:9"
     },
     {
       "name": "Stepper",
@@ -557,42 +617,6 @@
       }
     },
     {
-      "name": "Tabbar",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "tabbar",
-      "usage": 1,
-      "usageFiles": [
-        "src/components/Tabbar/index.vue"
-      ],
-      "example": "\u003cvan-tabbar v-model=\"active\" style=\"z-index: 1999\"\u003e",
-      "exampleAt": "src/components/Tabbar/index.vue:2"
-    },
-    {
-      "name": "NoticeBar",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "notice",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/order/order-detail-v2.vue"
-      ],
-      "example": "\u003cvan-notice-bar class=\"order-detail-v2__notice\"",
-      "exampleAt": "src/views/order/order-detail-v2.vue:9"
-    },
-    {
-      "name": "AddressList",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "list",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/user/module-address/index.vue"
-      ],
-      "example": "\u003cvan-address-list v-model=\"chosenAddressId\" :list=\"addressList\" @add=\"onAdd\" @edit=\"onEdit\" @select=\"onSelect\"/\u003e",
-      "exampleAt": "src/views/user/module-address/index.vue:3"
-    },
-    {
       "name": "Uploader",
       "kind": "ui-lib",
       "source": "Vant",
@@ -602,6 +626,18 @@
       ],
       "example": "\u003cvan-uploader :afterRead=\"avatarAfterRead\"\u003e",
       "exampleAt": "src/views/user/user-information-set/index.vue:5"
+    },
+    {
+      "name": "CountDown",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "countdown",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/order/order-detail-v2.vue"
+      ],
+      "example": "\u003cvan-count-down class=\"order-detail-v2__countdown\"",
+      "exampleAt": "src/views/order/order-detail-v2.vue:24"
     },
     {
       "name": "CouponList",
@@ -614,6 +650,29 @@
       ],
       "example": "\u003cvan-coupon-list",
       "exampleAt": "src/views/order/checkout.vue:23"
+    },
+    {
+      "name": "AddressEdit",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/user/module-address-edit/index.vue"
+      ],
+      "example": "\u003cvan-address-edit",
+      "exampleAt": "src/views/user/module-address-edit/index.vue:4"
+    },
+    {
+      "name": "TabbarItem",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "tabbar",
+      "usage": 1,
+      "usageFiles": [
+        "src/components/Tabbar/index.vue"
+      ],
+      "example": "\u003cvan-tabbar-item",
+      "exampleAt": "src/components/Tabbar/index.vue:3"
     },
     {
       "name": "Collapse",
@@ -630,65 +689,6 @@
       }
     },
     {
-      "name": "AddressEdit",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/user/module-address-edit/index.vue"
-      ],
-      "example": "\u003cvan-address-edit",
-      "exampleAt": "src/views/user/module-address-edit/index.vue:4"
-    },
-    {
-      "name": "RadioGroup",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "radio",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/order/payment/index.vue"
-      ],
-      "example": "\u003cvan-radio-group v-model=\"payWay\"\u003e",
-      "exampleAt": "src/views/order/payment/index.vue:18"
-    },
-    {
-      "name": "CountDown",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "countdown",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/order/order-detail-v2.vue"
-      ],
-      "example": "\u003cvan-count-down class=\"order-detail-v2__countdown\"",
-      "exampleAt": "src/views/order/order-detail-v2.vue:24"
-    },
-    {
-      "name": "CollapseItem",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "cell",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/user/module-help/index.vue"
-      ],
-      "example": "\u003cvan-collapse-item :title=\"issue.question\" :name=\"index\" v-for=\"(issue, index) in issueList\" :key=\"index\"\u003e",
-      "exampleAt": "src/views/user/module-help/index.vue:4"
-    },
-    {
-      "name": "TabbarItem",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "tabbar",
-      "usage": 1,
-      "usageFiles": [
-        "src/components/Tabbar/index.vue"
-      ],
-      "example": "\u003cvan-tabbar-item",
-      "exampleAt": "src/components/Tabbar/index.vue:3"
-    },
-    {
       "name": "IsEmpty",
       "kind": "business",
       "source": "src/components/is-empty/index.vue",
@@ -703,10 +703,30 @@
       "exampleAt": "src/views/items/search/index.vue:42"
     },
     {
+      "name": "Price",
+      "kind": "business",
+      "source": "src/components/price/index.vue",
+      "concept": "price",
+      "props": [
+        "value"
+      ],
+      "usage": 0
+    },
+    {
       "name": "FieldGroup",
       "kind": "business",
       "source": "src/components/field-group/index.vue",
       "concept": "input",
+      "usage": 0
+    },
+    {
+      "name": "Field",
+      "kind": "business",
+      "source": "src/components/field/index.vue",
+      "concept": "input",
+      "props": [
+        "value"
+      ],
       "usage": 0
     },
     {
@@ -721,26 +741,6 @@
       "kind": "business",
       "source": "src/components/Header/index.vue",
       "concept": "navbar",
-      "usage": 0
-    },
-    {
-      "name": "Price",
-      "kind": "business",
-      "source": "src/components/price/index.vue",
-      "concept": "price",
-      "props": [
-        "value"
-      ],
-      "usage": 0
-    },
-    {
-      "name": "Field",
-      "kind": "business",
-      "source": "src/components/field/index.vue",
-      "concept": "input",
-      "props": [
-        "value"
-      ],
       "usage": 0
     }
   ],
@@ -986,21 +986,21 @@
       ]
     },
     {
-      "value": "#000000",
-      "count": 5,
-      "sample": [
-        "src/assets/scss/_vant-theme.scss",
-        "src/assets/scss/global.scss",
-        "src/views/user/tabbar-user-coupon.vue"
-      ]
-    },
-    {
       "value": "#AB956D",
       "count": 5,
       "sample": [
         "src/views/home/tabbar-home.vue",
         "src/views/items/brand/index.vue",
         "src/views/items/topic/index.vue"
+      ]
+    },
+    {
+      "value": "#000000",
+      "count": 5,
+      "sample": [
+        "src/assets/scss/_vant-theme.scss",
+        "src/assets/scss/global.scss",
+        "src/views/user/tabbar-user-coupon.vue"
       ]
     },
     {
@@ -1021,19 +1021,19 @@
       ]
     },
     {
-      "value": "#FCF5F5",
-      "count": 3,
-      "sample": [
-        "src/components/field/index.vue"
-      ]
-    },
-    {
       "value": "#666666",
       "count": 3,
       "sample": [
         "src/views/items/brand/index.vue",
         "src/views/items/brand-list/index.vue",
         "src/views/items/topic-list/index.vue"
+      ]
+    },
+    {
+      "value": "#FCF5F5",
+      "count": 3,
+      "sample": [
+        "src/components/field/index.vue"
       ]
     },
     {
@@ -1046,7 +1046,7 @@
       ]
     },
     {
-      "value": "#E8E8E8",
+      "value": "#EBEDF0",
       "count": 2,
       "sample": [
         "src/views/home/tabbar-home.vue",
@@ -1054,7 +1054,7 @@
       ]
     },
     {
-      "value": "#EBEDF0",
+      "value": "#E8E8E8",
       "count": 2,
       "sample": [
         "src/views/home/tabbar-home.vue",
@@ -1067,6 +1067,13 @@
       "sample": [
         "src/views/home/tabbar-home.vue",
         "src/views/items/category/index.vue"
+      ]
+    },
+    {
+      "value": "#F7B444",
+      "count": 1,
+      "sample": [
+        "src/views/items/detail/index.vue"
       ]
     },
     {
@@ -1084,20 +1091,6 @@
       ]
     },
     {
-      "value": "#323233",
-      "count": 1,
-      "sample": [
-        "src/views/home/tabbar-home.vue"
-      ]
-    },
-    {
-      "value": "#F7B444",
-      "count": 1,
-      "sample": [
-        "src/views/items/detail/index.vue"
-      ]
-    },
-    {
       "value": "#999999",
       "count": 1,
       "token": "$gray-deep",
@@ -1110,6 +1103,13 @@
       "count": 1,
       "sample": [
         "src/views/order/payment/index.vue"
+      ]
+    },
+    {
+      "value": "#323233",
+      "count": 1,
+      "sample": [
+        "src/views/home/tabbar-home.vue"
       ]
     }
   ],

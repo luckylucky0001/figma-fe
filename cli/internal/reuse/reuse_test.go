@@ -692,3 +692,23 @@ func TestNonViewBaseIsNotACustomView(t *testing.T) {
 		t.Errorf("assets=%v", names)
 	}
 }
+
+// mall-app-web imports its own copy of uni-number-box: easycom would map the tag to uni-ui, the import wins
+func TestExplicitLocalImportBeatsLibraryPrefix(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"@dcloudio/uni-app":"3","@dcloudio/uni-ui":"1.5"}}`)
+	write(t, root, "src/components/uni-number-box.vue", `<template><view class="box"><text>-</text><input/><text>+</text></view></template>`)
+	write(t, root, "src/pages/cart/cart.vue", `<template><view><uni-number-box :value="1"></uni-number-box><uni-load-more/></view></template>
+<script setup>
+import uniNumberBox from '@/components/uni-number-box.vue'
+</script>`)
+	used := map[string]string{}
+	for _, a := range ScanH5(root).Assets {
+		if a.Usage > 0 {
+			used[a.Name] = a.Kind
+		}
+	}
+	if used["UniNumberBox"] != "business" || used["NumberBox"] != "" || used["LoadMore"] != "ui-lib" {
+		t.Errorf("used=%v", used)
+	}
+}

@@ -375,7 +375,22 @@ func ScanH5(root string) *Report {
 						continue
 					}
 				}
+				// an explicit import of a project file wins over a library tag prefix (mall-app-web imports
+				// its own copy of uni-number-box, which easycom would otherwise resolve to uni-ui)
+				if a == nil && strings.Contains(tag, "-") {
+					for k, src := range imported {
+						if strings.EqualFold(k, kebabToPascal(tag)) && (strings.HasPrefix(src, ".") || strings.HasPrefix(src, "@/") || strings.HasPrefix(src, "~/")) {
+							a = alias[strings.ToLower(strings.ReplaceAll(tag, "-", ""))]
+							if a == nil {
+								a = projByName[kebabToPascal(tag)]
+							}
+						}
+					}
+				}
 				for _, h := range libs {
+					if a != nil {
+						break
+					}
 					if h.lib.TagPrefix != "" && strings.HasPrefix(tag, h.lib.TagPrefix) {
 						if n := kebabToPascal(strings.TrimPrefix(tag, h.lib.TagPrefix)); h.names[n] {
 							a = assets["ui-lib|"+h.lib.Name+"|"+n]

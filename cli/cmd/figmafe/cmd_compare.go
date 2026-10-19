@@ -96,6 +96,7 @@ func runCompare(args []string) error {
 	_ = os.WriteFile(filepath.Join(*out, "report.md"), []byte(md.String()), 0o644)
 	fmt.Print(md.String())
 	if !pass {
+		b.Close() // os.Exit skips the deferred Close, which would leave Chrome and its temp profile behind
 		os.Exit(3)
 	}
 	return nil

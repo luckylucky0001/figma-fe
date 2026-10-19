@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"sort"
+	"strings"
 	"testing"
 )
 
@@ -46,5 +47,59 @@ func TestChangedUIFiles(t *testing.T) {
 	want := []string{"res/layout/page.xml", "res/values/colors.xml", "src/views/New.vue", "src/views/Old.vue"}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %v want %v", got, want)
+	}
+}
+
+// review: Chinese / spaced file names, renames, mode-only changes and a user's diff prefix settings
+// must neither crash the gate nor silently skip files
+func TestChangedFilesAndAddedLines(t *testing.T) {
+	if _, err := exec.LookPath("git"); err != nil {
+		t.Skip("git not installed")
+	}
+	root := t.TempDir()
+	run := func(args ...string) {
+		cmd := exec.Command("git", append([]string{"-C", root, "-c", "user.email=t@t", "-c", "user.name=t"}, args...)...)
+		if out, err := cmd.CombinedOutput(); err != nil {
+			t.Fatalf("git %v: %v %s", args, err, out)
+		}
+	}
+	put := func(rel, text string) {
+		p := filepath.Join(root, rel)
+		_ = os.MkdirAll(filepath.Dir(p), 0o755)
+		if err := os.WriteFile(p, []byte(text), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	run("init", "-q")
+	run("config", "diff.mnemonicPrefix", "true")
+	put("src/views/订单.vue", "<template>\n<div/>\n</template>\n")
+	put("src/views/My Page.vue", "<template>\n<div/>\n</template>\n")
+	put("src/views/Cart.vue", "<template>\n<div/>\n</template>\n")
+	put("src/views/Old.vue", "<template>\n<div/>\n</template>\n")
+	run("add", "-A")
+	run("commit", "-qm", "base")
+	put("src/views/订单.vue", "<template>\n<div/>\n<p style=\"color:#ff0000\"/>\n</template>\n")
+	put("src/views/My Page.vue", "<template>\n<div/>\n<p/>\n</template>\n")
+	_ = os.Chmod(filepath.Join(root, "src/views/Cart.vue"), 0o755)
+	run("mv", "src/views/Old.vue", "src/views/New.vue")
+	files, err := changedUIFiles(root, "HEAD")
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := strings.Join(files, "|")
+	for _, want := range []string{"src/views/订单.vue", "src/views/My Page.vue", "src/views/New.vue"} {
+		if !strings.Contains(got, want) {
+			t.Errorf("changed files %q miss %q", got, want)
+		}
+	}
+	lines := addedLines(root, "HEAD")
+	if !lines["src/views/订单.vue"][3] || len(lines["src/views/订单.vue"]) != 1 {
+		t.Errorf("订单.vue added lines = %v", lines["src/views/订单.vue"])
+	}
+	if !lines["src/views/My Page.vue"][3] {
+		t.Errorf("My Page.vue added lines = %v", lines["src/views/My Page.vue"])
+	}
+	if l, ok := lines["src/views/Cart.vue"]; !ok || len(l) != 0 {
+		t.Errorf("a chmod-only change adds no lines, got %v (present %v)", l, ok)
 	}
 }

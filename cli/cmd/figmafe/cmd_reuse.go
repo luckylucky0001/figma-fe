@@ -61,12 +61,7 @@ func runReuse(args []string) error {
 		lines = addedLines(root, *changed)
 		fmt.Printf("· 检查改动的 %d 个 UI 文件（已有文件只看新增的行）\n", len(files))
 	}
-	regressed := false
-	defer func() {
-		if regressed {
-			os.Exit(3)
-		}
-	}()
+	regressed, failed := false, false // reported after every platform ran, so real errors are not swallowed
 	for _, p := range plats {
 		var r *reuse.Report
 		if p == "h5" {
@@ -84,14 +79,20 @@ func runReuse(args []string) error {
 		}
 		if *baseline != "" {
 			var old reuse.Report
-			if b, err := os.ReadFile(*baseline); err != nil || json.Unmarshal(b, &old) != nil {
-				return fmt.Errorf("--baseline %s: not a figmafe reuse report", *baseline)
+			var probe map[string]json.RawMessage
+			b, err := os.ReadFile(*baseline)
+			if err != nil || json.Unmarshal(b, &probe) != nil || probe["metrics"] == nil || json.Unmarshal(b, &old) != nil || old.Platform == "" {
+				return fmt.Errorf("--baseline %s: not a figmafe reuse report (<platform>.json)", *baseline)
 			}
-			text, worse := reuse.CompareMetrics(&old, r)
-			md = text + "\n---\n\n" + md
-			fmt.Print(text)
-			if worse && *noRegress {
-				regressed = true
+			if old.Platform != p {
+				fmt.Printf("· --baseline 是 %s 的报告，跳过 %s 的对比\n", old.Platform, p)
+			} else {
+				text, worse := reuse.CompareMetrics(&old, r)
+				md = text + "\n---\n\n" + md
+				fmt.Print(text)
+				if worse && *noRegress {
+					regressed = true
+				}
 			}
 		}
 		_ = os.WriteFile(filepath.Join(*out, p+".md"), []byte(md), 0o644)
@@ -102,7 +103,7 @@ func runReuse(args []string) error {
 			fmt.Print(pc.Markdown())
 		}
 		if pc != nil && !pc.Pass {
-			defer func() { os.Exit(3) }()
+			failed = true
 		}
 		m := r.Metrics
 		wraps, blocked := 0, 0
@@ -126,6 +127,12 @@ func runReuse(args []string) error {
 		}
 		fmt.Printf("\n✓ [%s] %d 个资产 · 组件化率 %.0f%% · 重复概念 %d · 重复结构 %d 组 · 硬编码颜色 %d%s → %s\n",
 			p, len(r.Assets), m.Componentization*100, m.DuplicateConcepts, m.CloneGroups, m.HardcodedColors, extra, filepath.Join(*out, p+".md"))
+	}
+	switch {
+	case failed:
+		return exitError{3, "✗ 页面复用检查未通过"}
+	case regressed:
+		return exitError{3, "✗ 和上次体检相比有指标变差（--no-regress）"}
 	}
 	return nil
 }
@@ -228,20 +235,41 @@ func runMatch(args []string) error {
 	return nil
 }
 
-// changedUIFiles lists added / modified UI source files vs ref (git diff --diff-filter=AM).
+// gitOut runs git with stable path output: no quoting of non-ASCII names, a/ b/ prefixes whatever
+// the user's diff.noprefix / mnemonicPrefix, and renames reported as delete + add.
+func gitOut(root string, args ...string) ([]byte, error) {
+	base := []string{"-C", root, "-c", "core.quotePath=false", "-c", "diff.noprefix=false", "-c", "diff.mnemonicPrefix=false"}
+	return exec.Command("git", append(base, args...)...).Output()
+}
+
+// nulList splits git's -z output.
+func nulList(b []byte) []string {
+	var out []string
+	for _, f := range strings.Split(string(b), "\x00") {
+		if f = strings.TrimSpace(f); f != "" {
+			out = append(out, f)
+		}
+	}
+	return out
+}
+
+func uiFile(f string) bool {
+	ext := filepath.Ext(f)
+	return ext == ".vue" || ext == ".nvue" || ext == ".tsx" || ext == ".jsx" || ext == ".kt" || ext == ".java" ||
+		ext == ".xml" && (strings.Contains("/"+f, "/res/layout") || strings.Contains("/"+f, "/res/values"))
+}
+
+// changedUIFiles lists added / modified UI source files vs ref (a renamed file counts as added).
 func changedUIFiles(root, ref string) ([]string, error) {
-	out, err := exec.Command("git", "-C", root, "diff", "--name-only", "--relative", "--diff-filter=AM", ref, "--").Output()
+	out, err := gitOut(root, "diff", "--name-only", "-z", "--relative", "--no-renames", "--diff-filter=AM", ref, "--")
 	if err != nil {
 		return nil, fmt.Errorf("git diff %s: %w", ref, err)
 	}
-	untracked, _ := exec.Command("git", "-C", root, "ls-files", "--others", "--exclude-standard").Output()
+	untracked, _ := gitOut(root, "ls-files", "-z", "--others", "--exclude-standard")
 	var files []string
 	seen := map[string]bool{}
-	for _, f := range strings.Fields(string(out) + "\n" + string(untracked)) {
-		ext := filepath.Ext(f)
-		ui := ext == ".vue" || ext == ".tsx" || ext == ".jsx" || ext == ".kt" || ext == ".java" ||
-			ext == ".xml" && (strings.Contains("/"+f, "/res/layout") || strings.Contains("/"+f, "/res/values"))
-		if ui && !seen[f] {
+	for _, f := range append(nulList(out), nulList(untracked)...) {
+		if uiFile(f) && !seen[f] {
 			seen[f] = true
 			files = append(files, f)
 		}
@@ -249,27 +277,51 @@ func changedUIFiles(root, ref string) ([]string, error) {
 	return files, nil
 }
 
-var hunkRe = regexp.MustCompile(`(?m)^\+\+\+ b/(.+)$|^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@`)
+var hunkHeadRe = regexp.MustCompile(`^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@`)
 
 // addedLines: for files modified (not added) since ref, the line numbers this change added, so the
 // gate judges the change and not the file's history. Files missing from the map are judged whole.
 func addedLines(root, ref string) map[string]map[int]bool {
-	out, err := exec.Command("git", "-C", root, "diff", "-U0", "--relative", "--diff-filter=M", ref, "--").Output()
+	names, err := gitOut(root, "diff", "--name-only", "-z", "--relative", "--no-renames", "--diff-filter=M", ref, "--")
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "⚠ git diff %s 失败，改动过的文件将整份检查：%v\n", ref, err)
 		return nil
 	}
 	res := map[string]map[int]bool{}
+	for _, f := range nulList(names) {
+		res[f] = map[int]bool{} // a mode-only change adds no lines
+	}
+	out, err := gitOut(root, "diff", "-U0", "--relative", "--no-renames", "--diff-filter=M", "--src-prefix=a/", "--dst-prefix=b/", ref, "--")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "⚠ git diff %s 失败，改动过的文件将整份检查：%v\n", ref, err)
+		return nil
+	}
 	cur := ""
-	for _, m := range hunkRe.FindAllStringSubmatch(string(out), -1) {
-		if m[1] != "" {
-			cur = m[1]
-			res[cur] = map[int]bool{}
+	for _, line := range strings.Split(string(out), "\n") {
+		if strings.HasPrefix(line, "+++ ") {
+			p := strings.TrimRight(strings.TrimPrefix(line, "+++ "), "\t")
+			if strings.HasPrefix(p, `"`) {
+				if u, err := strconv.Unquote(p); err == nil {
+					p = u
+				}
+			}
+			cur = ""
+			if p != "/dev/null" {
+				cur = strings.TrimPrefix(p, "b/")
+				if res[cur] == nil {
+					res[cur] = map[int]bool{}
+				}
+			}
 			continue
 		}
-		start, _ := strconv.Atoi(m[2])
+		m := hunkHeadRe.FindStringSubmatch(line)
+		if m == nil || cur == "" {
+			continue
+		}
+		start, _ := strconv.Atoi(m[1])
 		n := 1
-		if m[3] != "" {
-			n, _ = strconv.Atoi(m[3])
+		if m[2] != "" {
+			n, _ = strconv.Atoi(m[2])
 		}
 		for i := 0; i < n; i++ {
 			res[cur][start+i] = true

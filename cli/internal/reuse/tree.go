@@ -53,6 +53,8 @@ func parseMarkup(src string) []*mnode {
 	return root.children
 }
 
+var qualifierRe = regexp.MustCompile(`/res/layout-[\w-]+/`)
+
 var voidTag = map[string]bool{"img": true, "input": true, "br": true, "hr": true, "meta": true, "link": true}
 
 // compute fills size and a shape signature. Runs of identical siblings collapse to one ("+"), so a
@@ -128,6 +130,15 @@ func findClones(files map[string]string, parse func(string) []*mnode, minSize in
 			}
 		}
 		if !maximal {
+			continue
+		}
+		// layout-land / layout-large copies of the same layout are Android's configuration variants,
+		// intended duplication rather than copy-paste: they must span at least two real files
+		logical := map[string]bool{}
+		for _, o := range os {
+			logical[qualifierRe.ReplaceAllString(o.file, "/res/layout/")] = true
+		}
+		if len(logical) < 2 {
 			continue
 		}
 		c := Clone{Signature: short(sig), Elements: os[0].node.size, Sample: os[0].node.pretty(0, 3)}

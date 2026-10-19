@@ -539,3 +539,14 @@ func TestAntdMobileV2(t *testing.T) {
 		t.Errorf("antd-mobile 2: %v", state)
 	}
 }
+
+func TestBrokerageNames(t *testing.T) {
+	for name, want := range map[string]string{
+		"GJTitleBar": "navbar", "GjStockListItem": "cell", "GJSwitchButton": "switch", "KLineView": "chart", "TimeSharingView": "chart",
+		"分时图": "chart", "GjPriceTextView": "price", "GjStepperView": "stepper", "GjSearchView": "search", "SplitLine": "divider",
+	} {
+		if got := ConceptOf(name); got != want {
+			t.Errorf("ConceptOf(%q)=%q want %q", name, got, want)
+		}
+	}
+}

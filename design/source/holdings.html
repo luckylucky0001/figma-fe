@@ -1,0 +1,64 @@
+<!doctype html>
+<!--
+  设计源：券商风格「我的持仓」页，用来生成第二份 Figma fixture（design/figma-export/holdings/）。
+  故意模拟真实设计稿里很常见的情况：图层用中文命名、没有组件化（全是 FRAME / TEXT，没有 INSTANCE）。
+  用来验证 figmafe match 的中文名识别和「未组件化图层」识别。
+-->
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; color: #1F2329; }
+  #frame { position: relative; width: 375px; height: 812px; background: #F5F6F7; overflow: hidden; }
+  .nav { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; position: relative; }
+  .nav .back { position: absolute; left: 12px; top: 10px; width: 24px; height: 24px; }
+  .notice { margin: 12px 12px 0; height: 36px; padding: 0 12px; border-radius: 8px; background: #FFF3E8; color: #FF8F1F; font-size: 12px; line-height: 36px; }
+  .asset { margin: 12px; background: linear-gradient(135deg, #FF4D1A, #FF7A45); border-radius: 12px; padding: 16px; color: #fff; }
+  .asset .l { font-size: 12px; opacity: .85; } .asset .v { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .asset .row { display: flex; gap: 24px; margin-top: 12px; font-size: 12px; }
+  .tabs { margin: 0 12px; height: 40px; display: flex; background: #fff; border-radius: 12px 12px 0 0; }
+  .tabs div { flex: 1; text-align: center; line-height: 40px; font-size: 14px; color: #646A73; }
+  .tabs .on { color: #1F2329; font-weight: 600; border-bottom: 2px solid #FF4D1A; }
+  .list { margin: 0 12px; background: #fff; border-radius: 0 0 12px 12px; padding: 0 16px; }
+  .item { display: flex; align-items: center; height: 64px; border-bottom: 1px solid #E5E6EB; }
+  .item:last-child { border-bottom: none; }
+  .item .n { flex: 1; } .item .n b { font-size: 15px; font-weight: 600; display: block; } .item .n i { font-style: normal; font-size: 12px; color: #8F959E; }
+  .item .p { width: 80px; text-align: right; font-size: 15px; }
+  .tag { margin-left: 12px; width: 64px; height: 24px; border-radius: 4px; text-align: center; line-height: 24px; font-size: 13px; color: #fff; }
+  .up { background: #F53F3F; } .down { background: #00B578; }
+  .countdown { margin: 12px; font-size: 12px; color: #F53F3F; text-align: center; }
+  .bar { position: absolute; left: 0; bottom: 0; width: 375px; height: 56px; background: #fff; border-top: 1px solid #E5E6EB; display: flex; gap: 8px; padding: 12px 16px; }
+  .btn { flex: 1; height: 32px; border-radius: 16px; text-align: center; line-height: 32px; font-size: 14px; font-weight: 500; }
+  .buy { background: #F53F3F; color: #fff; } .sell { background: #00B578; color: #fff; } .more { background: #fff; border: 1px solid #E5E6EB; }
+</style>
+</head>
+<body>
+<div id="frame" data-fig="FRAME" data-fig-name="我的持仓">
+  <div class="nav" data-fig="FRAME" data-fig-name="导航栏">
+    <svg class="back" viewBox="0 0 24 24" fill="none" stroke="#1F2329" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>
+    <span data-fig="TEXT" data-fig-name="标题">我的持仓</span>
+  </div>
+  <div class="notice" data-fig="FRAME" data-fig-name="公告通知栏"><span data-fig="TEXT" data-fig-name="文案">港股通今日休市，A 股交易正常进行</span></div>
+  <div class="asset" data-fig="FRAME" data-fig-name="资产卡片">
+    <div class="l" data-fig="TEXT" data-fig-name="标签">总资产（元）</div>
+    <div class="v" data-fig="TEXT" data-fig-name="金额">128,560.32</div>
+    <div class="row" data-fig="FRAME" data-fig-name="收益行"><span data-fig="TEXT" data-fig-name="当日盈亏">当日盈亏 +1,203.50</span><span data-fig="TEXT" data-fig-name="持仓盈亏">持仓盈亏 +8,920.11</span></div>
+  </div>
+  <div class="tabs" data-fig="FRAME" data-fig-name="标签页">
+    <div class="on" data-fig="TEXT" data-fig-name="选项">股票</div><div data-fig="TEXT" data-fig-name="选项">基金</div><div data-fig="TEXT" data-fig-name="选项">理财</div>
+  </div>
+  <div class="list" data-fig="FRAME" data-fig-name="持仓列表">
+    <div class="item" data-fig="FRAME" data-fig-name="持仓列表项"><div class="n"><b data-fig="TEXT" data-fig-name="名称">贵州茅台</b><i data-fig="TEXT" data-fig-name="代码">600519 · 100 股</i></div><div class="p" data-fig="TEXT" data-fig-name="现价">1,688.00</div><div class="tag up" data-fig="FRAME" data-fig-name="涨跌标签"><span data-fig="TEXT" data-fig-name="涨跌幅">+2.31%</span></div></div>
+    <div class="item" data-fig="FRAME" data-fig-name="持仓列表项"><div class="n"><b data-fig="TEXT" data-fig-name="名称">宁德时代</b><i data-fig="TEXT" data-fig-name="代码">300750 · 200 股</i></div><div class="p" data-fig="TEXT" data-fig-name="现价">201.36</div><div class="tag down" data-fig="FRAME" data-fig-name="涨跌标签"><span data-fig="TEXT" data-fig-name="涨跌幅">-1.08%</span></div></div>
+    <div class="item" data-fig="FRAME" data-fig-name="持仓列表项"><div class="n"><b data-fig="TEXT" data-fig-name="名称">招商银行</b><i data-fig="TEXT" data-fig-name="代码">600036 · 500 股</i></div><div class="p" data-fig="TEXT" data-fig-name="现价">33.20</div><div class="tag up" data-fig="FRAME" data-fig-name="涨跌标签"><span data-fig="TEXT" data-fig-name="涨跌幅">+0.45%</span></div></div>
+  </div>
+  <div class="countdown" data-fig="FRAME" data-fig-name="收盘倒计时"><span data-fig="TEXT" data-fig-name="文案">距收盘 01:23:45</span></div>
+  <div class="bar" data-fig="FRAME" data-fig-name="底部操作栏">
+    <div class="btn buy" data-fig="FRAME" data-fig-name="买入按钮"><span data-fig="TEXT" data-fig-name="文字">买入</span></div>
+    <div class="btn sell" data-fig="FRAME" data-fig-name="卖出按钮"><span data-fig="TEXT" data-fig-name="文字">卖出</span></div>
+    <div class="btn more" data-fig="FRAME" data-fig-name="更多按钮"><span data-fig="TEXT" data-fig-name="文字">更多</span></div>
+  </div>
+</div>
+</body>
+</html>

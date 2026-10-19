@@ -20,7 +20,7 @@ var (
 	preVarDefRe   = regexp.MustCompile(`([@$][\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
 	definePropsRe = regexp.MustCompile(`(?s)defineProps(?:<\s*\{(.*?)\}\s*>)?\(\s*(\{.*?\}|\[.*?\])?\s*\)`)
 	propsObjRe    = regexp.MustCompile(`(?s)props\s*:\s*(\{.*?\}|\[.*?\])\s*,?\s*\n`)
-	propNameRe    = regexp.MustCompile(`(?m)^\s*['"]?(\w+)['"]?\??\s*:`)
+	propNameRe    = regexp.MustCompile(`(?:^|[{,;\n])\s*['"]?(\w+)['"]?\??\s*:`)
 )
 
 var htmlTags = map[string]bool{}
@@ -220,11 +220,28 @@ func ScanH5(root string) *Report {
 			}
 		}
 		lines := strings.Split(f.text, "\n")
+		// at returns the line number and the tag snippet starting at idx (up to its closing '>' on that line).
 		at := func(idx int) (int, string) {
 			ln := strings.Count(f.text[:idx], "\n")
-			t := strings.TrimSpace(lines[ln])
+			start := strings.LastIndex(f.text[:idx], "\n") + 1
+			rest := f.text[idx:]
+			if e := strings.IndexByte(rest, '\n'); e >= 0 {
+				rest = rest[:e]
+			}
+			if e := strings.Index(rest, "</"); e > 0 {
+				if g := strings.IndexByte(rest[e:], '>'); g >= 0 {
+					rest = rest[:e+g+1]
+				}
+			} else if e := strings.IndexByte(rest, '>'); e >= 0 {
+				rest = rest[:e+1]
+			}
+			_ = start
+			t := strings.TrimSpace(rest)
 			if len(t) > 140 {
 				t = t[:140] + "…"
+			}
+			if t == "" {
+				t = strings.TrimSpace(lines[ln])
 			}
 			return ln + 1, t
 		}
@@ -303,6 +320,7 @@ func ScanH5(root string) *Report {
 		}
 	}
 	r.Metrics.RawPrimitives = rawCount
+	r.ColorTokens = colorTokens
 	finish(r, assets, colorHits)
 
 	markup := map[string]string{}
@@ -369,7 +387,7 @@ func classify(rel string) string {
 func bestAsset(assets map[string]*Asset, concept string) *Asset {
 	var best *Asset
 	for _, a := range assets {
-		if a.Concept == concept && a.Kind != "page-local" && (best == nil || rank(*a) > rank(*best)) {
+		if a.Concept == concept && a.Kind != "page-local" && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) && len(a.Name) < len(best.Name)) {
 			best = a
 		}
 	}

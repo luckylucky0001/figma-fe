@@ -74,6 +74,24 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		}
 		return true
 	})
+	// Detached / never-componentized layers whose names express a UI concept ("按钮", "Tag 状态")
+	// are reuse candidates too: designers often draw them by hand.
+	figma.Walk(exp.Frame, func(n *figma.Node) bool {
+		if n.Type == "INSTANCE" {
+			return false
+		}
+		if (n.Type == "FRAME" || n.Type == "GROUP" || n.Type == "COMPONENT") && n != exp.Frame && len(n.Children) > 0 && ConceptOf(n.Name) != "" {
+			name := n.Name + "（未组件化）"
+			a := sets[name]
+			if a == nil {
+				a = &agg{variants: map[string]bool{}, layers: map[string]bool{}}
+				sets[name] = a
+				order = append(order, name)
+			}
+			a.ids = append(a.ids, n.ID)
+		}
+		return true // keep walking: a list frame contains item / tag / button frames
+	})
 	pool := append([]Asset{}, r.Assets...)
 	seen := map[string]bool{}
 	for _, a := range r.Assets {
@@ -91,7 +109,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			item.Variants = append(item.Variants, v)
 		}
 		sort.Strings(item.Variants)
-		fc := ConceptOf(name)
+		fc := ConceptOf(strings.TrimSuffix(name, "（未组件化）"))
 		for _, as := range pool {
 			sc, why := score(name, fc, a.variants, as)
 			if sc < 0.5 {
@@ -103,7 +121,13 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			}
 			item.Candidates = append(item.Candidates, Candidate{as.Name, as.Kind, as.Source, round2(sc), as.Usage, ex, at, why})
 		}
-		sort.SliceStable(item.Candidates, func(i, j int) bool { return item.Candidates[i].Score > item.Candidates[j].Score })
+		sort.SliceStable(item.Candidates, func(i, j int) bool {
+			ci, cj := item.Candidates[i], item.Candidates[j]
+			if ci.Score != cj.Score {
+				return ci.Score > cj.Score
+			}
+			return len(ci.Name) < len(cj.Name) // generic before specialised (List before AddressList)
+		})
 		if len(item.Candidates) > 4 {
 			item.Candidates = item.Candidates[:4]
 		}
@@ -124,7 +148,11 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 }
 
 func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (float64, string) {
+	figmaName = strings.TrimSuffix(figmaName, "（未组件化）")
 	fn, an := normName(figmaName), normName(a.Name)
+	if hasCJK(figmaName) {
+		fn = "" // Chinese layer names match on concept only
+	}
 	var s float64
 	var why []string
 	switch {
@@ -138,6 +166,36 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s, why = 0.6, append(why, "名称包含")
 	default:
 		return 0, ""
+	}
+	// specialised components (AddressList, ContactCard, CouponCell) carry domain words the design does not
+	if s < 0.9 && a.Concept != "" && a.Kind == "ui-lib" {
+		ws := splitWords(a.Name)
+		for len(ws) > 1 && vendorPrefix[ws[0]] {
+			ws = ws[1:]
+		}
+		residual := strings.Join(ws, "")
+		for _, c := range concepts {
+			if c.Name != a.Concept {
+				continue
+			}
+			for _, w := range c.Words {
+				if len(w) >= 3 {
+					residual = strings.Replace(residual, w, "", 1)
+				}
+			}
+		}
+		residual = strings.TrimSuffix(residual, "s")
+		if len(residual) >= 3 && !strings.Contains(strings.ToLower(figmaName), residual) {
+			s -= 0.12
+			why = append(why, "专用组件（"+residual+"）")
+		}
+	}
+	// the library's canonical component of the concept (Cell for cell, Tag for tag) beats look-alikes
+	for _, c := range concepts {
+		if c.Name == a.Concept && an == c.Words[0] && fn != an {
+			s += 0.04
+			why = append(why, "标准组件")
+		}
 	}
 	// variant axes ↔ props
 	if len(variants) > 0 && len(a.Props) > 0 {

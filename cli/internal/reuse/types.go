@@ -68,17 +68,18 @@ type Metrics struct {
 }
 
 type Report struct {
-	Platform  string    `json:"platform"`
-	Root      string    `json:"root"`
-	Stack     []string  `json:"stack"`
-	Libraries []LibUse  `json:"libraries"`
-	Assets    []Asset   `json:"assets"`
-	Clusters  []Cluster `json:"clusters"`
-	Findings  []Finding `json:"findings"`
-	Clones    []Clone   `json:"clones"`
-	Colors    []Hotspot `json:"colors"`
-	LibAll    []Asset   `json:"-"` // every component of the detected UI libraries (used or not), for matching
-	Metrics   Metrics   `json:"metrics"`
+	Platform    string            `json:"platform"`
+	Root        string            `json:"root"`
+	Stack       []string          `json:"stack"`
+	Libraries   []LibUse          `json:"libraries"`
+	Assets      []Asset           `json:"assets"`
+	Clusters    []Cluster         `json:"clusters"`
+	Findings    []Finding         `json:"findings"`
+	Clones      []Clone           `json:"clones"`
+	Colors      []Hotspot         `json:"colors"`
+	LibAll      []Asset           `json:"-"` // every component of the detected UI libraries (used or not), for matching
+	ColorTokens map[string]string `json:"-"` // #RRGGBB → token reference
+	Metrics     Metrics           `json:"metrics"`
 }
 
 type LibUse struct {
@@ -156,9 +157,43 @@ var vendorPrefix = map[string]bool{"qmui": true, "van": true, "nut": true, "ds":
 // infrastructure suffixes: layout helpers, managers, adapters … are not UI components of a concept
 var infraSuffix = map[string]bool{"layout": true, "helper": true, "manager": true, "util": true, "utils": true, "controller": true, "background": true, "behavior": true, "decoration": true, "adapter": true, "holder": true, "mask": true, "root": true, "wrapper": true, "container": true, "delegate": true, "provider": true, "state": true}
 
+// Chinese layer / component names are common in Figma files of Chinese teams. Longest keyword wins.
+var zhConcepts = []struct{ kw, concept string }{
+	{"标签页", "tabs"}, {"选项卡", "tabs"}, {"导航栏", "navbar"}, {"标题栏", "navbar"}, {"顶栏", "navbar"},
+	{"操作栏", "actionbar"}, {"底部栏", "actionbar"}, {"提交栏", "actionbar"}, {"吸底", "actionbar"},
+	{"通知栏", "notice"}, {"公告", "notice"}, {"提示条", "notice"}, {"倒计时", "countdown"},
+	{"单元格", "cell"}, {"列表项", "cell"}, {"信息行", "cell"}, {"分割线", "divider"}, {"分隔线", "divider"},
+	{"商品卡", "goods"}, {"商品", "goods"}, {"价格", "price"}, {"金额", "price"}, {"按钮", "button"},
+	{"标签", "tag"}, {"徽标", "tag"}, {"角标", "tag"}, {"卡片", "card"}, {"弹窗", "dialog"}, {"对话框", "dialog"},
+	{"轻提示", "toast"}, {"吐司", "toast"}, {"弹出层", "popup"}, {"面板", "popup"}, {"输入框", "input"}, {"搜索", "input"},
+	{"图片", "image"}, {"头像", "image"}, {"空状态", "empty"}, {"加载", "loading"}, {"开关", "switch"}, {"复选框", "switch"},
+	{"单选", "switch"}, {"步进器", "stepper"}, {"轮播", "carousel"}, {"图标", "icon"}, {"列表", "list"},
+}
+
+func hasCJK(s string) bool {
+	for _, r := range s {
+		if r >= 0x4E00 && r <= 0x9FFF {
+			return true
+		}
+	}
+	return false
+}
+
 // ConceptOf returns the UI concept a component name expresses ("" if none). The last strong word
 // wins (StatusTag → tag, TagList → list is weak so → tag).
 func ConceptOf(name string) string {
+	if hasCJK(name) {
+		best, bl := "", 0
+		for _, z := range zhConcepts {
+			if strings.Contains(name, z.kw) && len(z.kw) > bl {
+				best, bl = z.concept, len(z.kw)
+			}
+		}
+		if best != "" {
+			return best
+		}
+		// mixed names like "Tag / 状态" fall through to the latin words
+	}
 	words := splitWords(name)
 	for len(words) > 1 && vendorPrefix[words[0]] {
 		words = words[1:]

@@ -311,6 +311,7 @@ func ScanAndroid(root string) *Report {
 			}
 		}
 	}
+	r.ColorTokens = colorTokens
 	finish(r, assets, colorHits)
 	r.Clones = findClones(layoutMarkup, func(s string) []*mnode { return dropContainers(parseMarkup(s)) }, 5)
 	r.Metrics.CloneGroups = len(r.Clones)
@@ -320,7 +321,7 @@ func ScanAndroid(root string) *Report {
 func bestProjectAsset(assets map[string]*Asset, concept string) *Asset {
 	var best *Asset
 	for _, a := range assets {
-		if a.Concept == concept && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || rank(*a) > rank(*best)) {
+		if a.Concept == concept && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) && len(a.Name) < len(best.Name)) {
 			best = a
 		}
 	}

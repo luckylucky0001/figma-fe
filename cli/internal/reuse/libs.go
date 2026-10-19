@@ -16,6 +16,8 @@ type uiLib struct {
 var uiLibs = []uiLib{
 	{Name: "Vant", Packages: []string{"vant"}, TagPrefix: "van-", Import: []string{"vant"}, Platform: "h5", Components: []string{
 		"ActionBar", "ActionBarButton", "ActionBarIcon", "ActionSheet", "AddressEdit", "AddressList", "Area", "BackTop", "Badge", "Button", "Calendar", "Card", "Cascader", "Cell", "CellGroup", "Checkbox", "CheckboxGroup", "Circle", "Col", "Collapse", "CollapseItem", "ConfigProvider", "ContactCard", "ContactEdit", "ContactList", "CountDown", "Coupon", "CouponCell", "CouponList", "DatePicker", "Dialog", "Divider", "DropdownItem", "DropdownMenu", "Empty", "Field", "FloatingBubble", "FloatingPanel", "Form", "Grid", "GridItem", "Highlight", "Icon", "Image", "ImagePreview", "IndexAnchor", "IndexBar", "List", "Loading", "NavBar", "NoticeBar", "Notify", "NumberKeyboard", "Overlay", "Pagination", "PasswordInput", "Picker", "PickerGroup", "Popover", "Popup", "Progress", "PullRefresh", "Radio", "RadioGroup", "Rate", "RollingText", "Row", "Search", "ShareSheet", "Sidebar", "SidebarItem", "Signature", "Skeleton", "Slider", "Space", "Step", "Stepper", "Steps", "Sticky", "SubmitBar", "Swipe", "SwipeCell", "SwipeItem", "Switch", "Tab", "Tabbar", "TabbarItem", "Tabs", "Tag", "TextEllipsis", "TimePicker", "Toast", "TreeSelect", "Uploader", "Watermark"}},
+	{Name: "React Vant", Packages: []string{"react-vant"}, Import: []string{"react-vant"}, Platform: "h5", Components: []string{
+		"ActionBar", "ActionSheet", "Area", "Badge", "Button", "Calendar", "Card", "Cascader", "Cell", "Checkbox", "Circle", "Collapse", "ConfigProvider", "CountDown", "DatetimePicker", "Dialog", "Divider", "DropdownMenu", "Empty", "Field", "Flex", "Form", "Grid", "Hooks", "Image", "ImagePreview", "IndexBar", "Input", "List", "Loading", "NavBar", "NoticeBar", "NumberKeyboard", "Overlay", "PasswordInput", "Picker", "Popover", "Popup", "Progress", "PullRefresh", "Radio", "Rate", "Search", "ShareSheet", "Sidebar", "Skeleton", "Slider", "Space", "Steps", "Sticky", "Stepper", "SubmitBar", "Swiper", "SwipeCell", "Switch", "Tabbar", "Tabs", "Tag", "TextEllipsis", "Toast", "TreeSelect", "Typography", "Uploader"}},
 	{Name: "NutUI", Packages: []string{"@nutui/nutui", "@nutui/nutui-react", "@nutui/nutui-taro"}, TagPrefix: "nut-", Import: []string{"@nutui/nutui", "@nutui/nutui-react"}, Platform: "h5", Components: []string{
 		"ActionSheet", "Address", "Animate", "Avatar", "Backtop", "Badge", "Barrage", "Button", "Calendar", "Card", "Cascader", "Cell", "CellGroup", "Checkbox", "CircleProgress", "Collapse", "Countdown", "CountUp", "DatePicker", "Dialog", "Divider", "Drag", "Ecard", "Elevator", "Empty", "FixedNav", "Form", "Grid", "Icon", "Image", "ImagePreview", "Indicator", "InfiniteLoading", "Input", "InputNumber", "Menu", "Navbar", "NoticeBar", "Notify", "NumberKeyboard", "Overlay", "Pagination", "Picker", "Popover", "Popup", "Price", "Progress", "Radio", "Range", "Rate", "SearchBar", "ShortPassword", "SideNavBar", "Signature", "Skeleton", "Sku", "Steps", "Sticky", "Swipe", "Swiper", "Switch", "Tabbar", "Tabs", "Tag", "TextArea", "Toast", "TrendArrow", "Uploader", "Watermark"}},
 	{Name: "antd-mobile", Packages: []string{"antd-mobile"}, Import: []string{"antd-mobile"}, Platform: "h5", Components: []string{
@@ -41,6 +43,10 @@ var rawAndroid = map[string]string{"Button": "button", "ImageButton": "button", 
 // libConcept overrides the name-derived concept where a library uses a misleading name.
 var libConcept = map[string]string{
 	"Vant/Card":                           "goods", // van-card is a product card
+	"Vant/Row":                            "",      // grid layout, not a list row
+	"Vant/Col":                            "",
+	"Vant/Space":                          "",
+	"React Vant/Card":                     "goods",
 	"Vant/SubmitBar":                      "actionbar",
 	"Vant/ActionBar":                      "actionbar",
 	"Vant/Field":                          "input",

@@ -1,12 +1,17 @@
 ---
 name: figma-to-code
-description: 按 Figma 设计稿实现或还原 H5 / Android 页面时使用（「照 Figma 做」「还原设计稿」「实现这个页面」「按设计稿改 UI」）。强制流程：先盘点现有组件资产，再出复用方案并等人确认，最后实现，并用 figmafe 做审计和截图比对，修正到达标。适用于仓库里有 figmafe.yaml 的项目。
+description: 按 Figma 设计稿实现或还原 H5 / Android 页面时使用（「照 Figma 做」「还原设计稿」「实现这个页面」「按设计稿改 UI」「这个设计稿哪些组件能复用」）。强制流程：先盘点现有组件资产，再根据新设计稿找出可直接复用的组件、出方案并等人确认，最后实现并验证，避免重复造轮子。支持常见栈：Vue / React（Vant、NutUI、antd-mobile、TDesign）与 Android XML View / Compose（Material、QMUI）。
 ---
 
 # Figma → 代码（H5 / Android）
 
 目标：**最大化复用现有组件，实现与 Figma 一致**。不要凭截图手写 UI。
 所有确定性的工作都交给 CLI `figmafe`（仓库根目录 `bin/figmafe`，没有就先 `cd cli && go build -o ../bin/figmafe ./cmd/figmafe`）。
+
+## 先判断走哪条流程
+
+- 仓库根目录**有 `figmafe.yaml`**（已经接入：映射、组件手册、截图比对都配好了）→ 按下面的完整流程做。
+- **没有**（普通的存量项目）→ 按 `references/brownfield.md` 做：`figmafe reuse` 体检 → `figmafe match` 拿到新设计稿的复用清单（作为方案闸门）→ 实现 → `figmafe reuse --focus` 做页面复用检查。
 
 ## 硬性规则
 
@@ -21,9 +26,10 @@ description: 按 Figma 设计稿实现或还原 H5 / Android 页面时使用（�
 
 ### Phase 0：资产盘点（组件库有变化时）
 ```
-bin/figmafe scan                 # 两端：组件 / props / 变体 / 示例 / 使用次数 / token / 存量问题
-bin/figmafe map check            # 缺口、变体不支持、token 漂移
+bin/figmafe scan                 # 两端：组件 / props / 变体 / 示例 / 使用次数 / token / 存量问题（含业务层重复组件）
+bin/figmafe map check            # 缺口、变体不支持、token 漂移、重复资产
 bin/figmafe catalog              # 更新 references/catalog-*.md
+bin/figmafe match --figma design/figma-export/<page> .   # 新设计稿里还有映射没覆盖的组件？看能复用什么
 ```
 新增了组件、映射还没有的：`bin/figmafe map suggest` 给出候选 → 人确认后写入 `design/component-map.yaml`。
 

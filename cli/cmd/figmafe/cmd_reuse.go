@@ -19,6 +19,7 @@ func runReuse(args []string) error {
 	pf := fs.String("platform", "auto", "h5|android|auto")
 	out := fs.String("o", "", "output dir (default <root>/.figmafe/reuse)")
 	quiet := fs.Bool("q", false, "quiet")
+	focus := fs.String("focus", "", "only judge this page dir/file (relative to project); the whole project is the asset pool")
 	pos := parse(fs, args)
 	root := "."
 	if len(pos) > 0 {
@@ -44,10 +45,21 @@ func runReuse(args []string) error {
 			r = reuse.ScanAndroid(root)
 		}
 		md := r.Markdown()
+		var pc *reuse.PageCheck
+		if *focus != "" {
+			pc = r.CheckFocus(*focus)
+			md = pc.Markdown() + "\n---\n\n" + md
+			writeJSON(filepath.Join(*out, p+".page.json"), pc)
+		}
 		_ = os.WriteFile(filepath.Join(*out, p+".md"), []byte(md), 0o644)
 		writeJSON(filepath.Join(*out, p+".json"), r)
 		if !*quiet {
 			fmt.Print(md)
+		} else if pc != nil {
+			fmt.Print(pc.Markdown())
+		}
+		if pc != nil && !pc.Pass {
+			defer func() { os.Exit(3) }()
 		}
 		m := r.Metrics
 		fmt.Printf("\n✓ [%s] %d 个资产 · 组件化率 %.0f%% · 重复概念 %d · 重复结构 %d 组 · 硬编码颜色 %d → %s\n",

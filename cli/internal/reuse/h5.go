@@ -98,6 +98,7 @@ func ScanH5(root string) *Report {
 		f := srcFile{path: p, rel: relPath(root, p), kind: kind, text: string(b)}
 		switch kind {
 		case "vue":
+			f.text = stripComments(f.text)
 			if m := vueTemplateRe.FindStringSubmatch(f.text); m != nil {
 				f.markup = m[1]
 			}

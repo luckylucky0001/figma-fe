@@ -10,6 +10,7 @@
 ```
 bin/figmafe reuse <项目目录>                  # 输出到 <项目>/.figmafe/reuse/<platform>.md
 ```
+示例代码、第三方拷贝、生成代码等不该算作资产的目录，写进 `<项目>/.figmafeignore`，一行一个路径前缀。
 报告里有这些内容，按需阅读：
 - 三方组件库的使用情况
 - 组件资产清单：每个组件都附有**项目里真实的用法示例**
@@ -21,7 +22,9 @@ bin/figmafe reuse <项目目录>                  # 输出到 <项目>/.figmafe/
 ## 2. 新设计稿 → 复用清单（这一步是方案闸门）
 ```
 bin/figmafe match --figma <Figma 导出目录> <项目目录>   # 输出到 <项目>/.figmafe/match/
+# Android 要说明新页面用什么写：--target xml（布局 XML + View）或 --target compose
 ```
+- 设计稿没组件化、或者图层是中文名（「按钮」「标签」「倒计时」）也能识别，这类会标成「（未组件化）」。
 - `<platform>.md`：每个 Figma 组件给出一个结论，「✅ 直接复用」「❓ 需确认」或「🆕 需新建」，同时附上推荐组件、判断依据，以及**项目里的真实用法**。
 - `component-map.draft.<platform>.yaml`：映射初稿。确认之后，可以合并成项目长期使用的 `component-map.yaml`。
 

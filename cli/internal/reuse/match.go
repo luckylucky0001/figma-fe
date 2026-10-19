@@ -43,6 +43,10 @@ type MatchResult struct {
 	New      int         `json:"new"`
 }
 
+// Target is the technology of the page being built: "" (any), "xml" (Android View layouts) or
+// "compose". Assets that cannot be used from that technology are pushed down.
+var Target string
+
 // Match scores project assets for each Figma component set used on the page.
 func Match(exp *figma.Export, r *Report) *MatchResult {
 	res := &MatchResult{Platform: r.Platform, Project: r.Root, Page: exp.Frame.Name}
@@ -232,6 +236,15 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s -= 0.2
 		why = append(why, "页面私有，需先抽出")
 	}
+	compose := a.Kind == "composable" || a.Source == "Compose Material3"
+	switch {
+	case Target == "xml" && compose:
+		s -= 0.25
+		why = append(why, "Composable，XML 页面不能直接用")
+	case Target == "compose" && (a.Kind == "custom-view" || a.Kind == "ui-lib" && !compose && r2android(a)):
+		s -= 0.1
+		why = append(why, "View 组件，Compose 页面需 AndroidView 包装")
+	}
 	if s > 1 {
 		s = 1
 	}
@@ -349,4 +362,13 @@ func importHint(c Candidate) string {
 		}
 	}
 	return c.Source
+}
+
+func r2android(a Asset) bool {
+	for _, l := range uiLibs {
+		if l.Name == a.Source {
+			return l.Platform == "android"
+		}
+	}
+	return false
 }

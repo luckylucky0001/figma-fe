@@ -72,6 +72,7 @@ func runReuse(args []string) error {
 func runMatch(args []string) error {
 	fs := flag.NewFlagSet("match", flag.ExitOnError)
 	figmaDir := fs.String("figma", "", "Figma page export dir (export.json)")
+	target := fs.String("target", "", "android page technology: xml|compose (ranks usable components first)")
 	pf := fs.String("platform", "auto", "h5|android|auto")
 	out := fs.String("o", "", "output dir (default <project>/.figmafe/match)")
 	quiet := fs.Bool("q", false, "quiet")
@@ -99,6 +100,7 @@ func runMatch(args []string) error {
 		} else {
 			r = reuse.ScanAndroid(root)
 		}
+		reuse.Target = *target
 		m := reuse.Match(exp, r)
 		md := m.Markdown()
 		_ = os.WriteFile(filepath.Join(*out, p+".md"), []byte(md), 0o644)

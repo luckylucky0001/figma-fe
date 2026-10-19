@@ -224,6 +224,9 @@ func ScanAndroid(root string) *Report {
 		r.Metrics.ComponentUsages++
 	}
 	layoutMarkup := map[string]string{}
+	for i := range layouts {
+		layouts[i].text = stripComments(layouts[i].text)
+	}
 	for _, f := range layouts {
 		layoutMarkup[f.rel] = f.text
 		lines := strings.Split(f.text, "\n")
@@ -242,7 +245,7 @@ func ScanAndroid(root string) *Report {
 			if a, ok := libOf[simple]; ok {
 				if a.Source == "Android SDK widgets" {
 					if concept, raw := rawAndroid[simple]; raw {
-						if alt := bestProjectAsset(assets, concept); alt != nil {
+						if alt := bestProjectAsset(assets, concept, "custom-view"); alt != nil {
 							r.Metrics.RawPrimitives++
 							r.Findings = append(r.Findings, Finding{"missed-reuse", "warn", f.rel, ln, line, "原生 " + simple + "：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
 							continue
@@ -337,10 +340,22 @@ func ScanAndroid(root string) *Report {
 	return r
 }
 
-func bestProjectAsset(assets map[string]*Asset, concept string) *Asset {
+// bestProjectAsset picks the replacement for a raw widget; prefer is the kind usable in that context
+// (custom-view inside XML layouts, composable inside Compose code).
+func bestProjectAsset(assets map[string]*Asset, concept, prefer string) *Asset {
 	var best *Asset
+	score := func(a *Asset) int {
+		s := rank(*a)
+		if a.Kind == prefer || prefer == "custom-view" && a.Kind == "ui-lib" && a.Source != "Compose Material3" {
+			s += 5000
+		}
+		if prefer == "custom-view" && (a.Kind == "composable" || a.Source == "Compose Material3") {
+			s -= 5000 // a composable cannot be dropped into an XML layout
+		}
+		return s
+	}
 	for _, a := range assets {
-		if a.Concept == concept && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) && len(a.Name) < len(best.Name)) {
+		if a.Concept == concept && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || score(a) > score(best) || score(a) == score(best) && len(a.Name) < len(best.Name)) {
 			best = a
 		}
 	}
@@ -358,4 +373,13 @@ func dropContainers(ns []*mnode) []*mnode {
 		out = append(out, n)
 	}
 	return out
+}
+
+var commentRe = regexp.MustCompile(`(?s)<!--.*?-->`)
+
+// stripComments blanks out markup comments but keeps line numbers.
+func stripComments(s string) string {
+	return commentRe.ReplaceAllStringFunc(s, func(c string) string {
+		return strings.Repeat("\n", strings.Count(c, "\n"))
+	})
 }

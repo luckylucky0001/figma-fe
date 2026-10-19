@@ -539,14 +539,25 @@ func ScanAndroid(root string) *Report {
 	r.Conventions = conventionsAndroid(layoutMarkup)
 	// a "wrapper" the project calls far less than the library component itself (Seal: Button × 16,
 	// LinkButton × 4) is a specialisation, not the house component
+	dropped := map[string]bool{}
 	for _, a := range assets {
 		if w := a.WrappedBy; w != "" && a.Kind == "ui-lib" {
 			if wa := compos[w]; wa != nil && wa.Usage*2 < a.Usage {
-				a.WrappedBy = ""
+				a.WrappedBy, dropped[w] = "", true
 			} else if wa := custom[w]; wa != nil && wa.Usage*2 < a.Usage {
-				a.WrappedBy = ""
+				a.WrappedBy, dropped[w] = "", true
 			}
 		}
+	}
+	if len(dropped) > 0 { // the bypass findings raised for it during the scan go too
+		kept := r.Findings[:0]
+		for _, f := range r.Findings {
+			if i, j := strings.LastIndex(f.Hint, "封装为 "), strings.LastIndex(f.Hint, "，应使用封装"); f.Rule == "bypass" && i >= 0 && j > i && dropped[f.Hint[i+len("封装为 "):j]] {
+				continue
+			}
+			kept = append(kept, f)
+		}
+		r.Findings = kept
 	}
 	if family == "material" || family == "material3" {
 		for _, a := range assets {

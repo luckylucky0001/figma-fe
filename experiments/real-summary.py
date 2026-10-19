@@ -27,6 +27,8 @@ NEW = {
     "Rlm-C-1": "Price.vue（md-price；决定写进 component-map.yaml）",
     "Rnp-A-1": "@layout/order_detail_cell + 6 个 drawable 背景（认为项目里没有卡片 / 单元格组件，没用 CardView）",
     "Rnp-C-1": "PriceTextView、CountDownTextView、@layout/info_cell（决定写进 component-map.yaml）",
+    "Rlm-Chk-1": "Price（md-price）；倒计时复用项目全局注册的 vue-countdown，顶栏复用项目的 Header",
+    "Rnia-Chk-1": "NiaNoticeBar、NiaStatusTag、NiaPrice、NiaActionBar + 颜色 token（决定写进 component-map.yaml）",
     "Rnia-C-2": "NiaStatusTag、NiaCell、NiaNoticeBar、NiaCountDown、NiaPriceText、NiaBottomActionBar、ProductItem（每个都在 component-map.yaml 记录了决定和理由）",
     "Rnia-C-1": "NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard",
 }
@@ -61,6 +63,14 @@ for p, (name, plat, how) in PROJECTS.items():
         grp = GROUP.get(r['group'], r['group']) + (f"（{INVALID[r['run']]}）" if r['run'] in INVALID else "")
         md.append(f"| {r['run']} | {grp} | {'✅ PASS' if r['pass'] else '❌ FAIL'} | {r['used']} | {r['reinvented']} / {r['reinventedWarn']} | {r['missed']} | {r['handBuiltError']} / {r['handBuiltWarn']} | {r['localTokens']} | {r['colors']} | {r['new']} |")
     md.append("")
+valid = [r for r in rows if r["run"] not in INVALID]
+def tally(pred):
+    rs = [r for r in valid if pred(r)]
+    return f"{sum(1 for r in rs if r['pass'])}/{len(rs)}"
+md += ["## 合计（有效 run）", "",
+       f"- 不用 Skill（A 组）：通过 {tally(lambda r: r['group'].startswith('A'))}",
+       f"- 用 Skill（C 组）：通过 {tally(lambda r: r['group'].startswith('C'))}（Opus {tally(lambda r: r['group'] == 'C')}，Haiku {tally(lambda r: r['group'] == 'Chk')}）",
+       ""]
 md += ["## 说明", "",
        "- NewPipe：C 组 agent 发现 `MaterialDivider` 在 AppCompat 主题下取不到颜色属性，改用了项目里 14 处的 1px View 细线；这条已做进工具（MaterialDivider 也算需要 Material 主题的组件），现在 match 直接推荐这个项目惯例。",
        "- **实验的局限**：A 组和 C 组都在同一个会话里以子 agent 运行，A 组也能看到本仓库的 Skill（实验环境所限）。Rnia-A-1、Rnia-A-2、Rqm-Ahk-1 读到了 Skill 但没按它做；Rlm-A-1 自己运行了 figmafe，已标为无效。这种「泄漏」只会让 A 组更好，所以 A / C 的差距是保守估计。",

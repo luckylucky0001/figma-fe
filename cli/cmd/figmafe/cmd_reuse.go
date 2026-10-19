@@ -34,6 +34,7 @@ func runReuse(args []string) error {
 	root, _ = filepath.Abs(root)
 	if *out == "" {
 		*out = filepath.Join(root, ".figmafe", "reuse")
+		ignoreWorkDir(root)
 	}
 	_ = os.MkdirAll(*out, 0o755)
 	plats := []string{*pf}
@@ -127,6 +128,7 @@ func runMatch(args []string) error {
 	root, _ := filepath.Abs(pos[0])
 	if *out == "" {
 		*out = filepath.Join(root, ".figmafe", "match")
+		ignoreWorkDir(root)
 	}
 	_ = os.MkdirAll(*out, 0o755)
 	plats := []string{*pf}
@@ -237,4 +239,13 @@ func loadConfirmed(root string) *mapping.Map {
 		return cm
 	}
 	return nil
+}
+
+// ignoreWorkDir keeps figmafe's reports out of the project's git status (.figmafe/.gitignore = "*").
+func ignoreWorkDir(root string) {
+	dir := filepath.Join(root, ".figmafe")
+	_ = os.MkdirAll(dir, 0o755)
+	if _, err := os.Stat(filepath.Join(dir, ".gitignore")); err != nil {
+		_ = os.WriteFile(filepath.Join(dir, ".gitignore"), []byte("# figmafe reports (generated)\n*\n"), 0o644)
+	}
 }

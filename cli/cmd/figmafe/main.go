@@ -44,6 +44,8 @@ func main() {
 		err = runVerify(args)
 	case "reuse":
 		err = runReuse(args)
+	case "compare":
+		err = runCompare(args)
 	case "match":
 		err = runMatch(args)
 	case "-h", "--help", "help":
@@ -86,6 +88,7 @@ Phase 4  audit    --page P --platform X        static audit of the page source
                   [--target xml|compose]       (.md / .json / .html overlay / component-map draft; no mapping needed)
          reuse    [dir] [--platform h5|android] brownfield health check of any Vue/React or Android project (no Figma needed)
                   [--focus files | --changed ref] page / PR gate: reinvented, missed reuse, bypassed wrappers (exit 3 = fail)
+         compare  --url <page> --figma <export> any running H5 page vs the Figma frame: pixel diff + text coverage
 dev      fixture  <design.html> -o <dir>       Figma-format export from an annotated design HTML
 
 Global: run from the repo root (figmafe.yaml) or pass --root <dir>.

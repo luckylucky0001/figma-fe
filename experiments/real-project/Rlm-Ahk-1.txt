@@ -1,0 +1,31 @@
+· 检查改动的 1 个 UI 文件（已有文件只看新增的行）
+
+## 页面复用检查：src/views/order/order-detail-v2.vue  ❌ FAIL
+
+- 复用的现成组件（1）：Icon（组件库）
+- 自造轮子（0）
+- 有组件却没用（4）
+  - ✗ src/views/order/order-detail-v2.vue:5 `<button type="button"` → 原生 <button>：项目里已有 Button（组件库）
+  - ✗ src/views/order/order-detail-v2.vue:89 `<button type="button" class="v2-btn" @click="onAction('联系客服')">联系客服</button>` → 原生 <button>：项目里已有 Button（组件库）
+  - ✗ src/views/order/order-detail-v2.vue:90 `<button type="button" class="v2-btn" @click="onAction('修改地址')">修改地址</button>` → 原生 <button>：项目里已有 Button（组件库）
+  - ✗ src/views/order/order-detail-v2.vue:91 `<button type="button" class="v2-btn v2-btn--primary" @click="onAction('提醒发货')">提醒发货</button>` → 原生 <button>：项目里已有 Button（组件库）
+- 疑似手写已有组件（10）
+  - ✗ src/views/order/order-detail-v2.vue:4 页面手写了「navbar」（.v2-navbar），已有 NavBar（组件库 Vant）（项目里已用 2 次）
+  - · src/views/order/order-detail-v2.vue:15 页面手写了「notice」（.v2-notice），已有 NoticeBar（组件库 Vant）（组件库标准组件，项目还没用过，请确认）
+  - ✗ src/views/order/order-detail-v2.vue:18 页面手写了「card」（.v2-card），已有 CellGroup（组件库 Vant）（项目里已用 29 次）
+  - ✗ src/views/order/order-detail-v2.vue:21 页面手写了「tag」（.v2-tag），已有 Tag（组件库 Vant）（项目里已用 8 次）
+  - ✗ src/views/order/order-detail-v2.vue:24 页面手写了「countdown」（.v2-status__countdown），已有 VueCountdown（组件库 @chenfengyuan/vue-countdown）（项目里已用 5 次）
+  - · src/views/order/order-detail-v2.vue:28 页面手写了「divider」（.v2-divider），已有 Divider（组件库 Vant）（组件库标准组件，项目还没用过，请确认）
+  - ✗ src/views/order/order-detail-v2.vue:30 页面手写了「cell」（.v2-address-cell），已有 Cell（组件库 Vant）（项目里已用 50 次）
+  - ✗ src/views/order/order-detail-v2.vue:45 页面手写了「goods」（.v2-goods），已有 Card（组件库 Vant）（项目里已用 13 次）
+  - ✗ src/views/order/order-detail-v2.vue:88 页面手写了「actionbar」（.v2-actionbar），已有 GoodsAction（组件库 Vant）（项目里已用 1 次）
+  - ✗ src/views/order/order-detail-v2.vue:89 页面手写了「button」（.v2-btn），已有 Button（组件库 Vant）（项目里已用 24 次）
+- 页面私有调色板：页面里自己定义了 10 个颜色变量（应使用项目 / 组件库已有的 token）
+- 写死颜色（5）
+  - · src/views/order/order-detail-v2.vue:222 #FFFFFF：写死颜色
+  - · src/views/order/order-detail-v2.vue:268 #FFFFFF：写死颜色
+  - · src/views/order/order-detail-v2.vue:498 #FFFFFF：写死颜色
+  - · src/views/order/order-detail-v2.vue:510 #FFFFFF：写死颜色
+  - · src/views/order/order-detail-v2.vue:521 #FFFFFF：写死颜色
+
+✓ [h5] 43 个资产 · 组件化率 91% · 重复概念 4 · 重复结构 3 组 · 硬编码颜色 100 · 不能直接用的库组件 14 → experiments/real-project/Rlm-Ahk-1/h5.md

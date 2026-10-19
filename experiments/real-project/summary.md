@@ -35,6 +35,7 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 | run | 组 | 结果 | 复用现成组件 | 自造轮子（确定/疑似） | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
 |---|---|---|---|---|---|---|---|---|---|
 | Rlm-A-1 | A 只给任务（Opus）（无效：A 组 agent 自己找到了本仓库的 Skill 并运行了 figmafe，不能当基线） | ✅ PASS | 11 | 0 / 0 | 0 | 0 / 0 | 0 | 0 | Price.vue |
+| Rlm-Ahk-1 | A 只给任务（Haiku） | ❌ FAIL | 1 | 0 / 0 | 4 | 8 / 2 | 10 | 5 | 无组件；顶栏 / 卡片 / 标签 / 按钮等 10 处手写，按钮是原生 <button> |
 | Rlm-C-1 | C 用 Skill（Opus） | ✅ PASS | 10 | 0 / 0 | 0 | 0 / 0 | 0 | 0 | Price.vue（md-price；决定写进 component-map.yaml） |
 | Rlm-Chk-1 | C 用 Skill（Haiku） | ✅ PASS | 9 | 0 / 0 | 0 | 0 / 0 | 0 | 0 | Price（md-price）；倒计时复用项目全局注册的 vue-countdown，顶栏复用项目的 Header |
 
@@ -55,13 +56,14 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 |---|---|---|---|---|---|---|---|---|---|
 | Rnia-A-1 | A 只给任务（Opus） | ❌ FAIL | 2 | 5 / 1 | 0 | 0 / 0 | 0 | 18 | 12 个：NiaNavBar、NiaCard、NiaDivider、NiaCell、NiaPillButton、NiaStatusTag、NiaPrice、NiaCountDown、NiaNoticeBar、NiaActionBar、NiaProductCard + CommerceTheme |
 | Rnia-A-2 | A 只给任务（Opus） | ❌ FAIL | 2 | 5 / 1 | 0 | 0 / 0 | 0 | 18 | 11 个 Commerce*（NavBar、NoticeBar、Card、Divider、Cell、Tag、Price、ProductCard、CountDown、Button、ActionBar）+ CommerceTheme |
+| Rnia-Ahk-1 | A 只给任务（Haiku） | ❌ FAIL | 1 | 2 / 0 | 0 | 0 / 0 | 0 | 12 | NiaCard、NiaCell、NiaPrice、NiaNoticeBar、NiaStatusTag + 页面私有色板 |
 | Rnia-C-1 | C 用 Skill（Opus） | ❌ FAIL | 6 | 1 / 1 | 0 | 0 / 0 | 0 | 0 | NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard |
 | Rnia-C-2 | C 用 Skill（Opus） | ✅ PASS | 8 | 0 / 0 | 0 | 0 / 0 | 0 | 33 | NiaStatusTag、NiaCell、NiaNoticeBar、NiaCountDown、NiaPriceText、NiaBottomActionBar、ProductItem（每个都在 component-map.yaml 记录了决定和理由） |
 | Rnia-Chk-1 | C 用 Skill（Haiku） | ✅ PASS | 8 | 0 / 0 | 0 | 0 / 0 | 0 | 11 | NiaNoticeBar、NiaStatusTag、NiaPrice、NiaActionBar + 颜色 token（决定写进 component-map.yaml） |
 
 ## 合计（有效 run）
 
-- 不用 Skill（A 组）：通过 0/9
+- 不用 Skill（A 组）：通过 0/11
 - 用 Skill（C 组）：通过 11/12（Opus 7/8，Haiku 4/4）
 
 ## 说明

@@ -29,6 +29,8 @@ NEW = {
     "Rnp-C-1": "PriceTextView、CountDownTextView、@layout/info_cell（决定写进 component-map.yaml）",
     "Rlm-Chk-1": "Price（md-price）；倒计时复用项目全局注册的 vue-countdown，顶栏复用项目的 Header",
     "Rnia-Chk-1": "NiaNoticeBar、NiaStatusTag、NiaPrice、NiaActionBar + 颜色 token（决定写进 component-map.yaml）",
+    "Rlm-Ahk-1": "无组件；顶栏 / 卡片 / 标签 / 按钮等 10 处手写，按钮是原生 <button>",
+    "Rnia-Ahk-1": "NiaCard、NiaCell、NiaPrice、NiaNoticeBar、NiaStatusTag + 页面私有色板",
     "Rnia-C-2": "NiaStatusTag、NiaCell、NiaNoticeBar、NiaCountDown、NiaPriceText、NiaBottomActionBar、ProductItem（每个都在 component-map.yaml 记录了决定和理由）",
     "Rnia-C-1": "NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard",
 }

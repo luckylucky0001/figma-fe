@@ -27,6 +27,7 @@ bin/figmafe reuse <项目目录>                  # 输出到 <项目>/.figmafe/
 ## 2. 新设计稿 → 复用清单（这一步是方案闸门）
 ```
 bin/figmafe match --figma <Figma 导出目录> <项目目录>   # 输出到 <项目>/.figmafe/match/
+# 一个需求有多个页面：--figma 指向放着各页面导出目录的文件夹，会多出一份 <platform>.summary.md（整个需求要用到哪些组件）
 # Android：新页面用 XML 还是 Compose 写，用 --target xml|compose 指定；不传时按项目主流写法推断，并在输出里说明
 ```
 - 设计稿没组件化、或者图层是中文名（「按钮」「标签」「倒计时」）也能识别，这类会标成「（未组件化）」。

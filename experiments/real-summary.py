@@ -29,7 +29,8 @@ for pj in sorted(glob.glob(os.path.join(RP, "R*", "*.page.json"))):
     hb = d.get("handBuilt") or []
     rec = {
         "run": run, "project": proj, "group": grp, "pass": d["pass"], "used": len(d.get("used") or []),
-        "reinvented": err(d.get("reinvented")), "missed": err(d.get("missedReuse")),
+        "reinvented": sum(1 for f in d.get("reinvented") or [] if f["severity"] == "error"),
+        "reinventedWarn": sum(1 for f in d.get("reinvented") or [] if f["severity"] != "error"), "missed": err(d.get("missedReuse")),
         "handBuiltError": sum(1 for f in hb if f["severity"] == "error"), "handBuiltWarn": sum(1 for f in hb if f["severity"] != "error"),
         "localTokens": d.get("localTokens", 0), "colors": len(d.get("colors") or []), "new": NEW.get(run, "—"),
     }
@@ -43,10 +44,10 @@ for p, (name, plat, how) in PROJECTS.items():
     if not rs:
         continue
     md += [f"## {name}", "", how, "",
-           "| run | 组 | 结果 | 复用现成组件 | 自造轮子 | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |",
+           "| run | 组 | 结果 | 复用现成组件 | 自造轮子（确定/疑似） | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |",
            "|---|---|---|---|---|---|---|---|---|---|"]
     for r in rs:
-        md.append(f"| {r['run']} | {GROUP.get(r['group'], r['group'])} | {'✅ PASS' if r['pass'] else '❌ FAIL'} | {r['used']} | {r['reinvented']} | {r['missed']} | {r['handBuiltError']} / {r['handBuiltWarn']} | {r['localTokens']} | {r['colors']} | {r['new']} |")
+        md.append(f"| {r['run']} | {GROUP.get(r['group'], r['group'])} | {'✅ PASS' if r['pass'] else '❌ FAIL'} | {r['used']} | {r['reinvented']} / {r['reinventedWarn']} | {r['missed']} | {r['handBuiltError']} / {r['handBuiltWarn']} | {r['localTokens']} | {r['colors']} | {r['new']} |")
     md.append("")
 md += ["## 说明", "",
        "- newbee：A 组页面里手写了商品卡、分割线、底部操作栏，还自建了 10 个颜色变量；C 组直接用 Vant 的 Card / Divider / ActionBar 和项目已有的 SimpleHeader，缺的 Price 放进组件目录。",

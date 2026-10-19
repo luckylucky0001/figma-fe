@@ -6,34 +6,34 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 
 新建 `src/views/OrderDetailV2.vue`；打分：`figmafe reuse <项目> --focus src/views/OrderDetailV2.vue`
 
-| run | 组 | 结果 | 复用现成组件 | 自造轮子 | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
+| run | 组 | 结果 | 复用现成组件 | 自造轮子（确定/疑似） | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
 |---|---|---|---|---|---|---|---|---|---|
-| Rnb-A-1 | A 只给任务（Opus） | ❌ FAIL | 6 | 0 | 0 | 2 / 1 | 10 | 2 | — |
-| Rnb-A-2 | A 只给任务（Opus） | ❌ FAIL | 6 | 0 | 0 | 3 / 1 | 10 | 7 | — |
-| Rnb-Ahk-1 | A 只给任务（Haiku） | ❌ FAIL | 0 | 0 | 4 | 5 / 5 | 0 | 28 | — |
-| Rnb-C-1 | C 用 Skill（Opus） | ✅ PASS | 12 | 0 | 0 | 0 / 0 | 0 | 0 | Price.vue |
-| Rnb-C-2 | C 用 Skill（Opus） | ✅ PASS | 12 | 0 | 0 | 0 / 0 | 0 | 0 | Price.vue |
-| Rnb-Chk-1 | C 用 Skill（Haiku） | ✅ PASS | 10 | 0 | 0 | 0 / 0 | 0 | 26 | Price.vue |
+| Rnb-A-1 | A 只给任务（Opus） | ❌ FAIL | 6 | 0 / 0 | 0 | 2 / 1 | 10 | 2 | — |
+| Rnb-A-2 | A 只给任务（Opus） | ❌ FAIL | 6 | 0 / 0 | 0 | 3 / 1 | 10 | 7 | — |
+| Rnb-Ahk-1 | A 只给任务（Haiku） | ❌ FAIL | 0 | 0 / 0 | 4 | 5 / 5 | 0 | 28 | — |
+| Rnb-C-1 | C 用 Skill（Opus） | ✅ PASS | 12 | 0 / 0 | 0 | 0 / 0 | 0 | 0 | Price.vue |
+| Rnb-C-2 | C 用 Skill（Opus） | ✅ PASS | 12 | 0 / 0 | 0 | 0 / 0 | 0 | 0 | Price.vue |
+| Rnb-Chk-1 | C 用 Skill（Haiku） | ✅ PASS | 10 | 0 / 0 | 0 | 0 / 0 | 0 | 26 | Price.vue |
 
 ## QMUI_Android（XML View + QMUI）
 
 新建 Fragment + layout；打分：`figmafe reuse <项目> --changed HEAD`（新文件整份判，已有文件只看新增行）
 
-| run | 组 | 结果 | 复用现成组件 | 自造轮子 | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
+| run | 组 | 结果 | 复用现成组件 | 自造轮子（确定/疑似） | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
 |---|---|---|---|---|---|---|---|---|---|
-| Rqm-A-1 | A 只给任务（Opus） | ❌ FAIL | 7 | 0 | 0 | 1 / 0 | 0 | 57 | — |
-| Rqm-A-2 | A 只给任务（Opus） | ❌ FAIL | 8 | 0 | 0 | 1 / 0 | 11 | 4 | — |
-| Rqm-C-1 | C 用 Skill（Opus） | ✅ PASS | 9 | 0 | 0 | 0 / 0 | 10 | 0 | QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBar |
-| Rqm-C-2 | C 用 Skill（Opus） | ✅ PASS | 8 | 0 | 0 | 0 / 0 | 8 | 0 | QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBarLayout、QDTagView、QDProductCardView |
+| Rqm-A-1 | A 只给任务（Opus） | ❌ FAIL | 7 | 0 / 0 | 0 | 1 / 0 | 0 | 57 | — |
+| Rqm-A-2 | A 只给任务（Opus） | ❌ FAIL | 8 | 0 / 0 | 0 | 1 / 0 | 11 | 4 | — |
+| Rqm-C-1 | C 用 Skill（Opus） | ✅ PASS | 9 | 0 / 0 | 0 | 0 / 0 | 10 | 0 | QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBar |
+| Rqm-C-2 | C 用 Skill（Opus） | ✅ PASS | 8 | 0 / 0 | 0 | 0 / 0 | 8 | 0 | QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBarLayout、QDTagView、QDProductCardView |
 
 ## Now in Android（Jetpack Compose + Material3 + 自有设计系统 Nia*）
 
 新建 `OrderDetailScreen.kt`，通用组件放哪由 agent 决定；打分：`figmafe reuse <项目> --changed HEAD`
 
-| run | 组 | 结果 | 复用现成组件 | 自造轮子 | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
+| run | 组 | 结果 | 复用现成组件 | 自造轮子（确定/疑似） | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
 |---|---|---|---|---|---|---|---|---|---|
-| Rnia-A-1 | A 只给任务（Opus） | ❌ FAIL | 2 | 6 | 0 | 0 / 0 | 0 | 18 | 12 个：NiaNavBar、NiaCard、NiaDivider、NiaCell、NiaPillButton、NiaStatusTag、NiaPrice、NiaCountDown、NiaNoticeBar、NiaActionBar、NiaProductCard + CommerceTheme |
-| Rnia-C-1 | C 用 Skill（Opus） | ❌ FAIL | 6 | 2 | 0 | 0 / 0 | 0 | 0 | NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard |
+| Rnia-A-1 | A 只给任务（Opus） | ❌ FAIL | 2 | 5 / 1 | 0 | 0 / 0 | 0 | 18 | 12 个：NiaNavBar、NiaCard、NiaDivider、NiaCell、NiaPillButton、NiaStatusTag、NiaPrice、NiaCountDown、NiaNoticeBar、NiaActionBar、NiaProductCard + CommerceTheme |
+| Rnia-C-1 | C 用 Skill（Opus） | ❌ FAIL | 6 | 1 / 1 | 0 | 0 / 0 | 0 | 0 | NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard |
 
 ## 说明
 

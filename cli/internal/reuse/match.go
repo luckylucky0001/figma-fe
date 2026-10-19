@@ -48,6 +48,27 @@ type MatchResult struct {
 // "compose". Assets that cannot be used from that technology are pushed down.
 var Target string
 
+// InferTarget guesses the page technology from what the project's screens are mostly built with:
+// component usages from XML layouts / Views vs composables. "" when it is too close to call.
+func InferTarget(r *Report) string {
+	var views, compose int
+	for _, a := range r.Assets {
+		switch {
+		case a.Kind == "composable" || a.Source == "Compose Material3":
+			compose += a.Usage
+		case a.Kind == "custom-view" || a.Kind == "ui-lib":
+			views += a.Usage
+		}
+	}
+	switch {
+	case views > 2*compose:
+		return "xml"
+	case compose > 2*views:
+		return "compose"
+	}
+	return ""
+}
+
 // Confirmed is a project's confirmed component map (design/component-map.yaml or
 // .figmafe/component-map.yaml). Confirmed entries win over inference: the team decided once.
 var Confirmed *mapping.Map
@@ -148,7 +169,14 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		}
 		fc := ConceptOf(strings.TrimSuffix(name, "（未组件化）"))
 		for _, as := range pool {
+			if as.Unavailable {
+				continue
+			}
 			sc, why := score(name, fc, a.variants, as)
+			if sc > 0 && !usable(&as) {
+				sc -= 0.3
+				why += "；⚠ " + as.Caveat
+			}
 			if sc < 0.5 {
 				continue
 			}
@@ -168,6 +196,43 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			}
 			return len(ci.Name) < len(cj.Name) // generic before specialised (List before AddressList)
 		})
+		// no component fits well: the project's established way of drawing it (1px View, hairline class)
+		if len(item.Candidates) == 0 || item.Candidates[0].Score < 0.7 {
+			for _, cv := range r.Conventions {
+				if cv.Concept == fc && fc != "" {
+					sc := 0.72 + math.Min(0.2, 0.05*math.Log2(float64(cv.Usage)+1))
+					item.Candidates = append([]Candidate{{cv.Name, cv.Kind, cv.Source, round2(sc), cv.Usage, cv.Example, cv.ExampleAt, "没有对应组件，项目里惯用这种写法（" + itoa(cv.Usage) + " 处）"}}, item.Candidates...)
+					break
+				}
+			}
+		}
+		// still nothing: a generic container the project uses that can draw it through attributes
+		// (QMUILinearLayout's qmui_bottomDividerHeight) — a capability, so it needs confirmation
+		if fc == "divider" && (len(item.Candidates) == 0 || item.Candidates[0].Score < 0.7) {
+			var best *Asset
+			var attrs []string
+			for i := range pool {
+				as := &pool[i]
+				if as.Concept != "" || as.Usage == 0 || best != nil && as.Usage <= best.Usage {
+					continue
+				}
+				var da []string
+				for _, p := range as.Props {
+					if strings.Contains(strings.ToLower(p), "divider") {
+						da = append(da, p)
+					}
+				}
+				if len(da) > 0 {
+					best, attrs = as, da
+				}
+			}
+			if best != nil {
+				if len(attrs) > 2 {
+					attrs = attrs[:2]
+				}
+				item.Candidates = append([]Candidate{{best.Name, best.Kind, best.Source, 0.75, best.Usage, best.Example, best.ExampleAt, "没有分割线组件；这个容器自带分割线属性（" + strings.Join(attrs, "、") + " …），项目里已用 " + itoa(best.Usage) + " 次"}}, item.Candidates...)
+			}
+		}
 		if len(item.Candidates) > 4 {
 			item.Candidates = item.Candidates[:4]
 		}

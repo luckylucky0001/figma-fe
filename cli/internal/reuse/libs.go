@@ -48,6 +48,7 @@ var rawAndroid = map[string]string{"Button": "button", "ImageButton": "button", 
 var libConcept = map[string]string{
 	"Vant/Card":                           "goods", // van-card is a product card
 	"Vant/Row":                            "",      // grid layout, not a list row
+	"Material Components/BadgeDrawable":   "",      // a drawable overlay, not a View to place
 	"Vant/Col":                            "",
 	"Vant/Space":                          "",
 	"React Vant/Card":                     "goods",

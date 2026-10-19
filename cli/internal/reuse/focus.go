@@ -22,7 +22,15 @@ type PageCheck struct {
 }
 
 // CheckFocus evaluates files under focus (relative to the report root).
-func (r *Report) CheckFocus(focus string) *PageCheck {
+func (r *Report) CheckFocus(focus string) *PageCheck { return r.CheckFocusLines(focus, nil) }
+
+// CheckFocusLines is CheckFocus restricted, per file, to the given lines (a PR's added lines);
+// files not in lines are judged whole.
+func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *PageCheck {
+	inLines := func(rel string, ln int) bool {
+		set, ok := lines[rel]
+		return !ok || set[ln]
+	}
 	var focuses []string // comma-separated: a page is often several files (Fragment + layout)
 	for _, f := range strings.Split(focus, ",") {
 		if f = filepath.ToSlash(strings.TrimSuffix(strings.TrimSpace(f), "/")); f != "" {
@@ -38,8 +46,12 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 		return false
 	}
 	pc := &PageCheck{Focus: focus}
-	pool := append([]Asset{}, r.Assets...)
-	pool = append(pool, r.LibAll...)
+	var pool []Asset
+	for _, a := range append(append([]Asset{}, r.Assets...), r.LibAll...) {
+		if usable(&a) {
+			pool = append(pool, a)
+		}
+	}
 	for _, a := range r.Assets {
 		for _, f := range a.UsageFiles {
 			if in(f) && !(in(a.Source) && a.Kind != "ui-lib") {
@@ -52,6 +64,9 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 	for _, a := range r.Assets {
 		if a.Kind == "ui-lib" || !in(a.Source) || a.Concept == "" {
 			continue
+		}
+		if _, modified := lines[a.Source]; modified {
+			continue // the component predates this change; only newly added components are judged
 		}
 		var existing *Asset
 		for i := range pool {
@@ -70,7 +85,7 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 		}
 	}
 	for _, f := range r.Findings {
-		if f.Rule == "missed-reuse" && in(f.File) {
+		if f.Rule == "missed-reuse" && in(f.File) && inLines(f.File, f.Line) {
 			pc.MissedReuse = append(pc.MissedReuse, f)
 		}
 	}
@@ -100,6 +115,9 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 	for _, f := range focusSrc {
 		for _, re := range []*regexp.Regexp{cssVarDefRe, preVarDefRe, xmlColorDefRe} {
 			for _, m := range re.FindAllStringSubmatchIndex(f.src, -1) {
+				if !inLines(f.rel, lineAt(f.src, m[0])) {
+					continue
+				}
 				pc.LocalTokens++
 				name := f.src[m[2]:m[3]]
 				v := strings.ToUpper(expandHex(f.src[m[4]:m[5]]))
@@ -120,6 +138,9 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 			if onComponent(f.src, m[0]) {
 				continue // <van-tag class="status-tag">: the class styles a component, it does not replace one
 			}
+			if !inLines(f.rel, lineAt(f.src, m[0])) {
+				continue
+			}
 			for _, cls := range strings.Fields(f.src[m[2]:m[3]]) {
 				checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, cls, in)
 			}
@@ -128,16 +149,22 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 			if onComponent(f.src, m[0]) {
 				continue // <QMUIRoundButton android:id="@+id/status_tag">: a deliberate component choice
 			}
+			if !inLines(f.rel, lineAt(f.src, m[0])) {
+				continue
+			}
 			checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, f.src[m[2]:m[3]], in)
 		}
 		for _, m := range cssSelRe2.FindAllStringSubmatchIndex(f.src, -1) {
+			if !inLines(f.rel, lineAt(f.src, m[0])) {
+				continue
+			}
 			checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, f.src[m[2]:m[3]], in)
 		}
 	}
 	for _, f := range focusSrc {
 		src, rel := f.src, f.rel
 		for _, loc := range hexColorRe.FindAllStringIndex(src, -1) {
-			if lineHasVarDef(src, loc[0]) {
+			if lineHasVarDef(src, loc[0]) || !inLines(rel, lineAt(src, loc[0])) {
 				continue
 			}
 			v := strings.ToUpper(expandHex(src[loc[0]:loc[1]]))
@@ -150,6 +177,9 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 		}
 		for _, m := range ktColorRe2.FindAllStringSubmatchIndex(src, -1) {
 			ln := strings.Count(src[:m[0]], "\n") + 1
+			if !inLines(rel, ln) {
+				continue
+			}
 			pc.Colors = append(pc.Colors, Finding{"hardcoded-color", "warn", rel, ln, src[m[0]:m[1]], "写死颜色"})
 		}
 	}

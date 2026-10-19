@@ -39,6 +39,9 @@ func TestChangedUIFiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if l := addedLines(filepath.Join(repo, "app"), "HEAD"); !l["src/views/Old.vue"][1] || l["src/views/New.vue"] != nil {
+		t.Errorf("addedLines=%v", l)
+	}
 	sort.Strings(got)
 	want := []string{"res/layout/page.xml", "res/values/colors.xml", "src/views/New.vue", "src/views/Old.vue"}
 	if !reflect.DeepEqual(got, want) {

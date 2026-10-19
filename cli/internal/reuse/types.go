@@ -23,6 +23,9 @@ type Asset struct {
 	UsageFiles []string `json:"usageFiles,omitempty"`
 	Example    string   `json:"example,omitempty"` // a real usage snippet from the project
 	ExampleAt  string   `json:"exampleAt,omitempty"`
+	// compatibility with the project as it is (see compat.go)
+	Caveat      string `json:"caveat,omitempty"`
+	Unavailable bool   `json:"unavailable,omitempty"` // the installed library version does not ship it
 }
 
 type Finding struct {
@@ -77,8 +80,9 @@ type Report struct {
 	Findings    []Finding         `json:"findings"`
 	Clones      []Clone           `json:"clones"`
 	Colors      []Hotspot         `json:"colors"`
-	LibAll      []Asset           `json:"-"` // every component of the detected UI libraries (used or not), for matching
-	ColorTokens map[string]string `json:"-"` // #RRGGBB → token reference
+	Conventions []Asset           `json:"conventions,omitempty"` // established non-component ways (see convention.go)
+	LibAll      []Asset           `json:"-"`                     // every component of the detected UI libraries (used or not), for matching
+	ColorTokens map[string]string `json:"-"`                     // #RRGGBB → token reference
 	Metrics     Metrics           `json:"metrics"`
 }
 
@@ -154,6 +158,24 @@ func splitWords(s string) []string {
 
 var vendorPrefix = map[string]bool{"qmui": true, "van": true, "nut": true, "ds": true, "legacy": true, "app": true, "common": true, "base": true, "my": true, "custom": true, "ui": true, "md": true, "t": true}
 
+var viewSuffix = map[string]bool{"view": true, "layout": true, "widget": true, "component": true, "comp": true}
+
+// projectPrefix: a short project abbreviation in front of a longer name (QDTagView, GJButton, XYCell).
+func projectPrefix(words []string) bool {
+	w := words[0]
+	if len(words) < 2 || len(w) < 2 || len(w) > 3 {
+		return false
+	}
+	for _, c := range concepts {
+		for _, cw := range c.Words {
+			if strings.HasPrefix(cw, w) {
+				return false // btn, nav, tag, img … are words, not prefixes
+			}
+		}
+	}
+	return !strings.ContainsAny(w, "aeiou") // abbreviations rarely have vowels (qd, gj, xy)
+}
+
 // infrastructure suffixes: layout helpers, managers, adapters … are not UI components of a concept
 var infraSuffix = map[string]bool{"layout": true, "helper": true, "manager": true, "util": true, "utils": true, "controller": true, "background": true, "behavior": true, "decoration": true, "adapter": true, "holder": true, "mask": true, "root": true, "wrapper": true, "container": true, "delegate": true, "provider": true, "state": true}
 
@@ -195,7 +217,7 @@ func ConceptOf(name string) string {
 		// mixed names like "Tag / 状态" fall through to the latin words
 	}
 	words := splitWords(name)
-	for len(words) > 1 && vendorPrefix[words[0]] {
+	for len(words) > 1 && (vendorPrefix[words[0]] || projectPrefix(words)) {
 		words = words[1:]
 	}
 	joined := strings.Join(words, "")
@@ -203,6 +225,17 @@ func ConceptOf(name string) string {
 		for _, w := range c.Words {
 			if joined == w {
 				return c.Name
+			}
+		}
+	}
+	// a compound concept wrapped as a View: ProductCardView, ActionBarLayout, NoticeBarWidget
+	if n := len(words); n > 2 && viewSuffix[words[n-1]] {
+		inner := strings.Join(words[:n-1], "")
+		for _, c := range concepts {
+			for _, w := range c.Words {
+				if inner == w {
+					return c.Name
+				}
 			}
 		}
 	}
@@ -323,7 +356,7 @@ func collapseFamilies(as []Asset) []Asset {
 }
 
 func kindLabel(k string) string {
-	return map[string]string{"ui-lib": "组件库", "design-system": "设计系统", "business": "业务组件", "page-local": "页面内私有", "custom-view": "自定义 View", "composable": "Composable"}[k]
+	return map[string]string{"ui-lib": "组件库", "design-system": "设计系统", "business": "业务组件", "page-local": "页面内私有", "custom-view": "自定义 View", "composable": "Composable", "convention": "项目惯例"}[k]
 }
 
 func itoa(n int) string {

@@ -62,6 +62,7 @@ func ScanAndroid(root string) *Report {
 	ign := ignoreList(root)
 	type file struct{ path, rel, text string }
 	var layouts, code, values []file
+	var manifests []string
 	gradle := ""
 	_ = filepath.Walk(root, func(p string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -84,6 +85,9 @@ func ScanAndroid(root string) *Report {
 			return nil
 		}
 		switch {
+		case name == "AndroidManifest.xml":
+			b, _ := os.ReadFile(p)
+			manifests = append(manifests, string(b))
 		case strings.HasSuffix(name, ".xml") && strings.Contains(rel, "/res/layout"):
 			b, _ := os.ReadFile(p)
 			layouts = append(layouts, file{p, rel, string(b)})
@@ -149,6 +153,19 @@ func ScanAndroid(root string) *Report {
 			}
 		}
 	}
+	// what the installed Material version / app theme allow
+	verTexts := []string{gradle}
+	for _, f := range code {
+		if strings.Contains(f.text, "com.google.android.material:material:") {
+			verTexts = append(verTexts, f.text)
+		}
+	}
+	var valueTexts []string
+	for _, f := range values {
+		valueTexts = append(valueTexts, f.text)
+	}
+	family, theme := appThemeFamily(manifests, valueTexts)
+	markCompat(assets, map[string]string{"Material Components": materialVersion(verTexts...)}, family, theme)
 	// custom Views + attrs
 	styleable := map[string][]string{}
 	for _, f := range values {
@@ -344,6 +361,7 @@ func ScanAndroid(root string) *Report {
 		}
 	}
 	r.ColorTokens = colorTokens
+	r.Conventions = conventionsAndroid(layoutMarkup)
 	finish(r, assets, colorHits)
 	r.Clones = findClones(layoutMarkup, func(s string) []*mnode { return dropContainers(parseMarkup(s)) }, 5)
 	r.Metrics.CloneGroups = len(r.Clones)
@@ -373,7 +391,7 @@ func bestProjectAsset(assets map[string]*Asset, concept, prefer string) *Asset {
 		return s
 	}
 	for _, a := range assets {
-		if a.Concept == concept && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || score(a) > score(best) || score(a) == score(best) && len(a.Name) < len(best.Name)) {
+		if a.Concept == concept && usable(a) && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || score(a) > score(best) || score(a) == score(best) && len(a.Name) < len(best.Name)) {
 			best = a
 		}
 	}

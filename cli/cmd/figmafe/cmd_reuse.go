@@ -6,6 +6,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -41,6 +43,7 @@ func runReuse(args []string) error {
 			return fmt.Errorf("%s: no H5 (package.json) or Android (build.gradle) project found", root)
 		}
 	}
+	var lines map[string]map[int]bool
 	if *changed != "" {
 		files, err := changedUIFiles(root, *changed)
 		if err != nil {
@@ -51,7 +54,8 @@ func runReuse(args []string) error {
 			return nil
 		}
 		*focus = strings.Join(files, ",")
-		fmt.Printf("· 检查改动的 %d 个 UI 文件\n", len(files))
+		lines = addedLines(root, *changed)
+		fmt.Printf("· 检查改动的 %d 个 UI 文件（已有文件只看新增的行）\n", len(files))
 	}
 	for _, p := range plats {
 		var r *reuse.Report
@@ -63,7 +67,7 @@ func runReuse(args []string) error {
 		md := r.Markdown()
 		var pc *reuse.PageCheck
 		if *focus != "" {
-			pc = r.CheckFocus(*focus)
+			pc = r.CheckFocusLines(*focus, lines)
 			md = pc.Markdown() + "\n---\n\n" + md
 			writeJSON(filepath.Join(*out, p+".page.json"), pc)
 		}
@@ -117,6 +121,11 @@ func runMatch(args []string) error {
 			r = reuse.ScanAndroid(root)
 		}
 		reuse.Target = *target
+		if p == "android" && *target == "" {
+			if reuse.Target = reuse.InferTarget(r); reuse.Target != "" {
+				fmt.Printf("· 未指定 --target，按项目主流写法推断新页面用 %s（不对请显式传 --target xml|compose）\n", reuse.Target)
+			}
+		}
 		reuse.Confirmed = nil
 		for _, cand := range []string{"design/component-map.yaml", ".figmafe/component-map.yaml", "component-map.yaml"} {
 			if cm, err := mapping.Load(filepath.Join(root, cand)); err == nil {
@@ -160,4 +169,33 @@ func changedUIFiles(root, ref string) ([]string, error) {
 		}
 	}
 	return files, nil
+}
+
+var hunkRe = regexp.MustCompile(`(?m)^\+\+\+ b/(.+)$|^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@`)
+
+// addedLines: for files modified (not added) since ref, the line numbers this change added, so the
+// gate judges the change and not the file's history. Files missing from the map are judged whole.
+func addedLines(root, ref string) map[string]map[int]bool {
+	out, err := exec.Command("git", "-C", root, "diff", "-U0", "--relative", "--diff-filter=M", ref, "--").Output()
+	if err != nil {
+		return nil
+	}
+	res := map[string]map[int]bool{}
+	cur := ""
+	for _, m := range hunkRe.FindAllStringSubmatch(string(out), -1) {
+		if m[1] != "" {
+			cur = m[1]
+			res[cur] = map[int]bool{}
+			continue
+		}
+		start, _ := strconv.Atoi(m[2])
+		n := 1
+		if m[3] != "" {
+			n, _ = strconv.Atoi(m[3])
+		}
+		for i := 0; i < n; i++ {
+			res[cur][start+i] = true
+		}
+	}
+	return res
 }

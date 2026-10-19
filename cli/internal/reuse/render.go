@@ -2,6 +2,7 @@ package reuse
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -24,6 +25,23 @@ func (r *Report) Markdown() string {
 		b.WriteString("\n## 1. 三方组件库使用\n\n| 组件库 | 使用次数 | 最常用 |\n|---|---|---|\n")
 		for _, l := range r.Libraries {
 			fmt.Fprintf(&b, "| %s | %d | %s |\n", l.Name, l.Usage, strings.Join(l.Top, "、"))
+		}
+		var bad []string
+		for i := range r.LibAll {
+			if a := &r.LibAll[i]; !usable(a) {
+				bad = append(bad, "- `"+a.Name+"`："+a.Caveat)
+			}
+		}
+		if len(bad) > 0 {
+			sort.Strings(bad)
+			b.WriteString("\n**组件库里有、但本项目不能直接用的组件**（match 不会推荐它们）：\n\n" + strings.Join(bad, "\n") + "\n")
+		}
+	}
+
+	if len(r.Conventions) > 0 {
+		b.WriteString("\n**项目惯例写法**（没有组件、但项目里固定这么写；新设计稿里没有对应组件时沿用它，不要另造）：\n\n")
+		for _, c := range r.Conventions {
+			fmt.Fprintf(&b, "- %s：%s，%d 处，例 `%s` %s\n", c.Concept, c.Name, c.Usage, strings.ReplaceAll(c.Example, "`", "'"), c.ExampleAt)
 		}
 	}
 

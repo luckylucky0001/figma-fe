@@ -53,6 +53,7 @@ func ScanH5(root string) *Report {
 	r := &Report{Platform: "h5", Root: root}
 	ign := ignoreList(root)
 	deps := map[string]bool{}
+	depVer := map[string]string{}
 	_ = filepath.Walk(root, func(p string, info os.FileInfo, err error) error {
 		if err != nil {
 			return nil
@@ -63,8 +64,9 @@ func ScanH5(root string) *Report {
 		if info.Name() == "package.json" {
 			var pj struct{ Dependencies, DevDependencies map[string]string }
 			if b, e := os.ReadFile(p); e == nil && json.Unmarshal(b, &pj) == nil {
-				for k := range pj.Dependencies {
+				for k, v := range pj.Dependencies {
 					deps[k] = true
+					depVer[k] = cleanVersion(v)
 				}
 				for k := range pj.DevDependencies {
 					deps[k] = true
@@ -157,11 +159,18 @@ func ScanH5(root string) *Report {
 		assets[k] = a
 		return a
 	}
+	versions := map[string]string{}
 	for _, h := range libs {
 		for c := range h.names {
 			get("ui-lib", c, h.lib.Name)
 		}
+		for _, p := range h.lib.Packages {
+			if v := depVer[p]; v != "" {
+				versions[h.lib.Name] = v
+			}
+		}
 	}
+	markCompat(assets, versions, "", "")
 	// Project components.
 	projByName := map[string]*Asset{}
 	fileAsset := map[string]*Asset{} // defining file → asset, to resolve aliased imports
@@ -348,6 +357,7 @@ func ScanH5(root string) *Report {
 	}
 	r.Metrics.RawPrimitives = rawCount
 	r.ColorTokens = colorTokens
+	r.Conventions = conventionsH5(files)
 	finish(r, assets, colorHits)
 
 	markup := map[string]string{}
@@ -414,7 +424,7 @@ func classify(rel string) string {
 func bestAsset(assets map[string]*Asset, concept string) *Asset {
 	var best *Asset
 	for _, a := range assets {
-		if a.Concept == concept && a.Kind != "page-local" && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) && len(a.Name) < len(best.Name)) {
+		if a.Concept == concept && a.Kind != "page-local" && usable(a) && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) && len(a.Name) < len(best.Name)) {
 			best = a
 		}
 	}

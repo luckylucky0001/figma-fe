@@ -20,6 +20,8 @@ var (
 	preVarDefRe   = regexp.MustCompile(`([@$][\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
 	definePropsRe = regexp.MustCompile(`(?s)defineProps(?:<\s*\{(.*?)\}\s*>)?\(\s*(\{.*?\}|\[.*?\])?\s*\)`)
 	propsObjRe    = regexp.MustCompile(`(?s)props\s*:\s*(\{.*?\}|\[.*?\])\s*,?\s*\n`)
+	fixedRe       = regexp.MustCompile(`position:\s*fixed`)
+	fixedBottomRe = regexp.MustCompile(`(?s)position:\s*fixed[^}]*?bottom:\s*0|bottom:\s*0[^}]*?position:\s*fixed`)
 	propNameRe    = regexp.MustCompile(`(?:^|[{,;\n])\s*['"]?(\w+)['"]?\??\s*:`)
 )
 
@@ -160,6 +162,7 @@ func ScanH5(root string) *Report {
 	}
 	// Project components.
 	projByName := map[string]*Asset{}
+	fileAsset := map[string]*Asset{} // defining file → asset, to resolve aliased imports
 	for _, f := range files {
 		kind := classify(f.rel)
 		switch f.kind {
@@ -174,7 +177,14 @@ func ScanH5(root string) *Report {
 			}
 			a := get(kind, name, f.rel)
 			a.Props = vueProps(f.text)
+			if fixedBottomRe.MatchString(f.text) && fixedRe.MatchString(f.text) && (a.Concept == "navbar" || a.Concept == "") {
+				a.Concept = "tabs" // a bar pinned to the bottom is a tab bar / action bar, whatever its name says
+				if regexp.MustCompile(`(?i)button|btn|submit`).MatchString(f.markup) {
+					a.Concept = "actionbar"
+				}
+			}
 			projByName[name] = a
+			fileAsset[f.rel] = a
 		case "jsx":
 			for _, m := range reactCompRe.FindAllStringSubmatch(f.text, -1) {
 				name := m[1] + m[2]
@@ -216,6 +226,19 @@ func ScanH5(root string) *Report {
 				}
 				if n != "" {
 					imported[n] = m[3]
+				}
+			}
+		}
+		// aliased imports: import sHeader from '@/components/SimpleHeader.vue' → <s-header>
+		alias := map[string]*Asset{}
+		for _, m := range importRe.FindAllStringSubmatch(f.text, -1) {
+			if m[1] == "" {
+				continue
+			}
+			base := strings.TrimSuffix(filepath.Base(m[3]), ".vue")
+			for rel, a := range fileAsset {
+				if strings.TrimSuffix(filepath.Base(rel), ".vue") == base || strings.EqualFold(filepath.Base(filepath.Dir(rel)), base) && strings.HasSuffix(rel, "index.vue") {
+					alias[strings.ToLower(m[1])] = a
 				}
 			}
 		}
@@ -264,7 +287,9 @@ func ScanH5(root string) *Report {
 					}
 				}
 				if a == nil {
-					if pa, ok := projByName[kebabToPascal(tag)]; ok && (f.kind == "vue" || tag == kebabToPascal(tag)) {
+					if pa, ok := alias[strings.ToLower(strings.ReplaceAll(tag, "-", ""))]; ok {
+						a = pa
+					} else if pa, ok := projByName[kebabToPascal(tag)]; ok && (f.kind == "vue" || tag == kebabToPascal(tag)) {
 						a = pa
 					}
 				}

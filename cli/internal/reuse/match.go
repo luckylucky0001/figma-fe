@@ -126,6 +126,9 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			if ci.Score != cj.Score {
 				return ci.Score > cj.Score
 			}
+			if ci.Usage != cj.Usage {
+				return ci.Usage > cj.Usage // tie: what this project already uses keeps it consistent
+			}
 			return len(ci.Name) < len(cj.Name) // generic before specialised (List before AddressList)
 		})
 		if len(item.Candidates) > 4 {

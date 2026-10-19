@@ -1,0 +1,116 @@
+{
+  "focus": "src/views/OrderDetailV2.vue",
+  "used": [
+    "Button（组件库）",
+    "Cell（组件库）",
+    "CountDown（组件库）",
+    "NavBar（组件库）",
+    "NoticeBar（组件库）",
+    "Tag（组件库）"
+  ],
+  "reinvented": null,
+  "missedReuse": [
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 41,
+      "text": "\u003cimg v-if=\"item.thumb\" :src=\"item.thumb\" alt=\"\" /\u003e",
+      "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
+    }
+  ],
+  "handBuilt": [
+    {
+      "rule": "hand-built",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 17,
+      "text": ".card",
+      "hint": "页面手写了「card」（.card），已有 CellGroup（组件库 Vant）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 24,
+      "text": ".divider",
+      "hint": "页面手写了「divider」（.divider），已有 Divider（组件库 Vant）（项目里已用 2 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 39,
+      "text": ".product",
+      "hint": "页面手写了「goods」（.product），已有 Card（组件库 Vant）（项目里已用 2 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 84,
+      "text": ".action-bar",
+      "hint": "页面手写了「actionbar」（.action-bar），已有 SubmitBar（组件库 Vant）（项目里已用 1 次）"
+    }
+  ],
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 19,
+      "text": "#FFF3E8",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 19,
+      "text": "#FF8F1F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 215,
+      "text": "#FFFFFF",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 282,
+      "text": "#F2F3F5",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 381,
+      "text": "#FFFFFF",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 391,
+      "text": "#FFFFFF",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 394,
+      "text": "#FFFFFF",
+      "hint": "写死颜色"
+    }
+  ],
+  "localTokens": 10,
+  "pass": false
+}

@@ -114,3 +114,42 @@ class StatusTagView @JvmOverloads constructor(c: Context) : AppCompatTextView(c)
 		t.Errorf("CountDown should need a new component here: %+v", m.Items[1])
 	}
 }
+
+func TestCheckFocusHandBuilt(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^3.4.0","vant":"^4.8.0"}}`)
+	write(t, root, "src/views/Order.vue", `<template><van-card title="x"/><van-action-bar/></template>`)
+	write(t, root, "src/views/New.vue", `<template><div class="goods-card">x</div><van-button>ok</van-button></template>
+<style lang="less">
+@brand: #FF4D1A;
+.goods-card { color: @brand; }
+.tip { color: #1BAEAE; }
+</style>`)
+	write(t, root, "src/styles/var.less", `@primary: #1BAEAE;`)
+	pc := ScanH5(root).CheckFocus("src/views/New.vue")
+	if pc.Pass || len(pc.HandBuilt) != 1 || pc.HandBuilt[0].Severity != "error" || !strings.Contains(pc.HandBuilt[0].Hint, "Card") {
+		t.Errorf("handBuilt=%+v pass=%v", pc.HandBuilt, pc.Pass)
+	}
+	if pc.LocalTokens != 1 || len(pc.Colors) != 1 || !strings.Contains(pc.Colors[0].Hint, "@primary") {
+		t.Errorf("localTokens=%d colors=%+v", pc.LocalTokens, pc.Colors)
+	}
+}
+
+func TestVueAliasAndFixedBottom(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^3.4.0","vant":"^4.8.0"}}`)
+	write(t, root, "src/components/NavBar.vue", "<template><div class=\"nav-bar\"><i>首页</i><i>我的</i></div></template>\n<style>.nav-bar { position: fixed;\n left: 0;\n bottom: 0; }</style>")
+	write(t, root, "src/components/SimpleHeader.vue", `<template><header><b>{{name}}</b></header></template>`)
+	write(t, root, "src/views/A.vue", "<template><s-header :name=\"'详情'\"></s-header><nav-bar/></template>\n<script>import sHeader from '@/components/SimpleHeader.vue'\nimport navBar from '@/components/NavBar.vue'</script>")
+	r := ScanH5(root)
+	got := map[string]Asset{}
+	for _, a := range r.Assets {
+		got[a.Name] = a
+	}
+	if got["SimpleHeader"].Usage != 1 {
+		t.Errorf("aliased SimpleHeader usage=%d", got["SimpleHeader"].Usage)
+	}
+	if got["NavBar"].Concept != "tabs" {
+		t.Errorf("fixed-bottom NavBar concept=%q want tabs (it is a bottom tab bar)", got["NavBar"].Concept)
+	}
+}

@@ -3,6 +3,7 @@ package reuse
 import (
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 )
@@ -14,7 +15,9 @@ type PageCheck struct {
 	Used        []string  `json:"used"`        // existing assets the page uses ("Name(kind)")
 	Reinvented  []Finding `json:"reinvented"`  // components defined in the page that already exist
 	MissedReuse []Finding `json:"missedReuse"` // raw primitives where a component exists
+	HandBuilt   []Finding `json:"handBuilt"`   // markup that hand-builds a concept an existing component covers
 	Colors      []Finding `json:"colors"`      // hard-coded colours (with token if one exists)
+	LocalTokens int       `json:"localTokens"` // colour variables defined inside the page itself
 	Pass        bool      `json:"pass"`
 }
 
@@ -55,22 +58,58 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 		}
 	}
 	tokens := map[string]string{}
-	for _, h := range r.Colors {
-		if h.Token != "" {
-			tokens[h.Value] = h.Token
-		}
-	}
 	for k, v := range r.ColorTokens {
 		tokens[k] = v
 	}
-	_ = filepath.Walk(filepath.Join(r.Root, focus), func(p string, info os.FileInfo, err error) error {
-		if err != nil || info.IsDir() {
-			return nil
+	usedConcepts := map[string]bool{}
+	for _, a := range r.Assets {
+		for _, f := range a.UsageFiles {
+			if in(f) {
+				usedConcepts[a.Concept] = true
+			}
 		}
-		b, _ := os.ReadFile(p)
-		src := string(b)
-		rel := relPath(r.Root, p)
+	}
+	var focusSrc []struct{ rel, src string }
+	_ = filepath.Walk(filepath.Join(r.Root, focus), func(p string, info os.FileInfo, err error) error {
+		if err == nil && !info.IsDir() {
+			b, _ := os.ReadFile(p)
+			focusSrc = append(focusSrc, struct{ rel, src string }{relPath(r.Root, p), string(b)})
+		}
+		return nil
+	})
+	// colour variables defined in the page are not project tokens
+	for _, f := range focusSrc {
+		for _, re := range []*regexp.Regexp{cssVarDefRe, preVarDefRe} {
+			for _, m := range re.FindAllStringSubmatch(f.src, -1) {
+				pc.LocalTokens++
+				v := strings.ToUpper(expandHex(m[2]))
+				if t := tokens[v]; t == m[1] || t == "var("+m[1]+")" {
+					delete(tokens, v)
+				}
+			}
+		}
+	}
+	// hand-built concepts: class names / selectors that express a concept the page does not use a component for
+	seenHB := map[string]bool{}
+	for _, f := range focusSrc {
+		for _, m := range classAttrRe.FindAllStringSubmatchIndex(f.src, -1) {
+			for _, cls := range strings.Fields(f.src[m[2]:m[3]]) {
+				checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, cls, in)
+			}
+		}
+		for _, m := range androidIDRe.FindAllStringSubmatchIndex(f.src, -1) {
+			checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, f.src[m[2]:m[3]], in)
+		}
+		for _, m := range cssSelRe2.FindAllStringSubmatchIndex(f.src, -1) {
+			checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, f.src[m[2]:m[3]], in)
+		}
+	}
+	for _, f := range focusSrc {
+		src, rel := f.src, f.rel
 		for _, loc := range hexColorRe.FindAllStringIndex(src, -1) {
+			if lineHasVarDef(src, loc[0]) {
+				continue
+			}
 			v := strings.ToUpper(expandHex(src[loc[0]:loc[1]]))
 			ln := strings.Count(src[:loc[0]], "\n") + 1
 			hint := "写死颜色"
@@ -83,10 +122,53 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 			ln := strings.Count(src[:m[0]], "\n") + 1
 			pc.Colors = append(pc.Colors, Finding{"hardcoded-color", "warn", rel, ln, src[m[0]:m[1]], "写死颜色"})
 		}
-		return nil
-	})
+	}
 	pc.Pass = len(pc.Reinvented) == 0 && len(pc.MissedReuse) == 0
+	for _, f := range pc.HandBuilt {
+		if f.Severity == "error" {
+			pc.Pass = false
+		}
+	}
 	return pc
+}
+
+var (
+	classAttrRe = regexp.MustCompile(`\bclass(?:Name)?="([^"]+)"`)
+	cssSelRe2   = regexp.MustCompile(`(?m)^\s*\.([A-Za-z][\w-]*)[^{\n]*\{`)
+	androidIDRe = regexp.MustCompile(`android:id="@\+id/(\w+)"`)
+)
+
+func lineHasVarDef(src string, idx int) bool {
+	ls := strings.LastIndex(src[:idx], "\n") + 1
+	le := strings.IndexByte(src[idx:], '\n')
+	if le < 0 {
+		le = len(src) - idx
+	}
+	line := src[ls : idx+le]
+	return cssVarDefRe.MatchString(line) || preVarDefRe.MatchString(line)
+}
+
+func checkHandBuilt(pc *PageCheck, r *Report, pool []Asset, used, seen map[string]bool, rel string, ln int, cls string, in func(string) bool) {
+	concept := ConceptOf(cls)
+	if concept == "" || used[concept] || seen[concept] || concept == "list" || concept == "icon" || concept == "image" {
+		return
+	}
+	var best *Asset
+	for i := range pool {
+		b := &pool[i]
+		if b.Concept == concept && !in(b.Source) && b.Source != "Android SDK widgets" && (best == nil || rank(*b) > rank(*best) || rank(*b) == rank(*best) && len(b.Name) < len(best.Name)) {
+			best = b
+		}
+	}
+	if best == nil {
+		return
+	}
+	seen[concept] = true
+	sev, note := "warn", "（组件库标准组件，项目还没用过，请确认）"
+	if best.Usage > 0 {
+		sev, note = "error", "（项目里已用 "+itoa(best.Usage)+" 次）"
+	}
+	pc.HandBuilt = append(pc.HandBuilt, Finding{"hand-built", sev, rel, ln, "." + cls, "页面手写了「" + concept + "」（." + cls + "），已有 " + best.Name + "（" + kindLabel(best.Kind) + " " + best.Source + "）" + note})
 }
 
 func (pc *PageCheck) Markdown() string {
@@ -104,6 +186,17 @@ func (pc *PageCheck) Markdown() string {
 	b.WriteString("- 有组件却没用（" + itoa(len(pc.MissedReuse)) + "）\n")
 	for _, f := range pc.MissedReuse {
 		b.WriteString("  - ✗ " + f.File + ":" + itoa(f.Line) + " `" + f.Text + "` → " + f.Hint + "\n")
+	}
+	b.WriteString("- 疑似手写已有组件（" + itoa(len(pc.HandBuilt)) + "）\n")
+	for _, f := range pc.HandBuilt {
+		mark := "·"
+		if f.Severity == "error" {
+			mark = "✗"
+		}
+		b.WriteString("  - " + mark + " " + f.File + ":" + itoa(f.Line) + " " + f.Hint + "\n")
+	}
+	if pc.LocalTokens > 0 {
+		b.WriteString("- 页面私有调色板：页面里自己定义了 " + itoa(pc.LocalTokens) + " 个颜色变量（应使用项目 / 组件库已有的 token）\n")
 	}
 	b.WriteString("- 写死颜色（" + itoa(len(pc.Colors)) + "）\n")
 	for i, f := range pc.Colors {

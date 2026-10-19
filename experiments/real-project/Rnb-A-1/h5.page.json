@@ -1,0 +1,68 @@
+{
+  "focus": "src/views/OrderDetailV2.vue",
+  "used": [
+    "Button（组件库）",
+    "Cell（组件库）",
+    "CountDown（组件库）",
+    "NavBar（组件库）",
+    "NoticeBar（组件库）",
+    "Tag（组件库）"
+  ],
+  "reinvented": null,
+  "missedReuse": [
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 44,
+      "text": "\u003cimg v-if=\"item.thumb\" :src=\"item.thumb\" alt=\"\" /\u003e",
+      "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
+    }
+  ],
+  "handBuilt": [
+    {
+      "rule": "hand-built",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 18,
+      "text": ".od-card",
+      "hint": "页面手写了「card」（.od-card），已有 CellGroup（组件库 Vant）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 27,
+      "text": ".od-divider",
+      "hint": "页面手写了「divider」（.od-divider），已有 Divider（组件库 Vant）（项目里已用 2 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 42,
+      "text": ".product",
+      "hint": "页面手写了「goods」（.product），已有 Card（组件库 Vant）（项目里已用 2 次）"
+    }
+  ],
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 217,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token var(--vt-c-white)"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 398,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token var(--vt-c-white)"
+    }
+  ],
+  "localTokens": 10,
+  "pass": false
+}

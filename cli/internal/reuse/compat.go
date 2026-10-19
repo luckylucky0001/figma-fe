@@ -18,6 +18,12 @@ var libMinVersion = map[string]map[string]string{
 		"CircularProgressIndicator": "1.3.0", "LinearProgressIndicator": "1.3.0", "MaterialButtonToggleGroup": "1.1.0",
 		"ExtendedFloatingActionButton": "1.1.0",
 	},
+	// antd-mobile 5 is a rewrite: these exist only from 5.0
+	"antd-mobile": {
+		"Swiper": "5.0.0", "Input": "5.0.0", "TextArea": "5.0.0", "SpinLoading": "5.0.0", "DotLoading": "5.0.0", "Space": "5.0.0",
+		"CapsuleTabs": "5.0.0", "JumboTabs": "5.0.0", "Ellipsis": "5.0.0", "FloatingPanel": "5.0.0", "Collapse": "5.0.0", "ErrorBlock": "5.0.0",
+		"InfiniteScroll": "5.0.0", "AutoCenter": "5.0.0", "Divider": "5.0.0", "Image": "5.0.0", "CheckList": "5.0.0", "Selector": "5.0.0", "Popup": "5.0.0", "CenterPopup": "5.0.0",
+	},
 	// components added in Vant 4 (projects on Vant 2 / 3 do not have them)
 	"Vant": {
 		"BackTop": "4.0.0", "DatePicker": "4.0.0", "TimePicker": "4.0.0", "PickerGroup": "4.0.0", "FloatingBubble": "4.0.0",
@@ -34,6 +40,9 @@ var libDeprecated = map[string]map[string]string{
 
 // libRemoved: component → [first version without it, its successor] (renamed / removed).
 var libRemoved = map[string]map[string][2]string{
+	"antd-mobile": {"InputItem": {"5.0.0", "Input"}, "TextareaItem": {"5.0.0", "TextArea"}, "Carousel": {"5.0.0", "Swiper"},
+		"ActivityIndicator": {"5.0.0", "SpinLoading / DotLoading"}, "WhiteSpace": {"5.0.0", "Space"}, "WingBlank": {"5.0.0", "Space"},
+		"ListView": {"5.0.0", "List + InfiniteScroll"}, "Flex": {"5.0.0", "Space / Grid"}, "Accordion": {"5.0.0", "Collapse"}, "Range": {"5.0.0", "Slider"}, "Menu": {"5.0.0", "CascaderView"}},
 	"Vant": {"GoodsAction": {"3.0.0", "ActionBar"}, "GoodsActionButton": {"3.0.0", "ActionBarButton"}, "GoodsActionIcon": {"3.0.0", "ActionBarIcon"}},
 }
 

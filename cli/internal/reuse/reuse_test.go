@@ -525,3 +525,17 @@ func TestSlashNamedComponents(t *testing.T) {
 		t.Errorf("items=%+v", m.Items)
 	}
 }
+
+func TestAntdMobileV2(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"react":"^16.8.0","antd-mobile":"^2.3.4"}}`)
+	write(t, root, "src/pages/A.jsx", "import { List, InputItem, Carousel } from 'antd-mobile'\nexport default function A() { return <List><InputItem placeholder='x'/><List.Item>a</List.Item><Carousel/></List> }")
+	r := ScanH5(root)
+	state := map[string]bool{}
+	for _, a := range r.LibAll {
+		state[a.Name] = usable(&a)
+	}
+	if !state["InputItem"] || !state["Carousel"] || state["Swiper"] || state["Divider"] {
+		t.Errorf("antd-mobile 2: %v", state)
+	}
+}

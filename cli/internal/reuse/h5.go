@@ -190,7 +190,7 @@ func ScanH5(root string) *Report {
 			a.Props = vueProps(f.text)
 			a.Enums = unionEnums(f.text)
 			if fixedBottomRe.MatchString(f.text) && fixedRe.MatchString(f.text) && (a.Concept == "navbar" || a.Concept == "") {
-				a.Concept = "tabs" // a bar pinned to the bottom is a tab bar / action bar, whatever its name says
+				a.Concept = "tabbar" // a bar pinned to the bottom is a tab bar / action bar, whatever its name says
 				if regexp.MustCompile(`(?i)button|btn|submit`).MatchString(f.markup) {
 					a.Concept = "actionbar"
 				}

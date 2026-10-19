@@ -110,7 +110,8 @@ var concepts = []struct {
 	{"dialog", []string{"dialog", "modal", "alert", "confirm"}},
 	{"toast", []string{"toast", "snackbar", "notify", "tips"}},
 	{"popup", []string{"popup", "sheet", "actionsheet", "bottomsheet", "drawer", "popover", "floatingpanel"}},
-	{"tabs", []string{"tabs", "tab", "tabbar", "segment", "segmented", "navigationbar", "bottomnavigation", "bottomnavigationview", "tabrow"}},
+	{"tabs", []string{"tabs", "tab", "segment", "segmented", "tabrow", "tabsegment"}},
+	{"tabbar", []string{"tabbar", "navigationbar", "bottomnavigation", "bottomnavigationview", "bottomnav"}},
 	{"input", []string{"input", "field", "edittext", "textfield", "search", "searchbar", "textarea"}},
 	{"carousel", []string{"swipe", "swiper", "carousel", "banner", "viewpager"}},
 	{"icon", []string{"icon"}},
@@ -124,7 +125,7 @@ var concepts = []struct {
 	{"stepper", []string{"stepper", "counter"}},
 	{"countdown", []string{"countdown", "timer"}},
 	{"goods", []string{"goods", "product", "sku", "goodscard", "productcard"}},
-	{"actionbar", []string{"actionbar", "bottombar", "submitbar", "bottomactionbar", "footerbar"}},
+	{"actionbar", []string{"actionbar", "bottombar", "bottomactionbar", "footerbar"}},
 }
 
 // noise words that never decide a concept on their own
@@ -184,7 +185,7 @@ var infraSuffix = map[string]bool{"layout": true, "helper": true, "manager": tru
 
 // Chinese layer / component names are common in Figma files of Chinese teams. Longest keyword wins.
 var zhConcepts = []struct{ kw, concept string }{
-	{"标签页", "tabs"}, {"选项卡", "tabs"}, {"导航栏", "navbar"}, {"标题栏", "navbar"}, {"顶栏", "navbar"},
+	{"标签页", "tabs"}, {"标签栏", "tabbar"}, {"底部导航", "tabbar"}, {"底部菜单", "tabbar"}, {"选项卡", "tabs"}, {"导航栏", "navbar"}, {"标题栏", "navbar"}, {"顶栏", "navbar"},
 	{"操作栏", "actionbar"}, {"底部栏", "actionbar"}, {"提交栏", "actionbar"}, {"吸底", "actionbar"},
 	{"通知栏", "notice"}, {"公告", "notice"}, {"提示条", "notice"}, {"倒计时", "countdown"},
 	{"单元格", "cell"}, {"列表项", "cell"}, {"信息行", "cell"}, {"分割线", "divider"}, {"分隔线", "divider"},

@@ -149,8 +149,8 @@ func TestVueAliasAndFixedBottom(t *testing.T) {
 	if got["SimpleHeader"].Usage != 1 {
 		t.Errorf("aliased SimpleHeader usage=%d", got["SimpleHeader"].Usage)
 	}
-	if got["NavBar"].Concept != "tabs" {
-		t.Errorf("fixed-bottom NavBar concept=%q want tabs (it is a bottom tab bar)", got["NavBar"].Concept)
+	if got["NavBar"].Concept != "tabbar" {
+		t.Errorf("fixed-bottom NavBar concept=%q want tabbar (it is a bottom tab bar)", got["NavBar"].Concept)
 	}
 }
 

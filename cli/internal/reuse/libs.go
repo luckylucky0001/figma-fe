@@ -53,12 +53,12 @@ var libConcept = map[string]string{
 	"antd-mobile/CollapsePanel":           "",
 	"antd-mobile/ErrorBlock":              "empty",
 	"antd-mobile/Result":                  "empty",
-	"Vant/Row":                            "", // grid layout, not a list row
-	"Material Components/BadgeDrawable":   "", // a drawable overlay, not a View to place
+	"Vant/SubmitBar":                      "actionbar", // price + submit: a specialised action bar
+	"Vant/Row":                            "",          // grid layout, not a list row
+	"Material Components/BadgeDrawable":   "",          // a drawable overlay, not a View to place
 	"Vant/Col":                            "",
 	"Vant/Space":                          "",
 	"React Vant/Card":                     "goods",
-	"Vant/SubmitBar":                      "actionbar",
 	"Vant/ActionBar":                      "actionbar",
 	"Vant/Field":                          "input",
 	"Vant/CellGroup":                      "card",

@@ -134,6 +134,30 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		}
 	}
 	familyBase = familyBases(pool)
+	libChild = map[string]bool{}
+	names := map[string]bool{}
+	for _, a := range pool {
+		names[a.Source+"|"+a.Name] = true
+	}
+	for _, a := range pool {
+		for _, suf := range []string{"s", "Group", "Row"} {
+			if a.Concept != "" && a.Concept != "button" && names[a.Source+"|"+a.Name+suf] {
+				libChild[a.Source+"|"+a.Name] = true // Tab in Tabs, Radio in RadioGroup, NiaTab in NiaTabRow
+			}
+		}
+	}
+	famPrefixes = map[string]bool{}
+	firstWords := map[string]int{}
+	for _, a := range pool {
+		if ws := splitWords(a.Name); len(ws) > 1 && a.Kind != "ui-lib" {
+			firstWords[ws[0]]++
+		}
+	}
+	for w, n := range firstWords {
+		if n >= 4 && ConceptOf(w) == "" {
+			famPrefixes[w] = true
+		}
+	}
 	for _, name := range order {
 		a := sets[name]
 		item := MatchItem{Figma: name, Instances: len(a.ids), NodeIDs: a.ids}
@@ -275,30 +299,49 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		return 0, ""
 	}
 	// specialised components (AddressList, ContactCard, CouponCell) carry domain words the design does not
-	if s < 0.9 && a.Concept != "" && a.Kind == "ui-lib" {
+	if s < 0.9 && a.Concept != "" && a.Kind != "convention" {
 		ws := splitWords(a.Name)
-		for len(ws) > 1 && vendorPrefix[ws[0]] {
+		for len(ws) > 1 && (vendorPrefix[ws[0]] || projectPrefix(ws) || familyPrefix(ws[0])) {
 			ws = ws[1:]
 		}
-		residual := strings.Join(ws, "")
+		var conceptWords []string
 		for _, c := range concepts {
-			if c.Name != a.Concept {
-				continue
+			if c.Name == a.Concept {
+				conceptWords = c.Words
 			}
-			for _, w := range c.Words {
-				if len(w) >= 3 {
-					residual = strings.Replace(residual, w, "", 1)
+		}
+		// drop the concept's own words (longest n-gram first: top+app+bar) and neutral style words
+		var residual []string
+		for i := 0; i < len(ws); {
+			n := 0
+			for k := min(3, len(ws)-i); k >= 1 && n == 0; k-- {
+				g := strings.Join(ws[i:i+k], "")
+				if contains(conceptWords, g) || contains(conceptWords, strings.TrimSuffix(g, "s")) || k == 1 && contains(styleWords, g) {
+					n = k
 				}
 			}
+			if n == 0 {
+				residual = append(residual, ws[i])
+				n = 1
+			}
+			i += n
 		}
-		residual = strings.TrimSuffix(residual, "s")
-		for _, w := range styleWords {
-			residual = strings.Replace(residual, w, "", 1)
+		joined := strings.Join(residual, "")
+		lowerFigma := strings.ToLower(figmaName)
+		specialised := len(joined) >= 3 && !strings.Contains(lowerFigma, joined)
+		if a.Kind != "ui-lib" {
+			// a project's StatusTagView / InterestsItem is its own vocabulary; only a multi-word domain
+			// qualifier (NewsResourceCardExpanded) marks a component made for one feature
+			specialised = specialised && len(residual) >= 2
 		}
-		if len(residual) >= 3 && !strings.Contains(strings.ToLower(figmaName), residual) {
+		if specialised {
 			s -= 0.12
-			why = append(why, "专用组件（"+residual+"）")
+			why = append(why, "专用组件（"+joined+"）")
 		}
+	}
+	if libChild[a.Source+"|"+a.Name] && fn != an {
+		s -= 0.1
+		why = append(why, "是容器组件（"+a.Name+"s / Group / Row）的子项")
 	}
 	// the library's canonical component of the concept (Cell for cell, Tag for tag) beats look-alikes
 	for _, c := range concepts {
@@ -507,7 +550,16 @@ func r2android(a Asset) bool {
 
 // styleWords are orientation / visual-style words, not a specialisation (HorizontalDivider,
 // OutlinedButton, FilledTonalButton are still the generic component).
-var styleWords = []string{"horizontal", "vertical", "outlined", "filled", "elevated", "tonal", "default", "basic", "simple", "standard", "normal"}
+var styleWords = []string{"horizontal", "vertical", "outlined", "filled", "elevated", "tonal", "default", "basic", "simple", "standard", "normal",
+	"layout", "view", "widget", "component", "container", "wrapper", "round", "common", "custom", "base", "text", "priority"}
+
+// familyPrefix: a word that prefixes a project family of components (Nia in NiaButton, NiaTab …),
+// set from the pool in Match so it is not mistaken for a domain word.
+func familyPrefix(w string) bool { return famPrefixes[w] }
+
+var famPrefixes = map[string]bool{}
+
+var libChild = map[string]bool{}
 
 // familyBase marks a project family's base component: NiaButton among NiaTextButton /
 // NiaOutlinedButton, DsCell among DsCellGroup … (prefix + the concept's own word).

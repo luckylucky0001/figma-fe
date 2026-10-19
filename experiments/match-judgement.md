@@ -77,9 +77,22 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 **每个项目 11/11。** 这两个是模板项目，代码量小，主要验证的是 React + antd-mobile 这条链路能跑通，以及组件目录是否正确。
 
+### 没组件化、图层是中文名的设计稿（`design/figma-export/holdings`，券商「我的持仓」页）
+
+设计稿里全是 FRAME / TEXT，没有组件实例，图层名是「导航栏」「涨跌标签」「收盘倒计时」这样的中文。工具按中文名推断 UI 概念再匹配，结果标「（未组件化）」：
+
+| 项目 | 12 个元素的推荐 | 人工判断 |
+|---|---|---|
+| newbee（Vue + Vant） | 导航栏 → SimpleHeader、标签页 → Tabs、持仓列表项 → Cell、涨跌标签 → Tag、收盘倒计时 → CountDown、底部操作栏 → ActionBar、买入 / 卖出 / 更多 → Button … | 12/12 ✓ |
+| react-h5-template（React + antd-mobile） | 导航栏 → NavBar、标签页 → Tabs、持仓列表项 → List.Item、收盘倒计时 / 底部操作栏 → 需新建 … | 12/12 ✓ |
+| QMUI（XML） | 导航栏 → QMUITopBarLayout、标签页 → QMUITabSegment、持仓列表 → RecyclerView、持仓列表项 → QMUICommonListItemView … | 12/12 ✓ |
+| Now in Android（Compose） | 导航栏 → NiaTopAppBar、资产卡片 → Card、标签页 → NiaTabRow、按钮 → NiaButton … | 9/12 ✓，3 △：持仓列表判成需新建（Compose 里列表是 LazyColumn，不算组件）、持仓列表项推荐了兴趣专用的 InterestsItem、涨跌标签推荐了可选中的 NiaFilterChip |
+
 ### 小结
 
-- 五个真实项目（覆盖 Vue+Vant、React+antd-mobile、XML+QMUI、Compose+Material3+自有设计系统）共 55 项：完全正确 52 项，可用但不是最优 3 项，推荐了错误组件 0 项。拿不准的情况，工具给出的都是「需确认」。
+- 订单详情（组件化的设计稿）：五个真实项目（覆盖 Vue+Vant、React+antd-mobile、XML+QMUI、Compose+Material3+自有设计系统）共 55 项，完全正确 52 项，可用但不是最优 3 项。
+- 我的持仓（没组件化、中文图层名）：四个真实项目共 48 项，完全正确 45 项，可用但不是最优 3 项。
+- 两份设计稿都没有出现推荐错误组件的情况。拿不准的情况，工具给出的都是「需确认」。
 - 存量项目里「组件库有这个组件」不等于「项目能用」。版本、主题、废弃 API、设计系统封装都会影响结论，这几项现在都会检查。
 - 项目惯例：没有对应组件、但项目里反复出现的写法（1px View 细线、Vant 的 `van-hairline--*` 类、容器自带的分割线属性）会作为「项目惯例」推荐，不会直接判成「需新建」。
 - 还没覆盖的：「借用」写法（例如用按钮组件来充当标签）。这类可以在 `component-map.yaml` 里人工确认一次，之后 match 会优先采用确认过的映射。

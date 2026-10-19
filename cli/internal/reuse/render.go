@@ -84,12 +84,15 @@ func (r *Report) Markdown() string {
 
 	var missed []Finding
 	for _, f := range r.Findings {
-		if f.Rule == "missed-reuse" || f.Rule == "bypass" {
+		if (f.Rule == "missed-reuse" || f.Rule == "bypass") && f.Severity != "info" {
 			missed = append(missed, f)
 		}
 	}
 	if len(missed) > 0 {
 		fmt.Fprintf(&b, "\n## 4. 有组件却没用（%d 处，含绕过设计系统封装直接用组件库）\n\n", len(missed))
+		if n := infoCount(r.Findings); n > 0 {
+			fmt.Fprintf(&b, "> 另有 %d 处原生图片（<img> / ImageView）可以换成图片组件，仅供参考，不计入问题。\n\n", n)
+		}
 		for i, f := range missed {
 			if i >= 25 {
 				fmt.Fprintf(&b, "- … 还有 %d 处\n", len(missed)-i)
@@ -130,4 +133,14 @@ func orDash(s string) string {
 		return "—"
 	}
 	return "`" + s + "`"
+}
+
+func infoCount(fs []Finding) int {
+	n := 0
+	for _, f := range fs {
+		if f.Rule == "missed-reuse" && f.Severity == "info" {
+			n++
+		}
+	}
+	return n
 }

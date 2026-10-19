@@ -345,6 +345,9 @@ func ScanH5(root string) *Report {
 					continue
 				}
 				if concept, ok := rawH5[tag]; ok {
+					if def := fileAsset[f.rel]; def != nil && def.Concept == concept {
+						continue // the project's own Field built on <input> is the component, not a missed reuse
+					}
 					rawCount++
 					ln, t := at(off + m[0])
 					if alt := bestAsset(assets, concept); alt != nil {

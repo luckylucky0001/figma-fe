@@ -85,9 +85,8 @@ var libConcept = map[string]string{
 	"taro-ui/AtTabsPane":                           "",
 	"taro-ui/AtFloatLayout":                        "popup",
 	"taro-ui/AtInputNumber":                        "stepper",
-	"NutUI/Card":                          "goods", // NutUI's Card is a product card, like Vant's
-	"NutUI/Sku":                           "",      // a spec picker popup
-	"NutUI/Ecard":                         "",
+	"NutUI/Sku":                                    "", // a spec picker popup
+	"NutUI/Ecard":                                  "",
 	"uni-ui/ListItem":                              "cell",
 	"uni-ui/Section":                               "",
 	"uni-ui/Title":                                 "",

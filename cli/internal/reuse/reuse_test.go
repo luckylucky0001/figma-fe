@@ -560,3 +560,15 @@ func TestFeatureSummary(t *testing.T) {
 		t.Errorf("%s", s)
 	}
 }
+
+func TestCompareMetrics(t *testing.T) {
+	old := &Report{Metrics: Metrics{Componentization: 0.80, HardcodedColors: 10}}
+	better := &Report{Metrics: Metrics{Componentization: 0.85, HardcodedColors: 10}}
+	worse := &Report{Metrics: Metrics{Componentization: 0.85, HardcodedColors: 12}}
+	if _, w := CompareMetrics(old, better); w {
+		t.Error("an improvement flagged as regression")
+	}
+	if s, w := CompareMetrics(old, worse); !w || !strings.Contains(s, "❌ 变差") {
+		t.Errorf("regression not flagged: %s", s)
+	}
+}

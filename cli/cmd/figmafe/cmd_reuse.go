@@ -48,6 +48,16 @@ func runReuse(args []string) error {
 		}
 	}
 	var lines map[string]map[int]bool
+	if *focus != "" && *changed == "" {
+		// a mistyped path would otherwise check nothing and pass: in CI that silently disables the gate
+		for _, f := range strings.Split(*focus, ",") {
+			if f = strings.TrimSpace(f); f != "" {
+				if _, err := os.Stat(filepath.Join(root, f)); err != nil {
+					return fmt.Errorf("--focus %s: not found under %s", f, root)
+				}
+			}
+		}
+	}
 	if *changed != "" {
 		files, err := changedUIFiles(root, *changed)
 		if err != nil {

@@ -103,3 +103,15 @@ func TestChangedFilesAndAddedLines(t *testing.T) {
 		t.Errorf("a chmod-only change adds no lines, got %v (present %v)", l, ok)
 	}
 }
+
+// a mistyped --focus path must fail instead of checking nothing and passing
+func TestFocusPathMustExist(t *testing.T) {
+	root := t.TempDir()
+	if err := os.WriteFile(filepath.Join(root, "package.json"), []byte(`{"dependencies":{"vue":"3"}}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	err := runReuse([]string{"--focus", "src/views/Nope.vue", "-q", "-o", t.TempDir(), root})
+	if err == nil || !strings.Contains(err.Error(), "not found") {
+		t.Errorf("err = %v", err)
+	}
+}

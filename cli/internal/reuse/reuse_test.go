@@ -1200,3 +1200,54 @@ func TestSameNamedComponentsInTwoFolders(t *testing.T) {
 		t.Errorf("cards = %v", got)
 	}
 }
+
+// review 4: Android scanner fixes
+func TestAndroidScannerReviewFixes(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/java/a/Views.kt", `package a
+internal open class RoundView : FrameLayout {
+    constructor(c: Context) : super(c)
+}
+class TagView<T : Any>(c: Context) : TextView(c)
+`)
+	write(t, root, "app/src/main/java/a/Fancy.java", "package a;\npublic final class FancyButton extends Button {\n}\nclass PlainCard extends FrameLayout {\n}")
+	write(t, root, "app/src/main/java/a/Ui.kt", `package a
+@Composable
+fun DsChip(@StringRes labelRes: Int, onPick: (id: String, index: Int) -> Unit, vararg tags: String, title: String = "a, b: c") {}
+@Composable
+fun DsCard(content: @Composable () -> Unit) {}
+@Composable
+fun <T> DsPicker(items: List<T>) {}
+@Composable
+fun RowScope.DsTab(selected: Boolean) {}
+@Composable
+internal fun Screen() { DsCard(DsChip(1, { _, _ -> })) ; DsPicker(listOf(1)); DsTab(true) }
+`)
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><a.RoundView/><a.TagView/><a.FancyButton/><a.PlainCard/><View android:layout_width="0dp" android:layout_height="1dp"/></LinearLayout>`)
+	r := ScanAndroid(root)
+	got := map[string]*Asset{}
+	for i := range r.Assets {
+		got[r.Assets[i].Name] = &r.Assets[i]
+	}
+	for _, n := range []string{"RoundView", "TagView", "FancyButton", "PlainCard", "DsPicker", "DsTab"} {
+		if got[n] == nil {
+			t.Errorf("%s not found", n)
+		}
+	}
+	if c := got["DsChip"]; c == nil || c.Usage != 1 || strings.Join(c.Props, ",") != "labelRes,onPick,tags,title" || strings.Join(c.Required, ",") != "labelRes,onPick,tags" {
+		t.Errorf("DsChip = %+v", c)
+	}
+	if r.Metrics.HardcodedSizes != 1 {
+		t.Errorf("hardcoded sizes = %d (0dp is not a size)", r.Metrics.HardcodedSizes)
+	}
+	// res/ at the project root (Eclipse / Ant layout)
+	root = t.TempDir()
+	write(t, root, "src/a/FancyButton.java", "package a;\npublic class FancyButton extends Button {\n}")
+	write(t, root, "res/layout/a.xml", `<LinearLayout><a.FancyButton/></LinearLayout>`)
+	write(t, root, "build.gradle", "")
+	for _, a := range ScanAndroid(root).Assets {
+		if a.Name == "FancyButton" && a.Usage != 1 {
+			t.Errorf("root res/ layout not scanned: %+v", a)
+		}
+	}
+}

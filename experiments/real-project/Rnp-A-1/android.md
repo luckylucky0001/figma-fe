@@ -19,11 +19,11 @@
 
 | 指标 | 值 |
 |---|---|
-| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（639 / 639） |
-| 重复概念（同一 UI 概念有多个实现） | 3 |
+| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（657 / 657） |
+| 重复概念（同一 UI 概念有多个实现） | 4 |
 | 重复结构（可抽成组件的复制粘贴结构） | 9 组 |
 | 硬编码颜色 | 102 处（其中 32 处已有同值 token） |
-| 硬编码尺寸 | 1100 处 |
+| 硬编码尺寸 | 996 处 |
 
 ## 0. 优先处理（按影响面排序）
 
@@ -112,22 +112,22 @@
 | `LicensePage` | Composable |  | 1 | `Page.LICENSE -> LicensePage()` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:52 |
 | `Render` | Composable |  | 0 | shared/src/commonMain/kotlin/net/newpipe/app/platform/PlayerSettingsSections.kt |
 | `NewPipeTextView` | 自定义 View |  | 261 | `<org.schabi.newpipe.views.NewPipeTextView` app/src/main/res/layout/activity_error.xml:29 |
+| `AnimatedProgressBar` | 自定义 View | loading | 10 | `<org.schabi.newpipe.views.AnimatedProgressBar` app/src/main/res/layout/fragment_video_detail.xml:131 |
 | `NewPipeEditText` | 自定义 View | input | 6 | `<org.schabi.newpipe.views.NewPipeEditText` app/src/main/res/layout/activity_error.xml:112 |
 | `CustomCollapsingToolbarLayout` | 自定义 View |  | 3 | `<org.schabi.newpipe.views.CustomCollapsingToolbarLayout` app/src/main/res/layout/fragment_channel.xml:17 |
+| `FocusAwareCoordinator` | 自定义 View |  | 2 | `<org.schabi.newpipe.views.FocusAwareCoordinator` app/src/main/res/layout/activity_main.xml:7 |
+| `FocusAwareDrawerLayout` | 自定义 View |  | 2 | `<org.schabi.newpipe.views.FocusAwareDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/activity_main.xml:2 |
 | `NewPipeRecyclerView` | 自定义 View | list | 2 | `<org.schabi.newpipe.views.NewPipeRecyclerView` app/src/main/res/layout/fragment_comments.xml:7 |
 | `PlayerFastSeekOverlay` | 自定义 View |  | 2 | `<org.schabi.newpipe.views.player.PlayerFastSeekOverlay` app/src/main/res/layout/player.xml:824 |
+| `PlaylistCreationDialog` | 自定义 View | dialog | 2 | `PlaylistCreationDialog.newInstance(getStreamEntities());` app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistAppendDialog.java:119 |
+| `ChaptersSeekBar` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.ChaptersSeekBar` app/src/main/res/layout/player.xml:489 |
 | `CircleClipTapView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.player.CircleClipTapView` app/src/main/res/layout/player_fast_seek_overlay.xml:8 |
 | `ExpandableSurfaceView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.ExpandableSurfaceView` app/src/main/res/layout/player.xml:11 |
+| `PlaylistAppendDialog` | 自定义 View | dialog | 1 | `? PlaylistAppendDialog.newInstance(streamEntities)` app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistDialog.java:151 |
 | `ScrollableTabLayout` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.ScrollableTabLayout` app/src/main/res/layout/fragment_main.xml:8 |
 | `SecondsView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.player.SecondsView` app/src/main/res/layout/player_fast_seek_overlay.xml:15 |
 | `FocusAwareSeekBar` | 自定义 View |  | 0 | app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java |
-| `@layout/error_panel` | 业务组件 | empty | 14 | include |
-| `@layout/list_empty_view` | 业务组件 | empty | 6 | include |
-| `@layout/order_detail_cell` | 业务组件 | cell | 6 | include |
-| `@layout/toolbar_layout` | 业务组件 | navbar | 6 | include |
-| `@layout/settings_notification_action` | 业务组件 |  | 5 | include |
-| `@layout/playlist_control` | 业务组件 |  | 3 | include |
-| … | | | | 共 64 个，见 reuse.json |
+| … | | | | 共 70 个，见 reuse.json |
 
 ## 3. 重复资产（同一概念多个实现 → 收敛到推荐组件）
 
@@ -136,6 +136,7 @@
 | navbar（View） | @layout/toolbar_layout（业务组件，用 6 次）<br>Toolbar（组件库，用 5 次）<br>@layout/settings_category_header_title（业务组件，用 1 次） | `@layout/toolbar_layout` |
 | empty（View） | @layout/error_panel（业务组件，用 14 次）<br>@layout/list_empty_view（业务组件，用 6 次） | `@layout/error_panel` |
 | navbar（Compose） | TopAppBar（Composable，用 10 次）<br>TopAppBar（组件库，用 2 次） | `TopAppBar` |
+| dialog（View） | PlaylistCreationDialog（自定义 View，用 2 次）<br>PlaylistAppendDialog（自定义 View，用 1 次） | `PlaylistCreationDialog` |
 
 ## 5. 重复结构（复制粘贴的 UI 片段，可抽成组件）
 

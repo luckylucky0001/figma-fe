@@ -849,6 +849,34 @@
       ]
     },
     {
+      "name": "NiaNavigationBarItem",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Navigation.kt",
+      "concept": "tabbar",
+      "props": [
+        "selected",
+        "onClick",
+        "modifier",
+        "enabled",
+        "alwaysShowLabel",
+        "icon",
+        "selectedIcon",
+        "label"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt",
+        "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Navigation.kt"
+      ],
+      "example": "NiaNavigationBarItem(",
+      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:350",
+      "required": [
+        "selected",
+        "onClick",
+        "icon"
+      ]
+    },
+    {
       "name": "NiaNoticeBar",
       "kind": "composable",
       "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/NoticeBar.kt",
@@ -965,7 +993,7 @@
       "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt",
       "concept": "navbar",
       "props": [
-        "StringRes titleRes",
+        "titleRes",
         "navigationIcon",
         "navigationIconContentDescription",
         "actionIcon",
@@ -983,7 +1011,7 @@
       "example": "NiaTopAppBar(",
       "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt:229",
       "required": [
-        "StringRes titleRes",
+        "titleRes",
         "navigationIcon",
         "navigationIconContentDescription",
         "actionIcon",
@@ -1247,7 +1275,7 @@
       "kind": "composable",
       "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt",
       "props": [
-        "vararg keys",
+        "keys",
         "reportMetric"
       ],
       "usage": 1,
@@ -1257,7 +1285,7 @@
       "example": "TrackDisposableJank(navigationState.currentKey) { metricsHolder -\u003e",
       "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaAppState.kt:115",
       "required": [
-        "vararg keys",
+        "keys",
         "reportMetric"
       ]
     },
@@ -1266,7 +1294,7 @@
       "kind": "composable",
       "source": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt",
       "props": [
-        "vararg keys",
+        "keys",
         "reportMetric"
       ],
       "usage": 1,
@@ -1276,8 +1304,42 @@
       "example": "TrackJank(scrollableState) { metricsHolder -\u003e",
       "exampleAt": "core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/JankStatsExtensions.kt:82",
       "required": [
-        "vararg keys",
+        "keys",
         "reportMetric"
+      ]
+    },
+    {
+      "name": "DecorativeScrollbar",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/AppScrollbars.kt",
+      "props": [
+        "state",
+        "orientation",
+        "modifier"
+      ],
+      "usage": 0,
+      "required": [
+        "state",
+        "orientation",
+        "orientation:Orientation"
+      ]
+    },
+    {
+      "name": "DraggableScrollbar",
+      "kind": "composable",
+      "source": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/scrollbar/AppScrollbars.kt",
+      "props": [
+        "state",
+        "orientation",
+        "onThumbMoved",
+        "modifier"
+      ],
+      "usage": 0,
+      "required": [
+        "state",
+        "orientation",
+        "orientation:Orientation",
+        "onThumbMoved"
       ]
     }
   ],
@@ -1832,7 +1894,7 @@
   ],
   "metrics": {
     "files": 250,
-    "componentUsages": 176,
+    "componentUsages": 178,
     "rawPrimitives": 0,
     "componentization": 1,
     "duplicateConcepts": 3,

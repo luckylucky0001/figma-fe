@@ -26,7 +26,7 @@
 
 | 指标 | 值 |
 |---|---|
-| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（181 / 181） |
+| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（183 / 183） |
 | 重复概念（同一 UI 概念有多个实现） | 1 |
 | 重复结构（可抽成组件的复制粘贴结构） | 0 组 |
 | 硬编码颜色 | 73 处（其中 4 处已有同值 token） |
@@ -92,6 +92,7 @@
 | `EmptySearchResultBody` | Composable | search | 2 | `EmptySearchResultBody(` feature/search/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/search/impl/SearchScreen.kt:173 |
 | `InterestsDetailPlaceholder` | Composable | empty | 2 | `InterestsDetailPlaceholder()` feature/interests/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/interests/impl/InterestsDetailPlaceholder.kt:70 |
 | `NiaNavigationBar` | Composable | tabbar | 2 | `NiaNavigationBar {` app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:348 |
+| `NiaNavigationBarItem` | Composable | tabbar | 2 | `NiaNavigationBarItem(` app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:350 |
 | `NiaOverlayLoadingWheel` | Composable | loading | 2 | `NiaOverlayLoadingWheel(contentDesc = "LoadingWheel")` core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/LoadingWheel.kt:167 |
 | `NiaPrice` | Composable | price | 2 | `NiaPrice(` app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:211 |
 | `NiaTab` | Composable | tabs | 2 | `NiaTab(` app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/ui/Catalog.kt:326 |
@@ -112,8 +113,7 @@
 | `NiaStatusTag` | Composable | tag | 1 | `NiaStatusTag(text = "待发货")` app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:128 |
 | `NotificationDot` | Composable | badge | 1 | `NotificationDot(` core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/NewsResourceCard.kt:157 |
 | `TopicIcon` | Composable | icon | 1 | `TopicIcon(` feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt:400 |
-| `TrackDisposableJank` | Composable |  | 1 | `TrackDisposableJank(navigationState.currentKey) { metricsHolder ->` app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaAppState.kt:115 |
-| … | | | | 共 61 个，见 reuse.json |
+| … | | | | 共 64 个，见 reuse.json |
 
 ## 3. 重复资产（同一概念多个实现 → 收敛到推荐组件）
 

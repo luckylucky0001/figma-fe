@@ -18,11 +18,11 @@
 
 | 指标 | 值 |
 |---|---|
-| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（1000 / 1000） |
+| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（1017 / 1017） |
 | 重复概念（同一 UI 概念有多个实现） | 12 |
 | 重复结构（可抽成组件的复制粘贴结构） | 1 组 |
 | 硬编码颜色 | 11 处（其中 1 处已有同值 token） |
-| 硬编码尺寸 | 477 处 |
+| 硬编码尺寸 | 391 处 |
 
 ## 0. 优先处理（按影响面排序）
 
@@ -92,6 +92,7 @@
 | `QMUIDialog` | Composable | dialog | 5 | `QMUIDialog(modal, horEdge, verEdge, widthLimit, radius, background, content)` compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt:351 |
 | `OnePx` | Composable |  | 4 | `separatorHeight: Dp = OnePx(),` compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt:179 |
 | `PressWithAlphaBox` | Composable |  | 4 | `PressWithAlphaBox(` compose-core/src/main/java/com/qmuiteam/compose/core/ui/QMUITopBar.kt:111 |
+| `QMUIBottomSheet` | Composable | sheet | 4 | `QMUIBottomSheet(` compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt:202 |
 | `QMUIGesturePhoto` | Composable |  | 4 | `QMUIGesturePhoto(` photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoViewerActivity.kt:185 |
 | `QMUITopBarWithLazyScrollState` | Composable |  | 4 | `QMUITopBarWithLazyScrollState(` photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:358 |
 | `TextButton` | Composable | button | 4 | `TextButton("加粗"){` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:57 |
@@ -125,9 +126,8 @@
 | `QMUIDialogTitle` | Composable | dialog | 1 | `QMUIDialogTitle(title)` compose/src/main/java/com/qmuiteam/compose/modal/QMUIDialog.kt:109 |
 | `QMUIEditor` | Composable |  | 1 | `QMUIEditor(` qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:42 |
 | `QMUIMarkIcon` | Composable | icon | 1 | `QMUIMarkIcon(` photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt:161 |
-| `QMUIPhotoBucketItem` | Composable | cell | 1 | `QMUIPhotoBucketItem(it, it.id == currentId, onBucketClick)` photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt:87 |
-| `QMUIPhotoPickCheckBox` | Composable | checkbox | 1 | `QMUIPhotoPickCheckBox(pickedIndex)` photo/src/main/java/com/qmuiteam/photo/compose/picker/Grid.kt:163 |
-| … | | | | 共 160 个，见 reuse.json |
+| `QMUIPhotoBucketChooser` | Composable |  | 1 | `QMUIPhotoBucketChooser(` photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:408 |
+| … | | | | 共 167 个，见 reuse.json |
 
 ## 3. 重复资产（同一概念多个实现 → 收敛到推荐组件）
 

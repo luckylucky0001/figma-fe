@@ -23,9 +23,9 @@
 | vue3-vant-mobile（留出） | Vue 3 + Vant 4 | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | mall-app-web（留出） | uni-app + 自有组件 | ✓10 △1 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | antennapod（留出） | XML + Material3 主题 | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓9 △1 ✗0 |
-| wanandroid（留出） | XML（AppCompat）+ 三方 ActionBarEx | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓9 △1 ✗0 |
+| wanandroid（留出） | XML（AppCompat）+ 三方 ActionBarEx | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | seal（留出） | Compose + Material3 + 自有组件 | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓9 △1 ✗0 |
 | kunminx（留出） | XML + DataBinding（AppCompat 主题） | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓7 △3 ✗0 |
 | jeecg-uniapp（留出） | uni-app + wot-design-uni | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓10 △0 ✗0 |
 
-**合计 ✓696 / △30 / ✗0**
+**合计 ✓699 / △27 / ✗0**

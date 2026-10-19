@@ -964,6 +964,31 @@
       "extends": "AppCompatTextView"
     },
     {
+      "name": "AnimatedProgressBar",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/AnimatedProgressBar.java",
+      "concept": "loading",
+      "usage": 10,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/list_stream_card_item.xml",
+        "app/src/main/res/layout/list_stream_grid_item.xml",
+        "app/src/main/res/layout/list_stream_item.xml",
+        "app/src/main/res/layout/list_stream_mini_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_card_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_grid_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_item.xml",
+        "app/src/main/res/layout-land/list_stream_card_item.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.AnimatedProgressBar",
+      "exampleAt": "app/src/main/res/layout/fragment_video_detail.xml:131",
+      "styles": {
+        "Widget.AppCompat.ProgressBar.Horizontal": 10
+      },
+      "extends": "ProgressBar"
+    },
+    {
       "name": "NewPipeEditText",
       "kind": "custom-view",
       "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeEditText.java",
@@ -996,6 +1021,32 @@
       "extends": "CollapsingToolbarLayout"
     },
     {
+      "name": "FocusAwareCoordinator",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/FocusAwareCoordinator.java",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_main.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.FocusAwareCoordinator",
+      "exampleAt": "app/src/main/res/layout/activity_main.xml:7",
+      "extends": "CoordinatorLayout"
+    },
+    {
+      "name": "FocusAwareDrawerLayout",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/FocusAwareDrawerLayout.java",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_main.xml",
+        "app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.FocusAwareDrawerLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/activity_main.xml:2",
+      "extends": "DrawerLayout"
+    },
+    {
       "name": "NewPipeRecyclerView",
       "kind": "custom-view",
       "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeRecyclerView.java",
@@ -1023,6 +1074,35 @@
       "extends": "ConstraintLayout"
     },
     {
+      "name": "PlaylistCreationDialog",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistCreationDialog.java",
+      "concept": "dialog",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistAppendDialog.java",
+        "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistDialog.java"
+      ],
+      "example": "PlaylistCreationDialog.newInstance(getStreamEntities());",
+      "exampleAt": "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistAppendDialog.java:119",
+      "extends": "PlaylistDialog"
+    },
+    {
+      "name": "ChaptersSeekBar",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/ChaptersSeekBar.java",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/player.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.ChaptersSeekBar",
+      "exampleAt": "app/src/main/res/layout/player.xml:489",
+      "styles": {
+        "Widget.AppCompat.SeekBar": 1
+      },
+      "extends": "FocusAwareSeekBar"
+    },
+    {
       "name": "CircleClipTapView",
       "kind": "custom-view",
       "source": "app/src/main/java/org/schabi/newpipe/views/player/CircleClipTapView.kt",
@@ -1045,6 +1125,19 @@
       "example": "\u003corg.schabi.newpipe.views.ExpandableSurfaceView",
       "exampleAt": "app/src/main/res/layout/player.xml:11",
       "extends": "SurfaceView"
+    },
+    {
+      "name": "PlaylistAppendDialog",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistAppendDialog.java",
+      "concept": "dialog",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistDialog.java"
+      ],
+      "example": "? PlaylistAppendDialog.newInstance(streamEntities)",
+      "exampleAt": "app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistDialog.java:151",
+      "extends": "PlaylistDialog"
     },
     {
       "name": "ScrollableTabLayout",
@@ -1228,6 +1321,15 @@
       ],
       "recommend": "TopAppBar",
       "totalUsage": 12
+    },
+    {
+      "concept": "dialog（View）",
+      "members": [
+        "PlaylistCreationDialog（自定义 View，用 2 次）",
+        "PlaylistAppendDialog（自定义 View，用 1 次）"
+      ],
+      "recommend": "PlaylistCreationDialog",
+      "totalUsage": 3
     }
   ],
   "findings": null,
@@ -1786,13 +1888,13 @@
   ],
   "metrics": {
     "files": 653,
-    "componentUsages": 639,
+    "componentUsages": 657,
     "rawPrimitives": 0,
     "componentization": 1,
-    "duplicateConcepts": 3,
+    "duplicateConcepts": 4,
     "cloneGroups": 9,
     "hardcodedColors": 102,
     "tokenizableColors": 32,
-    "hardcodedSizes": 1100
+    "hardcodedSizes": 996
   }
 }

@@ -549,6 +549,40 @@
       ]
     },
     {
+      "name": "QMUIBottomSheet",
+      "kind": "composable",
+      "source": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt",
+      "concept": "sheet",
+      "props": [
+        "modal",
+        "draggable",
+        "widthLimit",
+        "heightLimit",
+        "radius",
+        "background",
+        "mask",
+        "modifier",
+        "content"
+      ],
+      "usage": 4,
+      "usageFiles": [
+        "compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheet.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/dialog/QMUIBottomSheetBaseBuilder.java"
+      ],
+      "example": "QMUIBottomSheet(",
+      "exampleAt": "compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt:202",
+      "required": [
+        "modal",
+        "modal:QMUIModal",
+        "draggable",
+        "widthLimit",
+        "heightLimit",
+        "modifier",
+        "content"
+      ]
+    },
+    {
       "name": "QMUIGesturePhoto",
       "kind": "composable",
       "source": "photo/src/main/java/com/qmuiteam/photo/compose/GesturePhoto.kt",
@@ -569,10 +603,7 @@
         "onBeginPullExit",
         "onLongPress",
         "onTapExit",
-        "content",
-        "scale",
-        "rect",
-        "onImageRatioEnsured"
+        "content"
       ],
       "usage": 4,
       "usageFiles": [
@@ -590,11 +621,7 @@
         "isLongImage",
         "onBeginPullExit",
         "onTapExit",
-        "content",
-        "scale",
-        "rect",
-        "rect:Rect",
-        "onImageRatioEnsured"
+        "content"
       ]
     },
     {
@@ -884,8 +911,6 @@
         "clipFocusArea",
         "drawClipFocusArea",
         "bitmapClipper",
-        "clipArea",
-        "scale",
         "operateContent"
       ],
       "usage": 2,
@@ -898,9 +923,6 @@
       "required": [
         "photoProvider",
         "photoProvider:QMUIPhotoProvider",
-        "bitmapClipper",
-        "clipArea",
-        "clipArea:Rect",
         "operateContent"
       ]
     },
@@ -939,8 +961,7 @@
         "containerWidth",
         "rowCount",
         "startIndex",
-        "onClick",
-        "index"
+        "onClick"
       ],
       "usage": 2,
       "usageFiles": [
@@ -956,8 +977,7 @@
         "containerWidth",
         "rowCount",
         "startIndex",
-        "onClick",
-        "index"
+        "onClick"
       ]
     },
     {
@@ -1011,10 +1031,7 @@
         "scale",
         "translateX",
         "translateY",
-        "content",
-        "scale",
-        "translateX",
-        "translateY"
+        "content"
       ],
       "usage": 1,
       "usageFiles": [
@@ -1029,10 +1046,7 @@
         "scale",
         "translateX",
         "translateY",
-        "content",
-        "scale",
-        "translateX",
-        "translateY"
+        "content"
       ]
     },
     {
@@ -1048,10 +1062,7 @@
         "translateY",
         "transition",
         "transitionDurationMs",
-        "content",
-        "scaleY",
-        "translateX",
-        "translateY"
+        "content"
       ],
       "usage": 1,
       "usageFiles": [
@@ -1069,10 +1080,7 @@
         "translateY",
         "transition",
         "transitionDurationMs",
-        "content",
-        "scaleY",
-        "translateX",
-        "translateY"
+        "content"
       ]
     },
     {
@@ -1215,8 +1223,7 @@
         "itemTextFontFamily",
         "itemMarkTintColor",
         "contentPadding",
-        "onItemClick",
-        "index"
+        "onItemClick"
       ],
       "usage": 1,
       "usageFiles": [
@@ -1229,8 +1236,7 @@
         "modal:QMUIModal",
         "list",
         "markIndex",
-        "onItemClick",
-        "index"
+        "onItemClick"
       ]
     },
     {
@@ -1279,8 +1285,7 @@
         "itemCheckNormalTint",
         "itemCheckCheckedTint",
         "contentPadding",
-        "onItemClick",
-        "index"
+        "onItemClick"
       ],
       "usage": 1,
       "usageFiles": [
@@ -1293,8 +1298,7 @@
         "modal:QMUIModal",
         "list",
         "checked",
-        "onItemClick",
-        "index"
+        "onItemClick"
       ]
     },
     {
@@ -1365,6 +1369,31 @@
       ],
       "example": "QMUIMarkIcon(",
       "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt:161"
+    },
+    {
+      "name": "QMUIPhotoBucketChooser",
+      "kind": "composable",
+      "source": "photo/src/main/java/com/qmuiteam/photo/compose/picker/Buckets.kt",
+      "props": [
+        "focus",
+        "data",
+        "currentId",
+        "onBucketClick",
+        "onDismiss"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt"
+      ],
+      "example": "QMUIPhotoBucketChooser(",
+      "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:408",
+      "required": [
+        "focus",
+        "data",
+        "currentId",
+        "onBucketClick",
+        "onDismiss"
+      ]
     },
     {
       "name": "QMUIPhotoBucketItem",
@@ -1482,7 +1511,6 @@
         "state",
         "pickedItems",
         "onPickItem",
-        "model",
         "onPreview"
       ],
       "usage": 1,
@@ -1495,7 +1523,6 @@
         "data",
         "pickedItems",
         "onPickItem",
-        "model",
         "onPreview"
       ]
     },
@@ -1550,8 +1577,7 @@
       "props": [
         "images",
         "config",
-        "onClick",
-        "index"
+        "onClick"
       ],
       "usage": 1,
       "usageFiles": [
@@ -1560,8 +1586,7 @@
       "example": "QMUIPhotoThumbnail(images, config) { list, index -\u003e",
       "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt:93",
       "required": [
-        "images",
-        "onClick"
+        "images"
       ]
     },
     {
@@ -2600,6 +2625,19 @@
       "extends": "AppCompatEditText"
     },
     {
+      "name": "LineTypeView",
+      "kind": "custom-view",
+      "source": "type/src/main/java/com/qmuiteam/qmui/type/view/LineTypeView.kt",
+      "concept": "divider",
+      "usage": 3,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.type.view.LineTypeView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml:68",
+      "extends": "BaseTypeView"
+    },
+    {
       "name": "QDContinuousBottomView",
       "kind": "custom-view",
       "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDContinuousBottomView.java",
@@ -2737,6 +2775,43 @@
       "extends": "QMUIFrameLayout"
     },
     {
+      "name": "RootView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIFullScreenPopup.java",
+      "usage": 3,
+      "usageFiles": [
+        "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIFragmentActivity.java",
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUIFullScreenPopup.java"
+      ],
+      "example": "public RootView(Context context, int fragmentContainerId) {",
+      "exampleAt": "arch/src/main/java/com/qmuiteam/qmui/arch/QMUIFragmentActivity.java:445",
+      "extends": "QMUIConstraintLayout"
+    },
+    {
+      "name": "CustomRootView",
+      "kind": "custom-view",
+      "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/QDMainActivity.java",
+      "usage": 2,
+      "usageFiles": [
+        "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/QDMainActivity.java"
+      ],
+      "example": "return new CustomRootView(this, fragmentContainerId);",
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/QDMainActivity.java:92",
+      "extends": "RootView"
+    },
+    {
+      "name": "DecorRootView",
+      "kind": "custom-view",
+      "source": "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUINormalPopup.java",
+      "usage": 2,
+      "usageFiles": [
+        "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUINormalPopup.java"
+      ],
+      "example": "mDecorRootView = new DecorRootView(context);",
+      "exampleAt": "qmui/src/main/java/com/qmuiteam/qmui/widget/popup/QMUINormalPopup.java:117",
+      "extends": "FrameLayout"
+    },
+    {
       "name": "EmojiLayout",
       "kind": "custom-view",
       "source": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEmojiInputFragment.kt",
@@ -2772,6 +2847,18 @@
       "example": "HomeController.HomeControlListener listener = new HomeController.HomeControlListener() {",
       "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/home/HomeFragment.java:181",
       "extends": "LinearLayout"
+    },
+    {
+      "name": "MarqueeTypeView",
+      "kind": "custom-view",
+      "source": "type/src/main/java/com/qmuiteam/qmui/type/view/MarqueeTypeView.kt",
+      "usage": 2,
+      "usageFiles": [
+        "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml"
+      ],
+      "example": "\u003ccom.qmuiteam.qmui.type.view.MarqueeTypeView",
+      "exampleAt": "qmuidemo/src/main/res/layout/fragment_qqface_layout.xml:53",
+      "extends": "BaseTypeView"
     },
     {
       "name": "QMUIAlphaImageButton",
@@ -3608,13 +3695,13 @@
   ],
   "metrics": {
     "files": 554,
-    "componentUsages": 996,
+    "componentUsages": 1013,
     "rawPrimitives": 0,
     "componentization": 1,
     "duplicateConcepts": 12,
     "cloneGroups": 1,
     "hardcodedColors": 11,
     "tokenizableColors": 1,
-    "hardcodedSizes": 403
+    "hardcodedSizes": 329
   }
 }

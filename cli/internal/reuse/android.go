@@ -9,17 +9,18 @@ import (
 )
 
 var (
-	xmlTagRe      = regexp.MustCompile(`<([A-Za-z][\w.]*)[\s/>]`)
-	includeRe     = regexp.MustCompile(`<include[^>]*layout="@layout/(\w+)"`)
-	viewClassKtRe = regexp.MustCompile(`(?m)^\s*(?:open\s+|abstract\s+|internal\s+)?class\s+([A-Z]\w*)\b[^{:]*?(?:\([^)]*\))?\s*:\s*([A-Z][\w.]*)\s*\(`)
+	xmlTagRe  = regexp.MustCompile(`<([A-Za-z][\w.]*)[\s/>]`)
+	includeRe = regexp.MustCompile(`<include[^>]*layout="@layout/(\w+)"`)
+	// modifiers in any order, generics (with bounds), and a base with or without "(" (secondary constructors)
+	viewClassKtRe = regexp.MustCompile(`(?m)^\s*(?:(?:open|abstract|internal|public|private|sealed|data|inner)\s+)*class\s+([A-Z]\w*)\s*(?:<[^{]*?>)?[^{:]*?(?:\([^)]*\))?\s*:\s*([A-Z][\w.]*)\s*[({]`)
 	// a class that inflates a layout for one UI concept (AntennaPod's EmptyViewHandler): the project's way
 	// to show that concept, though it is not a View itself
 	// a class declared with no supertype at all (Java: no extends; Kotlin: no ":" before the body)
 	plainClassJvRe = regexp.MustCompile(`(?m)^\s*(?:public\s+|abstract\s+|final\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:implements\s+[^{]*)?\{`)
 	plainClassKtRe = regexp.MustCompile(`(?m)^\s*(?:internal\s+|open\s+|abstract\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:\([^)]*\))?\s*\{`)
 	helperClassRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
-	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*public\s+(?:abstract\s+)?class\s+([A-Z]\w*)\s+extends\s+([A-Z][\w.]*)`)
-	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+([A-Z]\w*)\s*\(`)
+	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*(?:(?:public|abstract|final)\s+)*class\s+([A-Z]\w*)\s*(?:<[^{]*?>)?\s+extends\s+([A-Z][\w.]*)`)
+	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+(?:<[^>]*>\s*)?(?:[\w.]+\.)?([A-Z]\w*)\s*\(`) // fun <T> X(, fun RowScope.X(
 	styleableRe2   = regexp.MustCompile(`(?s)<declare-styleable\s+name="(\w+)"\s*>(.*?)</declare-styleable>`)
 	attrNameRe     = regexp.MustCompile(`<attr\s+name="(\w+)"`)
 	colorResRe     = regexp.MustCompile(`<color\s+name="(\w+)">\s*(#[0-9A-Fa-f]{6,8})\s*</color>`)
@@ -97,10 +98,10 @@ func ScanAndroid(root string) *Report {
 		case name == "AndroidManifest.xml":
 			b, _ := os.ReadFile(p)
 			manifests = append(manifests, string(b))
-		case strings.HasSuffix(name, ".xml") && strings.Contains(rel, "/res/layout"):
+		case strings.HasSuffix(name, ".xml") && strings.Contains("/"+rel, "/res/layout"):
 			b, _ := os.ReadFile(p)
 			layouts = append(layouts, file{p, rel, string(b)})
-		case strings.HasSuffix(name, ".xml") && strings.Contains(rel, "/res/values"):
+		case strings.HasSuffix(name, ".xml") && strings.Contains("/"+rel, "/res/values"):
 			b, _ := os.ReadFile(p)
 			values = append(values, file{p, rel, string(b)})
 		case strings.HasSuffix(name, ".kt") || strings.HasSuffix(name, ".java"):
@@ -247,9 +248,9 @@ func ScanAndroid(root string) *Report {
 			a := get("composable", name, f.rel)
 			composDefs[f.rel] = append(composDefs[f.rel], composDef{strings.Count(f.text[:m[0]], "\n") + 1, name})
 			if end := matchParen(f.text, m[1]-1); end > m[1] {
-				for _, prm := range strings.Split(f.text[m[1]:end], ",") {
+				for _, prm := range splitTopLevel(f.text[m[1]:end]) {
 					if kv := strings.SplitN(strings.TrimSpace(prm), ":", 2); len(kv) == 2 {
-						pn := strings.TrimSpace(strings.TrimPrefix(kv[0], "@"))
+						pn := paramName(kv[0])
 						a.Props = append(a.Props, pn)
 						if !strings.Contains(kv[1], "=") {
 							a.Required = append(a.Required, pn)
@@ -418,7 +419,11 @@ func ScanAndroid(root string) *Report {
 		for _, m := range xmlHardColorRe.FindAllStringSubmatch(f.text, -1) {
 			hit(m[1], f.rel)
 		}
-		r.Metrics.HardcodedSizes += len(xmlHardSizeRe.FindAllStringIndex(f.text, -1))
+		for _, m := range xmlHardSizeRe.FindAllStringSubmatch(f.text, -1) {
+			if m[1] != "0" { // layout_width="0dp" is ConstraintLayout's match-constraint, not a size
+				r.Metrics.HardcodedSizes++
+			}
+		}
 	}
 	// one alternation regex per kind: a single pass per file instead of one regex per asset
 	alt := func(names map[string]*Asset) string {
@@ -431,7 +436,7 @@ func ScanAndroid(root string) *Report {
 	}
 	var composRe, customRe *regexp.Regexp
 	if len(compos) > 0 {
-		composRe = regexp.MustCompile(`(?:^|[^\w.])(` + alt(compos) + `)\s*[({]`) // NiaButton(…) and NiaButton { … }
+		composRe = regexp.MustCompile(`\b(` + alt(compos) + `)\s*[({]`) // NiaButton(…), NiaButton { … }, DsCard(DsChip(…))
 	}
 	if len(custom) > 0 {
 		customRe = regexp.MustCompile(`\b(` + alt(custom) + `)\b[(.]`)
@@ -440,8 +445,8 @@ func ScanAndroid(root string) *Report {
 		lines := strings.Split(f.text, "\n")
 		if composRe != nil {
 			for _, m := range composRe.FindAllStringSubmatchIndex(f.text, -1) {
-				if declaredAt(f.text, m[0]) {
-					continue
+				if m[2] > 0 && f.text[m[2]-1] == '.' || declaredAt(f.text, m[2]) {
+					continue // obj.NiaButton(…) / fun NiaButton(
 				}
 				name := f.text[m[2]:m[3]]
 				ln := strings.Count(f.text[:m[0]], "\n") + 1
@@ -518,8 +523,8 @@ func ScanAndroid(root string) *Report {
 				if compos[c] != nil && !strings.Contains(f.text, "import "+l.Import[0]+c) && !strings.Contains(f.text, "import "+l.Import[0]+"*") {
 					continue
 				}
-				for _, m := range regexp.MustCompile(`(?:^|[^\w.])`+c+`\s*[({]`).FindAllStringIndex(f.text, -1) {
-					if declaredAt(f.text, m[0]) {
+				for _, m := range regexp.MustCompile(`\b`+c+`\s*[({]`).FindAllStringIndex(f.text, -1) {
+					if m[0] > 0 && f.text[m[0]-1] == '.' || declaredAt(f.text, m[0]) {
 						continue
 					}
 					ln := strings.Count(f.text[:m[0]], "\n") + 1
@@ -619,7 +624,7 @@ func bestProjectAsset(assets map[string]*Asset, concept, prefer string) *Asset {
 		return s
 	}
 	for _, a := range assets {
-		if a.Concept == concept && usable(a) && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || score(a) > score(best) || score(a) == score(best) && len(a.Name) < len(best.Name)) {
+		if a.Concept == concept && usable(a) && (a.Kind == "custom-view" || a.Kind == "composable" || a.Kind == "design-system" || a.Kind == "business" || a.Kind == "ui-lib" && a.Source != "Android SDK widgets") && (best == nil || score(a) > score(best) || score(a) == score(best) && (len(a.Name) < len(best.Name) || len(a.Name) == len(best.Name) && a.Name+"|"+a.Source < best.Name+"|"+best.Source)) {
 			best = a
 		}
 	}
@@ -752,9 +757,46 @@ func refineConcept(a *Asset) {
 }
 
 // isComposeLib: a Jetpack Compose library catalog (composables, not Views).
+// splitTopLevel splits a parameter list at commas outside (), <>, {}, [] and quotes:
+// onPick: (id: String, index: Int) -> Unit stays one parameter.
+func splitTopLevel(s string) []string {
+	var out []string
+	depth, q, start := 0, byte(0), 0
+	for i := 0; i < len(s); i++ {
+		switch c := s[i]; {
+		case q != 0:
+			if c == q && s[i-1] != '\\' {
+				q = 0
+			}
+		case c == '"' || c == '\'':
+			q = c
+		case c == '(' || c == '<' || c == '{' || c == '[':
+			depth++
+		case c == ')' || c == '}' || c == ']' || c == '>' && (i == 0 || s[i-1] != '-'): // not the -> of a lambda type
+			depth--
+		case c == ',' && depth == 0:
+			out = append(out, s[start:i])
+			start = i + 1
+		}
+	}
+	return append(out, s[start:])
+}
+
+// paramName strips annotations and modifiers: "@StringRes labelRes" → labelRes, "vararg tags" → tags.
+func paramName(s string) string {
+	f := strings.Fields(s)
+	for len(f) > 1 && (strings.HasPrefix(f[0], "@") || f[0] == "vararg" || f[0] == "noinline" || f[0] == "crossinline") {
+		f = f[1:]
+	}
+	if len(f) == 0 {
+		return ""
+	}
+	return strings.TrimPrefix(f[len(f)-1], "@")
+}
+
 // declaredAt: the name at idx is being declared (fun / class / object / interface X), not called.
 func declaredAt(src string, idx int) bool {
-	return declKwRe.MatchString(src[max(0, idx-16) : idx+1])
+	return declKwRe.MatchString(src[max(0, idx-16):idx])
 }
 
 var declKwRe = regexp.MustCompile(`\b(?:fun|class|object|interface)\s+$`)

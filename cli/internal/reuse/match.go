@@ -166,7 +166,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	case fn == an && figmaConcept != "" && a.Concept != "" && figmaConcept != a.Concept:
 		s, why = 0.6, append(why, "同名但用途不同（"+a.Concept+"），需确认")
 	case fn == an:
-		s, why = 0.9, append(why, "同名")
+		s, why = 0.85, append(why, "同名")
 	case figmaConcept != "" && figmaConcept == a.Concept:
 		s, why = 0.72, append(why, "同为 "+figmaConcept)
 	case strings.Contains(an, fn) && len(fn) >= 4 || strings.Contains(fn, an) && len(an) >= 4:
@@ -226,7 +226,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	}
 	// proven in this project / preferred kinds
 	if a.Usage > 0 {
-		s += math.Min(0.2, 0.05*math.Log2(float64(a.Usage)+1)) // proven in this codebase, more so when widely used
+		s += math.Min(0.25, 0.05*math.Log2(float64(a.Usage)+1)) // proven in this codebase, more so when widely used
 		why = append(why, fmt.Sprintf("项目里已用 %d 次", a.Usage))
 	}
 	switch a.Kind {

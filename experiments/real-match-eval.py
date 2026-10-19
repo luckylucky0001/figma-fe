@@ -200,6 +200,22 @@ def main():
             print("\n".join(lines)) if lines else None
     print(f"合计 ✓{total['✓']} △{total['△']} ✗{total['✗']}")
     json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
+    if not only:
+        held = {"jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite"}
+        lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
+                 "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
+                 "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
+                 "| 项目 | 技术栈 | 订单详情（组件化设计稿） | 我的持仓（未组件化、中文图层） |", "|---|---|---|---|"]
+        stack = {"newbee": "Vue 3 + Vant", "qmui": "XML + QMUI", "nia": "Compose + 自有设计系统", "antdm-template": "React + antd-mobile",
+                 "antdm-mobile": "React + antd-mobile", "jetsnack": "Compose + 自有设计系统", "litemall": "Vue 2 + Vant 2",
+                 "hello-uniapp": "uni-app + uni-ui", "taro-ui-demo": "Taro + taro-ui", "nutui-vite": "Vue 3 + NutUI",
+                 "newpipe": "XML（AppCompat）+ 少量 Compose", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2"}
+        cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
+        for name in PROJECTS:
+            tag = "（留出）" if name in held else ""
+            lines.append(f"| {name}{tag} | {stack.get(name, '')} | {cell(report.get(name + '/order-detail'))} | {cell(report.get(name + '/holdings'))} |")
+        lines += ["", f"**合计 ✓{total['✓']} / △{total['△']} / ✗{total['✗']}**", ""]
+        open(os.path.join(HERE, "real-match-eval.md"), "w").write("\n".join(lines))
     sys.exit(1 if total["✗"] else 0)
 
 

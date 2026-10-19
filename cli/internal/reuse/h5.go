@@ -171,7 +171,9 @@ func ScanH5(root string) *Report {
 
 	assets := map[string]*Asset{} // key kind|name
 	get := func(kind, name, source string) *Asset {
-		k := kind + "|" + name
+		// a library component is one per library; a project component is one per file: two Card.vue in
+		// different folders are two components (and a duplicate worth reporting), not one merged asset
+		k := kind + "|" + name + "|" + source
 		if kind == "ui-lib" {
 			k = "ui-lib|" + source + "|" + name // SDK Button and Compose Material3 Button are different things
 		}
@@ -224,7 +226,9 @@ func ScanH5(root string) *Report {
 					a.Concept = "actionbar"
 				}
 			}
-			projByName[name] = a
+			if projByName[name] == nil {
+				projByName[name] = a // an unimported <card> goes to the first Card in path order
+			}
 			fileAsset[f.rel] = a
 		case "jsx":
 			for _, m := range reactCompRe.FindAllStringSubmatch(f.text, -1) {
@@ -243,7 +247,9 @@ func ScanH5(root string) *Report {
 					}
 				}
 				refineBadge(a)
-				projByName[name] = a
+				if projByName[name] == nil {
+					projByName[name] = a
+				}
 				if fileAsset[f.rel] == nil {
 					fileAsset[f.rel] = a // a Button.tsx built on <button> is that component, not a missed reuse
 				}

@@ -1182,3 +1182,21 @@ func TestVuePropsParsing(t *testing.T) {
 		t.Errorf("inline array props = %q", got)
 	}
 }
+
+// review 3: two Card.vue in different folders are two components; an import resolves to its own file
+func TestSameNamedComponentsInTwoFolders(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3"}}`)
+	write(t, root, "src/components/goods/Card.vue", "<template><div class=\"goods\"/></template>\n<script>\nexport default { props: { price: Number } }\n</script>")
+	write(t, root, "src/components/user/Card.vue", "<template><div class=\"user\"/></template>\n<script>\nexport default { props: { avatar: String } }\n</script>")
+	write(t, root, "src/views/A.vue", "<template><div><Card/><Card/></div></template>\n<script>\nimport Card from '@/components/user/Card.vue'\n</script>")
+	got := map[string]string{}
+	for _, a := range ScanH5(root).Assets {
+		if a.Name == "Card" {
+			got[a.Source] = strings.Join(a.Props, ",") + "/" + itoa(a.Usage)
+		}
+	}
+	if got["src/components/goods/Card.vue"] != "price/0" || got["src/components/user/Card.vue"] != "avatar/2" {
+		t.Errorf("cards = %v", got)
+	}
+}

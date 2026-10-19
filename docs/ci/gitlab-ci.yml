@@ -1,0 +1,14 @@
+# 组件复用 MR 闸门（GitLab CI 示例），逻辑同 github-actions.yml
+component-reuse:
+  image: golang:1.25
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  variables:
+    GIT_DEPTH: 0
+  script:
+    - git clone --depth 1 https://github.com/luckylucky0001/figma-fe /tmp/figma-fe && (cd /tmp/figma-fe/cli && go build -o /usr/local/bin/figmafe ./cmd/figmafe)
+    - git fetch origin $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+    - figmafe reuse . --changed origin/$CI_MERGE_REQUEST_TARGET_BRANCH_NAME -q
+  artifacts:
+    when: always
+    paths: [.figmafe/reuse/]

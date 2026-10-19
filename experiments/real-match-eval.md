@@ -20,5 +20,8 @@
 | newpipe（留出） | XML（AppCompat）+ 少量 Compose | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓7 △3 ✗0 |
 | vant-demo-vue3（留出） | Vue 3 + Vant | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | vant-demo-vue2（留出） | Vue 2 + Vant 2 | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
+| vue3-vant-mobile（留出） | Vue 3 + Vant 4 | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
+| mall-app-web（留出） | uni-app + 自有组件 | ✓10 △1 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
+| antennapod（留出） | XML + Material3 主题 | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓9 △1 ✗0 |
 
-**合计 ✓480 / △15 / ✗0**
+**合计 ✓575 / △19 / ✗0**

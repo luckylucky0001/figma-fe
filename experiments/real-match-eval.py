@@ -32,6 +32,10 @@ PROJECTS = {
     "newpipe": ("https://github.com/TeamNewPipe/NewPipe.git", "32eb85d0fb09ef9022421751fd96bee564b9223b", "android"),
     "vant-demo-vue3": ("https://github.com/youzan/vant-demo.git#vant/vue3-ts", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
     "vant-demo-vue2": ("https://github.com/youzan/vant-demo.git#vant/vue2", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
+    # held out, second batch (added after the report's first version)
+    "vue3-vant-mobile": ("https://github.com/easy-temps/vue3-vant-mobile.git", "8a46a5a41473ba3a638e2249b4c4e48b8ef7ddea", "h5"),
+    "mall-app-web": ("https://github.com/macrozheng/mall-app-web.git", "b1eb3cde1d74fbf62e72195bafd9322c8149f4c8", "h5"),
+    "antennapod": ("https://github.com/AntennaPod/AntennaPod.git", "3d105d598dfa582c6cb22ba40b56d11780366890", "android"),
 }
 
 # figma element → (right answers, acceptable answers)
@@ -171,7 +175,8 @@ NEW = R("—")
 VANT_TO = TO(R("NavBar"), R("Search"), R("Tabs"), R("Cell"), R("Stepper"), R("Field"), R("Switch"), R("Checkbox"), R("Button"), R("Empty"))
 EXPECTED_TO = {
     "newbee": dict(VANT_TO, NavBar=RA(["SimpleHeader"], ["NavBar"])),
-    "litemall": VANT_TO, "vant-demo-vue3": VANT_TO, "vant-demo-vue2": VANT_TO,
+    # litemall has its own is-empty (3 uses): the page check would flag a new van-empty as inconsistent
+    "litemall": dict(VANT_TO, Empty=R("IsEmpty", "Empty")), "vant-demo-vue3": VANT_TO, "vant-demo-vue2": VANT_TO,
     "qmui": TO(R("QMUITopBarLayout", "QMUITopBar"), NEW, R("QMUITabSegment"), R("QMUICommonListItemView"), NEW, RA(["EditText"], ["EmojiEditText"]),
                RA(["—"], ["Switch"]), RA(["—", "CheckBox"], ["MaterialCheckBox"]), R("QMUIRoundButton"), R("QMUIEmptyView")),
     "nia": TO(R("NiaTopAppBar"), R("SearchBar", "TextField"), R("NiaTabRow"), R("ListItem"), NEW, R("TextField", "OutlinedTextField"), R("Switch"), R("Checkbox"),
@@ -186,10 +191,40 @@ EXPECTED_TO = {
     "pokedex": TO(R("MaterialToolbar", "Toolbar"), RA(["—"], ["SearchBar"]), R("TabLayout"), NEW, NEW, R("TextInputEditText", "TextInputLayout", "EditText"),
                   R("SwitchMaterial", "SwitchCompat"), R("MaterialCheckBox", "CheckBox"), R("MaterialButton"), NEW),
     "newpipe": TO(R("Toolbar", "MaterialToolbar", "@layout/toolbar_layout"), RA(["—"], ["SearchBar"]), R("TabLayout"), RA(["—"], ["ListItem", "PreferenceRow"]), NEW,
-                  R("EditText", "TextInputEditText"), RA(["Switch[Android SDK widgets]", "SwitchCompat"], ["Switch"]), R("CheckBox", "MaterialCheckBox"),
+                  R("NewPipeEditText", "EditText", "TextInputEditText"), RA(["Switch[Android SDK widgets]", "SwitchCompat"], ["Switch"]), R("CheckBox", "MaterialCheckBox"),
                   R("MaterialButton", "Button[Android SDK widgets]"), R("@layout/list_empty_view")),
 }
 EXPECTED_TO["antdm-mobile"] = EXPECTED_TO["antdm-template"]
+
+# --- second held-out batch: answers written before running the current tool on them ---
+# vue3-vant-mobile: Vant 4 template; its own NavBar.vue is the app-wide navbar
+EXPECTED[("vue3-vant-mobile", "order-detail")] = "VANT"
+EXPECTED[("vue3-vant-mobile", "holdings")] = "VANT_H"
+EXPECTED_TO["vue3-vant-mobile"] = VANT_TO
+# mall-app-web: uni-app; uni-ui installed but barely used; own mix-list-cell (6 uses), empty.vue, a local uni-number-box
+UNI_BTN = R("Button[uni-app 内置组件]")
+EXPECTED[("mall-app-web", "order-detail")] = {
+    "NavBar": R("NavBar", "—"), "NoticeBar": R("NoticeBar"), "Card": R("Card", "—"), "Tag": R("Tag"), "CountDown": R("Countdown"),
+    "Divider": NEW, "Cell": RA(["MixListCell"], ["ListItem"]), "ProductCard": RA(["—"], ["Card"]), "Price": NEW, "ActionBar": R("GoodsNav"), "Button": UNI_BTN}
+EXPECTED[("mall-app-web", "holdings")] = {
+    "导航栏": R("NavBar", "—"), "公告通知栏": R("NoticeBar"), "资产卡片": R("Card", "—"), "标签页": R("SegmentedControl"),
+    "持仓列表": R("List", "—"), "持仓列表项": RA(["MixListCell"], ["ListItem"]), "涨跌标签": R("Tag"), "收盘倒计时": R("Countdown"),
+    "底部操作栏": R("GoodsNav"), "买入按钮": UNI_BTN, "卖出按钮": UNI_BTN, "更多按钮": UNI_BTN}
+EXPECTED_TO["mall-app-web"] = TO(R("NavBar", "—"), R("SearchBar"), R("SegmentedControl"), RA(["MixListCell"], ["ListItem"]), R("NumberBox", "UniNumberBox"),
+                                 R("Input"), R("Switch"), R("Checkbox"), UNI_BTN, R("Empty"))
+# AntennaPod: XML + Material 1.14 with a Material3 theme; empty states go through its EmptyViewHandler (7 screens)
+AP_BTN = R("MaterialButton")
+EXPECTED[("antennapod", "order-detail")] = {
+    "NavBar": R("MaterialToolbar", "Toolbar"), "NoticeBar": NEW, "Card": R("MaterialCardView", "CardView"), "Tag": R("Chip"), "CountDown": NEW,
+    "Divider": R("MaterialDivider", "1px View 细线"), "Cell": RA(["—"], ["@layout/swipeactions_row"]), "ProductCard": R("MaterialCardView", "CardView", "—"),
+    "Price": NEW, "ActionBar": NEW, "Button": AP_BTN}
+EXPECTED[("antennapod", "holdings")] = {
+    "导航栏": R("MaterialToolbar", "Toolbar"), "公告通知栏": NEW, "资产卡片": R("MaterialCardView", "CardView"), "标签页": R("TabLayout"),
+    "持仓列表": R("RecyclerView"), "持仓列表项": RA(["—"], ["@layout/swipeactions_row"]), "涨跌标签": R("Chip"), "收盘倒计时": NEW,
+    "底部操作栏": NEW, "买入按钮": AP_BTN, "卖出按钮": AP_BTN, "更多按钮": AP_BTN}
+EXPECTED_TO["antennapod"] = TO(R("MaterialToolbar", "Toolbar"), R("SearchBar", "SearchView"), R("TabLayout"), RA(["—"], ["@layout/swipeactions_row"]), NEW,
+                               R("TextInputEditText", "TextInputLayout", "EditText"), R("MaterialSwitch", "SwitchMaterial", "SwitchCompat"),
+                               R("MaterialCheckBox", "CheckBox"), AP_BTN, R("EmptyViewHandler", "@layout/empty_view_layout"))
 EXPECTED_TO["sunflower"] = TO(R("TopAppBar", "CenterAlignedTopAppBar"), R("SearchBar"), R("TabRow"), R("ListItem"), NEW, R("TextField", "OutlinedTextField"),
                               R("Switch"), R("Checkbox"), R("Button"), NEW)
 EXPECTED[("sunflower", "order-detail")] = {
@@ -257,7 +292,8 @@ def main():
     print(f"合计 ✓{total['✓']} △{total['△']} ✗{total['✗']}")
     if not only:  # a partial run must not overwrite the full results
         json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
-        held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite"}
+        held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite",
+                "vue3-vant-mobile", "mall-app-web", "antennapod"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
@@ -265,7 +301,8 @@ def main():
         stack = {"newbee": "Vue 3 + Vant", "qmui": "XML + QMUI", "nia": "Compose + 自有设计系统", "antdm-template": "React + antd-mobile",
                  "antdm-mobile": "React + antd-mobile", "jetsnack": "Compose + 自有设计系统", "litemall": "Vue 2 + Vant 2",
                  "hello-uniapp": "uni-app + uni-ui", "taro-ui-demo": "Taro + taro-ui", "nutui-vite": "Vue 3 + NutUI",
-                 "newpipe": "XML（AppCompat）+ 少量 Compose", "pokedex": "XML + Material（MaterialComponents 主题）", "sunflower": "Compose + Material3（无自有设计系统）", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2"}
+                 "newpipe": "XML（AppCompat）+ 少量 Compose", "pokedex": "XML + Material（MaterialComponents 主题）", "sunflower": "Compose + Material3（无自有设计系统）", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2",
+                 "vue3-vant-mobile": "Vue 3 + Vant 4", "mall-app-web": "uni-app + 自有组件", "antennapod": "XML + Material3 主题"}
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""

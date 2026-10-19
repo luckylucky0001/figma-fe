@@ -583,3 +583,53 @@ func TestHabitAttrs(t *testing.T) {
 		t.Errorf("habitList=%v", h)
 	}
 }
+
+// every catalogued library component must render a snippet (uni-app built-ins have no import path)
+func TestLibSnippetAllLibraries(t *testing.T) {
+	for _, l := range uiLibs {
+		for _, c := range l.Components {
+			if s := libSnippet(Asset{Name: c, Source: l.Name, Kind: "ui-lib"}); s == "" {
+				t.Errorf("%s/%s: empty snippet", l.Name, c)
+			}
+		}
+	}
+	if s := libSnippet(Asset{Name: "Switch", Source: "uni-app 内置组件"}); s != "<switch … />" {
+		t.Errorf("uni-app built-in: %q", s)
+	}
+}
+
+// AntennaPod shows every empty state through EmptyViewHandler (not a View): it is the project's empty
+// component and must beat "needs a new component"
+func TestViewHelperIsAnAsset(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "ui/common/src/main/java/a/EmptyViewHandler.java", `package a;
+public class EmptyViewHandler {
+    public EmptyViewHandler(Context c) { view = inflater.inflate(R.layout.empty_view_layout, null); }
+}`)
+	for _, p := range []string{"A", "B", "C"} {
+		write(t, root, "app/src/main/java/a/"+p+"Fragment.java", "class "+p+"Fragment { void f() { emptyView = new EmptyViewHandler(getContext()); } }")
+	}
+	write(t, root, "app/src/main/java/a/Util.java", "public class LayoutHelper { int x = R.layout.foo; }") // no concept: not an asset
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><TextView/></LinearLayout>`)
+	r := ScanAndroid(root)
+	var got *Asset
+	for i := range r.Assets {
+		if r.Assets[i].Kind == "view-helper" {
+			if got != nil {
+				t.Fatalf("extra helper %s", r.Assets[i].Name)
+			}
+			got = &r.Assets[i]
+		}
+	}
+	if got == nil || got.Name != "EmptyViewHandler" || got.Concept != "empty" || got.Usage != 3 {
+		t.Fatalf("helper = %+v", got)
+	}
+	exp := &figma.Export{
+		Frame:         &figma.Node{Type: "FRAME", Children: []*figma.Node{{ID: "1:2", Type: "INSTANCE", ComponentID: "c1"}}},
+		Components:    map[string]figma.Component{"c1": {ComponentSetID: "s1"}},
+		ComponentSets: map[string]figma.ComponentSet{"s1": {Name: "Empty"}},
+	}
+	if it := Match(exp, r).Items[0]; len(it.Candidates) == 0 || it.Candidates[0].Name != "EmptyViewHandler" {
+		t.Errorf("Empty → %+v", it.Candidates)
+	}
+}

@@ -176,9 +176,10 @@ ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.5mm 0; }}
 <tr><td>litemall</td><td>两份各 <b class="bad">1 ✗</b></td><td>推荐了 Vant 3 才有的 ActionBar，项目是 Vant 2 → 组件库加入改名 / 移除信息，按实际安装版本过滤</td></tr>
 <tr><td>hello-uniapp</td><td>持仓页 <b class="bad">12 ✗</b></td><td>uni-app 内置小写标签被当成项目组件、中文图层名规范化后为空被判「同名」→ 加 uni-ui 目录，修空名误判</td></tr>
 <tr><td>NewPipe</td><td><b class="bad">3 ✗</b></td><td>AppCompat 标准控件没算进项目资产，XML 页面被推荐 Compose 组件 → 跨技术栈的候选最多「需确认」</td></tr>
+<tr><td>mall-app-web / AntennaPod（第二批）</td><td>崩溃 + 1 ✗ / <b class="bad">1 ✗</b></td><td>uni-app 内置标签没有 import 路径导致崩溃；<code>&lt;view&gt;</code> 用量压低了 uni-ui 的占比；AntennaPod 的空状态封装 EmptyViewHandler 不是 View → 修崩溃、占比排除平台内置元素、识别「界面封装类」</td></tr>
 <tr><td>买入下单（新设计稿）</td><td>14 个项目 <b class="bad">12 ✗</b></td><td>开关 / 复选框 / 单选原来是一个概念，搜索算在输入框里 → 拆开概念、补词表、检查 Material 3 主题</td></tr>
 </table>
-<p class="note">vant-demo、Pokedex、Sunflower 第一次跑就没有 ✗。复用推荐只错在「项目没见过的结构」，修正都是通用规则，没有针对单个项目的特判；<code>python3 experiments/real-match-eval.py</code> 每次改规则都会全量回归。</p>
+<p class="note">vant-demo、Pokedex、Sunflower、vue3-vant-mobile 第一次跑就没有 ✗。复用推荐只错在「项目没见过的结构」，修正都是通用规则，没有针对单个项目的特判；<code>python3 experiments/real-match-eval.py</code> 每次改规则都会全量回归。</p>
 
 <div class="two">
 <div><h3>体检：组件库有，不等于本项目能用</h3><img class="wide" src="{img}21-qmui-compat.png">

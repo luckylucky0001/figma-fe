@@ -405,7 +405,7 @@ func inDesignSystem(rel string) bool {
 func filepathToSlash(p string) string { return strings.ReplaceAll(p, "\\", "/") }
 
 func kindLabel(k string) string {
-	return map[string]string{"ui-lib": "组件库", "design-system": "设计系统", "business": "业务组件", "page-local": "页面内私有", "custom-view": "自定义 View", "composable": "Composable", "convention": "项目惯例"}[k]
+	return map[string]string{"ui-lib": "组件库", "design-system": "设计系统", "business": "业务组件", "page-local": "页面内私有", "custom-view": "自定义 View", "view-helper": "界面封装类", "composable": "Composable", "convention": "项目惯例"}[k]
 }
 
 func itoa(n int) string {

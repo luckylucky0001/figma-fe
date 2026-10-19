@@ -9,9 +9,12 @@ import (
 )
 
 var (
-	xmlTagRe       = regexp.MustCompile(`<([A-Za-z][\w.]*)[\s/>]`)
-	includeRe      = regexp.MustCompile(`<include[^>]*layout="@layout/(\w+)"`)
-	viewClassKtRe  = regexp.MustCompile(`(?m)^\s*(?:open\s+|abstract\s+|internal\s+)?class\s+([A-Z]\w*)\b[^{:]*?(?:\([^)]*\))?\s*:\s*([A-Z][\w.]*)\s*\(`)
+	xmlTagRe      = regexp.MustCompile(`<([A-Za-z][\w.]*)[\s/>]`)
+	includeRe     = regexp.MustCompile(`<include[^>]*layout="@layout/(\w+)"`)
+	viewClassKtRe = regexp.MustCompile(`(?m)^\s*(?:open\s+|abstract\s+|internal\s+)?class\s+([A-Z]\w*)\b[^{:]*?(?:\([^)]*\))?\s*:\s*([A-Z][\w.]*)\s*\(`)
+	// a class that inflates a layout for one UI concept (AntennaPod's EmptyViewHandler): the project's way
+	// to show that concept, though it is not a View itself
+	helperClassRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
 	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*public\s+(?:abstract\s+)?class\s+([A-Z]\w*)\s+extends\s+([A-Z][\w.]*)`)
 	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+([A-Z]\w*)\s*\(`)
 	styleableRe2   = regexp.MustCompile(`(?s)<declare-styleable\s+name="(\w+)"\s*>(.*?)</declare-styleable>`)
@@ -210,6 +213,13 @@ func ScanAndroid(root string) *Report {
 				a.Enums = styleEnums[m[1]]
 				refineConcept(a)
 				custom[m[1]] = a
+			}
+		}
+		if strings.Contains(f.text, "R.layout.") {
+			for _, m := range helperClassRe.FindAllStringSubmatch(f.text, -1) {
+				if custom[m[1]] == nil && ConceptOf(m[1]) != "" {
+					custom[m[1]] = get("view-helper", m[1], f.rel)
+				}
 			}
 		}
 		glance := strings.Contains(f.text, "import androidx.glance") // home-screen widget UI, a different toolkit

@@ -57,7 +57,7 @@ func InferTarget(r *Report) string {
 		switch {
 		case a.Kind == "composable" || isComposeLib(a.Source):
 			compose += a.Usage
-		case a.Kind == "custom-view" || a.Kind == "ui-lib":
+		case a.Kind == "custom-view" || a.Kind == "view-helper" || a.Kind == "ui-lib":
 			views += a.Usage
 		}
 	}
@@ -144,10 +144,17 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		}
 	}
 	setFamilyPrefixes(pool)
+	established = map[string]string{}
+	best := map[string]int{}
+	for _, a := range r.Assets {
+		if a.Kind != "ui-lib" && a.Kind != "page-local" && a.Concept != "" && a.Usage >= 3 && a.Usage > best[a.Concept] {
+			best[a.Concept], established[a.Concept] = a.Usage, a.Name
+		}
+	}
 	libShare = map[string]float64{}
 	total := 0
 	for _, l := range r.Libraries {
-		if l.Name != "Android SDK widgets" {
+		if !builtinLib(l.Name) { // platform primitives (<view>, TextView) would drown every real toolkit
 			total += l.Usage
 		}
 	}
@@ -344,7 +351,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		why = append(why, "业务专用（必填 "+strings.Join(dr, "、")+"）")
 	}
 	// a composable / view only ever used inside the file that defines it is a page's helper
-	if (a.Kind == "composable" || a.Kind == "custom-view") && len(a.UsageFiles) > 0 && !inDesignSystem(a.Source) {
+	if (a.Kind == "composable" || a.Kind == "custom-view" || a.Kind == "view-helper") && len(a.UsageFiles) > 0 && !inDesignSystem(a.Source) {
 		local := true
 		for _, f := range a.UsageFiles {
 			local = local && f == a.Source
@@ -357,6 +364,12 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	if _, primitive := rawAndroid[a.Name]; primitive && a.Source == "Android SDK widgets" {
 		s -= 0.15 // Button / EditText / Toolbar are what projects wrap: the project's own component wins
 		why = append(why, "系统原生控件")
+	}
+	// the project already has its own way for this concept (mix-list-cell × 6): an unused library
+	// component would be the inconsistency the page check flags
+	if e := established[a.Concept]; e != "" && a.Kind == "ui-lib" && a.Usage == 0 {
+		s -= 0.08
+		why = append(why, "项目里已惯用 "+e)
 	}
 	// a library the project barely uses (one stray <van-button> in a uni-ui project) is not its toolkit
 	if share, ok := libShare[a.Source]; ok && a.Kind == "ui-lib" && a.Usage == 0 && share < 0.05 {
@@ -423,7 +436,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	case Target == "xml" && compose:
 		s = math.Min(s-0.25, 0.79) // never a direct reuse: an XML page cannot host it
 		why = append(why, "Composable，XML 页面不能直接用")
-	case Target == "compose" && (a.Kind == "custom-view" || a.Kind == "ui-lib" && !compose && r2android(a)):
+	case Target == "compose" && (a.Kind == "custom-view" || a.Kind == "view-helper" || a.Kind == "ui-lib" && !compose && r2android(a)):
 		s = math.Min(s-0.2, 0.79)
 		why = append(why, "View 组件，Compose 页面需 AndroidView 包装")
 	case Target == "compose" && a.Kind == "composable":
@@ -511,6 +524,8 @@ func libSnippet(a Asset) string {
 		switch {
 		case l.TagPrefix != "":
 			return "<" + l.TagPrefix + strings.Join(splitWords(a.Name), "-") + " … />"
+		case len(l.Import) == 0: // built-in tags (uni-app <switch>, <checkbox>) need no import
+			return "<" + strings.ToLower(strings.Join(splitWords(a.Name), "-")) + " … />"
 		case l.Platform == "h5" && compoundOf(l, a.Name) != "":
 			p := compoundOf(l, a.Name)
 			return "import { " + p + " } from '" + l.Import[0] + "'; <" + p + "." + strings.TrimPrefix(a.Name, p) + " … />"
@@ -599,6 +614,22 @@ var famPrefixes = map[string]bool{}
 var libChild = map[string]bool{}
 
 var libShare = map[string]float64{}
+
+// established: concept → the project's own component used ≥3 times for it (set per Match)
+var established = map[string]string{}
+
+// builtinLib: the platform's own element set (Android SDK widgets, uni-app built-in tags), not a toolkit.
+func builtinLib(name string) bool {
+	if name == "Android SDK widgets" {
+		return true
+	}
+	for _, l := range uiLibs {
+		if l.Name == name {
+			return len(l.Import) == 0
+		}
+	}
+	return false
+}
 
 // familyBase marks a project family's base component: NiaButton among NiaTextButton /
 // NiaOutlinedButton, DsCell among DsCellGroup … (prefix + the concept's own word).

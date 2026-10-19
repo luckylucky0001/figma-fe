@@ -1,9 +1,14 @@
-# Plan v2：先盘资产，再识别复用 —— Figma → H5 / Android 双端组件复用
+# Plan v3：先盘资产，再识别复用 —— Figma → H5 / Android 双端组件复用
 
 > v1 → v2 变化：
 > 1. 目标端从单一 Web 改为 **H5 + Android 两端**，各自基于自己的组件库实现
 > 2. 新增 **Phase 0：资产扫描**。先把两端「已有什么组件、什么 token、长什么样、用了多少次」扫描成结构化清单，之后才做映射和复用识别
 > 3. 每一步都对应到业界的 best practice 出处（见第 2 节）
+>
+> v2 → v3 变化（只用免费方案）：
+> 4. **不使用任何付费能力**：Figma 官方 MCP（免费档每月只有 6 次调用）、Code Connect（要 Organization / Enterprise）、Variables REST API（要 Enterprise）。它们只作为「思路出处」，不作为依赖
+> 5. Figma 数据改为通过**自建的 Figma 导出插件**获取（Plugin API 免费，没有调用配额）；REST API 只作为可选通道，用一次缓存一次
+> 6. 开源调研见 `docs/RESEARCH.md`：Mística / Spark / Backpack 等多端设计系统的工程实践，以及可以复用的开源工具
 
 ---
 
@@ -24,11 +29,11 @@
 | **先做 Interface Inventory**：建设计系统或做复用之前，先把现有 UI 部件全部盘点、分类 | Brad Frost「Interface Inventory」 | **Phase 0 资产扫描**，产出 `inventory.json` 和可视化目录 |
 | **组件清单要做成结构化 Manifest**，Agent 读 manifest（接口、变体、示例），不去扫整个源码树，token 消耗少得多，准确度也更高 | Storybook MCP / Component Manifest | 扫描结果统一成 manifest 格式（名称、路径、props、变体、示例、预览图、使用次数） |
 | **用使用量数据衡量组件采用率**（静态分析统计组件和 props 的使用情况） | react-scanner、Omlet、Productboard 实践 | 扫描时顺带统计每个组件在业务代码里的使用次数；Agent 优先用高频组件，同时作为复用率指标的基线 |
-| **Figma 组件 ↔ 代码组件建立显式映射**；一个 Figma 组件可以按平台分别映射，每个平台一个 label（React / Compose / …） | Figma Code Connect（CLI 和 UI）、多平台 label | `component-map.yaml` 每条记录带 `h5` 和 `android` 两个实现；可以导出成 Code Connect（label 用 `H5` / `Compose`） |
-| **生成代码前先查映射**，有映射就复用，不重新生成 | Figma MCP `get_code_connect_map`、`create_design_system_rules` | Skill 的 Plan 闸门：`figmafe plan` 先给出复用清单，人确认后才写代码 |
-| **先拿轻量结构（metadata），再按节点取细节**；token 用 variables 取，不从截图里猜 | Figma MCP：`get_metadata` → `get_design_context`、`get_variable_defs`、`get_screenshot` | `figmafe sync` 先拉节点树，再按需拉 variables 和导出图；token 对齐靠 variables |
+| **Figma 组件 ↔ 代码组件建立显式映射**；一个 Figma 组件可以按平台分别映射，每个平台一个 label（React / Compose / …） | Figma Code Connect 的思路（付费服务**不用**）；Mística 开源的 `*.figma.ts` / `*.mobile.figma.ts` 按端拆分映射 | `component-map.yaml` 每条记录带 `h5` 和 `android` 两个实现；能离线解析开源的 `*.figma.ts` 文件导入 |
+| **生成代码前先查映射**，有映射就复用，不重新生成 | Figma MCP `get_code_connect_map`、`create_design_system_rules` 的思路（付费，**不用**）；Mística `mistica-react` Skill「先读 llms.md 再写代码」 | `figmafe catalog` 代替 `create_design_system_rules`，`figmafe plan` 代替 `get_code_connect_map`；Skill 的 Plan 闸门：`figmafe plan` 先给出复用清单，人确认后才写代码 |
+| **先拿轻量结构（metadata），再按节点取细节**；token 用 variables 取，不从截图里猜 | Figma MCP 的分层取数思路（**不用**）；Framelink Figma-Context-MCP 的节点精简做法 | 自建 Figma 导出插件（免费）一次导出节点树、组件集、variables（DTCG）和 PNG @2x；`figmafe import` 精简后入库 |
 | **设计 token 用统一格式管理，再生成各端产物** | W3C DTCG Format 2025.10（稳定版）、Style Dictionary | token 统一成 DTCG JSON，生成 H5 的 CSS 变量和 Android 的 Compose Theme / XML 资源；扫描时校验两端 token 和 Figma variables 是否一致 |
-| **实现完要和 Figma 截图对照验证** | Figma MCP server guide 的工作流最后一步 | Phase 4 视觉对比：像素级加节点级 |
+| **实现完要和 Figma 截图对照验证** | Figma mcp-server-guide 推荐流程的最后一步（只借鉴流程） | Phase 4 视觉对比：像素级加节点级 |
 | **Android 用 JVM 截图测试**（不需要模拟器，支持 Compose Preview） | Roborazzi（兼容 Robolectric，支持 Compose 和 View） | Android 端用 Roborazzi 截图，以 Figma 导出图作为对比基准 |
 | **节点级位置和尺寸取 semantics 树** | Compose `SemanticsNode`（size、positionInRoot）、`testTag` / `testTagsAsResourceId` | Android 用 `testTag = figma 节点 id` 导出 bounds；H5 用 `data-figma-id` 加 `getBoundingClientRect` |
 | **用 lint 强制「只能用设计系统组件」**（禁止直接用 Material 或原生元素，并给出替换建议） | 社区自建 Compose lint、DuckDuckGo 设计系统 lint、Slack compose-lints | `figmafe audit` 做静态检查；长期建议沉淀为 Android Lint 和 ESLint 规则，接入 CI |
@@ -42,7 +47,7 @@
              ┌──────────────────────── Phase 0：资产扫描（Inventory）────────────────────────┐
 H5 组件库 ──▶│ figmafe scan --platform h5      → 组件/props/变体/示例/预览图/使用次数/token  │
 Android 库 ─▶│ figmafe scan --platform android → @Composable 或 View/参数/Preview/截图/token │
-Figma 库  ──▶│ figmafe sync --library          → Figma 组件集/变体属性/variables            │
+Figma 库  ──▶│ 导出插件 → figmafe import        → Figma 组件集/变体属性/variables            │
              └───────────────────────────────────────┬──────────────────────────────────────┘
                                                      ▼
              ┌──────────────────────── Phase 1：映射（Mapping）───────────────────────────────┐
@@ -130,7 +135,7 @@ Figma 页面 ─▶│ figmafe plan --platform h5|android → 节点树 → 组�
 - 两端变体不一致（例如 Android 少了 Size=S）
 - token 值不一致（Figma variables vs H5 vs Android）
 
-可选：如果有 Figma Organization / Enterprise 席位，导出为 Code Connect（label 为 `H5` 和 `Compose`），这样 Figma Dev Mode 和 Figma MCP 也能直接用这份映射。
+可选：如果组件库里已经有开源格式的 Code Connect 文件（`*.figma.ts`，例如 Mística），`figmafe map import-code-connect` 离线解析，作为映射的初始候选。全程不调用 Code Connect 服务。
 
 ### 4.3 Phase 2：页面复用方案（闸门）
 
@@ -184,7 +189,8 @@ SKILL.md 的硬性规则：
 
 | 命令 | 作用 |
 |---|---|
-| `sync [--library] <figma-url>` | Figma REST：nodes / components / component_sets / variables / images；支持 `--offline` |
+| `import <export.zip>` | 读取自建 Figma 导出插件的产物（节点 JSON、组件集、variables 的 DTCG JSON、PNG @2x），精简后入库。**主通道，免费** |
+| `sync <figma-url>`（可选） | Figma REST：`GET /v1/files` 和 `/v1/images` 各调用 1 次，结果缓存；免费档每月 6 次额度足够每月同步两三次。不调用 Variables API（要 Enterprise） |
 | `scan --platform h5\|android` | Phase 0 资产扫描 → `inventory.json`、预览图、目录页 |
 | `map suggest` / `map check` / `map export-code-connect` | Phase 1 映射 |
 | `catalog` | 由 inventory 和 map 生成给 Skill 用的 catalog-*.md |
@@ -234,7 +240,7 @@ B 组和 A 组对比，可以单独证明「先扫描资产」这一步的价值
 | # | 内容 | 完成标准 |
 |---|---|---|
 | M1 | 确定素材：真实组件库 / Figma 还是 fixture | 素材入库 |
-| M2 | CLI：sync 和 scan（两个 adapter） | 两端 inventory 和目录页生成正确；单元测试通过 |
+| M2 | Figma 导出插件；CLI：import、scan（两个 adapter） | 两端 inventory 和目录页生成正确；单元测试通过 |
 | M3 | CLI：map suggest/check 和 catalog | 映射建议的准确率可以人工核对；缺口报告输出 |
 | M4 | CLI：plan / audit / diff / report | 用一份手写的标准实现跑出达标结果，以此校准阈值 |
 | M5 | Skill | 人工把 C 流程两端各走通一遍 |
@@ -248,8 +254,8 @@ B 组和 A 组对比，可以单独证明「先扫描资产」这一步的价值
 | 风险 | 对策 |
 |---|---|
 | Android 截图需要 JDK、Android SDK 和 Gradle；当前云端环境可能没有，或下载受网络限制 | M1 先验证环境；不行的话，Android 截图在你本地或 CI 跑，CLI 只负责编排和对比 |
-| Code Connect 需要 Figma 付费席位，Compose 支持也有已知坑（例如 library module 解析失败） | 以自有的 component-map 为主，Code Connect 只作为可选导出 |
-| Figma MCP 的 `get_design_context` 输出固定是 React + Tailwind，不适合 Android | 不依赖它生成代码，只取结构、variables 和截图 |
+| Figma MCP、Code Connect、Variables API 都要付费 | **全部不用**；自建导出插件，加自有的 component-map 和 catalog |
+| 免费 REST 额度只有每月 6 次 | 插件作为主通道；REST 只作为可选通道，并且缓存结果 |
 | 字体和渲染差异带来像素噪声 | 两端用同一种字体；开启抗锯齿容差；在 M4 校准阈值 |
 | 自己构造素材，说服力打折 | 优先用真实素材；用 fixture 时先定稿设计、数据公开 |
 
@@ -259,5 +265,8 @@ B 组和 A 组对比，可以单独证明「先扫描资产」这一步的价值
 
 1. **你说的两点，我的理解是**：同一份 Figma 设计，H5 端基于 H5 组件库实现，Android 端基于 Android 组件库实现，两端都要先盘点资产。还是说 **H5 组件本身就是参照 Android 组件做的**，要以 Android 组件为基准去对齐 H5？
 2. **技术栈**：H5 是 React 还是 Vue（有没有基于 Vant / NutUI 之类的库）？Android 是 Compose 还是 XML View？
-3. **素材**：能提供真实组件库（可以裁剪）和 Figma 文件 + token 吗？
+3. **素材**（详见 `docs/RESEARCH.md` 第 5 节）：
+   - **方案 A（推荐）**：你们真实的 H5 和 Android 组件库（可以裁剪），加上你们的 Figma 页面，用免费插件导出
+   - **方案 B**：Material 3：免费的 Figma M3 Kit，加 Compose Material3 和 material-web。设计稿是第三方出的，最客观
+   - **方案 C**：仿 Spark 的结构自建两端组件库，再手工构造 Figma 数据
 4. **实验规模**：两端 A/B/C 共 18 次，还是只做 A 和 C 共 12 次？

@@ -22,12 +22,12 @@
 | 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（657 / 657） |
 | 重复概念（同一 UI 概念有多个实现） | 4 |
 | 重复结构（可抽成组件的复制粘贴结构） | 9 组 |
-| 硬编码颜色 | 102 处（其中 32 处已有同值 token） |
+| 硬编码颜色 | 105 处（其中 35 处已有同值 token） |
 | 硬编码尺寸 | 996 处 |
 
 ## 0. 优先处理（按影响面排序）
 
-1. 32 处写死的颜色已有同值 token，可以直接替换（见第 6 节）
+1. 35 处写死的颜色已有同值 token，可以直接替换（见第 6 节）
 2. 「empty（View）」有 2 种实现（共用 20 次）→ 统一到 `@layout/error_panel`
 3. 「navbar（View）」有 3 种实现（共用 12 次）→ 统一到 `@layout/toolbar_layout`
 4. 「navbar（Compose）」有 2 种实现（共用 12 次）→ 统一到 `TopAppBar`
@@ -183,7 +183,7 @@
 
 | 颜色 | 次数 | 已有 token | 出现在 |
 |---|---|---|---|
-| #FFFFFF | 15 | `@color/light_license_background_color` | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt、shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt |
+| #FFFFFF | 18 | `@color/light_license_background_color` | app/src/main/res/layout/fragment_channel.xml、app/src/main/res/layout/playlist_header.xml、shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
 | #FFDAD6 | 6 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
 | #F1DEDC | 4 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
 | #1A1110 | 3 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |

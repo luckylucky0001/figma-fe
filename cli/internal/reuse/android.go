@@ -23,8 +23,9 @@ var (
 	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+(?:<[^>]*>\s*)?(?:[\w.]+\.)?([A-Z]\w*)\s*\(`) // fun <T> X(, fun RowScope.X(
 	styleableRe2   = regexp.MustCompile(`(?s)<declare-styleable\s+name="(\w+)"\s*>(.*?)</declare-styleable>`)
 	attrNameRe     = regexp.MustCompile(`<attr\s+name="(\w+)"`)
-	colorResRe     = regexp.MustCompile(`<color\s+name="(\w+)">\s*(#[0-9A-Fa-f]{6,8})\s*</color>`)
-	xmlHardColorRe = regexp.MustCompile(`android:(?:textColor|background|tint|src)="(#[0-9A-Fa-f]{6,8})"`)
+	colorResRe     = regexp.MustCompile(`<color\s+name="(\w+)"[^>]*>\s*(#[0-9A-Fa-f]{3,8})\s*</color>`)
+	// any colour attribute (textColorHint, backgroundTint, app:tint, cardBackgroundColor …), #rgb to #aarrggbb
+	xmlHardColorRe = regexp.MustCompile(`\b(?:android|app):\w*(?:[Cc]olor|[Bb]ackground|[Tt]int|src)\w*="(#[0-9A-Fa-f]{3,8})"`)
 	xmlHardSizeRe  = regexp.MustCompile(`android:(?:textSize|layout_width|layout_height|padding\w*|layout_margin\w*)="(\d+(?:\.\d+)?)(sp|dp|dip|px)"`)
 	ktColorRe2     = regexp.MustCompile(`Color\(0x([0-9A-Fa-f]{8})\)|Color\.parseColor\("(#[0-9A-Fa-f]{6,8})"\)`)
 )
@@ -303,10 +304,7 @@ func ScanAndroid(root string) *Report {
 	colorTokens := map[string]string{}
 	for _, f := range values {
 		for _, m := range colorResRe.FindAllStringSubmatch(f.text, -1) {
-			v := strings.ToUpper(m[2])
-			if len(v) == 9 && strings.HasPrefix(v, "#FF") {
-				v = "#" + v[3:]
-			}
+			v := androidHex(m[2])
 			if _, ok := colorTokens[v]; !ok {
 				colorTokens[v] = "@color/" + m[1]
 			}
@@ -314,10 +312,7 @@ func ScanAndroid(root string) *Report {
 	}
 	colorHits := map[string]*Hotspot{}
 	hit := func(v, rel string) {
-		v = strings.ToUpper(v)
-		if len(v) == 9 && strings.HasPrefix(v, "#FF") {
-			v = "#" + v[3:]
-		}
+		v = androidHex(v)
 		h := colorHits[v]
 		if h == nil {
 			h = &Hotspot{Value: v, Token: colorTokens[v]}
@@ -792,6 +787,23 @@ func paramName(s string) string {
 		return ""
 	}
 	return strings.TrimPrefix(f[len(f)-1], "@")
+}
+
+// androidHex normalises an Android colour: #rgb / #argb expanded, upper case, opaque alpha dropped
+// (#fff, #FFFFFFFF and #ffffff are one colour).
+func androidHex(v string) string {
+	h := strings.ToUpper(strings.TrimPrefix(v, "#"))
+	if len(h) == 3 || len(h) == 4 {
+		var b []byte
+		for i := 0; i < len(h); i++ {
+			b = append(b, h[i], h[i])
+		}
+		h = string(b)
+	}
+	if len(h) == 8 && strings.HasPrefix(h, "FF") {
+		h = h[2:]
+	}
+	return "#" + h
 }
 
 // declaredAt: the name at idx is being declared (fun / class / object / interface X), not called.

@@ -1251,3 +1251,17 @@ internal fun Screen() { DsCard(DsChip(1, { _, _ -> })) ; DsPicker(listOf(1)); Ds
 		}
 	}
 }
+
+// review 4: every colour attribute counts, short forms included, and matches its token
+func TestAndroidColourAttributes(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/res/values/colors.xml", `<resources><color name="white" tools:ignore="UnusedResources">#FFFFFF</color></resources>`)
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><TextView android:textColorHint="#fff" android:backgroundTint="#FF123456"/><androidx.cardview.widget.CardView app:cardBackgroundColor="#abc"/></LinearLayout>`)
+	got := map[string]string{}
+	for _, h := range ScanAndroid(root).Colors {
+		got[h.Value] = h.Token
+	}
+	if tok, ok := got["#FFFFFF"]; !ok || tok != "@color/white" || got["#123456"] != "" || len(got) != 3 {
+		t.Errorf("colours = %v", got)
+	}
+}

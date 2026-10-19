@@ -30,7 +30,7 @@
 | 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（1012 / 1012） |
 | 重复概念（同一 UI 概念有多个实现） | 12 |
 | 重复结构（可抽成组件的复制粘贴结构） | 1 组 |
-| 硬编码颜色 | 47 处（其中 3 处已有同值 token） |
+| 硬编码颜色 | 58 处（其中 9 处已有同值 token） |
 | 硬编码尺寸 | 382 处 |
 
 ## 0. 优先处理（按影响面排序）
@@ -172,14 +172,14 @@
 | 颜色 | 次数 | 已有 token | 出现在 |
 |---|---|---|---|
 | #1F2329 | 15 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
+| #FFFFFF | 8 | `@color/qmui_config_color_white` | qmuidemo/src/main/res/layout/fragment_order_detail.xml、qmuidemo/src/main/res/layout/recycler_view_item.xml |
 | #646A73 | 6 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
+| #E5E6EB | 5 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #8F959E | 4 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
-| #E5E6EB | 3 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #0000FF | 2 | — | qmuidemo/src/main/res/layout/fragment_layout.xml、qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLayoutFragment.java |
 | #333333 | 2 | — | photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt |
 | #FF0000 | 2 | — | qmuidemo/src/main/res/layout/fragment_layout.xml、qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDLayoutFragment.java |
+| #FF4D1A | 2 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #FF8F1F | 2 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
-| #FFFFFF | 2 | `@color/qmui_config_color_white` | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
+| #FFF3E8 | 2 | — | qmuidemo/src/main/res/layout/fragment_order_detail.xml |
 | #00A8E1 | 1 | `@color/app_color_blue` | compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt |
-| #222222 | 1 | — | photo/src/main/java/com/qmuiteam/photo/compose/picker/Config.kt |
-| #666666 | 1 | — | compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt |

@@ -21,7 +21,7 @@
 | 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（1017 / 1017） |
 | 重复概念（同一 UI 概念有多个实现） | 12 |
 | 重复结构（可抽成组件的复制粘贴结构） | 1 组 |
-| 硬编码颜色 | 11 处（其中 1 处已有同值 token） |
+| 硬编码颜色 | 12 处（其中 2 处已有同值 token） |
 | 硬编码尺寸 | 391 处 |
 
 ## 0. 优先处理（按影响面排序）
@@ -170,3 +170,4 @@
 | #666666 | 1 | — | compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt |
 | #777777 | 1 | — | compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt |
 | #CCCCCC | 1 | — | compose-core/src/main/java/com/qmuiteam/compose/core/ui/DefaultConfig.kt |
+| #FFFFFF | 1 | `@color/qmui_config_color_white` | qmuidemo/src/main/res/layout/recycler_view_item.xml |

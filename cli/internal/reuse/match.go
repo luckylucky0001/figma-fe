@@ -421,6 +421,9 @@ func libSnippet(a Asset) string {
 		switch {
 		case l.TagPrefix != "":
 			return "<" + l.TagPrefix + strings.Join(splitWords(a.Name), "-") + " … />"
+		case l.Platform == "h5" && compoundOf(l, a.Name) != "":
+			p := compoundOf(l, a.Name)
+			return "import { " + p + " } from '" + l.Import[0] + "'; <" + p + "." + strings.TrimPrefix(a.Name, p) + " … />"
 		case l.Platform == "h5":
 			return "import { " + a.Name + " } from '" + l.Import[0] + "'; <" + a.Name + " … />"
 		case strings.HasPrefix(l.Import[0], "androidx.compose"):
@@ -525,5 +528,33 @@ func familyBases(pool []Asset) map[string]bool {
 			out[a.Name] = true
 		}
 	}
+	// a library's only / shortest component of a concept is its canonical one (antd-mobile ListItem for cell)
+	short := map[string]string{}
+	for _, a := range pool {
+		if a.Kind != "ui-lib" || a.Concept == "" {
+			continue
+		}
+		k := a.Source + "|" + a.Concept
+		if cur, ok := short[k]; !ok || len(a.Name) < len(cur) {
+			short[k] = a.Name
+		}
+	}
+	for _, n := range short {
+		out[n] = true
+	}
 	return out
+}
+
+// compoundOf: ListItem → List when the library exposes it as <List.Item> (antd-mobile style).
+func compoundOf(l uiLib, name string) string {
+	for _, suf := range []string{"Item", "Panel"} {
+		if p := strings.TrimSuffix(name, suf); p != name && l.TagPrefix == "" && l.Name == "antd-mobile" {
+			for _, c := range l.Components {
+				if c == p {
+					return p
+				}
+			}
+		}
+	}
+	return ""
 }

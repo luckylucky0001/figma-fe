@@ -64,9 +64,22 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 **9/11 完全正确，2/11 可用但不是最优。** 体检还找出了设计系统的全部 8 个封装关系（Button → NiaButton、TabRow → NiaTabRow 等），并确认业务代码里没有绕过封装直接用 Material3 的地方（用 grep 核对过）。
 
+### React + antd-mobile v5（两个开源移动端模板：lhw-dev/react-h5-template、xmllein/react-mobile）
+
+两个项目页面都不多，推荐主要来自 antd-mobile 组件目录，结论一致：
+
+| Figma | 推荐 | 结论 | 人工判断 |
+|---|---|---|---|
+| NavBar / NoticeBar / Card / Tag / Divider / Button | antd-mobile 同名组件 | 直接复用 | ✓ |
+| Cell | antd-mobile `List.Item` | 用过的项目：直接复用；没用过的：需确认 | ✓ antd-mobile 的列表项写作 `<List.Item>`，工具能识别这种点号写法，示例也给的是 `<List.Item>` |
+| ProductCard | antd-mobile Card | 需确认 | ✓ 只能当容器 |
+| CountDown / Price / ActionBar | — | 需新建 | ✓ antd-mobile 没有这三个组件 |
+
+**每个项目 11/11。** 这两个是模板项目，代码量小，主要验证的是 React + antd-mobile 这条链路能跑通，以及组件目录是否正确。
+
 ### 小结
 
-- 三个真实项目共 33 项：完全正确 30 项，可用但不是最优 3 项，推荐了错误组件 0 项。拿不准的情况，工具给出的都是「需确认」。
+- 五个真实项目（覆盖 Vue+Vant、React+antd-mobile、XML+QMUI、Compose+Material3+自有设计系统）共 55 项：完全正确 52 项，可用但不是最优 3 项，推荐了错误组件 0 项。拿不准的情况，工具给出的都是「需确认」。
 - 存量项目里「组件库有这个组件」不等于「项目能用」。版本、主题、废弃 API、设计系统封装都会影响结论，这几项现在都会检查。
 - 项目惯例：没有对应组件、但项目里反复出现的写法（1px View 细线、Vant 的 `van-hairline--*` 类、容器自带的分割线属性）会作为「项目惯例」推荐，不会直接判成「需新建」。
 - 还没覆盖的：「借用」写法（例如用按钮组件来充当标签）。这类可以在 `component-map.yaml` 里人工确认一次，之后 match 会优先采用确认过的映射。

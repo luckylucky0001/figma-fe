@@ -296,6 +296,12 @@ func ScanH5(root string) *Report {
 							a = assets["ui-lib|"+pascal]
 						}
 					}
+					// compound members: <List.Item>, <Form.Item> → ListItem, FormItem
+					if i := strings.IndexByte(tag, '.'); a == nil && i > 0 && h.names[strings.ReplaceAll(tag, ".", "")] {
+						if src, ok := imported[tag[:i]]; ok && contains(h.lib.Import, src) {
+							a = assets["ui-lib|"+strings.ReplaceAll(tag, ".", "")]
+						}
+					}
 				}
 				if a == nil {
 					if pa, ok := alias[strings.ToLower(strings.ReplaceAll(tag, "-", ""))]; ok {
@@ -421,6 +427,8 @@ func classify(rel string) string {
 	return "business"
 }
 
+var appShell = map[string]bool{"App": true, "Router": true, "Routes": true, "Root": true, "Main": true, "Index": true, "AppRouter": true, "RouterView": true}
+
 func bestAsset(assets map[string]*Asset, concept string) *Asset {
 	var best *Asset
 	for _, a := range assets {
@@ -433,6 +441,11 @@ func bestAsset(assets map[string]*Asset, concept string) *Asset {
 
 // finish converts maps to sorted slices and fills metrics shared by both platforms.
 func finish(r *Report, assets map[string]*Asset, colors map[string]*Hotspot) {
+	for k, a := range assets {
+		if a.Kind != "ui-lib" && appShell[a.Name] {
+			delete(assets, k) // app shell / routing, not a UI component anyone would reuse
+		}
+	}
 	for _, a := range assets {
 		if a.Kind == "ui-lib" && a.Usage == 0 {
 			continue // keep the report focused: unused library components are listed via r.Libraries

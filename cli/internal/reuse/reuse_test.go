@@ -307,3 +307,28 @@ func TestConventionsAndVantVersion(t *testing.T) {
 		}
 	}
 }
+
+func TestReactCompoundMembers(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"react":"^18.2.0","antd-mobile":"^5.38.0"}}`)
+	write(t, root, "src/App.tsx", `import { BrowserRouter } from 'react-router-dom'
+export default function App() { return <BrowserRouter><Profile/></BrowserRouter> }`)
+	write(t, root, "src/pages/Profile.tsx", `import { List, Form } from 'antd-mobile'
+export default function Profile() {
+  return <List><List.Item extra="x">a</List.Item><Form><Form.Item label="n">b</Form.Item></Form></List>
+}`)
+	r := ScanH5(root)
+	got := map[string]Asset{}
+	for _, a := range r.Assets {
+		got[a.Name] = a
+	}
+	if got["ListItem"].Usage != 1 || got["ListItem"].Concept != "cell" {
+		t.Errorf("ListItem=%+v", got["ListItem"])
+	}
+	if got["FormItem"].Concept != "" {
+		t.Errorf("Form.Item is not a list cell: %+v", got["FormItem"])
+	}
+	if _, ok := got["App"]; ok {
+		t.Errorf("app shell listed as a component")
+	}
+}

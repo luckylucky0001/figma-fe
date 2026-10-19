@@ -769,3 +769,16 @@ func TestPascalCaseLibraryTag(t *testing.T) {
 		t.Errorf("used=%v", used)
 	}
 }
+
+// litemall registers { [Field.name]: Field } and writes <md-field>: the name option is the tag
+func TestVueNameOptionAlias(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"2","vant":"2.12.0"}}`)
+	write(t, root, "src/components/field/index.vue", "<template><div class=\"md_field\"><input/></div></template>\n<script>\nexport default {\n  name: 'md-field',\n}\n</script>")
+	write(t, root, "src/views/login.vue", "<template><div><md-field/><md-field/></div></template>\n<script>\nimport Field from '@/components/field/';\nexport default { components: { [Field.name]: Field } }\n</script>")
+	for _, a := range ScanH5(root).Assets {
+		if a.Kind == "business" && a.Concept == "input" && a.Usage != 2 {
+			t.Errorf("%s usage=%d", a.Name, a.Usage)
+		}
+	}
+}

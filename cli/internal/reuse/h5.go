@@ -13,6 +13,7 @@ var (
 	vueTemplateRe = regexp.MustCompile(`(?s)<template[^>]*>(.*)</template>`)
 	vueStyleRe    = regexp.MustCompile(`(?s)<style[^>]*>(.*?)</style>`)
 	jsxTagRe2     = regexp.MustCompile(`<([A-Za-z][\w.-]*)[\s/>]`)
+	vueNameOptRe  = regexp.MustCompile(`(?m)^\s*name:\s*['"]([\w-]+)['"]`)
 	importRe      = regexp.MustCompile(`import\s+(?:(\w+)\s*,?\s*)?(?:\{([^}]*)\})?\s*from\s*['"]([^'"]+)['"]`)
 	reactCompRe   = regexp.MustCompile(`(?m)^(?:export\s+)?(?:default\s+)?(?:function\s+([A-Z]\w*)\s*\(|const\s+([A-Z]\w*)\s*(?::\s*[\w.<>]+)?\s*=\s*(?:React\.)?(?:memo|forwardRef)?\(?\s*(?:\([^)]*\)|\w+)\s*=>)`)
 	hexColorRe    = regexp.MustCompile(`#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b`)
@@ -300,6 +301,15 @@ func ScanH5(root string) *Report {
 	}
 	rawCount := 0
 	colorHits := map[string]*Hotspot{}
+	// the component's own name option: litemall registers { [Field.name]: Field } and writes <md-field>
+	optName := map[string]*Asset{}
+	for _, f := range files {
+		if a := fileAsset[f.rel]; a != nil {
+			if m := vueNameOptRe.FindStringSubmatch(f.text); m != nil {
+				optName[strings.ToLower(strings.ReplaceAll(m[1], "-", ""))] = a
+			}
+		}
+	}
 	for _, f := range files {
 		imported := map[string]string{} // local name → source
 		for _, m := range importRe.FindAllStringSubmatch(f.text, -1) {
@@ -318,6 +328,9 @@ func ScanH5(root string) *Report {
 		}
 		// aliased imports: import sHeader from '@/components/SimpleHeader.vue' → <s-header>
 		alias := map[string]*Asset{}
+		for k, a := range optName {
+			alias[k] = a
+		}
 		for k, a := range thirdParty {
 			alias[k] = a
 		}

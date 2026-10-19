@@ -393,7 +393,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 			}
 		}
 	}
-		// the name links to the concept only through a weak word (swipeactions_row, InterestsItem): less sure
+	// the name links to the concept only through a weak word (swipeactions_row, InterestsItem): less sure
 	if a.Kind != "ui-lib" && a.Concept != "" && weakOnly(a.Name, a.Concept) && fn != an {
 		s -= 0.08
 		why = append(why, "名称只以 row / item 之类的泛称对上")

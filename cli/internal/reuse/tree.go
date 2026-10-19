@@ -134,12 +134,13 @@ func findClones(files map[string]string, parse func(string) []*mnode, minSize in
 		}
 		// layout-land / layout-large copies of the same layout are Android's configuration variants,
 		// intended duplication rather than copy-paste: they must span at least two real files
-		logical := map[string]bool{}
+		logical, raw := map[string]bool{}, map[string]bool{}
 		for _, o := range os {
+			raw[o.file] = true
 			logical[qualifierRe.ReplaceAllString(o.file, "/res/layout/")] = true
 		}
-		if len(logical) < 2 {
-			continue
+		if len(raw) >= 2 && len(logical) < 2 {
+			continue // only layout-land / layout-large copies of one layout
 		}
 		c := Clone{Signature: short(sig), Elements: os[0].node.size, Sample: os[0].node.pretty(0, 3)}
 		for _, o := range os {

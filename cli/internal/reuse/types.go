@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"unicode/utf8"
 )
 
 // Asset is one reusable UI building block found in the project or its UI library.
@@ -417,6 +418,22 @@ func filepathToSlash(p string) string { return strings.ReplaceAll(p, "\\", "/") 
 
 func kindLabel(k string) string {
 	return map[string]string{"ui-lib": "组件库", "design-system": "设计系统", "business": "业务组件", "page-local": "页面内私有", "custom-view": "自定义 View", "view-helper": "界面封装类", "composable": "Composable", "convention": "项目惯例"}[k]
+}
+
+// clip shortens s to at most n bytes without splitting a UTF-8 character (Chinese text in snippets).
+func clip(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	for n > 0 && !utf8.RuneStart(s[n]) {
+		n--
+	}
+	return s[:n] + "…"
+}
+
+// identByte: a byte that can end an identifier (the "Ref" in useRef<Button>).
+func identByte(c byte) bool {
+	return c == '_' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9'
 }
 
 func itoa(n int) string {

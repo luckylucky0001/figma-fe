@@ -28,9 +28,7 @@ type convAcc struct {
 func (c *convAcc) add(ex, at string) {
 	c.n++
 	if c.ex == "" {
-		if len(ex) > 140 {
-			ex = ex[:140] + "…"
-		}
+		ex = clip(ex, 140)
 		c.ex, c.exAt = ex, at
 	}
 }
@@ -95,7 +93,7 @@ func conventionsH5(files []srcFile) []Asset {
 				if le < 0 {
 					le = len(src) - m[0]
 				}
-				acc[key].add(strings.TrimSpace(src[ls:m[0]+le]), f.rel+":"+itoa(lineAt(src, m[0])))
+				acc[key].add(strings.TrimSpace(src[ls:m[0]+le]), f.rel+":"+itoa(lineAt(src, m[0])+markupLine(f)))
 			}
 		}
 	}

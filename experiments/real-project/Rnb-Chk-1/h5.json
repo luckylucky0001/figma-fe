@@ -539,12 +539,7 @@
       "props": [
         "list"
       ],
-      "usage": 1,
-      "usageFiles": [
-        "src/views/Home.vue"
-      ],
-      "example": "\u003cswiper :list=\"state.swiperList\"\u003e\u003c/swiper\u003e",
-      "exampleAt": "src/views/Home.vue:26",
+      "usage": 0,
       "extends": "Swipe"
     }
   ],
@@ -698,7 +693,27 @@
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     }
   ],
-  "clones": null,
+  "clones": [
+    {
+      "signature": "aa968a5b",
+      "elements": 9,
+      "locations": [
+        "src/views/Home.vue:33",
+        "src/views/Home.vue:47",
+        "src/views/Home.vue:61"
+      ],
+      "sample": "\u003cdiv\u003e\n  \u003cheader\u003e\n  \u003cvan-skeleton\u003e\n    \u003cdiv\u003e\n      \u003cdiv\u003e\n"
+    },
+    {
+      "signature": "a7ab9a50",
+      "elements": 9,
+      "locations": [
+        "src/views/Login.vue:15",
+        "src/views/Login.vue:49"
+      ],
+      "sample": "\u003cdiv\u003e\n  \u003cvan-form\u003e\n    \u003cvan-field\u003e\n    \u003cvan-field\u003e\n    \u003cvan-field\u003e\n      \u003cvue-img-verify\u003e\n    \u003cdiv\u003e\n      \u003cdiv\u003e\n      \u003cvan-button\u003e\n"
+    }
+  ],
   "colors": [
     {
       "value": "#FFFFFF",
@@ -995,16 +1010,16 @@
       "concept": "divider",
       "usage": 7,
       "example": "\u003cdiv class=\"nav-bar van-hairline--top\"\u003e",
-      "exampleAt": "src/components/NavBar.vue:2"
+      "exampleAt": "src/components/NavBar.vue:12"
     }
   ],
   "metrics": {
     "files": 40,
-    "componentUsages": 117,
+    "componentUsages": 116,
     "rawPrimitives": 16,
-    "componentization": 0.8796992481203008,
+    "componentization": 0.8787878787878788,
     "duplicateConcepts": 2,
-    "cloneGroups": 0,
+    "cloneGroups": 2,
     "hardcodedColors": 145,
     "tokenizableColors": 53,
     "hardcodedSizes": 0

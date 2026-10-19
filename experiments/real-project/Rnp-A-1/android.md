@@ -21,7 +21,7 @@
 |---|---|
 | 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（639 / 639） |
 | 重复概念（同一 UI 概念有多个实现） | 3 |
-| 重复结构（可抽成组件的复制粘贴结构） | 8 组 |
+| 重复结构（可抽成组件的复制粘贴结构） | 9 组 |
 | 硬编码颜色 | 102 处（其中 32 处已有同值 token） |
 | 硬编码尺寸 | 1100 处 |
 
@@ -171,6 +171,7 @@
   <include>
   <View>
 ```
+- **8 个元素 × 3 处**：app/src/main/res/layout/dialog_playback_parameter.xml:29、app/src/main/res/layout/dialog_playback_parameter.xml:203、app/src/main/res/layout/dialog_playback_parameter.xml:299
 - **5 个元素 × 4 处**：app/src/main/res/layout/list_playlist_grid_item.xml:2、app/src/main/res/layout/list_playlist_item.xml:2、app/src/main/res/layout/list_playlist_mini_item.xml:2、app/src/main/res/layout/stream_quality_item.xml:2
 - **8 个元素 × 2 处**：app/src/main/res/layout/fragment_comments.xml:2、app/src/main/res/layout/fragment_kiosk.xml:2
 - **5 个元素 × 3 处**：app/src/main/res/layout/select_channel_fragment.xml:2、app/src/main/res/layout/select_feed_group_fragment.xml:2、app/src/main/res/layout/select_playlist_fragment.xml:2

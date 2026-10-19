@@ -1074,3 +1074,79 @@ func TestFocusListKeepsCommas(t *testing.T) {
 		t.Errorf("--focus list: %q", got)
 	}
 }
+
+// review 3: H5 scanner fixes
+func TestH5ScannerReviewFixes(t *testing.T) {
+	// a native <select> is not the imported Select component; a JSX comment / type argument is not a usage
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"react":"18","vue":"3"}}`)
+	write(t, root, "src/components/Select.vue", `<template><div class="select"><slot/></div></template>`)
+	write(t, root, "src/views/A.vue", "<template><div><select></select><Select/></div></template>\n<script>\nimport Select from '@/components/Select.vue'\n</script>")
+	write(t, root, "src/components/Button.tsx", "export function Button(props: Props) { return <button className=\"b\">{props.children}</button> }")
+	write(t, root, "src/views/B.tsx", "import { Button } from '../components/Button'\nconst r = useRef<Button>(null)\n// <Button old/>\nexport function B() { return <div>{/* <Button/> */}<Button/></div> }")
+	r := ScanH5(root)
+	use := map[string]int{}
+	for _, a := range r.Assets {
+		use[a.Name] += a.Usage
+	}
+	if use["Select"] != 1 || use["Button"] != 1 {
+		t.Errorf("usage = %v", use)
+	}
+	for _, f := range r.Findings {
+		if f.Rule == "missed-reuse" && strings.HasSuffix(f.File, "Button.tsx") {
+			t.Errorf("Button.tsx flagged for its own <button>: %+v", f)
+		}
+	}
+
+	// a colour after a token definition is still a usage; border-bottom: 0 is not "pinned to the bottom"
+	root = t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3"}}`)
+	write(t, root, "src/components/TopBar.vue", "<template><div class=\"top\">t</div></template>\n<style>\n$blue: #00f;\n.top { position: fixed; top: 0; border-bottom: 0; color: #123456; }\n</style>")
+	write(t, root, "src/views/P.vue", "<template><div><top-bar/><p class=\"t\">长长的中文说明文字长长的中文说明文字长长的中文说明文字长长的中文说明文字长长的中文说明文字长长的中文说明文字长长的中文</p><p class=\"t\">x</p></div></template>")
+	r = ScanH5(root)
+	found := false
+	for _, h := range r.Colors {
+		found = found || h.Value == "#123456"
+	}
+	if !found {
+		t.Errorf("#123456 after $blue: was not counted: %+v", r.Colors)
+	}
+	for _, a := range r.Assets {
+		if a.Name == "TopBar" && a.Concept == "tabbar" {
+			t.Error("border-bottom: 0 made a top bar a tab bar")
+		}
+	}
+	if s := clip("长长的中文", 4); s != "长…" {
+		t.Errorf("clip = %q", s)
+	}
+}
+
+// review 3: copy-paste within one file is a clone; layout-land copies of one layout are not
+func TestClonesWithinOneFile(t *testing.T) {
+	block := `<div class="row"><span>a</span><span>b</span><em>c</em><i>d</i></div>`
+	files := map[string]string{"Same.vue": "<div>" + block + "<p/>" + block + "</div>"}
+	if c := findClones(files, parseMarkup, 5); len(c) != 1 {
+		t.Errorf("clones in one file = %d", len(c))
+	}
+	files = map[string]string{"app/src/main/res/layout/a.xml": block, "app/src/main/res/layout-land/a.xml": block}
+	if c := findClones(files, parseMarkup, 5); len(c) != 0 {
+		t.Errorf("layout-land copy reported as clone: %+v", c)
+	}
+}
+
+// review 3: with <script setup> first, clone and convention locations are lines of the file
+func TestMarkupLineNumbersAreFileLines(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","vant":"4.8.0"}}`)
+	block := `<div class="row"><span>a</span><p>b</p><ul><li>c</li><li>d</li></ul><a>e</a><img/><section>f</section></div>`
+	src := "<script setup>\nconst a = 1\nconst b = 2\n</script>\n\n<template>\n<div>\n" + block + "\n<div class=\"van-hairline--top\"/><div class=\"van-hairline--top\"/><div class=\"van-hairline--top\"/>\n</div>\n</template>\n"
+	write(t, root, "src/views/A.vue", src)
+	write(t, root, "src/views/B.vue", "<template>\n<div>\n"+block+"\n</div>\n</template>\n")
+	r := ScanH5(root)
+	if len(r.Clones) == 0 || !strings.Contains(strings.Join(r.Clones[0].Locations, " "), "src/views/A.vue:8") {
+		t.Errorf("clones = %+v", r.Clones)
+	}
+	if len(r.Conventions) == 0 || r.Conventions[0].ExampleAt != "src/views/A.vue:9" {
+		t.Errorf("conventions = %+v", r.Conventions)
+	}
+}

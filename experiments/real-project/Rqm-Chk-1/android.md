@@ -18,7 +18,7 @@
 |---|---|
 | 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（977 / 977） |
 | 重复概念（同一 UI 概念有多个实现） | 12 |
-| 重复结构（可抽成组件的复制粘贴结构） | 0 组 |
+| 重复结构（可抽成组件的复制粘贴结构） | 1 组 |
 | 硬编码颜色 | 11 处（其中 1 处已有同值 token） |
 | 硬编码尺寸 | 381 处 |
 
@@ -139,6 +139,18 @@
 | carousel（View） | SwipeBackgroundView（自定义 View，用 2 次）<br>ViewPager（组件库，用 1 次） | `SwipeBackgroundView` |
 | checkbox（Compose） | QMUICheckBox（Composable，用 1 次）<br>QMUIPhotoPickCheckBox（Composable，用 1 次） | `QMUICheckBox` |
 | icon（Compose） | QMUIMarkIcon（Composable，用 1 次）<br>QMUIChevronIcon（Composable，用 0 次） | `QMUIMarkIcon` |
+
+## 5. 重复结构（复制粘贴的 UI 片段，可抽成组件）
+
+- **5 个元素 × 6 处**：qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:45、qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:92、qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:136、qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:180、qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:224、qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:270
+
+```
+<com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout>
+  <TextView>
+  <TextView>
+  <TextView>
+  <TextView>
+```
 
 ## 6. 硬编码颜色热点
 

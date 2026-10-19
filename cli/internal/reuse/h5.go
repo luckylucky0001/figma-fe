@@ -13,16 +13,18 @@ var (
 	vueTemplateRe = regexp.MustCompile(`(?s)<template[^>]*>(.*)</template>`)
 	vueStyleRe    = regexp.MustCompile(`(?s)<style[^>]*>(.*?)</style>`)
 	jsxTagRe2     = regexp.MustCompile(`<([A-Za-z][\w.-]*)[\s/>]`)
+	jsxCommentRe  = regexp.MustCompile(`(?s)/\*.*?\*/|(?m)^[ \t]*//[^\n]*`)
 	vueNameOptRe  = regexp.MustCompile(`(?m)^\s*name:\s*['"]([\w-]+)['"]`)
 	importRe      = regexp.MustCompile(`import\s+(?:(\w+)\s*,?\s*)?(?:\{([^}]*)\})?\s*from\s*['"]([^'"]+)['"]`)
 	reactCompRe   = regexp.MustCompile(`(?m)^(?:export\s+)?(?:default\s+)?(?:function\s+([A-Z]\w*)\s*\(|const\s+([A-Z]\w*)\s*(?::\s*[\w.<>]+)?\s*=\s*(?:React\.)?(?:memo|forwardRef)?\(?\s*(?:\([^)]*\)|\w+)\s*=>)`)
 	hexColorRe    = regexp.MustCompile(`#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b`)
+	varDefTailRe  = regexp.MustCompile(`(?:--|[@$])[\w-]+\s*:\s*$`)
 	cssVarDefRe   = regexp.MustCompile(`(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
 	preVarDefRe   = regexp.MustCompile(`([@$][\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
 	definePropsRe = regexp.MustCompile(`(?s)defineProps(?:<\s*\{(.*?)\}\s*>)?\(\s*(\{.*?\}|\[.*?\])?\s*\)`)
 	propsObjRe    = regexp.MustCompile(`(?s)props\s*:\s*(\{.*?\}|\[.*?\])\s*,?\s*\n`)
 	fixedRe       = regexp.MustCompile(`position:\s*fixed`)
-	fixedBottomRe = regexp.MustCompile(`(?s)position:\s*fixed[^}]*?bottom:\s*0|bottom:\s*0[^}]*?position:\s*fixed`)
+	fixedBottomRe = regexp.MustCompile(`(?s)position:\s*fixed[^}]*?(?:^|[;{\s])bottom:\s*0|(?:^|[;{\s])bottom:\s*0[^}]*?position:\s*fixed`) // not border-bottom: 0
 	propNameRe    = regexp.MustCompile(`(?:^|[{,;\n])\s*['"]?(\w+)['"]?\??\s*:`)
 )
 
@@ -125,6 +127,8 @@ func ScanH5(root string) *Report {
 				f.markup = m[1]
 			}
 		case "jsx":
+			// comments and commented-out JSX are not usages ({/* <Button/> */}, // <Button …)
+			f.text = jsxCommentRe.ReplaceAllStringFunc(f.text, func(c string) string { return strings.Repeat("\n", strings.Count(c, "\n")) })
 			f.markup = f.text
 		}
 		files = append(files, f)
@@ -239,6 +243,9 @@ func ScanH5(root string) *Report {
 				}
 				refineBadge(a)
 				projByName[name] = a
+				if fileAsset[f.rel] == nil {
+					fileAsset[f.rel] = a // a Button.tsx built on <button> is that component, not a missed reuse
+				}
 			}
 		}
 	}
@@ -382,9 +389,7 @@ func ScanH5(root string) *Report {
 			}
 			_ = start
 			t := strings.TrimSpace(rest)
-			if len(t) > 140 {
-				t = t[:140] + "…"
-			}
+			t = clip(t, 140)
 			if t == "" {
 				t = strings.TrimSpace(lines[ln])
 			}
@@ -393,6 +398,9 @@ func ScanH5(root string) *Report {
 		if f.markup != "" {
 			off := strings.Index(f.text, f.markup)
 			for _, m := range jsxTagRe2.FindAllStringSubmatchIndex(f.markup, -1) {
+				if m[0] > 0 && identByte(f.markup[m[0]-1]) {
+					continue // useRef<Button>, Array<Item>: a type argument, not a tag
+				}
 				tag := f.markup[m[2]:m[3]]
 				var a *Asset
 				if deps["@dcloudio/uni-app"] && uniTags[tag] {
@@ -444,8 +452,8 @@ func ScanH5(root string) *Report {
 					}
 				}
 				if a == nil {
-					if pa, ok := alias[strings.ToLower(strings.ReplaceAll(tag, "-", ""))]; ok {
-						a = pa
+					if pa, ok := alias[strings.ToLower(strings.ReplaceAll(tag, "-", ""))]; ok && !htmlTags[tag] && !uniTags[tag] {
+						a = pa // <select> stays the native element even when the file imports a Select
 					} else if pa, ok := projByName[kebabToPascal(tag)]; ok && (f.kind == "vue" && !htmlTags[tag] && !uniTags[tag] || tag == kebabToPascal(tag)) {
 						a = pa
 					}
@@ -498,7 +506,7 @@ func ScanH5(root string) *Report {
 		}
 		for _, loc := range hexColorRe.FindAllStringIndex(styleText, -1) {
 			before := styleText[max(0, loc[0]-40):loc[0]]
-			if cssVarDefRe.MatchString(before+styleText[loc[0]:loc[1]]) || preVarDefRe.MatchString(before+styleText[loc[0]:loc[1]]) {
+			if varDefTailRe.MatchString(before) { // "--brand: #f00" / "$blue: #00f", not a later "color: #123456"
 				continue // a token definition, not a usage
 			}
 			v := strings.ToUpper(expandHex(styleText[loc[0]:loc[1]]))
@@ -587,7 +595,8 @@ func ScanH5(root string) *Report {
 	markup := map[string]string{}
 	for _, f := range files {
 		if f.markup != "" {
-			markup[f.rel] = f.markup
+			// pad to the template's position so clone locations are file lines (<script setup> first)
+			markup[f.rel] = strings.Repeat("\n", markupLine(f)) + f.markup
 		}
 	}
 	r.Clones = findClones(markup, func(s string) []*mnode { return filterJSX(parseMarkup(s)) }, 8)
@@ -650,11 +659,20 @@ var appShell = map[string]bool{"App": true, "Router": true, "Routes": true, "Roo
 func bestAsset(assets map[string]*Asset, concept string) *Asset {
 	var best *Asset
 	for _, a := range assets {
-		if a.Concept == concept && a.Kind != "page-local" && usable(a) && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) && len(a.Name) < len(best.Name)) {
+		if a.Concept == concept && a.Kind != "page-local" && usable(a) && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) &&
+			(len(a.Name) < len(best.Name) || len(a.Name) == len(best.Name) && a.Name+"|"+a.Source < best.Name+"|"+best.Source)) {
 			best = a
 		}
 	}
 	return best
+}
+
+// markupLine: how many lines of the file come before its markup (the <template> body).
+func markupLine(f srcFile) int {
+	if i := strings.Index(f.text, f.markup); i > 0 {
+		return strings.Count(f.text[:i], "\n")
+	}
+	return 0
 }
 
 // resolveImport finds the component file an import points at: the path itself when it can be resolved

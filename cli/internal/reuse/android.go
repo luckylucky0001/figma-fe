@@ -333,9 +333,7 @@ func ScanAndroid(root string) *Report {
 			a.UsageFiles = append(a.UsageFiles, rel)
 		}
 		if a.Example == "" {
-			if len(line) > 140 {
-				line = line[:140] + "…"
-			}
+			line = clip(line, 140)
 			a.Example, a.ExampleAt = line, rel+":"+itoa(ln)
 		}
 		r.Metrics.ComponentUsages++

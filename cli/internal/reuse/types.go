@@ -329,7 +329,8 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 		if projects == 0 {
 			continue // siblings inside one UI library (Tab / Tabs) are not duplicates
 		}
-		sort.Slice(as, func(i, j int) bool { return rank(as[i]) > rank(as[j]) })
+		// same preference as match and the page check: established in this project first, then canonical
+		sort.SliceStable(as, func(i, j int) bool { return preference(as[i], c) > preference(as[j], c) })
 		cl := Cluster{Concept: c}
 		for _, a := range as {
 			cl.Members = append(cl.Members, a.Name+"（"+kindLabel(a.Kind)+"，用 "+itoa(a.Usage)+" 次）")
@@ -428,7 +429,7 @@ func conceptCanonical(concept string, _ []Asset) string {
 // featureOnly: a component made for one feature — it needs an app data model, or it is only used
 // inside the file that defines it.
 func featureOnly(a Asset) bool {
-	if hasModelParam(a.Required) {
+	if hasModelParam(a.Required) || len(domainRequired(a.Required)) >= 3 && !inDesignSystem(a.Source) {
 		return true
 	}
 	if (a.Kind == "composable" || a.Kind == "custom-view") && len(a.UsageFiles) > 0 && !inDesignSystem(a.Source) {
@@ -457,4 +458,22 @@ func oneFamily(as []Asset) bool {
 		prefix = ws[0]
 	}
 	return true
+}
+
+// preference orders alternatives of one concept: what the project has established (≥3 uses), then
+// anything it uses, then the concept's canonical component (Cell, Tag, NavBar), then kind rank.
+func preference(a Asset, concept string) int {
+	p := rank(a)
+	switch {
+	case a.Usage >= 3:
+		p += 3000
+	case a.Usage > 0:
+		p += 1000
+	}
+	for _, c := range concepts {
+		if c.Name == concept && normName(a.Name) == c.Words[0] {
+			p += 1500
+		}
+	}
+	return p
 }

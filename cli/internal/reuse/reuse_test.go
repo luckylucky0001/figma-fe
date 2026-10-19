@@ -386,3 +386,33 @@ func TestReinventionPurposeAndDecision(t *testing.T) {
 		}
 	}
 }
+
+func TestH5WrapperBypass(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^3.4.0","vant":"^4.8.0"}}`)
+	write(t, root, "src/components/base/BaseButton.vue", `<template><van-button :type="type" round><slot/></van-button></template>
+<script setup lang="ts">defineProps<{ type?: 'primary' | 'default' }>()</script>`)
+	write(t, root, "src/views/A.vue", `<template><BaseButton type="primary">ok</BaseButton><BaseButton>x</BaseButton><BaseButton>y</BaseButton></template>`)
+	write(t, root, "src/views/New.vue", `<template><van-button type="primary">pay</van-button></template>`)
+	r := ScanH5(root)
+	var bypass []Finding
+	for _, f := range r.Findings {
+		if f.Rule == "bypass" {
+			bypass = append(bypass, f)
+		}
+	}
+	if len(bypass) != 1 || bypass[0].File != "src/views/New.vue" || !strings.Contains(bypass[0].Hint, "BaseButton") {
+		t.Fatalf("bypass=%+v", bypass)
+	}
+	if pc := r.CheckFocus("src/views/New.vue"); pc.Pass {
+		t.Errorf("bypassing the wrapper should fail the page: %+v", pc.MissedReuse)
+	}
+	exp := &figma.Export{
+		Frame:         &figma.Node{Type: "FRAME", Children: []*figma.Node{{ID: "1:2", Type: "INSTANCE", ComponentID: "c1"}}},
+		Components:    map[string]figma.Component{"c1": {ComponentSetID: "s1"}},
+		ComponentSets: map[string]figma.ComponentSet{"s1": {Name: "Button"}},
+	}
+	if c := Match(exp, r).Items[0].Candidates[0]; c.Name != "BaseButton" {
+		t.Errorf("Button → %+v", c)
+	}
+}

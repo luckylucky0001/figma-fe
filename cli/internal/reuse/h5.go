@@ -218,6 +218,13 @@ func ScanH5(root string) *Report {
 		}
 	}
 
+	type occ struct {
+		rel  string
+		ln   int
+		text string
+		tag  string
+	}
+	libOcc := map[*Asset][]occ{}
 	// Usage: tags in templates / JSX.
 	colorTokens := map[string]string{}
 	for _, f := range files {
@@ -321,6 +328,9 @@ func ScanH5(root string) *Report {
 				}
 				if a != nil {
 					ln, t := at(off + m[0])
+					if a.Kind == "ui-lib" {
+						libOcc[a] = append(libOcc[a], occ{f.rel, ln, t, tag})
+					}
 					a.Usage++
 					if !contains(a.UsageFiles, f.rel) {
 						a.UsageFiles = append(a.UsageFiles, f.rel)
@@ -371,6 +381,37 @@ func ScanH5(root string) *Report {
 		}
 	}
 	r.Metrics.RawPrimitives = rawCount
+	// design-system wrappers: a design-system component whose own markup uses a library component of
+	// the same concept (BaseButton → <van-button>); pages that use the library directly bypass it
+	defIn := map[string][]*Asset{}
+	for _, a := range assets {
+		if a.Kind == "design-system" {
+			defIn[a.Source] = append(defIn[a.Source], a)
+		}
+	}
+	var libs2 []*Asset
+	for lib := range libOcc {
+		libs2 = append(libs2, lib)
+	}
+	sort.Slice(libs2, func(i, j int) bool { return libs2[i].Name < libs2[j].Name })
+	for _, lib := range libs2 {
+		os := libOcc[lib]
+		for _, o := range os {
+			for _, w := range defIn[o.rel] {
+				if lib.WrappedBy == "" && (w.Concept == lib.Concept && lib.Concept != "" || strings.HasSuffix(w.Name, lib.Name)) {
+					lib.WrappedBy = w.Name
+				}
+			}
+		}
+		if lib.WrappedBy == "" {
+			continue
+		}
+		for _, o := range os {
+			if classify(o.rel) != "design-system" {
+				r.Findings = append(r.Findings, Finding{"bypass", "warn", o.rel, o.ln, o.text, "直接用了 <" + o.tag + ">（" + lib.Source + "），项目设计系统已封装为 " + lib.WrappedBy + "，应使用封装"})
+			}
+		}
+	}
 	r.ColorTokens = colorTokens
 	r.Conventions = conventionsH5(files)
 	finish(r, assets, colorHits)

@@ -1,0 +1,40 @@
+{
+  "focus": "app/src/main/java/org/schabi/newpipe/orderdetail/OrderDetailFragment.kt,app/src/main/java/org/schabi/newpipe/orderdetail/OrderDetailMock.kt,app/src/main/res/layout/fragment_order_detail.xml,app/src/main/res/layout/order_detail_cell.xml,app/src/main/res/values/colors_order_detail.xml,app/src/main/res/values/strings_order_detail.xml,app/src/main/res/values/styles_order_detail.xml",
+  "used": [
+    "@layout/order_detail_cell（业务组件）",
+    "ImageView（组件库）",
+    "TextView（组件库）"
+  ],
+  "reinvented": null,
+  "missedReuse": null,
+  "handBuilt": [
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "app/src/main/res/layout/fragment_order_detail.xml",
+      "line": 18,
+      "text": ".nav_bar",
+      "hint": "页面手写了「navbar」（.nav_bar），已有 @layout/toolbar_layout（业务组件 include）（项目里已用 6 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "app/src/main/res/layout/fragment_order_detail.xml",
+      "line": 90,
+      "text": ".status_tag",
+      "hint": "页面手写了「tag」（.status_tag），已有 Chip（组件库 Material Components）（项目里已用 1 次）"
+    }
+  ],
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "app/src/main/res/values/colors_order_detail.xml",
+      "line": 9,
+      "text": "#FFFFFF",
+      "hint": "新定义的颜色 order_detail_surface 与已有 token @color/light_license_background_color 同值"
+    }
+  ],
+  "localTokens": 13,
+  "pass": false
+}

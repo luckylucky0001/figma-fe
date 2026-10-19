@@ -1,0 +1,15 @@
+· 检查改动的 7 个 UI 文件（已有文件只看新增的行）
+
+## 页面复用检查：7 个文件（app/src/main/java/org/schabi/newpipe/orderdetail/OrderDetailFragment.kt、app/src/main/java/org/schabi/newpipe/orderdetail/OrderDetailMock.kt …）  ❌ FAIL
+
+- 复用的现成组件（3）：@layout/order_detail_cell（业务组件）、ImageView（组件库）、TextView（组件库）
+- 自造轮子（0）
+- 有组件却没用（0）
+- 疑似手写已有组件（2）
+  - ✗ app/src/main/res/layout/fragment_order_detail.xml:18 页面手写了「navbar」（.nav_bar），已有 @layout/toolbar_layout（业务组件 include）（项目里已用 6 次）
+  - ✗ app/src/main/res/layout/fragment_order_detail.xml:90 页面手写了「tag」（.status_tag），已有 Chip（组件库 Material Components）（项目里已用 1 次）
+- 页面私有调色板：页面里自己定义了 13 个颜色变量（应使用项目 / 组件库已有的 token）
+- 写死颜色（1）
+  - · app/src/main/res/values/colors_order_detail.xml:9 #FFFFFF：新定义的颜色 order_detail_surface 与已有 token @color/light_license_background_color 同值
+
+✓ [android] 63 个资产 · 组件化率 100% · 重复概念 5 · 重复结构 8 组 · 硬编码颜色 102 · 不能直接用的库组件 10 · 项目惯例 1 → experiments/real-project/Rnp-A-1/android.md

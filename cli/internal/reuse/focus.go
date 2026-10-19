@@ -203,6 +203,11 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 			if b.Concept != a.Concept || b.Name == a.Name && b.Source == a.Source || b.Usage < 3 || featureOnly(*b) {
 				continue
 			}
+			viewSide := strings.HasSuffix(a.Source, ".xml") || a.Kind == "custom-view" || strings.HasPrefix(a.Name, "@layout/")
+			composeSide := a.Kind == "composable" || isComposeLib(a.Source)
+			if viewSide && (b.Kind == "composable" || isComposeLib(b.Source)) || composeSide && (b.Kind == "custom-view" || strings.HasPrefix(b.Name, "@layout/")) {
+				continue // XML and Compose alternatives are not interchangeable
+			}
 			if est == nil || preference(*b, a.Concept) > preference(*est, a.Concept) {
 				est = b
 			}
@@ -351,6 +356,9 @@ func checkHandBuilt(pc *PageCheck, r *Report, pool []Asset, used, seen map[strin
 		b := &pool[i]
 		if xmlCtx && (b.Kind == "composable" || isComposeLib(b.Source)) {
 			continue
+		}
+		if b.Kind == "ui-lib" && len(specialWords(b.Name, b.Concept)) > 0 && len(splitWords(b.Name)) > 1 {
+			continue // FloatingActionButton is no replacement for a hand-built button
 		}
 		if b.Concept == concept && !in(b.Source) && b.Source != "Android SDK widgets" && (best == nil || pref(b) > pref(best) || pref(b) == pref(best) && len(b.Name) < len(best.Name)) {
 			best = b

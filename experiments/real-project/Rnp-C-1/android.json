@@ -1,0 +1,1782 @@
+{
+  "platform": "android",
+  "root": "/home/user/exp/Rnp-C-1",
+  "stack": [
+    "XML View",
+    "Jetpack Compose",
+    "Material Components",
+    "Compose Foundation",
+    "Compose Material3"
+  ],
+  "libraries": [
+    {
+      "name": "Android SDK widgets",
+      "usage": 200,
+      "top": [
+        "ImageView×63",
+        "RecyclerView×26",
+        "TextView×23",
+        "ProgressBar×22",
+        "ImageButton×22",
+        "Button×15",
+        "CardView×7",
+        "Toolbar×5"
+      ]
+    },
+    {
+      "name": "Material Components",
+      "usage": 31,
+      "top": [
+        "ShapeableImageView×16",
+        "AppBarLayout×5",
+        "TabLayout×3",
+        "FloatingActionButton×3",
+        "TextInputLayout×1",
+        "Chip×1",
+        "NavigationView×1",
+        "ChipGroup×1"
+      ]
+    },
+    {
+      "name": "Compose Material3",
+      "usage": 17,
+      "top": [
+        "TextButton×5",
+        "ListItem×4",
+        "TopAppBar×3",
+        "AlertDialog×2",
+        "Switch×1",
+        "Tab×1",
+        "RadioButton×1"
+      ]
+    },
+    {
+      "name": "Compose Foundation",
+      "usage": 5,
+      "top": [
+        "LazyColumn×4",
+        "HorizontalPager×1"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "name": "ImageView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "image",
+      "usage": 63,
+      "usageFiles": [
+        "app/src/main/res/layout/comment_replies_header.xml",
+        "app/src/main/res/layout/dialog_playback_parameter.xml",
+        "app/src/main/res/layout/dialog_playlists.xml",
+        "app/src/main/res/layout/drawer_header.xml",
+        "app/src/main/res/layout/feed_group_add_new_grid_item.xml",
+        "app/src/main/res/layout/feed_group_add_new_item.xml",
+        "app/src/main/res/layout/feed_group_card_grid_item.xml",
+        "app/src/main/res/layout/feed_group_card_item.xml",
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_description.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/info_cell.xml",
+        "app/src/main/res/layout/item_search_suggestion.xml",
+        "app/src/main/res/layout/item_stream_segment.xml",
+        "app/src/main/res/layout/list_comment_item.xml",
+        "app/src/main/res/layout/list_playlist_bookmark_item.xml",
+        "app/src/main/res/layout/list_playlist_card_item.xml",
+        "app/src/main/res/layout/list_playlist_grid_item.xml",
+        "app/src/main/res/layout/list_playlist_item.xml",
+        "app/src/main/res/layout/list_playlist_mini_item.xml",
+        "app/src/main/res/layout/list_stream_card_item.xml",
+        "app/src/main/res/layout/list_stream_grid_item.xml",
+        "app/src/main/res/layout/list_stream_item.xml",
+        "app/src/main/res/layout/list_stream_mini_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_card_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_grid_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_item.xml",
+        "app/src/main/res/layout/mission_item.xml",
+        "app/src/main/res/layout/mission_item_linear.xml",
+        "app/src/main/res/layout/picker_icon_item.xml",
+        "app/src/main/res/layout/picker_subscription_item.xml",
+        "app/src/main/res/layout/play_queue_item.xml",
+        "app/src/main/res/layout/player.xml",
+        "app/src/main/res/layout/select_kiosk_item.xml",
+        "app/src/main/res/layout/statistic_playlist_control.xml",
+        "app/src/main/res/layout/stream_quality_item.xml",
+        "app/src/main/res/layout/toolbar_search_layout.xml",
+        "app/src/main/res/layout-land/list_stream_card_item.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003cImageView",
+      "exampleAt": "app/src/main/res/layout/comment_replies_header.xml:54"
+    },
+    {
+      "name": "RecyclerView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "list",
+      "usage": 26,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/dialog_feed_group_reorder.xml",
+        "app/src/main/res/layout/dialog_playlists.xml",
+        "app/src/main/res/layout/feed_item_carousel.xml",
+        "app/src/main/res/layout/fragment_bookmarks.xml",
+        "app/src/main/res/layout/fragment_channel_tab.xml",
+        "app/src/main/res/layout/fragment_channel_videos.xml",
+        "app/src/main/res/layout/fragment_channels_notifications.xml",
+        "app/src/main/res/layout/fragment_choose_tabs.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_instance_list.xml",
+        "app/src/main/res/layout/fragment_playlist.xml",
+        "app/src/main/res/layout/fragment_related_items.xml",
+        "app/src/main/res/layout/fragment_search.xml",
+        "app/src/main/res/layout/fragment_subscription.xml",
+        "app/src/main/res/layout/missions.xml",
+        "app/src/main/res/layout/player.xml",
+        "app/src/main/res/layout/select_channel_fragment.xml",
+        "app/src/main/res/layout/select_feed_group_fragment.xml",
+        "app/src/main/res/layout/select_kiosk_fragment.xml",
+        "app/src/main/res/layout/select_playlist_fragment.xml",
+        "app/src/main/res/layout/settings_preferencesearch_fragment.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml"
+      ],
+      "example": "\u003candroidx.recyclerview.widget.RecyclerView",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:30"
+    },
+    {
+      "name": "TextView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "usage": 23,
+      "usageFiles": [
+        "app/src/main/res/layout/instance_spinner_item.xml",
+        "app/src/main/res/layout/item_instance.xml",
+        "app/src/main/res/layout/item_metadata_tags.xml",
+        "app/src/main/res/layout/item_search_suggestion.xml",
+        "app/src/main/res/layout/item_software_component.xml",
+        "app/src/main/res/layout/list_channel_card_item.xml",
+        "app/src/main/res/layout/list_channel_grid_item.xml",
+        "app/src/main/res/layout/list_channel_item.xml",
+        "app/src/main/res/layout/list_channel_mini_item.xml",
+        "app/src/main/res/layout/list_choose_tabs.xml",
+        "app/src/main/res/layout/player_fast_seek_seconds_view.xml",
+        "app/src/main/res/layout/settings_preferencesearch_list_item_result.xml"
+      ],
+      "example": "\u003cTextView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/instance_spinner_item.xml:2"
+    },
+    {
+      "name": "ImageButton",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "button",
+      "usage": 22,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/subscription_groups_header.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003cImageButton",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:165"
+    },
+    {
+      "name": "ProgressBar",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "loading",
+      "usage": 22,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/download_loading_dialog.xml",
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_channel_tab.xml",
+        "app/src/main/res/layout/fragment_channel_videos.xml",
+        "app/src/main/res/layout/fragment_comments.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_instance_list.xml",
+        "app/src/main/res/layout/fragment_kiosk.xml",
+        "app/src/main/res/layout/fragment_playlist.xml",
+        "app/src/main/res/layout/fragment_related_items.xml",
+        "app/src/main/res/layout/fragment_search.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/pignate_footer.xml",
+        "app/src/main/res/layout/player.xml",
+        "app/src/main/res/layout/select_channel_fragment.xml",
+        "app/src/main/res/layout/select_feed_group_fragment.xml",
+        "app/src/main/res/layout/select_playlist_fragment.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003cProgressBar",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:226"
+    },
+    {
+      "name": "ShapeableImageView",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "concept": "image",
+      "usage": 16,
+      "usageFiles": [
+        "app/src/main/res/layout/comment_replies_header.xml",
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/list_channel_card_item.xml",
+        "app/src/main/res/layout/list_channel_grid_item.xml",
+        "app/src/main/res/layout/list_channel_item.xml",
+        "app/src/main/res/layout/list_channel_mini_item.xml",
+        "app/src/main/res/layout/list_comment_item.xml",
+        "app/src/main/res/layout/picker_subscription_item.xml",
+        "app/src/main/res/layout/playlist_header.xml",
+        "app/src/main/res/layout/select_channel_item.xml",
+        "app/src/main/res/layout/select_feed_group_item.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003ccom.google.android.material.imageview.ShapeableImageView",
+      "exampleAt": "app/src/main/res/layout/comment_replies_header.xml:8"
+    },
+    {
+      "name": "Button",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "button",
+      "usage": 15,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_error.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/dialog_feed_group_reorder.xml",
+        "app/src/main/res/layout/drawer_header.xml",
+        "app/src/main/res/layout/error_panel.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_import.xml",
+        "app/src/main/res/layout/list_comment_item.xml",
+        "app/src/main/res/layout/player.xml"
+      ],
+      "example": "\u003cButton",
+      "exampleAt": "app/src/main/res/layout/activity_error.xml:118"
+    },
+    {
+      "name": "CardView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "card",
+      "usage": 7,
+      "usageFiles": [
+        "app/src/main/res/layout/feed_group_add_new_grid_item.xml",
+        "app/src/main/res/layout/feed_group_add_new_item.xml",
+        "app/src/main/res/layout/feed_group_card_grid_item.xml",
+        "app/src/main/res/layout/feed_group_card_item.xml",
+        "app/src/main/res/layout/feed_group_reorder_item.xml",
+        "app/src/main/res/layout/item_instance.xml",
+        "app/src/main/res/layout/list_choose_tabs.xml"
+      ],
+      "example": "\u003candroidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/feed_group_add_new_grid_item.xml:2"
+    },
+    {
+      "name": "TextButton",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "button",
+      "usage": 5,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt"
+      ],
+      "example": "TextButton(onClick = { showDialog = false }) {",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:104"
+    },
+    {
+      "name": "Toolbar",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "navbar",
+      "usage": 5,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/activity_recaptcha.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/toolbar_layout.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml"
+      ],
+      "example": "\u003candroidx.appcompat.widget.Toolbar",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:18"
+    },
+    {
+      "name": "AppBarLayout",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "usage": 5,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003ccom.google.android.material.appbar.AppBarLayout",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:11"
+    },
+    {
+      "name": "RadioButton",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "switch",
+      "usage": 5,
+      "usageFiles": [
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/item_instance.xml",
+        "app/src/main/res/layout/list_radio_icon_item.xml"
+      ],
+      "example": "\u003cRadioButton",
+      "exampleAt": "app/src/main/res/layout/download_dialog.xml:43"
+    },
+    {
+      "name": "LazyColumn",
+      "kind": "ui-lib",
+      "source": "Compose Foundation",
+      "concept": "list",
+      "usage": 4,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/SettingsHomeScreen.kt"
+      ],
+      "example": "LazyColumn(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt:78"
+    },
+    {
+      "name": "Spinner",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "loading",
+      "usage": 4,
+      "usageFiles": [
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/instance_spinner_layout.xml"
+      ],
+      "example": "\u003cSpinner",
+      "exampleAt": "app/src/main/res/layout/download_dialog.xml:63"
+    },
+    {
+      "name": "ViewPager",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "carousel",
+      "usage": 4,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_main.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003candroidx.viewpager.widget.ViewPager",
+      "exampleAt": "app/src/main/res/layout/fragment_channel.xml:156"
+    },
+    {
+      "name": "ListItem",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "cell",
+      "usage": 4,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LibraryListItem.kt"
+      ],
+      "example": "ListItem(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:68"
+    },
+    {
+      "name": "FloatingActionButton",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "concept": "button",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_choose_tabs.xml",
+        "app/src/main/res/layout/fragment_instance_list.xml",
+        "app/src/main/res/layout/player_popup_close_overlay.xml"
+      ],
+      "example": "\u003ccom.google.android.material.floatingactionbutton.FloatingActionButton",
+      "exampleAt": "app/src/main/res/layout/fragment_choose_tabs.xml:35"
+    },
+    {
+      "name": "CheckBox",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "switch",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/dialog_playback_parameter.xml",
+        "app/src/main/res/layout/settings_notification_action.xml"
+      ],
+      "example": "\u003cCheckBox",
+      "exampleAt": "app/src/main/res/layout/dialog_playback_parameter.xml:503"
+    },
+    {
+      "name": "TabLayout",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "concept": "tabs",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003ccom.google.android.material.tabs.TabLayout",
+      "exampleAt": "app/src/main/res/layout/fragment_channel.xml:145"
+    },
+    {
+      "name": "TopAppBar",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "navbar",
+      "usage": 3,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt"
+      ],
+      "example": "fun TopAppBar(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt:37"
+    },
+    {
+      "name": "AlertDialog",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "dialog",
+      "usage": 2,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt"
+      ],
+      "example": "AlertDialog(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:77"
+    },
+    {
+      "name": "NavigationView",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/drawer_layout.xml"
+      ],
+      "example": "\u003ccom.google.android.material.navigation.NavigationView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/drawer_layout.xml:2"
+    },
+    {
+      "name": "Tab",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "tabs",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "Tab(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:87"
+    },
+    {
+      "name": "ChipGroup",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "concept": "tag",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/item_metadata_tags.xml"
+      ],
+      "example": "\u003ccom.google.android.material.chip.ChipGroup",
+      "exampleAt": "app/src/main/res/layout/item_metadata_tags.xml:22",
+      "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
+    },
+    {
+      "name": "HorizontalPager",
+      "kind": "ui-lib",
+      "source": "Compose Foundation",
+      "concept": "carousel",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "HorizontalPager(modifier = Modifier.fillMaxSize(), state = pagerState) { page -\u003e",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:104"
+    },
+    {
+      "name": "Chip",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "concept": "tag",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/chip.xml"
+      ],
+      "example": "\u003ccom.google.android.material.chip.Chip xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/chip.xml:4",
+      "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
+    },
+    {
+      "name": "Switch",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "switch",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt"
+      ],
+      "example": "Switch(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt:64"
+    },
+    {
+      "name": "RadioButton",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "switch",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt"
+      ],
+      "example": "RadioButton(selected = entry.value == selectedValue, onClick = null)",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97"
+    },
+    {
+      "name": "TextInputLayout",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/dialog_feed_group_create.xml"
+      ],
+      "example": "\u003ccom.google.android.material.textfield.TextInputLayout",
+      "exampleAt": "app/src/main/res/layout/dialog_feed_group_create.xml:34",
+      "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
+    },
+    {
+      "name": "SeekBar",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/download_dialog.xml"
+      ],
+      "example": "\u003cSeekBar",
+      "exampleAt": "app/src/main/res/layout/download_dialog.xml:137"
+    },
+    {
+      "name": "SwitchPreference",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt",
+      "concept": "switch",
+      "props": [
+        "title",
+        "checked",
+        "onCheckedChange",
+        "modifier",
+        "summary",
+        "enabled"
+      ],
+      "usage": 25,
+      "usageFiles": [
+        "shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/AppearanceSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/DebugSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/SwitchPreferenceTest.kt"
+      ],
+      "example": "SwitchPreference(",
+      "exampleAt": "shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt:112",
+      "required": [
+        "title",
+        "checked",
+        "onCheckedChange"
+      ]
+    },
+    {
+      "name": "ListPreference",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
+      "concept": "list",
+      "props": [
+        "title",
+        "entries",
+        "selectedValue",
+        "onValueSelected",
+        "modifier",
+        "summary",
+        "enabled"
+      ],
+      "usage": 20,
+      "usageFiles": [
+        "shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/AppearanceSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/ListPreferenceTest.kt"
+      ],
+      "example": "ListPreference(",
+      "exampleAt": "shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt:102",
+      "required": [
+        "title",
+        "entries",
+        "selectedValue",
+        "onValueSelected"
+      ]
+    },
+    {
+      "name": "PreferenceRow",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt",
+      "concept": "cell",
+      "props": [
+        "title",
+        "modifier",
+        "icon",
+        "summary",
+        "enabled",
+        "onClick"
+      ],
+      "usage": 12,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/AppearanceSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/DebugSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/SettingsHomeScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/PreferenceRowTest.kt"
+      ],
+      "example": "PreferenceRow(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt:62",
+      "required": [
+        "title"
+      ]
+    },
+    {
+      "name": "TopAppBar",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt",
+      "concept": "navbar",
+      "props": [
+        "modifier",
+        "title",
+        "navigationIcon",
+        "onNavigateUp",
+        "colors",
+        "actions"
+      ],
+      "usage": 10,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/AppearanceSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/DebugSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/PlayerSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/SettingsHomeScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/TopAppBarTest.kt"
+      ],
+      "example": "TopAppBar(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt:45"
+    },
+    {
+      "name": "LibraryListItem",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LibraryListItem.kt",
+      "concept": "cell",
+      "props": [
+        "modifier",
+        "library",
+        "onClick"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LibraryListItem.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/about/LibraryListItemTest.kt"
+      ],
+      "example": "LibraryListItem(library = library)",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LibraryListItem.kt:72",
+      "required": [
+        "library",
+        "library:Library"
+      ]
+    },
+    {
+      "name": "LicenseDialog",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+      "concept": "dialog",
+      "props": [
+        "modifier",
+        "license",
+        "onOpenWebsite",
+        "onDismiss"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/screen/about/LicenseDialogTest.kt"
+      ],
+      "example": "LicenseDialog(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt:92",
+      "required": [
+        "license",
+        "license:License"
+      ]
+    },
+    {
+      "name": "LinkListItem",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
+      "concept": "cell",
+      "props": [
+        "modifier",
+        "link",
+        "onAction"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/about/LinkListItemTest.kt"
+      ],
+      "example": "LinkListItem(link = link)",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt:64",
+      "required": [
+        "link",
+        "link:Link"
+      ]
+    },
+    {
+      "name": "PreferenceCategoryTitle",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt",
+      "props": [
+        "title",
+        "modifier"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt"
+      ],
+      "example": "PreferenceCategoryTitle(title = \"Player\")",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt:35",
+      "required": [
+        "title"
+      ]
+    },
+    {
+      "name": "NavDisplay",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/navigation/NavDisplay.kt",
+      "props": [
+        "startDestination",
+        "onCloseRequest",
+        "navigator"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/App.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/navigation/NavDisplay.kt"
+      ],
+      "example": "NavDisplay(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/App.kt:37",
+      "required": [
+        "startDestination",
+        "startDestination:Destination",
+        "onCloseRequest"
+      ]
+    },
+    {
+      "name": "LicensePage",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
+      "props": [
+        "viewModel",
+        "shareHandler"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "Page.LICENSE -\u003e LicensePage()",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:52"
+    },
+    {
+      "name": "SecondsView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/player/SecondsView.kt",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/player_fast_seek_overlay.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.player.SecondsView",
+      "exampleAt": "app/src/main/res/layout/player_fast_seek_overlay.xml:15"
+    },
+    {
+      "name": "ScrollableTabLayout",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/ScrollableTabLayout.java",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_main.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.ScrollableTabLayout",
+      "exampleAt": "app/src/main/res/layout/fragment_main.xml:8"
+    },
+    {
+      "name": "ExpandableSurfaceView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/ExpandableSurfaceView.java",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/player.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.ExpandableSurfaceView",
+      "exampleAt": "app/src/main/res/layout/player.xml:11"
+    },
+    {
+      "name": "PlayerFastSeekOverlay",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/player/PlayerFastSeekOverlay.kt",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/player.xml",
+        "app/src/main/java/org/schabi/newpipe/player/ui/VideoPlayerUi.java"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.player.PlayerFastSeekOverlay",
+      "exampleAt": "app/src/main/res/layout/player.xml:824"
+    },
+    {
+      "name": "NewPipeEditText",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeEditText.java",
+      "concept": "input",
+      "usage": 6,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_error.xml",
+        "app/src/main/res/layout/dialog_edit_text.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/fragment_import.xml",
+        "app/src/main/res/layout/toolbar_search_layout.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.NewPipeEditText",
+      "exampleAt": "app/src/main/res/layout/activity_error.xml:112"
+    },
+    {
+      "name": "NewPipeTextView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeTextView.java",
+      "usage": 266,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_error.xml",
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/comment_replies_header.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/dialog_playback_parameter.xml",
+        "app/src/main/res/layout/dialog_playlists.xml",
+        "app/src/main/res/layout/dialog_title.xml",
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/drawer_header.xml",
+        "app/src/main/res/layout/error_panel.xml",
+        "app/src/main/res/layout/feed_group_add_new_grid_item.xml",
+        "app/src/main/res/layout/feed_group_add_new_item.xml",
+        "app/src/main/res/layout/feed_group_card_grid_item.xml",
+        "app/src/main/res/layout/feed_group_card_item.xml",
+        "app/src/main/res/layout/feed_group_reorder_item.xml",
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_channel_videos.xml",
+        "app/src/main/res/layout/fragment_choose_tabs.xml",
+        "app/src/main/res/layout/fragment_comments.xml",
+        "app/src/main/res/layout/fragment_description.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_import.xml",
+        "app/src/main/res/layout/fragment_instance_list.xml",
+        "app/src/main/res/layout/fragment_kiosk.xml",
+        "app/src/main/res/layout/fragment_playlist.xml",
+        "app/src/main/res/layout/fragment_related_items.xml",
+        "app/src/main/res/layout/fragment_search.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/info_cell.xml",
+        "app/src/main/res/layout/item_metadata.xml",
+        "app/src/main/res/layout/item_stream_segment.xml",
+        "app/src/main/res/layout/list_choose_tabs_dialog.xml",
+        "app/src/main/res/layout/list_comment_item.xml",
+        "app/src/main/res/layout/list_empty_view.xml",
+        "app/src/main/res/layout/list_empty_view_subscriptions.xml",
+        "app/src/main/res/layout/list_playlist_bookmark_item.xml",
+        "app/src/main/res/layout/list_playlist_card_item.xml",
+        "app/src/main/res/layout/list_playlist_grid_item.xml",
+        "app/src/main/res/layout/list_playlist_item.xml",
+        "app/src/main/res/layout/list_playlist_mini_item.xml",
+        "app/src/main/res/layout/list_stream_card_item.xml",
+        "app/src/main/res/layout/list_stream_grid_item.xml",
+        "app/src/main/res/layout/list_stream_item.xml",
+        "app/src/main/res/layout/list_stream_mini_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_card_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_grid_item.xml",
+        "app/src/main/res/layout/list_stream_playlist_item.xml",
+        "app/src/main/res/layout/local_playlist_header.xml",
+        "app/src/main/res/layout/main_bg.xml",
+        "app/src/main/res/layout/mission_item.xml",
+        "app/src/main/res/layout/mission_item_linear.xml",
+        "app/src/main/res/layout/missions_header.xml",
+        "app/src/main/res/layout/picker_subscription_item.xml",
+        "app/src/main/res/layout/play_queue_item.xml",
+        "app/src/main/res/layout/player.xml",
+        "app/src/main/res/layout/playlist_control.xml",
+        "app/src/main/res/layout/playlist_header.xml",
+        "app/src/main/res/layout/related_items_header.xml",
+        "app/src/main/res/layout/select_channel_fragment.xml",
+        "app/src/main/res/layout/select_channel_item.xml",
+        "app/src/main/res/layout/select_feed_group_fragment.xml",
+        "app/src/main/res/layout/select_feed_group_item.xml",
+        "app/src/main/res/layout/select_kiosk_fragment.xml",
+        "app/src/main/res/layout/select_kiosk_item.xml",
+        "app/src/main/res/layout/select_playlist_fragment.xml",
+        "app/src/main/res/layout/settings_category_header_layout.xml",
+        "app/src/main/res/layout/settings_category_header_title.xml",
+        "app/src/main/res/layout/settings_notification.xml",
+        "app/src/main/res/layout/settings_notification_action.xml",
+        "app/src/main/res/layout/settings_preferencesearch_fragment.xml",
+        "app/src/main/res/layout/statistic_playlist_control.xml",
+        "app/src/main/res/layout/stream_quality_item.xml",
+        "app/src/main/res/layout/subscription_groups_header.xml",
+        "app/src/main/res/layout/subscription_header.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml",
+        "app/src/main/res/layout-land/list_stream_card_item.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml",
+        "app/src/main/java/org/schabi/newpipe/views/CountDownTextView.kt",
+        "app/src/main/java/org/schabi/newpipe/views/PriceTextView.kt"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.NewPipeTextView",
+      "exampleAt": "app/src/main/res/layout/activity_error.xml:29"
+    },
+    {
+      "name": "CircleClipTapView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/player/CircleClipTapView.kt",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/player_fast_seek_overlay.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.player.CircleClipTapView",
+      "exampleAt": "app/src/main/res/layout/player_fast_seek_overlay.xml:8"
+    },
+    {
+      "name": "Render",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/platform/PlayerSettingsSections.kt",
+      "usage": 0
+    },
+    {
+      "name": "NewPipeRecyclerView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeRecyclerView.java",
+      "concept": "list",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_comments.xml",
+        "app/src/main/res/layout/fragment_kiosk.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.NewPipeRecyclerView",
+      "exampleAt": "app/src/main/res/layout/fragment_comments.xml:7"
+    },
+    {
+      "name": "CustomCollapsingToolbarLayout",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/CustomCollapsingToolbarLayout.java",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.CustomCollapsingToolbarLayout",
+      "exampleAt": "app/src/main/res/layout/fragment_channel.xml:17"
+    },
+    {
+      "name": "AboutPage",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
+      "props": [
+        "shareHandler"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "Page.ABOUT -\u003e AboutPage()",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:51"
+    },
+    {
+      "name": "ExoPlayerSettingsSections",
+      "kind": "composable",
+      "source": "shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt",
+      "concept": "card",
+      "props": [
+        "viewModel"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt"
+      ],
+      "example": "override fun Render() = ExoPlayerSettingsSections()",
+      "exampleAt": "shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt:17"
+    },
+    {
+      "name": "PriceTextView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/PriceTextView.kt",
+      "concept": "price",
+      "props": [
+        "priceAmount",
+        "priceCurrencySymbol",
+        "priceMinorTextSize"
+      ],
+      "usage": 0
+    },
+    {
+      "name": "FocusAwareSeekBar",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java",
+      "usage": 0
+    },
+    {
+      "name": "CountDownTextView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/CountDownTextView.kt",
+      "concept": "countdown",
+      "usage": 0
+    },
+    {
+      "name": "@layout/error_panel",
+      "kind": "business",
+      "source": "include",
+      "concept": "empty",
+      "usage": 14,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_blank.xml",
+        "app/src/main/res/layout/fragment_bookmarks.xml",
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_channel_tab.xml",
+        "app/src/main/res/layout/fragment_channel_videos.xml",
+        "app/src/main/res/layout/fragment_comments.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_kiosk.xml",
+        "app/src/main/res/layout/fragment_playlist.xml",
+        "app/src/main/res/layout/fragment_related_items.xml",
+        "app/src/main/res/layout/fragment_search.xml",
+        "app/src/main/res/layout/fragment_subscription.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ]
+    },
+    {
+      "name": "@layout/toolbar_layout",
+      "kind": "business",
+      "source": "include",
+      "concept": "navbar",
+      "usage": 6,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_downloader.xml",
+        "app/src/main/res/layout/activity_error.xml",
+        "app/src/main/res/layout/activity_main.xml",
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/download_loading_dialog.xml",
+        "app/src/main/res/layout/settings_layout.xml"
+      ]
+    },
+    {
+      "name": "@layout/list_empty_view",
+      "kind": "business",
+      "source": "include",
+      "concept": "empty",
+      "usage": 6,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_bookmarks.xml",
+        "app/src/main/res/layout/fragment_channel_tab.xml",
+        "app/src/main/res/layout/fragment_empty.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_subscription.xml",
+        "app/src/main/res/layout/missions.xml"
+      ]
+    },
+    {
+      "name": "@layout/settings_notification_action",
+      "kind": "business",
+      "source": "include",
+      "usage": 5,
+      "usageFiles": [
+        "app/src/main/res/layout/settings_notification.xml"
+      ]
+    },
+    {
+      "name": "@layout/playlist_control",
+      "kind": "business",
+      "source": "include",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/local_playlist_header.xml",
+        "app/src/main/res/layout/playlist_header.xml",
+        "app/src/main/res/layout/statistic_playlist_control.xml"
+      ]
+    },
+    {
+      "name": "@layout/toolbar_search_layout",
+      "kind": "business",
+      "source": "include",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/toolbar_layout.xml"
+      ]
+    },
+    {
+      "name": "@layout/drawer_layout",
+      "kind": "business",
+      "source": "include",
+      "concept": "popup",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_main.xml"
+      ]
+    },
+    {
+      "name": "@layout/settings_category_header_title",
+      "kind": "business",
+      "source": "include",
+      "concept": "navbar",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/settings_category_header_layout.xml"
+      ]
+    },
+    {
+      "name": "@layout/main_bg",
+      "kind": "business",
+      "source": "include",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_blank.xml"
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "concept": "navbar",
+      "members": [
+        "TopAppBar（组件库，用 3 次）",
+        "TopAppBar（Composable，用 10 次）",
+        "@layout/toolbar_layout（业务组件，用 6 次）",
+        "Toolbar（组件库，用 5 次）",
+        "@layout/settings_category_header_title（业务组件，用 1 次）"
+      ],
+      "recommend": "TopAppBar",
+      "totalUsage": 25
+    },
+    {
+      "concept": "list",
+      "members": [
+        "LazyColumn（组件库，用 4 次）",
+        "RecyclerView（组件库，用 26 次）",
+        "NewPipeRecyclerView（自定义 View，用 2 次）"
+      ],
+      "recommend": "LazyColumn",
+      "totalUsage": 32
+    },
+    {
+      "concept": "empty",
+      "members": [
+        "@layout/error_panel（业务组件，用 14 次）",
+        "@layout/list_empty_view（业务组件，用 6 次）"
+      ],
+      "recommend": "@layout/error_panel",
+      "totalUsage": 20
+    },
+    {
+      "concept": "cell",
+      "members": [
+        "ListItem（组件库，用 4 次）",
+        "PreferenceRow（Composable，用 12 次）"
+      ],
+      "recommend": "ListItem",
+      "totalUsage": 16
+    },
+    {
+      "concept": "card",
+      "members": [
+        "Card（Compose Material3，项目未使用）",
+        "ExoPlayerSettingsSections（Composable，用 1 次）"
+      ],
+      "recommend": "Card",
+      "totalUsage": 1
+    }
+  ],
+  "findings": null,
+  "clones": [
+    {
+      "signature": "2d72cc3d",
+      "elements": 7,
+      "locations": [
+        "app/src/main/res/layout-land/list_stream_card_item.xml:2",
+        "app/src/main/res/layout/list_stream_card_item.xml:2",
+        "app/src/main/res/layout/list_stream_grid_item.xml:2",
+        "app/src/main/res/layout/list_stream_item.xml:2"
+      ],
+      "sample": "\u003candroidx.constraintlayout.widget.ConstraintLayout\u003e\n  \u003cImageView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.AnimatedProgressBar\u003e\n"
+    },
+    {
+      "signature": "1420f075",
+      "elements": 5,
+      "locations": [
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml:416",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml:492",
+        "app/src/main/res/layout/dialog_playback_parameter.xml:406",
+        "app/src/main/res/layout/fragment_video_detail.xml:403",
+        "app/src/main/res/layout/fragment_video_detail.xml:477"
+      ],
+      "sample": "\u003cLinearLayout\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n"
+    },
+    {
+      "signature": "a0ddd277",
+      "elements": 8,
+      "locations": [
+        "app/src/main/res/layout/fragment_channel_videos.xml:2",
+        "app/src/main/res/layout/fragment_playlist.xml:2",
+        "app/src/main/res/layout/fragment_related_items.xml:2"
+      ],
+      "sample": "\u003cRelativeLayout\u003e\n  \u003candroidx.recyclerview.widget.RecyclerView\u003e\n  \u003cProgressBar\u003e\n  \u003cLinearLayout\u003e\n    \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n    \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003cinclude\u003e\n  \u003cView\u003e\n"
+    },
+    {
+      "signature": "54958853",
+      "elements": 5,
+      "locations": [
+        "app/src/main/res/layout/list_playlist_grid_item.xml:2",
+        "app/src/main/res/layout/list_playlist_item.xml:2",
+        "app/src/main/res/layout/list_playlist_mini_item.xml:2",
+        "app/src/main/res/layout/stream_quality_item.xml:2"
+      ],
+      "sample": "\u003cRelativeLayout\u003e\n  \u003cImageView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n"
+    },
+    {
+      "signature": "3ff529e9",
+      "elements": 8,
+      "locations": [
+        "app/src/main/res/layout/fragment_comments.xml:2",
+        "app/src/main/res/layout/fragment_kiosk.xml:2"
+      ],
+      "sample": "\u003cRelativeLayout\u003e\n  \u003corg.schabi.newpipe.views.NewPipeRecyclerView\u003e\n  \u003cProgressBar\u003e\n  \u003cLinearLayout\u003e\n    \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n    \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003cinclude\u003e\n  \u003cView\u003e\n"
+    },
+    {
+      "signature": "02c3dbe8",
+      "elements": 5,
+      "locations": [
+        "app/src/main/res/layout/select_channel_fragment.xml:2",
+        "app/src/main/res/layout/select_feed_group_fragment.xml:2",
+        "app/src/main/res/layout/select_playlist_fragment.xml:2"
+      ],
+      "sample": "\u003cLinearLayout\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003candroidx.recyclerview.widget.RecyclerView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003cProgressBar\u003e\n"
+    },
+    {
+      "signature": "1604628b",
+      "elements": 7,
+      "locations": [
+        "app/src/main/res/layout/list_stream_playlist_grid_item.xml:2",
+        "app/src/main/res/layout/list_stream_playlist_item.xml:2"
+      ],
+      "sample": "\u003cRelativeLayout\u003e\n  \u003cImageView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003cImageView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.NewPipeTextView\u003e\n  \u003corg.schabi.newpipe.views.AnimatedProgressBar\u003e\n"
+    },
+    {
+      "signature": "6c5096db",
+      "elements": 5,
+      "locations": [
+        "app/src/main/res/layout/fragment_bookmarks.xml:2",
+        "app/src/main/res/layout/fragment_subscription.xml:2"
+      ],
+      "sample": "\u003cRelativeLayout\u003e\n  \u003candroidx.recyclerview.widget.RecyclerView\u003e\n  \u003cinclude\u003e\n  \u003cinclude\u003e\n  \u003cView\u003e\n"
+    }
+  ],
+  "colors": [
+    {
+      "value": "#FFFFFF",
+      "count": 15,
+      "token": "@color/light_license_background_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#FFDAD6",
+      "count": 6,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F1DEDC",
+      "count": 4,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#1A1110",
+      "count": 3,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#231918",
+      "count": 3,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FFF8F7",
+      "count": 3,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#534342",
+      "count": 3,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#64000000",
+      "count": 2,
+      "token": "@color/video_overlay_color",
+      "sample": [
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ]
+    },
+    {
+      "value": "#00000000",
+      "count": 2,
+      "token": "@color/transparent_background_color",
+      "sample": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml"
+      ]
+    },
+    {
+      "value": "#FFB3AC",
+      "count": 2,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#904A45",
+      "count": 2,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#C0000000",
+      "count": 2,
+      "sample": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml"
+      ]
+    },
+    {
+      "value": "#FEDEA6",
+      "count": 2,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#392E2D",
+      "count": 2,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#60000000",
+      "count": 2,
+      "sample": [
+        "app/src/main/res/layout/player.xml"
+      ]
+    },
+    {
+      "value": "#23000000",
+      "count": 2,
+      "sample": [
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ]
+    },
+    {
+      "value": "#D8C2BF",
+      "count": 2,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#000000",
+      "count": 2,
+      "token": "@color/black_background_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#3B0908",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FFEDEB",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#E7BDB8",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#690005",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#17A0C4",
+      "count": 1,
+      "token": "@color/light_bandcamp_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#1383A1",
+      "count": 1,
+      "token": "@color/dark_bandcamp_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#857371",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FFB4AB",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#E8D6D4",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#571E1B",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#140C0B",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#3D3231",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#E1C38C",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F6E4E2",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#73332F",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#271D1C",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#BA1A1A",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#410002",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FF6F00",
+      "count": 1,
+      "token": "@color/light_peertube_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#F57C00",
+      "count": 1,
+      "token": "@color/light_soundcloud_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#775653",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#AAFF0000",
+      "count": 1,
+      "sample": [
+        "app/src/main/res/layout/player.xml"
+      ]
+    },
+    {
+      "value": "#9E9E9E",
+      "count": 1,
+      "token": "@color/light_media_ccc_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#FFF0EF",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#A34700",
+      "count": 1,
+      "token": "@color/dark_peertube_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#725B2E",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#442927",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#E53935",
+      "count": 1,
+      "token": "@color/light_settings_accent_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#878787",
+      "count": 1,
+      "token": "@color/dark_media_ccc_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#5D3F3C",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F5DDDB",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#992722",
+      "count": 1,
+      "token": "@color/dark_youtube_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#402D04",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#A35300",
+      "count": 1,
+      "token": "@color/dark_soundcloud_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#423735",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#93000A",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#CD201F",
+      "count": 1,
+      "token": "@color/ic_launcher_background",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#2C1513",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#261900",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#584419",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#A08C8A",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#322827",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FCEAE8",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    }
+  ],
+  "conventions": [
+    {
+      "name": "1px View 细线",
+      "kind": "convention",
+      "source": "项目惯例",
+      "concept": "divider",
+      "usage": 14,
+      "example": "\u003cView android:layout_width=\"match_parent\" android:layout_height=\"1dp\" android:background=\"?attr/separator_color\" /\u003e",
+      "exampleAt": "app/src/main/res/layout/dialog_feed_group_reorder.xml:19"
+    }
+  ],
+  "metrics": {
+    "files": 654,
+    "componentUsages": 620,
+    "rawPrimitives": 0,
+    "componentization": 1,
+    "duplicateConcepts": 5,
+    "cloneGroups": 8,
+    "hardcodedColors": 102,
+    "tokenizableColors": 32,
+    "hardcodedSizes": 1053
+  }
+}

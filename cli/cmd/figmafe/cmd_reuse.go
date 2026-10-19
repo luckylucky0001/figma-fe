@@ -112,18 +112,30 @@ func runReuse(args []string) error {
 // runMatch: a new Figma page + an existing project → which existing components can be reused.
 func runMatch(args []string) error {
 	fs := flag.NewFlagSet("match", flag.ExitOnError)
-	figmaDir := fs.String("figma", "", "Figma page export dir (export.json)")
+	figmaDir := fs.String("figma", "", "Figma page export dir (export.json), or a dir of page export dirs (a whole feature)")
 	target := fs.String("target", "", "android page technology: xml|compose (ranks usable components first)")
 	pf := fs.String("platform", "auto", "h5|android|auto")
 	out := fs.String("o", "", "output dir (default <project>/.figmafe/match)")
 	quiet := fs.Bool("q", false, "quiet")
 	pos := parse(fs, args)
 	if *figmaDir == "" || len(pos) != 1 {
-		return fmt.Errorf("usage: figmafe match --figma <export dir> <project dir> [--platform h5|android]")
+		return fmt.Errorf("usage: figmafe match --figma <export dir | dir of exports> <project dir> [--platform h5|android]")
 	}
-	exp, err := figma.LoadExport(*figmaDir)
-	if err != nil {
-		return err
+	// one page, or every page export under the dir (a feature's pages)
+	pages := []string{*figmaDir}
+	multi := false
+	if _, err := os.Stat(filepath.Join(*figmaDir, "export.json")); err != nil {
+		pages = nil
+		entries, _ := os.ReadDir(*figmaDir)
+		for _, e := range entries {
+			if _, err := os.Stat(filepath.Join(*figmaDir, e.Name(), "export.json")); e.IsDir() && err == nil {
+				pages = append(pages, filepath.Join(*figmaDir, e.Name()))
+			}
+		}
+		if len(pages) == 0 {
+			return fmt.Errorf("%s: no export.json (and no page export dirs inside)", *figmaDir)
+		}
+		multi = true
 	}
 	root, _ := filepath.Abs(pos[0])
 	if *out == "" {
@@ -151,25 +163,46 @@ func runMatch(args []string) error {
 		if reuse.Confirmed = loadConfirmed(root); reuse.Confirmed != nil {
 			fmt.Println("· 使用已确认映射 component-map.yaml")
 		}
-		m := reuse.Match(exp, r)
-		md := m.Markdown()
-		if exp.Images.Frame != "" {
-			if b, err := os.ReadFile(filepath.Join(*figmaDir, exp.Images.Frame)); err == nil {
-				img := p + ".frame.png"
-				_ = os.WriteFile(filepath.Join(*out, img), b, 0o644)
-				_ = os.WriteFile(filepath.Join(*out, p+".html"), []byte(m.HTML(exp, img)), 0o644)
+		var results []*reuse.MatchResult
+		for _, page := range pages {
+			exp, err := figma.LoadExport(page)
+			if err != nil {
+				return err
 			}
+			dir := *out
+			if multi {
+				dir = filepath.Join(*out, filepath.Base(page))
+				_ = os.MkdirAll(dir, 0o755)
+			}
+			m := reuse.Match(exp, r)
+			results = append(results, m)
+			md := m.Markdown()
+			if exp.Images.Frame != "" {
+				if b, err := os.ReadFile(filepath.Join(page, exp.Images.Frame)); err == nil {
+					img := p + ".frame.png"
+					_ = os.WriteFile(filepath.Join(dir, img), b, 0o644)
+					_ = os.WriteFile(filepath.Join(dir, p+".html"), []byte(m.HTML(exp, img)), 0o644)
+				}
+			}
+			_ = os.WriteFile(filepath.Join(dir, p+".md"), []byte(md), 0o644)
+			writeJSON(filepath.Join(dir, p+".json"), m)
+			if b, err := yaml.Marshal(m.Draft()); err == nil {
+				hdr := "# component-map 初稿（figmafe match 自动生成）：人工确认推荐组件、补齐变体 → props 后，合并进 design/component-map.yaml\n"
+				_ = os.WriteFile(filepath.Join(dir, "component-map.draft."+p+".yaml"), append([]byte(hdr), b...), 0o644)
+			}
+			if !*quiet && !multi {
+				fmt.Print(md)
+			}
+			fmt.Printf("\n✓ [%s] %s：Figma 组件 %d 个：可直接复用 %d · 需确认 %d · 需新建 %d → %s\n", p, m.Page, len(m.Items), m.Reuse, m.Confirm, m.New, filepath.Join(dir, p+".md"))
 		}
-		_ = os.WriteFile(filepath.Join(*out, p+".md"), []byte(md), 0o644)
-		writeJSON(filepath.Join(*out, p+".json"), m)
-		if b, err := yaml.Marshal(m.Draft()); err == nil {
-			hdr := "# component-map 初稿（figmafe match 自动生成）：人工确认推荐组件、补齐变体 → props 后，合并进 design/component-map.yaml\n"
-			_ = os.WriteFile(filepath.Join(*out, "component-map.draft."+p+".yaml"), append([]byte(hdr), b...), 0o644)
+		if multi {
+			sum := reuse.FeatureSummary(results)
+			_ = os.WriteFile(filepath.Join(*out, p+".summary.md"), []byte(sum), 0o644)
+			if !*quiet {
+				fmt.Print(sum)
+			}
+			fmt.Printf("✓ [%s] %d 个页面的汇总 → %s\n", p, len(pages), filepath.Join(*out, p+".summary.md"))
 		}
-		if !*quiet {
-			fmt.Print(md)
-		}
-		fmt.Printf("\n✓ [%s] Figma 组件 %d 个：可直接复用 %d · 需确认 %d · 需新建 %d → %s\n", p, len(m.Items), m.Reuse, m.Confirm, m.New, filepath.Join(*out, p+".md"))
 	}
 	return nil
 }

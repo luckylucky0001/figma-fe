@@ -550,3 +550,13 @@ func TestBrokerageNames(t *testing.T) {
 		}
 	}
 }
+
+func TestFeatureSummary(t *testing.T) {
+	a := &MatchResult{Page: "A", Items: []MatchItem{{Figma: "Button", Instances: 2, Verdict: "reuse", Candidates: []Candidate{{Name: "Button", Source: "Vant"}}}}}
+	b := &MatchResult{Page: "B", Items: []MatchItem{{Figma: "买入按钮（未组件化）", Instances: 1, Verdict: "confirm", Candidates: []Candidate{{Name: "Button", Source: "Vant"}}},
+		{Figma: "Price", Instances: 1, Verdict: "new"}}}
+	s := FeatureSummary([]*MatchResult{a, b})
+	if !strings.Contains(s, "| `Button` | ✅ 直接复用 | Button、买入按钮 | 2 | 3 |") || !strings.Contains(s, "需新建：Price") {
+		t.Errorf("%s", s)
+	}
+}

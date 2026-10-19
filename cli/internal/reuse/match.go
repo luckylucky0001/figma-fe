@@ -790,3 +790,63 @@ func selectableName(name string) bool {
 	}
 	return false
 }
+
+// FeatureSummary rolls the reuse lists of a feature's pages into one plan, grouped by what to use:
+// every component the feature needs, which Figma elements map to it, on how many pages.
+func FeatureSummary(ms []*MatchResult) string {
+	type row struct {
+		use     string
+		figma   []string
+		pages   map[string]bool
+		inst    int
+		verdict string
+	}
+	rows := map[string]*row{}
+	var order []string
+	rank := map[string]int{"reuse": 0, "confirm": 1, "new": 2}
+	for _, m := range ms {
+		for _, it := range m.Items {
+			name := strings.TrimSuffix(it.Figma, "（未组件化）")
+			use, key := "需新建："+name, "new|"+strings.ToLower(name)
+			if len(it.Candidates) > 0 && it.Verdict != "new" {
+				use, key = it.Candidates[0].Name, "use|"+it.Candidates[0].Source+"|"+it.Candidates[0].Name
+			}
+			r := rows[key]
+			if r == nil {
+				r = &row{use: use, pages: map[string]bool{}, verdict: it.Verdict}
+				rows[key] = r
+				order = append(order, key)
+			}
+			if !contains(r.figma, name) {
+				r.figma = append(r.figma, name)
+			}
+			r.pages[m.Page] = true
+			r.inst += it.Instances
+			if rank[it.Verdict] < rank[r.verdict] {
+				r.verdict = it.Verdict // the same component confidently matched on one page is reusable everywhere
+			}
+		}
+	}
+	sort.SliceStable(order, func(i, j int) bool {
+		a, b := rows[order[i]], rows[order[j]]
+		if rank[a.verdict] != rank[b.verdict] {
+			return rank[a.verdict] < rank[b.verdict]
+		}
+		return a.inst > b.inst
+	})
+	label := map[string]string{"reuse": "✅ 直接复用", "confirm": "❓ 需确认", "new": "🆕 需新建"}
+	var b strings.Builder
+	var pages []string
+	for _, m := range ms {
+		pages = append(pages, m.Page)
+	}
+	fmt.Fprintf(&b, "# 整个需求的复用清单（%d 个页面：%s）\n\n| 用什么 | 结论 | 对应的 Figma 元素 | 页面数 | 实例 |\n|---|---|---|---|---|\n", len(ms), strings.Join(pages, "、"))
+	n := map[string]int{}
+	for _, k := range order {
+		r := rows[k]
+		n[r.verdict]++
+		fmt.Fprintf(&b, "| `%s` | %s | %s | %d | %d |\n", r.use, label[r.verdict], strings.Join(r.figma, "、"), len(r.pages), r.inst)
+	}
+	fmt.Fprintf(&b, "\n这个需求共要用到 %d 个组件：直接复用 %d · 需确认 %d · 需新建 %d。需新建的组件只做一次、放进组件库，所有页面共用。\n", len(order), n["reuse"], n["confirm"], n["new"])
+	return b.String()
+}

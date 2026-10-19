@@ -1,0 +1,23 @@
+<!doctype html>
+<html><body style="font: 13px sans-serif; padding: 12px">
+<p><b>figmafe exporter</b>（免费 Plugin API）</p>
+<button id="page" style="width:100%;margin-bottom:8px">导出选中页面（export.json + frame@2x.png）</button>
+<button id="lib" style="width:100%">导出组件库（library.json + variables.tokens.json）</button>
+<p id="msg" style="color:#666"></p>
+<script>
+  page.onclick = () => parent.postMessage({ pluginMessage: { type: 'page' } }, '*');
+  lib.onclick = () => parent.postMessage({ pluginMessage: { type: 'library' } }, '*');
+  onmessage = (e) => {
+    const m = e.data.pluginMessage;
+    if (!m || m.type !== 'download') return;
+    for (const f of m.files) {
+      const blob = f.text != null ? new Blob([f.text], { type: 'application/json' }) : new Blob([new Uint8Array(f.bytes)], { type: 'image/png' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = f.name;
+      a.click();
+    }
+    msg.textContent = '已下载 ' + m.files.map((f) => f.name).join('、') + '，放到 design/figma-export/<page>/';
+  };
+</script>
+</body></html>

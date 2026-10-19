@@ -9,10 +9,10 @@ out=$repo/experiments/runs/$run
 mkdir -p "$out"
 # A 组的工作目录里没有 figmafe 配置和映射：临时放进去，打完分再删掉
 added=()
-for f in figmafe.yaml design/component-map.yaml; do
+for f in figmafe.yaml design/component-map.yaml design/figma-export/library.json design/figma-export/variables.tokens.json design/figma-export/order-detail/export.json; do
   if [ ! -e "$wt/$f" ]; then
     src=$repo/$f
-    if [ "$variant" = pkg ]; then src=$repo/experiments/$(basename "${f%.yaml}").pkg.yaml; fi
+    if [ "$variant" = pkg ] && [[ $f == *.yaml ]]; then src=$repo/experiments/$(basename "${f%.yaml}").pkg.yaml; fi
     cp "$src" "$wt/$f"; added+=("$f")
   fi
 done

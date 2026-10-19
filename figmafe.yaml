@@ -28,6 +28,6 @@ thresholds:
   violations: 0            # 原生元素 / 硬编码颜色 / 直接用 Material 组件
   pixelMismatch:           # 像素差异占比
     h5: 0.03
-    android: 0.04
+    android: 0.05            # Compose Desktop(Skia) 与 Chromium 字形渲染本底约 4%，见 docs/REPORT.md 校准说明
   nodeErrors: 0            # 节点级严重偏差（缺失、位置/尺寸偏差 > 4px）
   positionTolerance: 2     # px，小于等于此值视为一致

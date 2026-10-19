@@ -1,0 +1,75 @@
+.order-detail {
+  min-height: 100vh;
+  /* ActionBar is fixed at the bottom: reserve its height so content is not covered */
+  padding-bottom: 56px;
+  background: var(--ds-color-bg-page);
+}
+
+.order-detail__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-md);
+  padding: var(--ds-space-md);
+}
+
+/* 1:7 StatusRow — horizontal, gap space.sm; CountDown pushed to the right edge */
+.order-detail__status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-sm);
+}
+
+/* Tag ships with align-self: flex-start; Figma centers it in the 24-high StatusRow (y 122, not 120) */
+.order-detail__v-center {
+  align-self: center;
+}
+
+/* 1:10 StatusTitle — font.title + text-primary */
+.order-detail__status-title {
+  font-size: var(--ds-font-title-size);
+  line-height: var(--ds-font-title-line-height);
+  font-weight: var(--ds-font-title-weight);
+  color: var(--ds-color-text-primary);
+}
+
+/* 1:11 CountDown — no component yet (gap): plain text, font.caption + color.danger */
+.order-detail__countdown {
+  margin-left: auto;
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+  color: var(--ds-color-danger);
+}
+
+/* 1:13 StatusDesc — font.caption + text-tertiary */
+.order-detail__status-desc {
+  margin-top: var(--ds-space-xs);
+  margin-bottom: var(--ds-space-md);
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+  color: var(--ds-color-text-tertiary);
+}
+
+/* 1:20 ProductCard sits 12 above the divider */
+.order-detail__product {
+  margin-bottom: var(--ds-space-md);
+}
+
+/* 1:39 TotalRow — right aligned, gap space.sm, 32 high, 4 below the last Cell */
+.order-detail__total-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ds-space-sm);
+  height: 32px;
+  margin-top: var(--ds-space-xs);
+}
+
+/* 1:40 TotalLabel — font.body + text-primary */
+.order-detail__total-label {
+  font-size: var(--ds-font-body-size);
+  line-height: var(--ds-font-body-line-height);
+  font-weight: var(--ds-font-body-weight);
+  color: var(--ds-color-text-primary);
+}

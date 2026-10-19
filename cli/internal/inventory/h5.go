@@ -19,22 +19,33 @@ var (
 // ScanH5 scans a React component library (dsDir) and its usage in the rest of srcRoot.
 func ScanH5(repoRoot, h5Root, dsRel string) (*Inventory, error) {
 	dsDir := filepath.Join(h5Root, dsRel)
+	// Source library (index.ts + Name/index.tsx) or a published package's type declarations (index.d.ts).
+	ext := ".tsx"
 	idx := readFile(filepath.Join(dsDir, "index.ts"))
 	if idx == "" {
-		return nil, fmt.Errorf("%s/index.ts not found", dsDir)
+		idx = readFile(filepath.Join(dsDir, "index.d.ts"))
+		ext = ".d.ts"
 	}
+	if idx == "" {
+		return nil, fmt.Errorf("%s/index.ts (or index.d.ts) not found", dsDir)
+	}
+	pkgName := packageName(dsDir)
 	inv := &Inventory{Schema: "figmafe-inventory/1", Platform: "h5", Root: rel(repoRoot, h5Root)}
 	for _, m := range h5ExportRe.FindAllStringSubmatch(idx, -1) {
 		name, sub := m[1], m[2]
-		file := filepath.Join(dsDir, sub, "index.tsx")
+		file := filepath.Join(dsDir, sub, "index"+ext)
 		src := readFile(file)
 		if src == "" {
-			file = filepath.Join(dsDir, sub+".tsx")
+			file = filepath.Join(dsDir, sub+ext)
 			src = readFile(file)
 		}
-		c := Component{Name: name, Kind: "react", File: rel(repoRoot, file), Import: fmt.Sprintf("import { %s } from '@ds';", name)}
+		imp := "@ds"
+		if pkgName != "" {
+			imp = pkgName
+		}
+		c := Component{Name: name, Kind: "react", File: rel(repoRoot, file), Import: fmt.Sprintf("import { %s } from '%s';", name, imp)}
 		c.Props = parseTSProps(src, name+"Props")
-		if loc := regexp.MustCompile(`export\s+(function|const)\s+` + name + `\b`).FindStringIndex(src); loc != nil {
+		if loc := regexp.MustCompile(`export\s+(declare\s+)?(function|const)\s+` + name + `\b`).FindStringIndex(src); loc != nil {
 			c.Description, c.Example = docBefore(src, loc[0])
 		}
 		inv.Components = append(inv.Components, c)
@@ -43,9 +54,12 @@ func ScanH5(repoRoot, h5Root, dsRel string) (*Inventory, error) {
 	files := walkFiles(srcRoot, []string{".tsx", ".ts", ".css"}, func(p string) bool { return p == dsDir })
 	for _, f := range files {
 		src := readFile(f)
-		if strings.HasSuffix(f, ".tsx") && (strings.Contains(src, "'@ds'") || strings.Contains(src, "/ds'")) {
+		if strings.HasSuffix(f, ".tsx") {
 			for i := range inv.Components {
 				c := &inv.Components[i]
+				if !regexp.MustCompile(`import\s*\{[^}]*\b` + c.Name + `\b[^}]*\}\s*from`).MatchString(src) {
+					continue
+				}
 				n := len(regexp.MustCompile(`<`+c.Name+`[\s/>]`).FindAllStringIndex(src, -1))
 				if n > 0 {
 					c.Usage += n
@@ -61,6 +75,11 @@ func ScanH5(repoRoot, h5Root, dsRel string) (*Inventory, error) {
 		}
 	}
 	tokFile := filepath.Join(dsDir, "tokens.css")
+	if readFile(tokFile) == "" { // packaged library: tokens are bundled into the stylesheet next to the types
+		if m, _ := filepath.Glob(filepath.Join(dsDir, "..", "*.css")); len(m) > 0 {
+			tokFile = m[0]
+		}
+	}
 	for _, m := range cssVarRe.FindAllStringSubmatch(readFile(tokFile), -1) {
 		name := m[1]
 		if i := strings.IndexByte(name, '-'); i > 0 {
@@ -109,4 +128,16 @@ func parseTSProps(src, iface string) []Prop {
 		doc = ""
 	}
 	return props
+}
+
+// packageName returns the npm package name if dir sits inside node_modules/<pkg>.
+func packageName(dir string) string {
+	for d := dir; d != filepath.Dir(d); d = filepath.Dir(d) {
+		if b := readFile(filepath.Join(d, "package.json")); b != "" && strings.Contains(filepath.Dir(d), "node_modules") {
+			if m := regexp.MustCompile(`"name"\s*:\s*"([^"]+)"`).FindStringSubmatch(b); m != nil {
+				return m[1]
+			}
+		}
+	}
+	return ""
 }

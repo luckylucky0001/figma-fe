@@ -1,0 +1,186 @@
+# Figma ↔ 代码组件映射（人工确认版）
+# 生成方式：figmafe map suggest 给出候选 → 人工确认 → 写入本文件；figmafe map check 校验缺口与漂移。
+# texts：组件属性 ← Figma 文本图层模板（{图层名}；|num 取数字）。
+# props：Figma 变体值 → 代码片段。"" 表示用默认值即可，"-" 表示该端不支持（会在 map check 中报出）。
+# 决策记录：Android 端同时存在 Compose（Ds*）和 XML View（Legacy*）两套资产；新页面一律用 Compose，Legacy* 只用于存量 XML 页面。
+version: 1
+components:
+  - figma: NavBar
+    h5:
+      component: NavBar
+      import: "import { NavBar } from '@company/mobile-ui';"
+      texts: { title: "{Title}" }
+      usage: '<NavBar title="订单详情" onBack={() => history.back()} />'
+    android:
+      component: DsTopBar
+      import: "import com.demo.ds.DsTopBar"
+      texts: { title: "{Title}" }
+      usage: 'DsTopBar(title = "订单详情", onBack = { })'
+    constraints:
+      - 页面顶部只放一个 NavBar；不要自己用 div/Row 拼标题栏
+
+  - figma: Card
+    slot: true
+    h5:
+      component: Card
+      import: "import { Card } from '@company/mobile-ui';"
+      props:
+        Title: { "On": "", "Off": "" }
+      texts: { title: "{CardTitle}" }
+      usage: '<Card title="商品信息">…</Card>'
+    android:
+      component: DsCard
+      import: "import com.demo.ds.DsCard"
+      props:
+        Title: { "On": "", "Off": "" }
+      texts: { title: "{CardTitle}" }
+      usage: 'DsCard(title = "商品信息") { … }'
+    constraints:
+      - Card 已内置 16 内边距和 12 圆角，页面不要再给 Card 加 padding / 背景 / 圆角
+      - 卡片之间的间距用 space.md (12)，由页面容器的 gap 提供
+
+  - figma: Cell
+    h5:
+      component: Cell
+      import: "import { Cell } from '@company/mobile-ui';"
+      props:
+        Arrow: { "On": "arrow", "Off": "" }
+        Label: { "On": "", "Off": "" }
+      texts: { title: "{Title}", label: "{Label}", value: "{Value}" }
+      usage: '<Cell title="运费" value="免运费" />'
+    android:
+      component: DsListItem
+      import: "import com.demo.ds.DsListItem"
+      props:
+        Arrow: { "On": "showChevron = true", "Off": "" }
+        Label: { "On": "", "Off": "" }
+      texts: { title: "{Title}", subtitle: "{Label}", trailingText: "{Value}" }
+      usage: 'DsListItem(title = "运费", trailingText = "免运费")'
+      notes: 不要用 LegacyCellView（XML View 存量组件）
+    constraints:
+      - 左标题 / 右值的行一律用 Cell，不要自己用 flex/Row + 两个文本拼
+
+  - figma: Tag
+    h5:
+      component: Tag
+      import: "import { Tag } from '@company/mobile-ui';"
+      props:
+        Tone: { "Primary": 'type="primary"', "Success": 'type="success"', "Warning": 'type="warning"', "Danger": 'type="danger"' }
+        Variant: { "Light": "", "Solid": "light={false}" }
+      texts: { children: "{Label}" }
+      usage: '<Tag type="warning">待发货</Tag>'
+    android:
+      component: DsBadge
+      import: "import com.demo.ds.DsBadge"
+      props:
+        Tone: { "Primary": "tone = DsBadgeTone.Primary", "Success": "tone = DsBadgeTone.Success", "Warning": "tone = DsBadgeTone.Warning", "Danger": "tone = DsBadgeTone.Danger" }
+        Variant: { "Light": "", "Solid": "-" }
+      texts: { text: "{Label}" }
+      usage: 'DsBadge(text = "待发货", tone = DsBadgeTone.Warning)'
+      notes: DsBadge 只有 Light 变体；Solid 需求已登记给组件库 owner
+    constraints:
+      - 状态色只能通过 type/tone 表达，禁止自己写背景色和文字色
+
+  - figma: Price
+    h5:
+      component: Price
+      import: "import { Price } from '@company/mobile-ui';"
+      props:
+        Size: { "Large": 'size="large"', "Medium": 'size="medium"', "Small": 'size="small"' }
+        Tone: { "Primary": 'tone="primary"', "Default": 'tone="default"' }
+      texts: { value: "{Integer}{Decimal}|num" }
+      usage: '<Price value={269} size="large" tone="primary" />'
+    android:
+      component: DsPriceText
+      import: "import com.demo.ds.DsPriceText"
+      props:
+        Size: { "Large": "size = DsPriceSize.Large", "Medium": "size = DsPriceSize.Medium", "Small": "size = DsPriceSize.Small" }
+        Tone: { "Primary": "tone = DsPriceTone.Primary", "Default": "tone = DsPriceTone.Default" }
+      texts: { amount: "{Integer}{Decimal}|num" }
+      usage: 'DsPriceText(amount = 269.0, size = DsPriceSize.Large, tone = DsPriceTone.Primary)'
+    constraints:
+      - 金额一律用 Price，不要拼「¥」+ 数字文本（字号层级和基线对齐会错）
+      - 例外：Cell 右侧的值（如「¥299.00」「-¥30.00」）在设计稿里是普通文本，用 Cell 的 value 传字符串
+
+  - figma: Button
+    h5:
+      component: Button
+      import: "import { Button } from '@company/mobile-ui';"
+      props:
+        Type: { "Primary": 'type="primary"', "Default": 'type="default"', "Text": 'type="text"' }
+        Size: { "Large": 'size="large"', "Medium": 'size="medium"', "Small": 'size="small"' }
+      texts: { children: "{Label}" }
+      usage: '<Button type="primary" size="medium">提醒发货</Button>'
+    android:
+      component: DsButton
+      import: "import com.demo.ds.DsButton"
+      props:
+        Type: { "Primary": "style = DsButtonStyle.Primary", "Default": "style = DsButtonStyle.Default", "Text": "style = DsButtonStyle.Text" }
+        Size: { "Large": "size = DsButtonSize.Large", "Medium": "size = DsButtonSize.Medium", "Small": "size = DsButtonSize.Small" }
+      texts: { text: "{Label}" }
+      usage: 'DsButton(text = "提醒发货", onClick = { }, style = DsButtonStyle.Primary, size = DsButtonSize.Medium)'
+      notes: 不要用 LegacyButton（XML View 存量组件），不要用 material3.Button
+    constraints:
+      - 一屏最多一个 Primary 按钮
+      - H5 禁止原生 <button>；Android 禁止 material3.Button / OutlinedButton
+
+  - figma: Divider
+    h5:
+      component: Divider
+      import: "import { Divider } from '@company/mobile-ui';"
+      usage: '<Divider />'
+    android:
+      component: DsDivider
+      import: "import com.demo.ds.DsDivider"
+      usage: 'DsDivider()'
+    constraints:
+      - 不要用 border-bottom / material3.Divider 代替
+
+  - figma: ProductCard
+    h5:
+      component: ProductCard
+      import: "import { ProductCard } from '@company/mobile-ui';"
+      texts: { title: "{Title}", spec: "{Spec}", price: "{Integer}{Decimal}|num", count: "{Count}|num" }
+      usage: '<ProductCard title="…" spec="米白色 / M" price={299} count={1} />'
+    android:
+      component: DsGoodsCard
+      import: "import com.demo.ds.DsGoodsCard"
+      texts: { title: "{Title}", price: "{Integer}{Decimal}|num", spec: "{Spec}", count: "{Count}|int" }
+      usage: 'DsGoodsCard(title = "…", price = 299.0, spec = "米白色 / M", count = 1)'
+    constraints:
+      - 商品行一律用 ProductCard，内部的缩略图 / 标题 / 规格 / 价格 / 数量不要拆开自己拼
+
+  - figma: ActionBar
+    slot: true
+    h5:
+      component: ActionBar
+      import: "import { ActionBar } from '@company/mobile-ui';"
+      usage: '<ActionBar><Button>联系客服</Button><Button type="primary">提醒发货</Button></ActionBar>'
+    android:
+      component: DsBottomBar
+      import: "import com.demo.ds.DsBottomBar"
+      usage: 'DsBottomBar { DsButton(text = "联系客服", onClick = {}, style = DsButtonStyle.Default) }'
+      notes: DsBottomBar 不负责定位，页面需要把它放在底部（Box + Alignment.BottomCenter）
+    constraints:
+      - 吸底操作区一律用 ActionBar；页面内容区底部要留出 56 的空间
+
+  - figma: NoticeBar
+    h5:
+      component: NoticeBar
+      import: "import { NoticeBar } from '@company/mobile-ui';"
+      props:
+        Tone: { "Info": 'tone="info"', "Warning": 'tone="warning"' }
+      texts: { children: "{Text}" }
+      usage: '<NoticeBar tone="warning">商家已接单</NoticeBar>'
+    android:
+      component: DsBanner
+      import: "import com.demo.ds.DsBanner"
+      props:
+        Tone: { "Info": "tone = DsBannerTone.Info", "Warning": "tone = DsBannerTone.Warning" }
+      texts: { text: "{Text}" }
+      usage: 'DsBanner(text = "商家已接单", tone = DsBannerTone.Warning)'
+
+gaps:
+  - figma: CountDown
+    platform: all
+    decision: 两端暂无组件。本期按普通文本实现（font.caption + color.danger，静态文案），已登记为组件需求；不要在页面里自造倒计时组件

@@ -207,11 +207,19 @@ func Nodes(exp *figma.Export, p *plan.Plan, rn *capture.Nodes, tol float64, mask
 		res.Texts++
 		b := exp.Rel(t)
 		want := norm(t.Characters)
-		var cands []int
+		// Prefer plain text nodes; component roots also carry their joined text (e.g. DsTopBar "订单详情").
+		var cands, compCands []int
 		for i, n := range rn.Nodes {
 			if !usedT[i] && n.Text != nil && norm(*n.Text) == want {
-				cands = append(cands, i)
+				if n.DS == nil {
+					cands = append(cands, i)
+				} else {
+					compCands = append(compCands, i)
+				}
 			}
+		}
+		if len(cands) == 0 {
+			cands = compCands
 		}
 		idx := near(cands, b)
 		label := fmt.Sprintf("文本「%s」", trunc(t.Characters, 14))
@@ -242,8 +250,11 @@ func Nodes(exp *figma.Export, p *plan.Plan, rn *capture.Nodes, tol float64, mask
 		usedT[idx] = true
 		res.TextsMatched++
 		n := rn.Nodes[idx]
-		dx, dy := n.X-b.X, n.Y-b.Y
-		if d := math.Max(math.Abs(dx), math.Abs(dy)); d > tol {
+		// Text boxes differ in width between Figma (often fixed / fill width) and code (hug content or
+		// padded parent), so x is alignment-agnostic: left, centre or right edge may match. y uses the centre.
+		dx := math.Min(math.Abs(n.X-b.X), math.Min(math.Abs((n.X+n.W/2)-(b.X+b.Width/2)), math.Abs((n.X+n.W)-(b.X+b.Width))))
+		dy := math.Abs((n.Y + n.H/2) - (b.Y + b.Height/2))
+		if d := math.Max(dx, dy); d > tol {
 			add(Deviation{sev(d), "position", t.ID, label, fmt.Sprintf("(%.0f, %.0f)", b.X, b.Y), fmt.Sprintf("(%.0f, %.0f)", n.X, n.Y), round1(d)})
 		}
 		if t.Style != nil && n.FontSize > 0 {

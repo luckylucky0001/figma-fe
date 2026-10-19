@@ -84,7 +84,7 @@ func Load(root string) (*Config, error) {
 		c.Thresholds.PositionTol = 2
 	}
 	if c.Thresholds.PixelMismatch == nil {
-		c.Thresholds.PixelMismatch = map[string]float64{"h5": 0.03, "android": 0.04}
+		c.Thresholds.PixelMismatch = map[string]float64{"h5": 0.03, "android": 0.05}
 	}
 	return &c, nil
 }

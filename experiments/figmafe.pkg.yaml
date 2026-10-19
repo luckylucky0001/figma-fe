@@ -1,0 +1,33 @@
+# figmafe 配置：所有路径相对仓库根目录
+figma:
+  library: design/figma-export/library.json            # Figma 组件库导出（组件集 + 变体）
+  variables: design/figma-export/variables.tokens.json  # Figma Variables（DTCG）
+  pages:
+    OrderDetail: design/figma-export/order-detail
+map: design/component-map.yaml
+out: .figmafe            # 扫描结果、截图、报告（gitignore）
+
+h5:
+  root: h5
+  ds: node_modules/@company/mobile-ui/dist/types   # H5 组件库（npm 包，扫描其类型声明）
+  pages: src/pages
+  build: npm run build --silent
+  dist: dist
+
+android:
+  root: android
+  ds: ds/src/main/kotlin/com/demo/ds        # Compose 组件库
+  dsView: ds-view/src/main                  # XML View 老组件（attrs.xml + View 类 + layout）
+  app: app/src/main/kotlin/com/demo/app
+  screens: app/src/main/kotlin/com/demo/app/screens
+  build: gradle -q :harness:installDist
+  run: harness/build/install/harness/bin/harness
+
+thresholds:
+  reuse: 0.95              # 组件复用率
+  violations: 0            # 原生元素 / 硬编码颜色 / 直接用 Material 组件
+  pixelMismatch:           # 像素差异占比
+    h5: 0.03
+    android: 0.04
+  nodeErrors: 0            # 节点级严重偏差（缺失、位置/尺寸偏差 > 4px）
+  positionTolerance: 2     # px，小于等于此值视为一致

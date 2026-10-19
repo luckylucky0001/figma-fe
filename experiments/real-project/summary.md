@@ -33,6 +33,7 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 | run | 组 | 结果 | 复用现成组件 | 自造轮子（确定/疑似） | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
 |---|---|---|---|---|---|---|---|---|---|
 | Rnia-A-1 | A 只给任务（Opus） | ❌ FAIL | 2 | 5 / 1 | 0 | 0 / 0 | 0 | 18 | 12 个：NiaNavBar、NiaCard、NiaDivider、NiaCell、NiaPillButton、NiaStatusTag、NiaPrice、NiaCountDown、NiaNoticeBar、NiaActionBar、NiaProductCard + CommerceTheme |
+| Rnia-A-2 | A 只给任务（Opus） | ❌ FAIL | 2 | 5 / 1 | 0 | 0 / 0 | 0 | 18 | 11 个 Commerce*（NavBar、NoticeBar、Card、Divider、Cell、Tag、Price、ProductCard、CountDown、Button、ActionBar）+ CommerceTheme |
 | Rnia-C-1 | C 用 Skill（Opus） | ❌ FAIL | 6 | 1 / 1 | 0 | 0 / 0 | 0 | 0 | NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard |
 
 ## 说明

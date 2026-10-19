@@ -83,10 +83,10 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 				continue
 			}
 			if subset(specialWords(b.Name, b.Concept), mine) {
-				if existing == nil || rank(*b) > rank(*existing) {
+				if existing == nil || preference(*b, a.Concept) > preference(*existing, a.Concept) {
 					existing = b
 				}
-			} else if other == nil || rank(*b) > rank(*other) {
+			} else if other == nil || preference(*b, a.Concept) > preference(*other, a.Concept) {
 				other = b
 			}
 		}
@@ -99,7 +99,7 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 			if existing.Kind == "ui-lib" && existing.Usage == 0 {
 				sev, note = "warn", "（组件库标准组件，项目还没用过，请确认）"
 			}
-			pc.Reinvented = append(pc.Reinvented, Finding{"reinvented", sev, a.Source, 0, a.Name, "页面里自造了 " + a.Name + "，已有 " + existing.Name + "（" + kindLabel(existing.Kind) + " " + existing.Source + "）" + note})
+			pc.Reinvented = append(pc.Reinvented, Finding{"reinvented", sev, a.Source, 0, a.Name, "新建了 " + a.Name + "，已有 " + existing.Name + "（" + kindLabel(existing.Kind) + " " + existing.Source + "）" + note})
 		}
 	}
 	for _, f := range r.Findings {

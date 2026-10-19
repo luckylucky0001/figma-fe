@@ -17,6 +17,7 @@ NEW = {
     "Rqm-C-1": "QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBar",
     "Rqm-C-2": "QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBarLayout、QDTagView、QDProductCardView",
     "Rnia-A-1": "12 个：NiaNavBar、NiaCard、NiaDivider、NiaCell、NiaPillButton、NiaStatusTag、NiaPrice、NiaCountDown、NiaNoticeBar、NiaActionBar、NiaProductCard + CommerceTheme",
+    "Rnia-A-2": "11 个 Commerce*（NavBar、NoticeBar、Card、Divider、Cell、Tag、Price、ProductCard、CountDown、Button、ActionBar）+ CommerceTheme",
     "Rnia-C-1": "NiaNoticeBar、NiaPriceText、NiaCountdownText、NiaActionBar、NiaListItem、NiaStatusTag、ProductCard",
 }
 

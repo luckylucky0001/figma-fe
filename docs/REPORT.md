@@ -77,6 +77,13 @@
 - **实验有泄漏**：A 组 agent 也能看到本仓库的 Skill；Rlm-A-1 自己运行了 figmafe，已剔除。泄漏只会让 A 组更好，所以 A / C 差距是保守估计。样本量小（每种条件 1～2 次），只能说明方向。
 - **准确率的判断标准是人定的**：✓ / △ / ✗ 由我逐条判断并写成回归用例；真实接入时应由组件 owner 复核一次。
 
+## 已知未解决的问题
+
+- **「重复实现」的判断仍有争议项**：Android 端按使用次数选推荐（QMUI 的 Compose 按钮推荐用得最多的 `CommonImageButton`，而不是更通用的 `CommonButton`）；「原生 ImageButton → MaterialButton」在 Material 3 里成立（IconButton 样式），在老项目里只能当参考。
+- **按名字识别概念的边界**：靠弱词（line / item / row）沾上概念的组件已降权，但新的命名习惯仍可能误判；遇到时在 `component-map.yaml` 里登记决定，之后 match 和页面检查都会采用。
+- **组件库目录需要维护**：没收录的 H5 组件库（例如 jeecg 用的 wot-design-uni 在加入前）会整个看不到。Android 布局里的三方 View 会自动收录，H5 的需要在 `cli/internal/reuse/libs.go` 里补一条。
+- **主题判断**：应用主题在代码里切换、又不使用 Theme.* 命名时，工具判断不出主题，Material 组件的可用性按「未知」处理（不报不可用）。
+
 ## 接入真实项目
 
 1. `figmafe reuse` 分别扫 H5 和 Android 仓库（只读），把体检报告给组件 owner 看，先处理「优先处理」里的项。

@@ -498,7 +498,10 @@ func preference(a Asset, concept string) int {
 		p += 1000
 	}
 	for _, c := range concepts {
-		if c.Name == concept && normName(a.Name) == c.Words[0] && !builtinLib(a.Source) { // ListView is not the list to converge on
+		// ListView is not the list to converge on; outside a design system a learned family prefix
+		// (jeecg's Online*) is not enough to make OnlineImage "the" Image
+		if c.Name == concept && normName(a.Name) == c.Words[0] && !builtinLib(a.Source) &&
+			(a.Kind == "ui-lib" || a.Kind == "design-system" || inDesignSystem(a.Source) || strings.EqualFold(a.Name, c.Words[0])) {
 			p += 1500
 		}
 	}

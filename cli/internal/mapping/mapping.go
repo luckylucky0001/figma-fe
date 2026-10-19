@@ -128,6 +128,19 @@ func nameScore(figmaName, code string) float64 {
 			return 0.9
 		}
 	}
+	// Word-level: StatusTag / InfoRow / SectionCard / PageHeader carry a synonym as one of their words.
+	for _, w := range camelWords(code) {
+		for _, g := range synonyms {
+			ia, iw := false, false
+			for _, x := range g {
+				ia = ia || a == x
+				iw = iw || w == x || w == x+"s"
+			}
+			if ia && iw {
+				return 0.85
+			}
+		}
+	}
 	d := levenshtein(a, b)
 	l := max(len(a), len(b))
 	if l == 0 {
@@ -218,7 +231,13 @@ func Suggest(lib *figma.Library, invs map[string]*inventory.Inventory) []Suggest
 					cs = append(cs, Candidate{Component: c.Name, Kind: c.Kind, Score: round2(sc), Name: round2(ns), Variant: round2(vs)})
 				}
 			}
-			sort.Slice(cs, func(i, j int) bool { return cs[i].Score > cs[j].Score })
+			sort.SliceStable(cs, func(i, j int) bool {
+				bi, bj := cs[i].Kind == "business", cs[j].Kind == "business"
+				if bi != bj {
+					return !bi // design-system assets first; business look-alikes are listed as duplicates
+				}
+				return cs[i].Score > cs[j].Score
+			})
 			if len(cs) > 3 {
 				cs = cs[:3]
 			}
@@ -238,6 +257,49 @@ func Suggest(lib *figma.Library, invs map[string]*inventory.Inventory) []Suggest
 }
 
 func round2(f float64) float64 { return float64(int(f*100+0.5)) / 100 }
+
+func camelWords(s string) []string {
+	var out []string
+	cur := []rune{}
+	for _, r := range s {
+		if r >= 'A' && r <= 'Z' && len(cur) > 0 {
+			out = append(out, strings.ToLower(string(cur)))
+			cur = cur[:0]
+		}
+		cur = append(cur, r)
+	}
+	if len(cur) > 0 {
+		out = append(out, strings.ToLower(string(cur)))
+	}
+	return out
+}
+
+// NameScore is exported for duplicate detection.
+func NameScore(figmaName, code string) float64 { return nameScore(figmaName, code) }
+
+// Duplicates maps each business component to the design-system component it duplicates, if any.
+func Duplicates(m *Map, inv *inventory.Inventory, platform string) map[string]string {
+	out := map[string]string{}
+	for _, c := range inv.Components {
+		if c.Kind != "business" {
+			continue
+		}
+		best, bs := "", 0.0
+		for _, e := range m.Components {
+			im := e.Impl(platform)
+			if im == nil {
+				continue
+			}
+			if sc := nameScore(e.Figma, c.Name); sc >= 0.85 && sc > bs {
+				best, bs = im.Component, sc
+			}
+		}
+		if best != "" {
+			out[c.Name] = best
+		}
+	}
+	return out
+}
 
 func levenshtein(a, b string) int {
 	ra, rb := []rune(a), []rune(b)

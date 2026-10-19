@@ -9,6 +9,7 @@ import (
 	"github.com/luckylucky0001/figma-fe/cli/internal/capture"
 	"github.com/luckylucky0001/figma-fe/cli/internal/config"
 	"github.com/luckylucky0001/figma-fe/cli/internal/diff"
+	"github.com/luckylucky0001/figma-fe/cli/internal/mapping"
 	"github.com/luckylucky0001/figma-fe/cli/internal/report"
 )
 
@@ -39,7 +40,11 @@ func doAudit(cfg *config.Config, a *pageArgs) (*audit.Result, error) {
 	if _, err := os.Stat(dir); err != nil {
 		return nil, fmt.Errorf("page source dir %s not found", relTo(cfg, dir))
 	}
-	res, err := audit.Run(a.platform, cfg.Root, dir, p, invs[a.platform])
+	var dups map[string]string
+	if m, err := mapping.Load(cfg.P(cfg.Map)); err == nil {
+		dups = mapping.Duplicates(m, invs[a.platform], a.platform)
+	}
+	res, err := audit.Run(a.platform, cfg.Root, dir, p, invs[a.platform], dups)
 	if err != nil {
 		return nil, err
 	}

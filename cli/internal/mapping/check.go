@@ -78,7 +78,14 @@ func Check(m *Map, lib *figma.Library, invs map[string]*inventory.Inventory, var
 		}
 		res.Coverage[pf] = cov
 		if inv := invs[pf]; inv != nil {
+			dups := Duplicates(m, inv, pf)
 			for _, c := range inv.Components {
+				if c.Kind == "business" {
+					if ds, ok := dups[c.Name]; ok {
+						add(Issue{Kind: "duplicate", Severity: "warn", Platform: pf, Detail: fmt.Sprintf("业务组件 %s（%s，被用 %d 次）与设计系统组件 %s 重复：新页面用 %s，存量逐步迁移", c.Name, c.File, c.Usage, ds, ds)})
+					}
+					continue
+				}
 				if !used[pf][c.Name] {
 					add(Issue{Kind: "code-only", Severity: "info", Platform: pf, Detail: fmt.Sprintf("%s（%s）没有对应的 Figma 组件：设计侧缺口、老组件或待废弃", c.Name, c.Kind)})
 				}

@@ -57,7 +57,8 @@ var (
 )
 
 // Run audits all source files under dir for the given platform against the plan.
-func Run(platform, repoRoot, dir string, p *plan.Plan, inv *inventory.Inventory) (*Result, error) {
+// dups maps business look-alike components (e.g. StatusTag) to the design-system component they duplicate.
+func Run(platform, repoRoot, dir string, p *plan.Plan, inv *inventory.Inventory, dups map[string]string) (*Result, error) {
 	res := &Result{Platform: platform}
 	exts := []string{".tsx", ".ts", ".css"}
 	if platform == "android" {
@@ -77,7 +78,17 @@ func Run(platform, repoRoot, dir string, p *plan.Plan, inv *inventory.Inventory)
 	sort.Strings(files)
 	known := map[string]bool{}
 	for _, c := range inv.Components {
-		known[c.Name] = true
+		if c.Kind != "business" {
+			known[c.Name] = true
+		}
+	}
+	dupRe := map[string]*regexp.Regexp{}
+	for b := range dups {
+		if platform == "h5" {
+			dupRe[b] = regexp.MustCompile(`<` + b + `[\s/>]`)
+		} else {
+			dupRe[b] = regexp.MustCompile(`\b` + b + `\s*\(`)
+		}
 	}
 	actual := map[string]int{}
 	add := func(f Finding) {
@@ -95,6 +106,15 @@ func Run(platform, repoRoot, dir string, p *plan.Plan, inv *inventory.Inventory)
 		at := func(idx int) (int, string) {
 			ln := strings.Count(src[:idx], "\n")
 			return ln + 1, strings.TrimSpace(lines[ln])
+		}
+		for b, re := range dupRe {
+			for _, m := range re.FindAllStringIndex(src, -1) {
+				if strings.Contains(src[max(0, m[0]-6):m[0]], "fun ") {
+					continue // the page defines it itself; lookalike rule covers that
+				}
+				ln, t := at(m[0])
+				add(Finding{"business-duplicate", "error", relf, ln, t, "用了业务重复组件 " + b + "，应改用设计系统组件 " + dups[b]})
+			}
 		}
 		if platform == "h5" {
 			for _, m := range jsxTagRe.FindAllStringSubmatchIndex(src, -1) {

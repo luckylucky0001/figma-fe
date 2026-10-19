@@ -24,7 +24,7 @@ import androidx.compose.material3.Text
 	_ = os.WriteFile(filepath.Join(dir, "Page.kt"), []byte(src), 0o644)
 	inv := &inventory.Inventory{Components: []inventory.Component{{Name: "DsTopBar"}, {Name: "DsButton"}}}
 	p := &plan.Plan{Counts: map[string]int{"DsTopBar": 1, "DsButton": 1}}
-	r, err := Run("android", dir, dir, p, inv)
+	r, err := Run("android", dir, dir, p, inv, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,8 +55,20 @@ export default () => <div><Cell title="运费" data-figma-id="1:3" /><button sty
 	_ = os.WriteFile(filepath.Join(dir, "index.tsx"), []byte(src), 0o644)
 	inv := &inventory.Inventory{Components: []inventory.Component{{Name: "Cell"}, {Name: "Tag"}}}
 	p := &plan.Plan{Counts: map[string]int{"Cell": 1, "Tag": 1}}
-	r, _ := Run("h5", dir, dir, p, inv)
+	r, _ := Run("h5", dir, dir, p, inv, nil)
 	if r.ReuseRate != 0.5 || r.Violations != 2 || r.FigmaIDs != 1 {
 		t.Errorf("reuse=%v violations=%d ids=%d findings=%+v", r.ReuseRate, r.Violations, r.FigmaIDs, r.Findings)
+	}
+}
+
+func TestAuditBusinessDuplicate(t *testing.T) {
+	dir := t.TempDir()
+	src := "import { StatusTag } from '../../components';\nexport default () => <StatusTag status=\"pending\" text=\"待发货\" />"
+	_ = os.WriteFile(filepath.Join(dir, "index.tsx"), []byte(src), 0o644)
+	inv := &inventory.Inventory{Components: []inventory.Component{{Name: "Tag"}, {Name: "StatusTag", Kind: "business"}}}
+	p := &plan.Plan{Counts: map[string]int{"Tag": 1}}
+	r, _ := Run("h5", dir, dir, p, inv, map[string]string{"StatusTag": "Tag"})
+	if r.Violations != 1 || r.ReuseRate != 0 || r.Findings[0].Rule != "business-duplicate" {
+		t.Errorf("violations=%d reuse=%v findings=%+v", r.Violations, r.ReuseRate, r.Findings)
 	}
 }

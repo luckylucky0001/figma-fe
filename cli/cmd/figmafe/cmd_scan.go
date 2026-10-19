@@ -21,11 +21,34 @@ func inventoryPath(cfg *config.Config, pf string) string {
 }
 
 func scanPlatform(cfg *config.Config, pf string) (*inventory.Inventory, error) {
+	exists := func(p ...string) bool { _, err := os.Stat(cfg.P(p...)); return err == nil }
 	switch pf {
 	case "h5":
-		return inventory.ScanH5(cfg.Root, cfg.P(cfg.H5.Root), cfg.H5.DS)
+		inv, err := inventory.ScanH5(cfg.Root, cfg.P(cfg.H5.Root), cfg.H5.DS)
+		if err != nil {
+			return nil, err
+		}
+		biz := cfg.H5.Business
+		if biz == nil && exists(cfg.H5.Root, "src/components") {
+			biz = []string{"src/components"}
+		}
+		inventory.ScanBusinessH5(cfg.Root, cfg.P(cfg.H5.Root), biz, inv)
+		return inv, nil
 	case "android":
-		return inventory.ScanAndroid(cfg.Root, cfg.P(cfg.Android.Root), cfg.Android.DS, cfg.Android.DSView, cfg.Android.App)
+		inv, err := inventory.ScanAndroid(cfg.Root, cfg.P(cfg.Android.Root), cfg.Android.DS, cfg.Android.DSView, cfg.Android.App)
+		if err != nil {
+			return nil, err
+		}
+		biz := cfg.Android.Business
+		if biz == nil {
+			for _, d := range []string{"widgets", "components", "common"} {
+				if exists(cfg.Android.Root, cfg.Android.App, d) {
+					biz = append(biz, filepath.Join(cfg.Android.App, d))
+				}
+			}
+		}
+		inventory.ScanBusinessAndroid(cfg.Root, cfg.P(cfg.Android.Root), biz, cfg.Android.App, inv)
+		return inv, nil
 	}
 	return nil, fmt.Errorf("unknown platform %q (h5|android)", pf)
 }
@@ -187,6 +210,7 @@ func renderCheck(res *mapping.CheckResult) string {
 		{"variant-unsupported", "变体在该端不支持"},
 		{"variant-unmapped", "变体没有 props 映射"},
 		{"token-drift", "Token 漂移（Figma Variables ≠ 代码）"},
+		{"duplicate", "重复资产（业务组件 ≈ 设计系统组件）"},
 		{"token-missing", "Token 缺失"},
 		{"code-only", "代码有、Figma 没有"},
 	}

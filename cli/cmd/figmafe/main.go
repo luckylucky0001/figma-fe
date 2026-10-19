@@ -42,6 +42,10 @@ func main() {
 		err = runDiff(args)
 	case "verify":
 		err = runVerify(args)
+	case "reuse":
+		err = runReuse(args)
+	case "match":
+		err = runMatch(args)
 	case "-h", "--help", "help":
 		usage()
 		return
@@ -78,6 +82,8 @@ Phase 4  audit    --page P --platform X        static audit of the page source
          capture  --page P --platform X        render → screen.png + nodes.json
          diff     --page P --platform X        pixel + node diff vs Figma
          verify   --page P --platform X        audit + capture + diff + report (exit 3 if below threshold)
+存量     match    --figma <export> <project>    new Figma page → which existing components to reuse (no mapping needed)
+         reuse    [dir] [--platform h5|android] brownfield reuse check of any Vue/React or Android project (no Figma needed)
 dev      fixture  <design.html> -o <dir>       Figma-format export from an annotated design HTML
 
 Global: run from the repo root (figmafe.yaml) or pass --root <dir>.

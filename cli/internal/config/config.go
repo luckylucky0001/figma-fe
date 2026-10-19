@@ -24,6 +24,8 @@ type Config struct {
 		Pages string `yaml:"pages"`
 		Build string `yaml:"build"`
 		Dist  string `yaml:"dist"`
+		// Business (non design-system) component dirs; scanned to find duplicates. Default: src/components if present.
+		Business []string `yaml:"business"`
 	} `yaml:"h5"`
 	Android struct {
 		Root    string `yaml:"root"`
@@ -33,6 +35,8 @@ type Config struct {
 		Screens string `yaml:"screens"`
 		Build   string `yaml:"build"`
 		Run     string `yaml:"run"`
+		// Business composable dirs (relative to android root). Default: <app>/widgets|components|common if present.
+		Business []string `yaml:"business"`
 	} `yaml:"android"`
 	Thresholds Thresholds `yaml:"thresholds"`
 }

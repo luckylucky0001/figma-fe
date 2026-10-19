@@ -14,10 +14,10 @@ func TestNameScore(t *testing.T) {
 	}{
 		{"Button", "Button", 1, 1},
 		{"Button", "DsButton", 1, 1},
-		{"NavBar", "DsTopBar", 0.9, 0.9},  // synonym
-		{"Cell", "DsListItem", 0.9, 0.9},  // synonym
-		{"Tag", "LegacyTagView", 1, 1},    // prefix/suffix stripped
-		{"CountDown", "Button", 0, 0.45},  // unrelated
+		{"NavBar", "DsTopBar", 0.9, 0.9}, // synonym
+		{"Cell", "DsListItem", 0.9, 0.9}, // synonym
+		{"Tag", "LegacyTagView", 1, 1},   // prefix/suffix stripped
+		{"CountDown", "Button", 0, 0.45}, // unrelated
 	}
 	for _, c := range cases {
 		got := nameScore(c.figma, c.code)

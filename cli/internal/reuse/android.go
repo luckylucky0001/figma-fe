@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -263,26 +264,43 @@ func ScanAndroid(root string) *Report {
 		}
 		r.Metrics.HardcodedSizes += len(xmlHardSizeRe.FindAllStringIndex(f.text, -1))
 	}
+	// one alternation regex per kind: a single pass per file instead of one regex per asset
+	alt := func(names map[string]*Asset) string {
+		var ns []string
+		for n := range names {
+			ns = append(ns, regexp.QuoteMeta(n))
+		}
+		sort.Slice(ns, func(i, j int) bool { return len(ns[i]) > len(ns[j]) })
+		return strings.Join(ns, "|")
+	}
+	var composRe, customRe *regexp.Regexp
+	if len(compos) > 0 {
+		composRe = regexp.MustCompile(`(?:^|[^\w.])(` + alt(compos) + `)\s*\(`)
+	}
+	if len(custom) > 0 {
+		customRe = regexp.MustCompile(`\b(` + alt(custom) + `)\b[(.]`)
+	}
 	for _, f := range code {
 		lines := strings.Split(f.text, "\n")
-		for name, a := range compos {
-			re := regexp.MustCompile(`(?:^|[^\w.])` + name + `\s*\(`)
-			for _, m := range re.FindAllStringIndex(f.text, -1) {
-				if strings.HasSuffix(strings.TrimRight(f.text[max(0, m[0]-6):m[0]+1], " ("), "fun") || strings.Contains(f.text[max(0, m[0]-5):m[0]+1], "fun ") {
+		if composRe != nil {
+			for _, m := range composRe.FindAllStringSubmatchIndex(f.text, -1) {
+				if strings.Contains(f.text[max(0, m[0]-5):m[0]+1], "fun ") {
 					continue
 				}
+				name := f.text[m[2]:m[3]]
 				ln := strings.Count(f.text[:m[0]], "\n") + 1
-				use(a, f.rel, ln, strings.TrimSpace(lines[ln-1]))
+				use(compos[name], f.rel, ln, strings.TrimSpace(lines[ln-1]))
 			}
 		}
 		// programmatic custom view / library usage in code (e.g. QMUITipDialog.Builder, MaterialButton(context))
-		for name, a := range custom {
-			if strings.HasSuffix(f.rel, "/"+name+".kt") || strings.HasSuffix(f.rel, "/"+name+".java") {
-				continue
-			}
-			for _, m := range regexp.MustCompile(`\b`+name+`\b[(.]`).FindAllStringIndex(f.text, -1) {
+		if customRe != nil {
+			for _, m := range customRe.FindAllStringSubmatchIndex(f.text, -1) {
+				name := f.text[m[2]:m[3]]
+				if strings.HasSuffix(f.rel, "/"+name+".kt") || strings.HasSuffix(f.rel, "/"+name+".java") {
+					continue
+				}
 				ln := strings.Count(f.text[:m[0]], "\n") + 1
-				use(a, f.rel, ln, strings.TrimSpace(lines[ln-1]))
+				use(custom[name], f.rel, ln, strings.TrimSpace(lines[ln-1]))
 			}
 		}
 		for _, m := range ktColorRe2.FindAllStringSubmatch(f.text, -1) {

@@ -23,8 +23,20 @@ type PageCheck struct {
 
 // CheckFocus evaluates files under focus (relative to the report root).
 func (r *Report) CheckFocus(focus string) *PageCheck {
-	focus = filepath.ToSlash(strings.TrimSuffix(focus, "/"))
-	in := func(rel string) bool { return rel == focus || strings.HasPrefix(rel, focus+"/") }
+	var focuses []string // comma-separated: a page is often several files (Fragment + layout)
+	for _, f := range strings.Split(focus, ",") {
+		if f = filepath.ToSlash(strings.TrimSuffix(strings.TrimSpace(f), "/")); f != "" {
+			focuses = append(focuses, f)
+		}
+	}
+	in := func(rel string) bool {
+		for _, f := range focuses {
+			if rel == f || strings.HasPrefix(rel, f+"/") {
+				return true
+			}
+		}
+		return false
+	}
 	pc := &PageCheck{Focus: focus}
 	pool := append([]Asset{}, r.Assets...)
 	pool = append(pool, r.LibAll...)
@@ -70,13 +82,15 @@ func (r *Report) CheckFocus(focus string) *PageCheck {
 		}
 	}
 	var focusSrc []struct{ rel, src string }
-	_ = filepath.Walk(filepath.Join(r.Root, focus), func(p string, info os.FileInfo, err error) error {
-		if err == nil && !info.IsDir() {
-			b, _ := os.ReadFile(p)
-			focusSrc = append(focusSrc, struct{ rel, src string }{relPath(r.Root, p), string(b)})
-		}
-		return nil
-	})
+	for _, fo := range focuses {
+		_ = filepath.Walk(filepath.Join(r.Root, fo), func(p string, info os.FileInfo, err error) error {
+			if err == nil && !info.IsDir() {
+				b, _ := os.ReadFile(p)
+				focusSrc = append(focusSrc, struct{ rel, src string }{relPath(r.Root, p), string(b)})
+			}
+			return nil
+		})
+	}
 	// colour variables defined in the page are not project tokens
 	for _, f := range focusSrc {
 		for _, re := range []*regexp.Regexp{cssVarDefRe, preVarDefRe} {

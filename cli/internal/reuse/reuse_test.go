@@ -153,3 +153,49 @@ func TestVueAliasAndFixedBottom(t *testing.T) {
 		t.Errorf("fixed-bottom NavBar concept=%q want tabs (it is a bottom tab bar)", got["NavBar"].Concept)
 	}
 }
+
+func TestLibrariesDetection(t *testing.T) {
+	cases := []struct {
+		name, pkg, file, src, lib, comp string
+	}{
+		{"nutui", `{"dependencies":{"vue":"3","@nutui/nutui":"4"}}`, "src/views/A.vue", `<template><nut-button type="primary">去支付</nut-button><nut-price :price="269"/></template>`, "NutUI", "Price"},
+		{"antd-mobile", `{"dependencies":{"react":"18","antd-mobile":"5"}}`, "src/pages/A.tsx", "import { Button, NoticeBar } from 'antd-mobile';\nexport default function A() { return <div><NoticeBar content=\"x\"/><Button color=\"primary\">ok</Button></div> }", "antd-mobile", "NoticeBar"},
+		{"tdesign", `{"dependencies":{"vue":"3","tdesign-mobile-vue":"1"}}`, "src/views/A.vue", `<template><t-cell title="运费" note="免运费"/><t-count-down :time="1000"/></template>`, "TDesign Mobile", "CountDown"},
+	}
+	for _, c := range cases {
+		root := t.TempDir()
+		write(t, root, "package.json", c.pkg)
+		write(t, root, c.file, c.src)
+		r := ScanH5(root)
+		found := false
+		for _, a := range r.Assets {
+			if a.Kind == "ui-lib" && a.Source == c.lib && a.Name == c.comp && a.Usage == 1 {
+				found = true
+			}
+		}
+		if !found {
+			t.Errorf("%s: %s/%s not detected; assets=%+v", c.name, c.lib, c.comp, r.Assets)
+		}
+	}
+}
+
+func TestComposeProject(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/build.gradle.kts", `dependencies { implementation("androidx.compose.material3:material3") }`)
+	write(t, root, "app/src/main/java/x/ui/StatusBadge.kt", "package x.ui\n@Composable\nfun StatusBadge(text: String, tone: Tone = Tone.Warning) {}\n@Composable\nprivate fun Inner() {}")
+	write(t, root, "app/src/main/java/x/OrderScreen.kt", "import androidx.compose.material3.Button\n@Composable\nfun OrderScreen() { StatusBadge(\"待发货\"); Button(onClick = {}) { Text(\"ok\") } }")
+	r := ScanAndroid(root)
+	got := map[string]Asset{}
+	for _, a := range r.Assets {
+		got[a.Kind+"|"+a.Name] = a
+	}
+	if a := got["composable|StatusBadge"]; a.Usage != 1 || a.Concept != "tag" {
+		t.Errorf("StatusBadge=%+v", a)
+	}
+	if _, ok := got["composable|Inner"]; ok {
+		t.Error("private composables are not reusable assets")
+	}
+	if got["ui-lib|Button"].Usage != 1 {
+		t.Errorf("material3 Button=%+v", got["ui-lib|Button"])
+	}
+}

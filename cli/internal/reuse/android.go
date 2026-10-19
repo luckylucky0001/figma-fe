@@ -14,6 +14,7 @@ var (
 	viewClassKtRe = regexp.MustCompile(`(?m)^\s*(?:open\s+|abstract\s+|internal\s+)?class\s+([A-Z]\w*)\b[^{:]*?(?:\([^)]*\))?\s*:\s*([A-Z][\w.]*)\s*\(`)
 	// a class that inflates a layout for one UI concept (AntennaPod's EmptyViewHandler): the project's way
 	// to show that concept, though it is not a View itself
+	classDeclRe    = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+|abstract\s+|final\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)`)
 	helperClassRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
 	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*public\s+(?:abstract\s+)?class\s+([A-Z]\w*)\s+extends\s+([A-Z][\w.]*)`)
 	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+([A-Z]\w*)\s*\(`)
@@ -261,6 +262,24 @@ func ScanAndroid(root string) *Report {
 			compos[name] = a
 		}
 	}
+	// DownloadActionButton extends ItemActionButton, a plain project class: a name ending in Button
+	// does not make a View. Drop custom "views" whose base is a project class that is not a View.
+	declared := map[string]bool{}
+	for _, f := range code {
+		for _, m := range classDeclRe.FindAllStringSubmatch(f.text, -1) {
+			declared[m[1]] = true
+		}
+	}
+	for changed := true; changed; {
+		changed = false
+		for name, a := range custom {
+			if a.Kind == "custom-view" && declared[a.Extends] && (custom[a.Extends] == nil || custom[a.Extends].Kind != "custom-view") {
+				delete(custom, name)
+				delete(assets, "custom-view|"+name)
+				changed = true
+			}
+		}
+	}
 	// colour tokens
 	colorTokens := map[string]string{}
 	for _, f := range values {
@@ -498,6 +517,13 @@ func ScanAndroid(root string) *Report {
 	}
 	r.ColorTokens = colorTokens
 	r.Conventions = conventionsAndroid(layoutMarkup)
+	if family == "material" || family == "material3" {
+		for _, a := range assets {
+			if a.Source == "Android SDK widgets" && materialInflated[a.Name] {
+				a.Concept = "" // inflated as its Material version: the same component, not a second one
+			}
+		}
+	}
 	finish(r, assets, colorHits)
 	r.Clones = findClones(layoutMarkup, func(s string) []*mnode { return dropContainers(parseMarkup(s)) }, 5)
 	r.Metrics.CloneGroups = len(r.Clones)

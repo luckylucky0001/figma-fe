@@ -676,3 +676,19 @@ func TestSubclassIsNotADuplicate(t *testing.T) {
 		}
 	}
 }
+
+// AntennaPod's DownloadActionButton extends ItemActionButton, an abstract class that is not a View
+func TestNonViewBaseIsNotACustomView(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/java/a/ItemActionButton.java", "package a;\npublic abstract class ItemActionButton {\n}")
+	write(t, root, "app/src/main/java/a/DownloadActionButton.java", "package a;\npublic class DownloadActionButton extends ItemActionButton {\n}")
+	write(t, root, "app/src/main/java/a/PlayButton.java", "package a;\npublic class PlayButton extends AppCompatImageButton {\n}")
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><a.PlayButton/></LinearLayout>`)
+	names := map[string]bool{}
+	for _, a := range ScanAndroid(root).Assets {
+		names[a.Name] = true
+	}
+	if names["DownloadActionButton"] || !names["PlayButton"] {
+		t.Errorf("assets=%v", names)
+	}
+}

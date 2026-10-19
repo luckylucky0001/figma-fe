@@ -28,25 +28,45 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 **11/11**
 
-### QMUI_Android（XML View，`--target xml`）
+### QMUI_Android（XML View，未传 `--target`，工具按项目主流写法推断为 xml）
 
 | Figma | 推荐 | 结论 | 人工判断 |
 |---|---|---|---|
-| NavBar | QMUITopBar（View，项目里已用 6 次） | 直接复用 | ✓ |
+| NavBar | QMUITopBarLayout（View，项目里已用 45 次） | 直接复用 | ✓ 两个用 Skill 的 agent 最后都选了它 |
 | NoticeBar | — | 需新建 | ✓ QMUI 没有通知条组件 |
 | Card | QMUIGroupListView（项目里已用 25 次） | 直接复用 | ✓ QMUI 惯用分组列表来做白底分区 |
-| Tag | Material Chip | 需确认 | △ 可以用，但 QMUI demo 里实际常用 QMUIRoundButton 做标签，工具没有识别出这种「借用」写法 |
+| Tag | — | 需新建 | ✓ 组件库里的 Chip 在本项目的 AppCompat 主题下会崩溃，工具已排除它 |
 | CountDown | — | 需新建 | ✓ |
-| Divider | MaterialDivider | 直接复用 | △ 项目里更常见的写法是分组列表自带的分隔线，或者一个 1px 的 View |
+| Divider | QMUIPriorityLinearLayout 自带的分割线属性（qmui_bottomDividerHeight 等） | 需确认 | △ 思路对（两个 agent 都用了 QMUI 容器自带的分割线），但更常用的是 QMUILinearLayout，推荐的容器偏冷门 |
 | Cell | QMUICommonListItemView（项目里已用 48 次） | 直接复用 | ✓ |
-| ProductCard | MaterialCardView | 需确认 | △ 只能当容器用，商品卡的内容仍要自己写 |
+| ProductCard | — | 需新建 | ✓ MaterialCardView 同样有主题崩溃问题，已排除 |
 | Price | — | 需新建 | ✓ |
 | ActionBar | — | 需新建 | ✓ |
-| Button | QMUIRoundButton（项目里已用 29 次） | 直接复用 | ✓ |
+| Button | QMUIRoundButton（项目里已用 33 次） | 直接复用 | ✓ |
 
-**8/11 完全正确，3/11 可用但不是最优**（都标成了「需确认」或者给了说明，交给人做最终决定）。
+**10/11 完全正确，1/11 可用但不是最优。** 上一版是 8/11 + 3 个「可用」，其中 MaterialDivider（项目的 Material 1.4.0 里没有）和 Chip / MaterialCardView（AppCompat 主题下会崩溃）其实是错的推荐，是用 Skill 的 agent 实现时发现并反馈的。现在体检会检查组件库版本和 App 主题，报告里列出「组件库里有、但本项目不能直接用的组件」，match 不再推荐它们。
+
+### Now in Android（Jetpack Compose + Material3 + 自有设计系统 `Nia*`，Google 官方示例）
+
+| Figma | 推荐 | 结论 | 人工判断 |
+|---|---|---|---|
+| NavBar | NiaTopAppBar（设计系统） | 直接复用 | ✓ |
+| NoticeBar | — | 需新建 | ✓ |
+| Card | Material3 Card（项目里直接用了 2 次，设计系统没有封装） | 直接复用 | ✓ |
+| Tag | NiaFilterChip（设计系统） | 直接复用 | △ 可用。NiaFilterChip 是可选中的筛选标签，纯展示的状态标签用 NiaTopicTag 也说得通 |
+| CountDown | — | 需新建 | ✓ |
+| Divider | Material3 HorizontalDivider（项目里已用 2 次） | 直接复用 | ✓ 已废弃的 `Divider` 被排除 |
+| Cell | InterestsItem（core/ui，项目里已用 7 次） | 直接复用 | △ 它是「兴趣」专用的列表项，通用列表项用 Material3 ListItem 更合适 |
+| ProductCard | Material3 Card | 需确认 | ✓ |
+| Price | — | 需新建 | ✓ |
+| ActionBar | — | 需新建 | ✓ |
+| Button | NiaButton（设计系统） | 直接复用 | ✓ 同一家族里有 NiaButton / NiaTextButton / NiaOutlinedButton，选了基础款 |
+
+**9/11 完全正确，2/11 可用但不是最优。** 体检还找出了设计系统的全部 8 个封装关系（Button → NiaButton、TabRow → NiaTabRow 等），并确认业务代码里没有绕过封装直接用 Material3 的地方（用 grep 核对过）。
 
 ### 小结
 
-- 「直接复用」的结论在两个真实项目里都没有出现明显错误。拿不准的情况，工具给出的都是「需确认」。
-- 还没覆盖的：「借用」写法（例如用按钮组件来充当标签）、项目里约定俗成的写法（例如用 1px 的 View 做分割线）。这些可以通过 `component-map.yaml` 人工补充，之后就会固定下来。
+- 三个真实项目共 33 项：完全正确 30 项，可用但不是最优 3 项，推荐了错误组件 0 项。拿不准的情况，工具给出的都是「需确认」。
+- 存量项目里「组件库有这个组件」不等于「项目能用」。版本、主题、废弃 API、设计系统封装都会影响结论，这几项现在都会检查。
+- 项目惯例：没有对应组件、但项目里反复出现的写法（1px View 细线、Vant 的 `van-hairline--*` 类、容器自带的分割线属性）会作为「项目惯例」推荐，不会直接判成「需新建」。
+- 还没覆盖的：「借用」写法（例如用按钮组件来充当标签）。这类可以在 `component-map.yaml` 里人工确认一次，之后 match 会优先采用确认过的映射。

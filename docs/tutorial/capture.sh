@@ -147,6 +147,9 @@ section 22-nia-wrappers "Now in Android：设计系统封装" "$t/nia/android.md
 term 23-match-newbee "新设计稿 → newbee 的复用清单" "bin/figmafe match --figma design/figma-export/order-detail $cache/newbee -o $t/m-nb"
 html 23-match-newbee-overlay "$t/m-nb/h5.html"
 section 23-match-props "变体 → 属性（推荐组件怎么配置）" "$t/m-nb/h5.md" "^## 变体" "^## 候选"
+mkdir -p "$t/feature" && cp -r design/figma-export/order-detail design/figma-export/holdings design/figma-export/trade-order "$t/feature/"
+bin/figmafe match --figma "$t/feature" $cache/newbee -o $t/m-feat -q >/dev/null
+md 23b-feature-summary "一个需求的多个页面 → 整体复用清单（h5.summary.md）" "$t/m-feat/h5.summary.md"
 term 24-match-qmui "同一份设计稿 → QMUI（XML）" "bin/figmafe match --figma design/figma-export/order-detail $cache/qmui -o $t/m-qm -q"
 html 24-match-qmui-overlay "$t/m-qm/android.html"
 term 25-match-holdings "没组件化、中文图层名的设计稿 → newbee" "bin/figmafe match --figma design/figma-export/holdings $cache/newbee -o $t/m-h -q"
@@ -158,6 +161,8 @@ html 25b-match-trade-overlay "$t/m-to/android.html"
 term 26-check-a "页面复用检查：不用 Skill 的实现（newbee，A 组）" "cat $repo/experiments/real-project/Rnb-A-1.txt | sed -n '1,22p'"
 term 26-check-c "页面复用检查：用 Skill 的实现（newbee，C 组）" "cat $repo/experiments/real-project/Rnb-C-1.txt | sed -n '1,12p'"
 term 27-gate "PR 闸门：只检查改动的文件（Now in Android，C 组，决定已写进 component-map.yaml）" "cat $repo/experiments/real-project/Rnia-C-2.txt | sed -n '1,14p'"
+term 27b-baseline "治理存量：和上次体检比，不许变差（--baseline --no-regress）" "bin/figmafe reuse $cache/newbee -q -o $t/base >/dev/null; bin/figmafe reuse $repo/../exp/Rnb-A-1 --baseline $t/base/h5.json --no-regress -q -o $t/bl >$t/bl.txt 2>/dev/null; rc=\$?; head -9 $t/bl.txt; echo exit=\$rc"
+term 27c-compare "页面跑起来后：截图和设计稿比对（compare）" "bin/figmafe compare --url design/source/order-detail.html --figma design/figma-export/order-detail -o $t/cmp; echo exit=\$?"
 md 28-eval "match 回归评测（14 个真实开源项目）" "$repo/experiments/real-match-eval.md"
 md 29-summary "真实项目对照实验汇总" "$repo/experiments/real-project/summary.md" 60
 

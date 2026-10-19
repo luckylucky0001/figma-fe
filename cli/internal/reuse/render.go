@@ -2,9 +2,16 @@ package reuse
 
 import (
 	"fmt"
+	"regexp"
 	"sort"
 	"strings"
 )
+
+// rawTagRe: a literal element name in prose (原生 <input>) would render as a real element in markdown.
+var rawTagRe = regexp.MustCompile("(^|[^`])(<[A-Za-z][\\w.-]*>)")
+
+// mdTags wraps literal tags in backticks so markdown viewers show them as text.
+func mdTags(s string) string { return rawTagRe.ReplaceAllString(s, "$1`$2`") }
 
 // Markdown renders the brownfield reuse check report.
 func (r *Report) Markdown() string {
@@ -24,7 +31,7 @@ func (r *Report) Markdown() string {
 	if todo := r.Priorities(); len(todo) > 0 {
 		b.WriteString("\n## 0. 优先处理（按影响面排序）\n\n")
 		for i, t := range todo {
-			fmt.Fprintf(&b, "%d. %s\n", i+1, t)
+			fmt.Fprintf(&b, "%d. %s\n", i+1, mdTags(t))
 		}
 	}
 
@@ -98,14 +105,14 @@ func (r *Report) Markdown() string {
 	if len(missed) > 0 {
 		fmt.Fprintf(&b, "\n## 4. 有组件却没用（%d 处，含绕过设计系统封装直接用组件库）\n\n", len(missed))
 		if n := infoCount(r.Findings); n > 0 {
-			fmt.Fprintf(&b, "> 另有 %d 处原生图片（<img> / ImageView）可以换成图片组件，仅供参考，不计入问题。\n\n", n)
+			fmt.Fprintf(&b, "> 另有 %d 处原生图片（`<img>` / ImageView）可以换成图片组件，仅供参考，不计入问题。\n\n", n)
 		}
 		for i, f := range missed {
 			if i >= 25 {
 				fmt.Fprintf(&b, "- … 还有 %d 处\n", len(missed)-i)
 				break
 			}
-			fmt.Fprintf(&b, "- %s:%d `%s` → %s\n", f.File, f.Line, strings.ReplaceAll(f.Text, "`", "'"), f.Hint)
+			fmt.Fprintf(&b, "- %s:%d `%s` → %s\n", f.File, f.Line, strings.ReplaceAll(f.Text, "`", "'"), mdTags(f.Hint))
 		}
 	}
 

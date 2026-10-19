@@ -394,7 +394,7 @@ func (pc *PageCheck) Markdown() string {
 		if f.Severity != "error" {
 			mark = "·"
 		}
-		b.WriteString("  - " + mark + " " + f.File + "：" + f.Hint + "\n")
+		b.WriteString("  - " + mark + " " + f.File + "：" + mdTags(f.Hint) + "\n")
 	}
 	b.WriteString("- 有组件却没用（" + itoa(len(pc.MissedReuse)) + "）\n")
 	for _, f := range pc.MissedReuse {
@@ -402,7 +402,7 @@ func (pc *PageCheck) Markdown() string {
 		if f.Severity == "info" {
 			mark = "·"
 		}
-		b.WriteString("  - " + mark + " " + f.File + ":" + itoa(f.Line) + " `" + f.Text + "` → " + f.Hint + "\n")
+		b.WriteString("  - " + mark + " " + f.File + ":" + itoa(f.Line) + " `" + f.Text + "` → " + mdTags(f.Hint) + "\n")
 	}
 	b.WriteString("- 疑似手写已有组件（" + itoa(len(pc.HandBuilt)) + "）\n")
 	for _, f := range pc.HandBuilt {
@@ -410,12 +410,12 @@ func (pc *PageCheck) Markdown() string {
 		if f.Severity == "error" {
 			mark = "✗"
 		}
-		b.WriteString("  - " + mark + " " + f.File + ":" + itoa(f.Line) + " " + f.Hint + "\n")
+		b.WriteString("  - " + mark + " " + f.File + ":" + itoa(f.Line) + " " + mdTags(f.Hint) + "\n")
 	}
 	if len(pc.Inconsistent) > 0 {
 		b.WriteString("- 和项目惯用组件不一致（" + itoa(len(pc.Inconsistent)) + "，不影响通过）\n")
 		for _, f := range pc.Inconsistent {
-			b.WriteString("  - · " + f.File + "：" + f.Hint + "\n")
+			b.WriteString("  - · " + f.File + "：" + mdTags(f.Hint) + "\n")
 		}
 	}
 	if pc.LocalTokens > 0 {
@@ -427,7 +427,7 @@ func (pc *PageCheck) Markdown() string {
 			b.WriteString("  - … 共 " + itoa(len(pc.Colors)) + " 处\n")
 			break
 		}
-		b.WriteString("  - · " + f.File + ":" + itoa(f.Line) + " " + f.Text + "：" + f.Hint + "\n")
+		b.WriteString("  - · " + f.File + ":" + itoa(f.Line) + " " + f.Text + "：" + mdTags(f.Hint) + "\n")
 	}
 	return b.String()
 }

@@ -1,7 +1,9 @@
 # 教程：用 figma-to-code Skill + figmafe，把 Figma 页面复用组件还原到 H5 / Android
 
 > 本教程的每一张截图都是真实运行产生的，可以用 `docs/tutorial/capture.sh` 重新生成。
-> 示例页面：订单详情（`OrderDetail`，375×900）。两端组件库：H5 `h5/src/ds`（React），Android `android/ds`（Compose）和 `android/ds-view`（XML View 存量组件）。
+>
+> - **第一部分（Step 1-11）**：已经接入的项目怎么用：组件映射、复用方案、截图逐节点比对。示例是本仓库的 demo（H5 `h5/src/ds`，Android `android/ds` / `android/ds-view`）。
+> - **第二部分（Step 12-19）**：**任何存量项目**怎么用，不需要先接入：先体检，拿到新设计稿后自动给出「哪些组件可以直接复用、怎么配置」，实现后检查有没有自造轮子，接进 PR 闸门。示例是真实开源项目（newbee-mall、QMUI_Android、Now in Android）。只关心存量项目可以直接跳到 [第二部分](#第二部分存量项目不需要先接入)。
 
 **整体流程**
 
@@ -20,7 +22,7 @@ Figma ──导出插件──▶ design/figma-export        (Step 2)
 
 ## Step 1 环境准备
 
-需要 Go 1.22+、Node 18+、Chromium（Playwright 自带的即可）、Gradle 8+（JDK 17+），以及 Noto Sans SC 字体（`make fonts`）。字体必须装上：设计图、H5 截图、Android 渲染都用这一套字体，像素对比才有意义。
+需要 Go 1.25+、Node 18+、Chromium（Playwright 自带的即可）、Gradle 8+（JDK 17+），以及 Noto Sans SC 字体（`make fonts`）。字体必须装上：设计图、H5 截图、Android 渲染都用这一套字体，像素对比才有意义。
 
 ```bash
 make fonts      # 安装 Noto Sans SC
@@ -207,9 +209,141 @@ Android 端剩下的 2 处严重偏差（DsPriceText 高度、DsGoodsCard 规格
 
 ![rules](img/12-rules.png)
 
+
+---
+
+# 第二部分：存量项目（不需要先接入）
+
+存量项目的问题是：组件散在各处，有自己写的、有组件库的、有被封装过的，新人和 Agent 都不知道「已经有什么」，于是看着设计稿重新造。第二部分的工具不需要 `figmafe.yaml`、不需要 component-map，直接对着项目目录跑。支持：
+
+- **H5**：Vue 2 / 3、React（含写在 .js 里的 JSX）、uni-app、Taro；组件库 Vant（2/3/4）、React Vant、NutUI、antd-mobile（v2/v5）、TDesign Mobile、uView、uni-ui、taro-ui、Element Plus，以及单组件的 npm 包（如 vue-countdown）
+- **Android**：XML View（layout、自定义 View、`attrs.xml`、`<include>`、style）、Jetpack Compose；组件库 Material Components、Compose Material3 / Foundation、QMUI，以及项目自己的设计系统模块
+
+## Step 12 存量体检：项目里已经有什么
+
+```bash
+bin/figmafe reuse <项目目录>          # 报告在 <项目>/.figmafe/reuse/<platform>.md（.figmafe 会自动被 git 忽略）
+```
+
+![newbee 体检](img/20-reuse-newbee.png)
+
+报告第 0 节是「优先处理」：按影响面排好序的几件事，团队可以从这里开始治理：
+
+![体检报告](img/20-reuse-report.png)
+
+同一个工具对 Android 也一样。QMUI_Android 里，工具从依赖和主题推断出：项目用的是 Material 1.4.0、App 主题继承 AppCompat，所以 `MaterialDivider`（1.5 才有）、`Chip`（需要 MaterialComponents 主题，否则运行时崩溃）这些组件虽然在组件库里，**但这个项目不能直接用**，后面的推荐会自动排除它们：
+
+![QMUI 体检](img/21-reuse-qmui.png)
+
+![QMUI 不能直接用的组件](img/21-qmui-compat.png)
+
+Now in Android 有自己的设计系统（`core/designsystem`），工具找出了它封装了哪些 Material3 组件。之后新代码直接用 `Button` 而不是 `NiaButton`，会被判为「绕过封装」：
+
+![Now in Android 体检](img/22-reuse-nia.png)
+
+![设计系统封装](img/22-nia-wrappers.png)
+
+## Step 13 新设计稿 → 复用清单（这一步回答「哪些可以直接复用」）
+
+```bash
+bin/figmafe match --figma <Figma 导出目录> <项目目录>
+```
+
+![match](img/23-match-newbee.png)
+
+同时生成一张叠在设计图上的可视版（`.html`），绿色 = 直接复用，橙色 = 需确认，红色 = 需新建。方案闸门时直接把这一页发给人看：
+
+![复用清单叠图](img/23-match-newbee-overlay.png)
+
+清单不只说「用哪个组件」，还说「怎么配置」：设计稿的变体映射到组件的属性，以及项目自己的惯用写法（比如 newbee 的按钮都是 `block color="#1baeae"`）：
+
+![变体到属性](img/23-match-props.png)
+
+一个需求往往有好几个页面。`--figma` 指向放着多个页面导出的文件夹，会多出一份整个需求的复用清单：
+
+![需求汇总](img/23b-feature-summary.png)
+
+## Step 14 同一份设计稿，不同的项目给出不同的答案
+
+推荐来自**这个项目**里的东西，而不是一张通用对照表。同一份设计稿放到 QMUI（XML）上：导航栏是 `QMUITopBarLayout`、卡片是 `QMUIGroupListView`、单元格是 `QMUICommonListItemView`、按钮是项目里用了 29 次的 `QMUIRoundButton`（附带项目惯用的 `style="@style/QDRoundButtonStyle"`）；而 Chip、MaterialDivider 因为版本 / 主题不兼容，不会被推荐。没有现成组件的分割线，推荐的是 QMUI 容器自带的分割线属性：
+
+![QMUI](img/24-match-qmui.png)
+
+![QMUI 叠图](img/24-match-qmui-overlay.png)
+
+## Step 15 没组件化、图层名不规范的设计稿也能用
+
+真实设计稿经常没有组件化，图层叫「导航栏」「涨跌标签」「收盘倒计时」。工具按图层名推断 UI 概念，结果标「（未组件化）」：
+
+![持仓页](img/25-match-holdings.png)
+
+![持仓页叠图](img/25-match-holdings-overlay.png)
+
+英文图层名、前两份设计稿没有的组件（搜索、步进器、开关、复选框、空状态），放到 Compose 项目上：
+
+![买入下单](img/25b-match-trade.png)
+
+![买入下单叠图](img/25b-match-trade-overlay.png)
+
+## Step 16 让 Agent 按清单实现，再检查有没有自造轮子
+
+Skill 的存量流程（`references/brownfield.md`）要求 Agent：先体检 → 拿复用清单 → 「直接复用」的必须用、「需确认」的写理由、只有「需新建」的才能新建（放进组件目录）→ 实现完跑页面复用检查：
+
+```bash
+bin/figmafe reuse <项目目录> --focus <新页面文件>      # 退出码 3 = 不通过
+```
+
+同一个任务，在 newbee 上的检查结果。上面是不用 Skill 的 Agent（A 组），下面是用 Skill 的 Agent（C 组）：
+
+![A 组](img/26-check-a.png)
+
+![C 组](img/26-check-c.png)
+
+不用 Skill 时，Agent 手写了卡片、分割线、商品卡、底部操作栏，还自己定义了 10 个颜色变量；用 Skill 时这些都换成了项目已有的组件，缺的价格组件放进了 `src/components`。
+
+## Step 17 PR 闸门：只检查这次改动
+
+```bash
+bin/figmafe reuse . --changed origin/main      # 新文件整份检查，修改过的文件只看新增的行
+```
+
+有意不用推荐组件、或者新建了和已有组件同类的组件时，把决定和理由写进 `component-map.yaml` 的 `gaps`，闸门会认可这个决定，不会每次都报：
+
+![PR 闸门](img/27-gate.png)
+
+GitHub Actions / GitLab CI 的配置示例在 `docs/ci/`。
+
+存量的问题一次改不完，可以先保证「不变差」：
+
+![baseline](img/27b-baseline.png)
+
+## Step 18 页面能跑起来时：截图比对
+
+存量项目没有挂 Figma 节点 id，做不了第一部分那样的逐节点比对，但可以对任意一个能打开的页面做整页比对和文字覆盖检查：
+
+```bash
+bin/figmafe compare --url http://localhost:5173/#/order/detail --figma <Figma 导出目录>
+```
+
+![compare](img/27c-compare.png)
+
+## Step 19 效果：准确率和对照实验
+
+**复用清单的准确率**：15 个真实开源项目（其中 10 个在调规则时没用过，第一次跑出的错误都如实记录在 `experiments/match-judgement.md`）× 3 份设计稿，每一项人工判断推荐得对不对：
+
+![准确率](img/28-eval.png)
+
+**对照实验**：在 5 个真实项目上让 Agent 实现同一个页面，A 组只给任务，C 组用 Skill，统一用页面复用检查打分：
+
+![汇总](img/29-summary.png)
+
 ---
 
 ## 接入你们自己的项目（清单）
+
+**存量项目，最快的用法**（不需要任何配置）：`figmafe reuse` 体检 → 把 `.claude/skills/figma-to-code/` 放进仓库 → 新需求先跑 `figmafe match` 出复用清单 → 把 `figmafe reuse --changed origin/main` 接进 PR CI（`docs/ci/`）。
+
+**想要逐节点的截图比对**（第一部分的完整流程）：
 
 1. 用插件导出组件库，得到 `library.json` 和 `variables.tokens.json`；导出第一个典型页面，得到 `export.json` 和 `frame@2x.png`
 2. 修改 `figmafe.yaml`：H5 组件库路径（源码目录，或 npm 包的 `dist/types`）、Android Compose 组件库和 XML View 组件库的路径、页面目录、构建和渲染命令

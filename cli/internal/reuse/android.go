@@ -169,6 +169,7 @@ func ScanAndroid(root string) *Report {
 				}
 				a := get("custom-view", m[1], f.rel)
 				a.Props = styleable[m[1]]
+				refineConcept(a)
 				custom[m[1]] = a
 			}
 		}
@@ -178,7 +179,16 @@ func ScanAndroid(root string) *Report {
 			if strings.Contains(pre, "private") || strings.HasSuffix(name, "Preview") || strings.HasSuffix(name, "Screen") || strings.HasSuffix(name, "App") || strings.HasSuffix(name, "Theme") {
 				continue
 			}
-			compos[name] = get("composable", name, f.rel)
+			a := get("composable", name, f.rel)
+			if end := matchParen(f.text, m[1]-1); end > m[1] {
+				for _, prm := range strings.Split(f.text[m[1]:end], ",") {
+					if kv := strings.SplitN(strings.TrimSpace(prm), ":", 2); len(kv) == 2 {
+						a.Props = append(a.Props, strings.TrimSpace(strings.TrimPrefix(kv[0], "@")))
+					}
+				}
+			}
+			refineConcept(a)
+			compos[name] = a
 		}
 	}
 	// colour tokens
@@ -382,4 +392,36 @@ func stripComments(s string) string {
 	return commentRe.ReplaceAllStringFunc(s, func(c string) string {
 		return strings.Repeat("\n", strings.Count(c, "\n"))
 	})
+}
+
+// matchParen returns the index of the ')' closing the '(' at open.
+func matchParen(s string, open int) int {
+	depth := 0
+	for i := open; i < len(s); i++ {
+		switch s[i] {
+		case '(':
+			depth++
+		case ')':
+			depth--
+			if depth == 0 {
+				return i
+			}
+		}
+	}
+	return -1
+}
+
+// refineConcept resolves ambiguous names with the props: a "Banner" taking text / tone is a notice
+// bar, one taking images / items is a carousel.
+func refineConcept(a *Asset) {
+	if a.Concept != "carousel" || !strings.Contains(strings.ToLower(a.Name), "banner") {
+		return
+	}
+	for _, p := range a.Props {
+		switch strings.ToLower(p) {
+		case "text", "tone", "message", "content", "type", "title":
+			a.Concept = "notice"
+			return
+		}
+	}
 }

@@ -112,7 +112,7 @@ var concepts = []struct {
 	{"loading", []string{"loading", "spinner", "progress", "skeleton"}},
 	{"list", []string{"list", "recyclerview", "listview", "lazycolumn"}},
 	{"divider", []string{"divider", "separator", "line"}},
-	{"notice", []string{"noticebar", "notice"}},
+	{"notice", []string{"noticebar", "notice", "alertbar", "tipsbar"}},
 	{"switch", []string{"switch", "toggle", "checkbox", "radio", "radiobutton", "togglebutton", "checkboxgroup", "radiogroup"}},
 	{"stepper", []string{"stepper", "counter"}},
 	{"countdown", []string{"countdown", "timer"}},

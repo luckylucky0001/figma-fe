@@ -242,8 +242,14 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s -= 0.25
 		why = append(why, "Composable，XML 页面不能直接用")
 	case Target == "compose" && (a.Kind == "custom-view" || a.Kind == "ui-lib" && !compose && r2android(a)):
-		s -= 0.1
+		s -= 0.2
 		why = append(why, "View 组件，Compose 页面需 AndroidView 包装")
+	case Target == "compose" && a.Kind == "composable":
+		s += 0.03
+	}
+	if strings.Contains(strings.ToLower(a.Name), "legacy") || strings.Contains(strings.ToLower(a.Name), "deprecated") || strings.HasPrefix(a.Name, "Old") {
+		s -= 0.1
+		why = append(why, "名称表明是老组件")
 	}
 	if s > 1 {
 		s = 1

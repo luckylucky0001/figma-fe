@@ -179,6 +179,45 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 			checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, f.src[m[2]:m[3]], in)
 		}
 	}
+	// hand-built list rows by structure (no telling id / class): XML rows of label + value TextViews
+	for _, f := range focusSrc {
+		if strings.HasSuffix(f.rel, ".xml") && strings.Contains("/"+f.rel, "/res/layout") && !usedConcepts["cell"] && !seenHB["cell"] {
+			var rows []int
+			var walk func(ns []*mnode)
+			walk = func(ns []*mnode) {
+				for _, n := range ns {
+					if textRow(n) && inLines(f.rel, n.line) {
+						rows = append(rows, n.line)
+						continue
+					}
+					walk(n.children)
+				}
+			}
+			walk(parseMarkup(f.src))
+			if len(rows) >= 2 {
+				pref := func(a *Asset) int { return preference(*a, "cell") }
+				var best *Asset
+				for i := range pool {
+					b := &pool[i]
+					if b.Concept == "cell" && !in(b.Source) && b.Kind != "composable" && !isComposeLib(b.Source) && b.Source != "Android SDK widgets" && !featureOnly(*b) && (best == nil || pref(b) > pref(best)) {
+						best = b
+					}
+				}
+				if best != nil && best.Usage > 0 {
+					seenHB["cell"] = true
+					var at []string
+					for i, l := range rows {
+						if i == 4 {
+							at = append(at, "…")
+							break
+						}
+						at = append(at, itoa(l))
+					}
+					pc.HandBuilt = append(pc.HandBuilt, Finding{"hand-built", "error", f.rel, rows[0], "list rows", "页面里有 " + itoa(len(rows)) + " 行「标题 + 值」横排是手写的（第 " + strings.Join(at, "、") + " 行），已有 " + best.Name + "（" + kindLabel(best.Kind) + " " + best.Source + "）（项目里已用 " + itoa(best.Usage) + " 次）"})
+				}
+			}
+		}
+	}
 	for _, f := range focusSrc {
 		src, rel := f.src, f.rel
 		for _, loc := range hexColorRe.FindAllStringIndex(src, -1) {
@@ -366,4 +405,34 @@ func accepted(name, platform string) bool {
 		}
 	}
 	return false
+}
+
+// textRow: a horizontal layout whose content is a label and a value (TextViews, possibly a
+// vertical title/subtitle stack) and at most an arrow / spacer — a list cell built by hand.
+func textRow(n *mnode) bool {
+	tag := n.tag[strings.LastIndex(n.tag, ".")+1:]
+	if tag != "LinearLayout" && tag != "RelativeLayout" && tag != "ConstraintLayout" {
+		return false
+	}
+	if tag == "LinearLayout" && strings.Contains(n.attrs, `orientation="vertical"`) {
+		return false
+	}
+	texts := 0
+	for _, c := range n.children {
+		switch t := c.tag[strings.LastIndex(c.tag, ".")+1:]; {
+		case t == "TextView" || t == "AppCompatTextView" || t == "MaterialTextView":
+			texts++
+		case t == "LinearLayout" && strings.Contains(c.attrs, `orientation="vertical"`):
+			for _, g := range c.children {
+				if g.tag[strings.LastIndex(g.tag, ".")+1:] != "TextView" {
+					return false
+				}
+			}
+			texts++
+		case t == "ImageView" || t == "AppCompatImageView" || t == "View" || t == "Space":
+		default:
+			return false
+		}
+	}
+	return texts >= 2 && len(n.children) <= 4
 }

@@ -1,11 +1,10 @@
-· 检查改动的 3 个 UI 文件
+· 检查改动的 3 个 UI 文件（已有文件只看新增的行）
 
 ## 页面复用检查：qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt,qmuidemo/src/main/res/layout/fragment_order_detail.xml,qmuidemo/src/main/res/values/order_detail.xml  ❌ FAIL
 
-- 复用的现成组件（8）：QMUILinearLayout（自定义 View）、QMUIRadiusImageView2（自定义 View）、QMUIRoundButton（自定义 View）、QMUIRoundFrameLayout（自定义 View）、QMUIRoundLinearLayout（自定义 View）、QMUITopBarLayout（自定义 View）、QMUIWindowInsetLayout（自定义 View）、TextView（组件库）
+- 复用的现成组件（9）：ImageView（组件库）、QMUILinearLayout（自定义 View）、QMUIRadiusImageView2（自定义 View）、QMUIRoundButton（自定义 View）、QMUIRoundFrameLayout（自定义 View）、QMUIRoundLinearLayout（自定义 View）、QMUITopBarLayout（自定义 View）、QMUIWindowInsetLayout（自定义 View）、TextView（组件库）
 - 自造轮子（0）
-- 有组件却没用（1）
-  - · qmuidemo/src/main/res/layout/fragment_order_detail.xml:165 `<ImageView` → 原生 ImageView：项目里已有 ShapeableImageView（组件库）
+- 有组件却没用（0）
 - 疑似手写已有组件（1）
   - ✗ qmuidemo/src/main/res/layout/fragment_order_detail.xml:132 页面手写了「cell」（.order_detail_address_cell），已有 QMUICommonListItemView（自定义 View qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUICommonListItemView.java）（项目里已用 48 次）
 - 页面私有调色板：页面里自己定义了 11 个颜色变量（应使用项目 / 组件库已有的 token）
@@ -15,4 +14,4 @@
   - · qmuidemo/src/main/res/values/order_detail.xml:99 #E5E6EB：写死颜色
   - · qmuidemo/src/main/res/values/order_detail.xml:107 #FF4D1A：写死颜色
 
-✓ [android] 162 个资产 · 组件化率 98% · 重复概念 12 · 重复结构 1 组 · 硬编码颜色 11 → experiments/real-project/Rqm-A-2/android.md
+✓ [android] 161 个资产 · 组件化率 100% · 重复概念 13 · 重复结构 1 组 · 硬编码颜色 11 → experiments/real-project/Rqm-A-2/android.md

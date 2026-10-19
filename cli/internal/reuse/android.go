@@ -284,6 +284,13 @@ func ScanAndroid(root string) *Report {
 		}
 		r.Metrics.ComponentUsages++
 	}
+	type rawOcc struct {
+		a                    *Asset
+		simple, concept, rel string
+		ln                   int
+		line                 string
+	}
+	var raws []rawOcc
 	layoutMarkup := map[string]string{}
 	for i := range layouts {
 		layouts[i].text = stripComments(layouts[i].text)
@@ -309,11 +316,10 @@ func ScanAndroid(root string) *Report {
 				}
 				if a.Source == "Android SDK widgets" {
 					if concept, raw := rawAndroid[simple]; raw {
-						if alt := bestProjectAsset(assets, concept, "custom-view"); alt != nil {
-							r.Metrics.RawPrimitives++
-							r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(concept), f.rel, ln, line, "原生 " + simple + "：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
-							continue
-						}
+						// judged after all usages are counted: only an alternative the project has
+						// (its own view, or a library view it actually uses) makes this a missed reuse
+						raws = append(raws, rawOcc{a, simple, concept, f.rel, ln, line})
+						continue
 					}
 				}
 				use(a, f.rel, ln, line)
@@ -378,6 +384,14 @@ func ScanAndroid(root string) *Report {
 				hit(m[2], f.rel)
 			}
 		}
+	}
+	for _, o := range raws {
+		if alt := bestProjectAsset(assets, o.concept, "custom-view"); alt != nil && (alt.Kind != "ui-lib" || alt.Usage > 0) {
+			r.Metrics.RawPrimitives++
+			r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(o.concept), o.rel, o.ln, o.line, "原生 " + o.simple + "：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
+			continue
+		}
+		use(o.a, o.rel, o.ln, o.line) // AppCompat Toolbar in a project without an alternative is just the standard widget
 	}
 	// Compose material3 / library calls
 	for _, l := range libs {

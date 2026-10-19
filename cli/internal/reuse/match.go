@@ -378,10 +378,10 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	compose := a.Kind == "composable" || isComposeLib(a.Source)
 	switch {
 	case Target == "xml" && compose:
-		s -= 0.25
+		s = math.Min(s-0.25, 0.79) // never a direct reuse: an XML page cannot host it
 		why = append(why, "Composable，XML 页面不能直接用")
 	case Target == "compose" && (a.Kind == "custom-view" || a.Kind == "ui-lib" && !compose && r2android(a)):
-		s -= 0.2
+		s = math.Min(s-0.2, 0.79)
 		why = append(why, "View 组件，Compose 页面需 AndroidView 包装")
 	case Target == "compose" && a.Kind == "composable":
 		s += 0.03

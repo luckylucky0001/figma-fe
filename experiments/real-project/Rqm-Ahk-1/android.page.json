@@ -1,0 +1,35 @@
+{
+  "focus": "qmuidemo/src/main/res/values/colors.xml,qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/components/QDOrderDetailFragment.kt,qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+  "used": [
+    "ImageView（组件库）",
+    "QMUIRoundButton（自定义 View）",
+    "QMUIRoundLinearLayout（自定义 View）",
+    "QMUITopBarLayout（自定义 View）",
+    "QMUIWindowInsetLayout（自定义 View）",
+    "TextView（组件库）"
+  ],
+  "reinvented": null,
+  "missedReuse": null,
+  "handBuilt": [
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "qmuidemo/src/main/res/layout/fragment_order_detail.xml",
+      "line": 293,
+      "text": "list rows",
+      "hint": "页面里有 7 行「标题 + 值」横排是手写的（第 293、317、341、380、… 行），已有 QMUICommonListItemView（自定义 View qmui/src/main/java/com/qmuiteam/qmui/widget/grouplist/QMUICommonListItemView.java）（项目里已用 48 次）"
+    }
+  ],
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "qmuidemo/src/main/res/values/colors.xml",
+      "line": 62,
+      "text": "#FFFFFF",
+      "hint": "新定义的颜色 qd_order_detail_white 与已有 token @color/qmui_config_color_white 同值"
+    }
+  ],
+  "localTokens": 11,
+  "pass": false
+}

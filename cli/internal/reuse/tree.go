@@ -12,6 +12,7 @@ import (
 // copy-pasted subtrees. Attributes and text are ignored; only the element structure counts.
 
 type mnode struct {
+	attrs    string
 	tag      string
 	line     int
 	children []*mnode
@@ -42,7 +43,7 @@ func parseMarkup(src string) []*mnode {
 			}
 			continue
 		}
-		n := &mnode{tag: tag, line: strings.Count(src[:m[0]], "\n") + 1}
+		n := &mnode{tag: tag, attrs: attrs, line: strings.Count(src[:m[0]], "\n") + 1}
 		parent := stack[len(stack)-1]
 		parent.children = append(parent.children, n)
 		if !self && !voidTag[strings.ToLower(tag)] {

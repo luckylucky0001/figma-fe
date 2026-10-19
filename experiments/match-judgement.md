@@ -105,6 +105,7 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 |---|---|---|---|
 | Jetsnack（android/compose-samples，Compose + 自有 `Jetsnack*` 设计系统） | 订单详情 6 ✓ / 2 △ / **3 ✗** | ① 把桌面小部件（Glance）里的 `IconButton`、`ListItem` 当成了 App 组件；② `JetsnackCard` 输给了同名的 Material3 `Card`（没认出 `Jetsnack` 是项目前缀）；③ `JetsnackBottomBar` 其实是底部导航，被当成了操作栏；④ `ui/components` 目录没被认成设计系统 | 订单详情 10 ✓ / 1 △，我的持仓 11 ✓ / 1 △（Tag 推荐了可选中的 FilterChip，项目里没有纯展示标签） |
 | vant-demo（youzan 官方，Vue 3 + TS / Vue 2 两套） | 两套各 23 项全部 ✓ | — | 同左 |
+| NewPipe（大型开源 App，XML View 为主，部分 Compose） | 订单详情 8 ✓ / 2 △ / **1 ✗**，我的持仓 5 ✓ / 5 △ / **2 ✗** | ① AppCompat `Toolbar` 等标准控件被当成「有组件却没用」（只因组件库目录里有 MaterialToolbar，而项目根本没用过），也就没算进项目资产，导航栏推荐成了 Compose 的 TopAppBar；② `TabLayout` 这类「概念 + Layout」的两词名字没识别出概念；③ `@layout/error_panel` 按 panel 当成了卡片；④ XML 页面里 Compose 的 Button 仍可能得到「直接复用」 | 订单详情 9 ✓ / 2 △，我的持仓 8 ✓ / 4 △，无 ✗。剩下的 △ 都是「项目里只有 Compose 版的按钮 / 列表行、XML 页面没有现成可用的」，工具给的是「需确认」 |
 
 修正的都是通用规则（识别 Glance、学习项目前缀、按参数判断底部导航、`ui/components` 算设计系统、必填参数里有业务数据模型的算业务组件），不是针对 Jetsnack 的特判。之后 `python3 experiments/real-match-eval.py` 会同时跑调参集和留出集，作为回归测试。
 

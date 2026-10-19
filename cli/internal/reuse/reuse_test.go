@@ -416,3 +416,19 @@ func TestH5WrapperBypass(t *testing.T) {
 		t.Errorf("Button → %+v", c)
 	}
 }
+
+func TestHandBuiltRowsByStructure(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "lib/src/main/java/com/x/CellView.java", "package com.x;\npublic class CellView extends LinearLayout {}")
+	write(t, root, "app/src/main/res/layout/old.xml", `<LinearLayout><com.x.CellView/><com.x.CellView/></LinearLayout>`)
+	row := `<LinearLayout android:layout_width="match_parent" android:orientation="horizontal"><TextView android:text="运费"/><TextView android:text="免运费"/></LinearLayout>`
+	write(t, root, "app/src/main/res/layout/page.xml", `<LinearLayout android:orientation="vertical">
+`+row+`
+`+row+`
+<LinearLayout android:orientation="horizontal"><Button/><Button/></LinearLayout>
+</LinearLayout>`)
+	pc := ScanAndroid(root).CheckFocus("app/src/main/res/layout/page.xml")
+	if len(pc.HandBuilt) != 1 || !strings.Contains(pc.HandBuilt[0].Hint, "2 行") || !strings.Contains(pc.HandBuilt[0].Hint, "CellView") || pc.Pass {
+		t.Errorf("handBuilt=%+v", pc.HandBuilt)
+	}
+}

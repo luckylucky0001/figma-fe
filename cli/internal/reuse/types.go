@@ -117,7 +117,7 @@ var concepts = []struct {
 	{"carousel", []string{"swipe", "swiper", "carousel", "banner", "viewpager"}},
 	{"icon", []string{"icon"}},
 	{"image", []string{"image", "img", "avatar", "imageview"}},
-	{"empty", []string{"empty", "emptyview", "nodata", "placeholder"}},
+	{"empty", []string{"empty", "emptyview", "nodata", "placeholder", "error", "errorpanel", "errorview", "errorblock", "errorstate"}},
 	{"loading", []string{"loading", "spinner", "progress", "skeleton"}},
 	{"list", []string{"list", "recyclerview", "listview", "lazycolumn"}},
 	{"divider", []string{"divider", "separator", "line"}},
@@ -130,7 +130,7 @@ var concepts = []struct {
 }
 
 // noise words that never decide a concept on their own
-var weak = map[string]bool{"item": true, "row": true, "box": true, "field": true, "line": true, "label": true, "section": true, "header": true, "footer": true, "list": true}
+var weak = map[string]bool{"panel": true, "item": true, "row": true, "box": true, "field": true, "line": true, "label": true, "section": true, "header": true, "footer": true, "list": true}
 
 // splitWords splits CamelCase, kebab-case, snake_case and dotted names into lower-case words.
 func splitWords(s string) []string {
@@ -161,7 +161,7 @@ func splitWords(s string) []string {
 	return out
 }
 
-var vendorPrefix = map[string]bool{"qmui": true, "van": true, "nut": true, "ds": true, "legacy": true, "app": true, "common": true, "base": true, "my": true, "custom": true, "ui": true, "md": true, "t": true}
+var vendorPrefix = map[string]bool{"material": true, "qmui": true, "van": true, "nut": true, "ds": true, "legacy": true, "app": true, "common": true, "base": true, "my": true, "custom": true, "ui": true, "md": true, "t": true}
 
 var viewSuffix = map[string]bool{"view": true, "layout": true, "widget": true, "component": true, "comp": true}
 
@@ -233,8 +233,8 @@ func ConceptOf(name string) string {
 			}
 		}
 	}
-	// a compound concept wrapped as a View: ProductCardView, ActionBarLayout, NoticeBarWidget
-	if n := len(words); n > 2 && viewSuffix[words[n-1]] {
+	// a compound concept wrapped as a View: ProductCardView, ActionBarLayout, TabLayout, AppBarLayout
+	if n := len(words); n >= 2 && viewSuffix[words[n-1]] {
 		inner := strings.Join(words[:n-1], "")
 		for _, c := range concepts {
 			for _, w := range c.Words {

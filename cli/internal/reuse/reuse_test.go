@@ -199,3 +199,19 @@ func TestComposeProject(t *testing.T) {
 		t.Errorf("material3 Button=%+v", got["ui-lib|Button"])
 	}
 }
+
+func TestUViewUniApp(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","uview-plus":"3"}}`)
+	write(t, root, "pages/order/detail.vue", `<template><u-navbar title="订单详情"/><u-count-down :time="1000"/><u-tag text="待发货" type="warning"/></template>`)
+	r := ScanH5(root)
+	n := 0
+	for _, a := range r.Assets {
+		if a.Source == "uView" && a.Usage == 1 {
+			n++
+		}
+	}
+	if n != 3 {
+		t.Errorf("uView assets used=%d assets=%+v", n, r.Assets)
+	}
+}

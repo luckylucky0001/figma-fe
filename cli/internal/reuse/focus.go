@@ -181,12 +181,18 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 	}
 	// hand-built list rows by structure (no telling id / class): XML rows of label + value TextViews
 	for _, f := range focusSrc {
-		if strings.HasSuffix(f.rel, ".xml") && strings.Contains("/"+f.rel, "/res/layout") && !usedConcepts["cell"] && !seenHB["cell"] {
+		xmlLayout := strings.HasSuffix(f.rel, ".xml") && strings.Contains("/"+f.rel, "/res/layout")
+		markupFile := strings.HasSuffix(f.rel, ".vue") || strings.HasSuffix(f.rel, ".tsx") || strings.HasSuffix(f.rel, ".jsx")
+		if (xmlLayout || markupFile) && !usedConcepts["cell"] && !seenHB["cell"] {
+			isRow, minRows := textRow, 2
+			if markupFile {
+				isRow, minRows = htmlTextRow, 3 // markup is freer: ask for a clearer repetition
+			}
 			var rows []int
 			var walk func(ns []*mnode)
 			walk = func(ns []*mnode) {
 				for _, n := range ns {
-					if textRow(n) && inLines(f.rel, n.line) {
+					if isRow(n) && inLines(f.rel, n.line) {
 						rows = append(rows, n.line)
 						continue
 					}
@@ -194,7 +200,7 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 				}
 			}
 			walk(parseMarkup(f.src))
-			if len(rows) >= 2 {
+			if len(rows) >= minRows {
 				pref := func(a *Asset) int { return preference(*a, "cell") }
 				var best *Asset
 				for i := range pool {
@@ -435,4 +441,27 @@ func textRow(n *mnode) bool {
 		}
 	}
 	return texts >= 2 && len(n.children) <= 4
+}
+
+// htmlTextRow: a div / li / view holding just a label and a value as plain text elements.
+func htmlTextRow(n *mnode) bool {
+	switch strings.ToLower(n.tag) {
+	case "div", "li", "view", "section", "p":
+	default:
+		return false
+	}
+	if len(n.children) < 2 || len(n.children) > 3 {
+		return false
+	}
+	for _, c := range n.children {
+		switch strings.ToLower(c.tag) {
+		case "span", "div", "p", "label", "text", "em", "b", "strong", "i":
+		default:
+			return false
+		}
+		if len(c.children) > 0 {
+			return false
+		}
+	}
+	return true
 }

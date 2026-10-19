@@ -432,3 +432,18 @@ func TestHandBuiltRowsByStructure(t *testing.T) {
 		t.Errorf("handBuilt=%+v", pc.HandBuilt)
 	}
 }
+
+func TestHandBuiltRowsH5(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^3.4.0","vant":"^4.8.0"}}`)
+	write(t, root, "src/views/Old.vue", `<template><van-cell title="a"/><van-cell title="b"/><van-cell title="c"/></template>`)
+	write(t, root, "src/views/New.vue", `<template><div>
+  <div><span>运费</span><span>免运费</span></div>
+  <div><span>优惠</span><span>-¥30</span></div>
+  <div><span>实付</span><span>¥269</span></div>
+</div></template>`)
+	pc := ScanH5(root).CheckFocus("src/views/New.vue")
+	if len(pc.HandBuilt) != 1 || !strings.Contains(pc.HandBuilt[0].Hint, "3 行") || !strings.Contains(pc.HandBuilt[0].Hint, "Cell") {
+		t.Errorf("handBuilt=%+v", pc.HandBuilt)
+	}
+}

@@ -11,14 +11,15 @@ import (
 // PageCheck is the brownfield verification of one new page: the whole project is the asset pool,
 // only the files under Focus are judged.
 type PageCheck struct {
-	Focus       string    `json:"focus"`
-	Used        []string  `json:"used"`        // existing assets the page uses ("Name(kind)")
-	Reinvented  []Finding `json:"reinvented"`  // components defined in the page that already exist
-	MissedReuse []Finding `json:"missedReuse"` // raw primitives where a component exists
-	HandBuilt   []Finding `json:"handBuilt"`   // markup that hand-builds a concept an existing component covers
-	Colors      []Finding `json:"colors"`      // hard-coded colours (with token if one exists)
-	LocalTokens int       `json:"localTokens"` // colour variables defined inside the page itself
-	Pass        bool      `json:"pass"`
+	Focus        string    `json:"focus"`
+	Used         []string  `json:"used"`                   // existing assets the page uses ("Name(kind)")
+	Reinvented   []Finding `json:"reinvented"`             // components defined in the page that already exist
+	MissedReuse  []Finding `json:"missedReuse"`            // raw primitives where a component exists
+	HandBuilt    []Finding `json:"handBuilt"`              // markup that hand-builds a concept an existing component covers
+	Inconsistent []Finding `json:"inconsistent,omitempty"` // a component new to the project where it has an established one
+	Colors       []Finding `json:"colors"`                 // hard-coded colours (with token if one exists)
+	LocalTokens  int       `json:"localTokens"`            // colour variables defined inside the page itself
+	Pass         bool      `json:"pass"`
 }
 
 // CheckFocus evaluates files under focus (relative to the report root).
@@ -177,6 +178,37 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 				continue
 			}
 			checkHandBuilt(pc, r, pool, usedConcepts, seenHB, f.rel, strings.Count(f.src[:m[0]], "\n")+1, f.src[m[2]:m[3]], in)
+		}
+	}
+	// inconsistent choices: the page brings in a component the project has not used before for a
+	// concept it already has an established component for (Vant CountDown where vue-countdown is used 5×)
+	for _, a := range r.Assets {
+		if a.Concept == "" || a.Usage == 0 || a.WrappedBy != "" {
+			continue // a library component the design system wraps is used inside its wrapper on purpose
+		}
+		inFocus, outside := false, false
+		for _, f := range a.UsageFiles {
+			if in(f) && !inDesignSystem(f) {
+				inFocus = true
+			} else {
+				outside = true
+			}
+		}
+		if !inFocus || outside || in(a.Source) {
+			continue
+		}
+		var est *Asset
+		for i := range r.Assets {
+			b := &r.Assets[i]
+			if b.Concept != a.Concept || b.Name == a.Name && b.Source == a.Source || b.Usage < 3 || featureOnly(*b) {
+				continue
+			}
+			if est == nil || preference(*b, a.Concept) > preference(*est, a.Concept) {
+				est = b
+			}
+		}
+		if est != nil {
+			pc.Inconsistent = append(pc.Inconsistent, Finding{"inconsistent", "warn", a.UsageFiles[0], 0, a.Name, "新引入了 " + a.Name + "（" + kindLabel(a.Kind) + " " + a.Source + "），项目里「" + a.Concept + "」惯用 " + est.Name + "（用 " + itoa(est.Usage) + " 次），请确认是否统一"})
 		}
 	}
 	// hand-built list rows by structure (no telling id / class): XML rows of label + value TextViews
@@ -370,6 +402,12 @@ func (pc *PageCheck) Markdown() string {
 			mark = "✗"
 		}
 		b.WriteString("  - " + mark + " " + f.File + ":" + itoa(f.Line) + " " + f.Hint + "\n")
+	}
+	if len(pc.Inconsistent) > 0 {
+		b.WriteString("- 和项目惯用组件不一致（" + itoa(len(pc.Inconsistent)) + "，不影响通过）\n")
+		for _, f := range pc.Inconsistent {
+			b.WriteString("  - · " + f.File + "：" + f.Hint + "\n")
+		}
 	}
 	if pc.LocalTokens > 0 {
 		b.WriteString("- 页面私有调色板：页面里自己定义了 " + itoa(pc.LocalTokens) + " 个颜色变量（应使用项目 / 组件库已有的 token）\n")

@@ -482,3 +482,17 @@ func TestThirdPartyComponentPackage(t *testing.T) {
 	}
 	t.Errorf("third-party countdown not found: %+v", r.Assets)
 }
+
+func TestInconsistentChoice(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^3.4.0","vant":"^4.8.0"}}`)
+	write(t, root, "src/components/SimpleHeader.vue", `<template><header/></template>`)
+	for _, n := range []string{"A", "B", "C"} {
+		write(t, root, "src/views/"+n+".vue", `<template><SimpleHeader/></template>`)
+	}
+	write(t, root, "src/views/New.vue", `<template><van-nav-bar title="x"/></template>`)
+	pc := ScanH5(root).CheckFocus("src/views/New.vue")
+	if len(pc.Inconsistent) != 1 || !strings.Contains(pc.Inconsistent[0].Hint, "SimpleHeader") || !pc.Pass {
+		t.Errorf("inconsistent=%+v pass=%v", pc.Inconsistent, pc.Pass)
+	}
+}

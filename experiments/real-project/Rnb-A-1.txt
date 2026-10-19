@@ -10,6 +10,8 @@
   - ✗ src/views/OrderDetailV2.vue:27 页面手写了「divider」（.od-divider），已有 Divider（组件库 Vant）（项目里已用 2 次）
   - ✗ src/views/OrderDetailV2.vue:42 页面手写了「goods」（.product），已有 Card（组件库 Vant）（项目里已用 2 次）
   - ✗ src/views/OrderDetailV2.vue:79 页面手写了「actionbar」（.od-action-bar），已有 ActionBar（组件库 Vant）（项目里已用 1 次）
+- 和项目惯用组件不一致（1，不影响通过）
+  - · src/views/OrderDetailV2.vue：新引入了 NavBar（组件库 Vant），项目里「navbar」惯用 SimpleHeader（用 11 次），请确认是否统一
 - 页面私有调色板：页面里自己定义了 10 个颜色变量（应使用项目 / 组件库已有的 token）
 - 写死颜色（2）
   - · src/views/OrderDetailV2.vue:217 #FFFFFF：写死颜色，已有同值 token var(--vt-c-white)

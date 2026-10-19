@@ -510,3 +510,18 @@ func TestTaroJSXInPlainJS(t *testing.T) {
 		t.Errorf("usage=%v libraries=%+v", use, r.Libraries)
 	}
 }
+
+func TestSlashNamedComponents(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^3.4.0","vant":"^4.8.0"}}`)
+	write(t, root, "src/views/A.vue", `<template><van-button type="primary">x</van-button></template>`)
+	exp := &figma.Export{
+		Frame:         &figma.Node{Type: "FRAME", Children: []*figma.Node{{ID: "1:2", Type: "INSTANCE", ComponentID: "c1"}, {ID: "1:3", Type: "INSTANCE", ComponentID: "c2"}}},
+		Components:    map[string]figma.Component{"c1": {ComponentSetID: "c1"}, "c2": {ComponentSetID: "c2"}},
+		ComponentSets: map[string]figma.ComponentSet{"c1": {Name: "Button/Primary/Large"}, "c2": {Name: "Button / Secondary"}},
+	}
+	m := Match(exp, ScanH5(root))
+	if len(m.Items) != 1 || m.Items[0].Figma != "Button" || m.Items[0].Instances != 2 || m.Items[0].Candidates[0].Name != "Button" {
+		t.Errorf("items=%+v", m.Items)
+	}
+}

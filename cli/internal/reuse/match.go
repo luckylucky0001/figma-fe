@@ -87,6 +87,13 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 	figma.Walk(exp.Frame, func(n *figma.Node) bool {
 		if n.Type == "INSTANCE" {
 			name := exp.SetName(n)
+			// slash-named components without a variant set ("Button/Primary/Large"): the first segment
+			// is the component, the rest are its variants
+			var pathVariant string
+			if i := strings.Index(name, "/"); i > 0 && len(n.Variant()) == 0 {
+				pathVariant = strings.TrimSpace(name[i+1:])
+				name = strings.TrimSpace(name[:i])
+			}
 			a := sets[name]
 			if a == nil {
 				a = &agg{variants: map[string]bool{}, layers: map[string]bool{}}
@@ -96,6 +103,9 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			a.ids = append(a.ids, n.ID)
 			for k, v := range n.Variant() {
 				a.variants[k+"="+v] = true
+			}
+			if pathVariant != "" {
+				a.variants["Variant="+pathVariant] = true
 			}
 			for _, c := range n.Children {
 				if c.Type == "TEXT" {

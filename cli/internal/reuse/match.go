@@ -147,7 +147,8 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 	established = map[string]string{}
 	best := map[string]int{}
 	for _, a := range r.Assets {
-		if a.Kind != "ui-lib" && a.Kind != "page-local" && a.Concept != "" && a.Usage >= 3 && a.Usage > best[a.Concept] {
+		// only a name that says the concept counts (JLine is a line chart, not a divider)
+		if a.Kind != "ui-lib" && a.Kind != "page-local" && a.Concept != "" && a.Usage >= 3 && a.Usage > best[a.Concept] && !weakOnly(a.Name, a.Concept) {
 			best[a.Concept], established[a.Concept] = a.Usage, a.Name
 		}
 	}

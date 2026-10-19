@@ -11,7 +11,7 @@
 | **Figma 导出插件**（免费 Plugin API） | [`figma-plugin/`](figma-plugin) |
 | **报告**（PDF 共 3 页） | [`docs/report.pdf`](docs/report.pdf) |
 | **分步教程**（每一步都有截图） | [`docs/tutorial/README.md`](docs/tutorial/README.md)：第一部分是新页面闭环，第二部分是存量项目 |
-| 复用推荐准确率（21 个开源项目 × 3 份设计稿） | [`experiments/real-match-eval.md`](experiments/real-match-eval.md)、[`experiments/match-judgement.md`](experiments/match-judgement.md) |
+| 复用推荐准确率（22 个开源项目 × 3 份设计稿） | [`experiments/real-match-eval.md`](experiments/real-match-eval.md)、[`experiments/match-judgement.md`](experiments/match-judgement.md) |
 | Agent 对照实验（真实项目 / demo 仓库） | [`experiments/real-project/summary.md`](experiments/real-project/summary.md)、[`experiments/summary.md`](experiments/summary.md) |
 | Demo：H5 / Android 组件库 + 订单详情页 | [`h5/`](h5)、[`android/`](android)、[`design/`](design) |
 | CI 示例 | [`docs/ci/`](docs/ci) |

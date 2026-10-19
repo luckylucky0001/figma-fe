@@ -39,6 +39,7 @@ PROJECTS = {
     "wanandroid": ("https://github.com/goweii/WanAndroid.git", "baba04a90460be2233ddd715fa41f1faa9be741d", "android"),
     "seal": ("https://github.com/JunkFood02/Seal.git", "7677f61a20fda4210e84215fef9e9b51d25daa47", "android"),
     "kunminx": ("https://github.com/KunMinX/Jetpack-MVVM-Best-Practice.git", "543eb8659089d74ccad403763cb16596febc89b7", "android"),
+    "jeecg-uniapp": ("https://github.com/jeecgboot/jeecg-uniapp.git", "1f33e0225f6557994805db6706034cc0db0232c7", "h5"),
 }
 
 # figma element → (right answers, acceptable answers)
@@ -240,6 +241,16 @@ EXPECTED[("kunminx", "holdings")] = {
 EXPECTED_TO["kunminx"] = TO(KX_NAV, RA(["—"], ["SearchView"]), R("TabLayout"), NEW, NEW, R("EditText", "TextInputEditText", "AppCompatEditText"),
                             RA(["SwitchCompat", "Switch[Android SDK widgets]", "—"], ["SwitchMaterial"]), RA(["CheckBox", "AppCompatCheckBox", "—"], ["MaterialCheckBox"]),
                             KX_BTN, NEW)
+# jeecg-uniapp: uni-app + wot-design-uni 1.13 (wd-*), a little uni-ui
+EXPECTED[("jeecg-uniapp", "order-detail")] = {
+    "NavBar": R("Navbar"), "NoticeBar": R("NoticeBar"), "Card": R("CellGroup", "Card"), "Tag": R("Tag"), "CountDown": R("CountDown"), "Divider": R("Divider"),
+    "Cell": R("Cell"), "ProductCard": R("Card", "—"), "Price": NEW, "ActionBar": RA(["—"], ["GoodsNav"]), "Button": R("Button")}
+EXPECTED[("jeecg-uniapp", "holdings")] = {
+    "导航栏": R("Navbar"), "公告通知栏": R("NoticeBar"), "资产卡片": R("CellGroup", "Card"), "标签页": R("Tabs", "Segmented"), "持仓列表": R("List", "—"),
+    "持仓列表项": R("Cell"), "涨跌标签": R("Tag"), "收盘倒计时": R("CountDown"), "底部操作栏": RA(["—"], ["GoodsNav"]),
+    "买入按钮": R("Button"), "卖出按钮": R("Button"), "更多按钮": R("Button")}
+EXPECTED_TO["jeecg-uniapp"] = TO(R("Navbar"), R("Search"), R("Tabs", "Segmented"), R("Cell"), R("InputNumber"), R("Input"), R("Switch"), R("Checkbox"),
+                                 R("Button"), R("StatusTip", "Empty"))
 # Seal: Compose + Material3 with its own ui/component set (SettingItem, PreferenceSwitch, SealSearchBar …)
 SEAL_BTN = R("Button", "FilledButtonWithIcon", "OutlinedButtonWithIcon")
 SEAL_NAV = R("TopAppBar", "LargeTopAppBar", "CenterAlignedTopAppBar")
@@ -335,7 +346,7 @@ def main():
     if not only:  # a partial run must not overwrite the full results
         json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
         held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite",
-                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal", "kunminx"}
+                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal", "kunminx", "jeecg-uniapp"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
@@ -346,7 +357,8 @@ def main():
                  "newpipe": "XML（AppCompat）+ 少量 Compose", "pokedex": "XML + Material（MaterialComponents 主题）", "sunflower": "Compose + Material3（无自有设计系统）", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2",
                  "vue3-vant-mobile": "Vue 3 + Vant 4", "mall-app-web": "uni-app + 自有组件", "antennapod": "XML + Material3 主题",
                  "wanandroid": "XML（AppCompat）+ 三方 ActionBarEx", "seal": "Compose + Material3 + 自有组件",
-                 "kunminx": "XML + DataBinding（AppCompat 主题）"}
+                 "kunminx": "XML + DataBinding（AppCompat 主题）",
+                 "jeecg-uniapp": "uni-app + wot-design-uni"}
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""

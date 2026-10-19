@@ -806,3 +806,19 @@ func TestUnusableCandidateNeverDecidesVerdict(t *testing.T) {
 		}
 	}
 }
+
+// jeecg-uniapp is built on wot-design-uni: wd-* tags are its toolkit (wd-status-tip is the empty state)
+func TestWotDesignUni(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"@dcloudio/uni-app":"3","wot-design-uni":"^1.9.1"}}`)
+	write(t, root, "src/pages/a.vue", `<template><view><wd-cell title="a"/><wd-cell title="b"/><wd-status-tip image="content" tip="暂无内容"/><wd-input-number v-model="n"/></view></template>`)
+	got := map[string]string{}
+	for _, a := range ScanH5(root).Assets {
+		if a.Source == "wot-design-uni" {
+			got[a.Name] = a.Concept
+		}
+	}
+	if got["Cell"] != "cell" || got["StatusTip"] != "empty" || got["InputNumber"] != "stepper" {
+		t.Errorf("got=%v", got)
+	}
+}

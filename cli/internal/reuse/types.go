@@ -379,7 +379,7 @@ func collapseFamilies(as []Asset) []Asset {
 	return out
 }
 
-var dsPathRe = regexp.MustCompile(`/(ds|design-?system|ui-?kit|core-?ui|base-?ui|widget-?lib)/`)
+var dsPathRe = regexp.MustCompile(`/(ds|design-?system|ui-?kit|core-?ui|base-?ui|widget-?lib|ui/components?)/`)
 
 // inDesignSystem: the file lives in a design-system / UI-kit module or folder.
 func inDesignSystem(rel string) bool {

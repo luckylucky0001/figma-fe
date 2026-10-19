@@ -133,6 +133,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			pool = append(pool, a)
 		}
 	}
+	setFamilyPrefixes(pool)
 	familyBase = familyBases(pool)
 	libChild = map[string]bool{}
 	names := map[string]bool{}
@@ -146,7 +147,6 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			}
 		}
 	}
-	setFamilyPrefixes(pool)
 	for _, name := range order {
 		a := sets[name]
 		item := MatchItem{Figma: name, Instances: len(a.ids), NodeIDs: a.ids}
@@ -310,9 +310,20 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	}
 	// a feature component: several required business parameters (InterestsItem needs following,
 	// topicImageUrl, onFollowButtonClick); design-system components are exempt by definition
-	if dr := domainRequired(a.Required); len(dr) >= 3 && !inDesignSystem(a.Source) {
+	if dr := domainRequired(a.Required); len(dr) >= 3 && !inDesignSystem(a.Source) || hasModelParam(a.Required) {
 		s -= 0.12
 		why = append(why, "业务专用（必填 "+strings.Join(dr, "、")+"）")
+	}
+	// a composable / view only ever used inside the file that defines it is a page's helper
+	if (a.Kind == "composable" || a.Kind == "custom-view") && len(a.UsageFiles) > 0 && !inDesignSystem(a.Source) {
+		local := true
+		for _, f := range a.UsageFiles {
+			local = local && f == a.Source
+		}
+		if local {
+			s -= 0.15
+			why = append(why, "只在定义它的文件里用过（页面内部组件）")
+		}
 	}
 	// a selectable component (FilterChip: selected / onSelectedChange) for a design element that has
 	// no selected state is the wrong interaction
@@ -387,6 +398,9 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 
 func normName(s string) string {
 	w := splitWords(s)
+	if len(w) > 1 && famPrefixes[w[0]] {
+		w = w[1:] // JetsnackCard is the project's Card
+	}
 	j := strings.Join(w, "")
 	for _, p := range []string{"van", "nut", "ds", "legacy", "qmui", "material", "app"} {
 		j = strings.TrimPrefix(j, p)
@@ -676,9 +690,19 @@ var genericParams = map[string]bool{"modifier": true, "onclick": true, "content"
 func domainRequired(req []string) []string {
 	var out []string
 	for _, p := range req {
-		if !genericParams[normProp(p)] {
+		if !genericParams[normProp(p)] && !strings.Contains(p, ":") {
 			out = append(out, p)
 		}
 	}
 	return out
+}
+
+// hasModelParam: a required parameter typed as an app data model ("snack:Snack").
+func hasModelParam(req []string) bool {
+	for _, p := range req {
+		if strings.Contains(p, ":") {
+			return true
+		}
+	}
+	return false
 }

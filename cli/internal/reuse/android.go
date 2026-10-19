@@ -204,7 +204,11 @@ func ScanAndroid(root string) *Report {
 				custom[m[1]] = a
 			}
 		}
+		glance := strings.Contains(f.text, "import androidx.glance") // home-screen widget UI, a different toolkit
 		for _, m := range composableRe.FindAllStringSubmatchIndex(f.text, -1) {
+			if glance {
+				break
+			}
 			name := f.text[m[2]:m[3]]
 			pre := f.text[max(0, m[0]-12):m[0]]
 			if strings.Contains(pre, "private") || strings.HasSuffix(name, "Preview") || strings.HasSuffix(name, "Screen") || strings.HasSuffix(name, "App") || strings.HasSuffix(name, "Theme") {
@@ -218,6 +222,9 @@ func ScanAndroid(root string) *Report {
 						a.Props = append(a.Props, pn)
 						if !strings.Contains(kv[1], "=") {
 							a.Required = append(a.Required, pn)
+							if t := strings.TrimSuffix(strings.TrimSpace(kv[1]), "?"); domainType(t) {
+								a.Required = append(a.Required, pn+":"+t)
+							}
 						}
 						typ := strings.TrimSuffix(strings.TrimSpace(strings.SplitN(kv[1], "=", 2)[0]), "?")
 						if vals := ktEnums[typ]; len(vals) > 0 {
@@ -505,6 +512,16 @@ func matchParen(s string, open int) int {
 // refineConcept resolves ambiguous names with the props: a "Banner" taking text / tone is a notice
 // bar, one taking images / items is a carousel.
 func refineConcept(a *Asset) {
+	// a "bottom bar" that takes tabs / routes is bottom navigation, not an action bar
+	if a.Concept == "actionbar" {
+		for _, p := range a.Props {
+			switch normProp(p) {
+			case "tabs", "items", "currentroute", "selectedtab", "selectedindex", "navigatetoroute", "destinations", "onnavigate":
+				a.Concept = "tabbar"
+				return
+			}
+		}
+	}
 	if a.Concept != "carousel" || !strings.Contains(strings.ToLower(a.Name), "banner") {
 		return
 	}
@@ -519,3 +536,18 @@ func refineConcept(a *Asset) {
 
 // isComposeLib: a Jetpack Compose library catalog (composables, not Views).
 func isComposeLib(source string) bool { return strings.HasPrefix(source, "Compose ") }
+
+// domainType: a parameter type that is an app data model (Snack, Topic, Order) rather than UI
+// plumbing (String, Color, Modifier, ImageVector, lambdas, generics).
+func domainType(t string) bool {
+	if t == "" || t[0] < 'A' || t[0] > 'Z' || strings.ContainsAny(t, "()<>-.") {
+		return false
+	}
+	switch t {
+	case "String", "Int", "Long", "Float", "Double", "Boolean", "Color", "Dp", "TextUnit", "Modifier", "ImageVector", "Painter",
+		"Shape", "TextStyle", "Brush", "Alignment", "Arrangement", "PaddingValues", "AnnotatedString", "Unit", "Any", "Text",
+		"MutableInteractionSource", "BorderStroke", "ButtonColors", "CardColors", "ImageBitmap", "Uri", "Bitmap", "LazyListState", "ScrollState":
+		return false
+	}
+	return !strings.HasSuffix(t, "Colors") && !strings.HasSuffix(t, "State") && !strings.HasSuffix(t, "Style") && !strings.HasSuffix(t, "Tone") && !strings.HasSuffix(t, "Size") && !strings.HasSuffix(t, "Type") && !strings.HasSuffix(t, "Variant")
+}

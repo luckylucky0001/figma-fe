@@ -21,6 +21,10 @@ PROJECTS = {
     "nia": ("https://github.com/android/nowinandroid.git", "a49ed253d75e61a2b6ab80a8da677b57437b08eb", "android"),
     "antdm-template": ("https://github.com/lhw-dev/react-h5-template.git", "d0fc97327b35a2675f55a2fe88c5b39d20aec8a1", "h5"),
     "antdm-mobile": ("https://github.com/xmllein/react-mobile.git", "12e4276ce83962d92a86b11fa2e89c1ec94f927f", "h5"),
+    # held out: first run after the rules above were tuned (see match-judgement.md for the first-pass result)
+    "jetsnack": ("https://github.com/android/compose-samples.git#Jetsnack", "0bc770fd28510b5a16395349e7281f11386ac82f", "android"),
+    "vant-demo-vue3": ("https://github.com/youzan/vant-demo.git#vant/vue3-ts", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
+    "vant-demo-vue2": ("https://github.com/youzan/vant-demo.git#vant/vue2", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
 }
 
 # figma element → (right answers, acceptable answers)
@@ -33,6 +37,16 @@ ANTD_H = {
     "导航栏": (["NavBar"], []), "公告通知栏": (["NoticeBar"], []), "资产卡片": (["Card"], []), "标签页": (["Tabs"], []),
     "持仓列表": (["List"], []), "持仓列表项": (["ListItem"], []), "涨跌标签": (["Tag"], []), "收盘倒计时": (["—"], []),
     "底部操作栏": (["—"], []), "买入按钮": (["Button"], []), "卖出按钮": (["Button"], []), "更多按钮": (["Button"], []),
+}
+VANT = {
+    "NavBar": (["NavBar"], []), "NoticeBar": (["NoticeBar"], []), "Card": (["CellGroup"], ["—"]), "Tag": (["Tag"], []),
+    "CountDown": (["CountDown"], []), "Divider": (["Divider"], []), "Cell": (["Cell"], []), "ProductCard": (["Card"], []),
+    "Price": (["—"], []), "ActionBar": (["ActionBar"], []), "Button": (["Button"], []),
+}
+VANT_H = {
+    "导航栏": (["NavBar"], []), "公告通知栏": (["NoticeBar"], []), "资产卡片": (["CellGroup", "—"], []), "标签页": (["Tabs"], []),
+    "持仓列表": (["List"], []), "持仓列表项": (["Cell"], []), "涨跌标签": (["Tag"], []), "收盘倒计时": (["CountDown"], []),
+    "底部操作栏": (["ActionBar"], []), "买入按钮": (["Button"], []), "卖出按钮": (["Button"], []), "更多按钮": (["Button"], []),
 }
 EXPECTED = {
     ("newbee", "order-detail"): {
@@ -65,22 +79,38 @@ EXPECTED = {
         "持仓列表": (["LazyColumn"], ["—"]), "持仓列表项": (["ListItem"], ["InterestsItem"]), "涨跌标签": (["NiaTopicTag"], ["NiaFilterChip"]), "收盘倒计时": (["—"], []),
         "底部操作栏": (["—"], []), "买入按钮": (["NiaButton"], []), "卖出按钮": (["NiaButton"], []), "更多按钮": (["NiaButton"], ["NiaOutlinedButton"]),
     },
+    ("jetsnack", "order-detail"): {
+        "NavBar": (["TopAppBar", "CenterAlignedTopAppBar"], ["—"]), "NoticeBar": (["—"], []), "Card": (["JetsnackCard"], ["Card"]), "Tag": (["—", "Badge"], ["FilterChip"]),
+        "CountDown": (["—"], []), "Divider": (["JetsnackDivider"], ["HorizontalDivider"]), "Cell": (["ListItem"], ["—"]), "ProductCard": (["JetsnackCard", "—"], ["Card"]),
+        "Price": (["—"], []), "ActionBar": (["—"], []), "Button": (["JetsnackButton"], []),
+    },
+    ("jetsnack", "holdings"): {
+        "导航栏": (["TopAppBar", "CenterAlignedTopAppBar"], ["—"]), "公告通知栏": (["—"], []), "资产卡片": (["JetsnackCard"], ["Card"]), "标签页": (["TabRow"], ["—"]),
+        "持仓列表": (["LazyColumn"], []), "持仓列表项": (["ListItem"], ["—"]), "涨跌标签": (["—", "Badge"], ["FilterChip"]), "收盘倒计时": (["—"], []),
+        "底部操作栏": (["—"], []), "买入按钮": (["JetsnackButton"], []), "卖出按钮": (["JetsnackButton"], []), "更多按钮": (["JetsnackButton"], []),
+    },
+    ("vant-demo-vue3", "order-detail"): "VANT", ("vant-demo-vue3", "holdings"): "VANT_H",
+    ("vant-demo-vue2", "order-detail"): "VANT", ("vant-demo-vue2", "holdings"): "VANT_H",
     ("antdm-template", "order-detail"): ANTD, ("antdm-template", "holdings"): ANTD_H,
     ("antdm-mobile", "order-detail"): ANTD, ("antdm-mobile", "holdings"): ANTD_H,
 }
 
 
 def checkout(name, url, commit):
+    """url may end with #subdir: only that directory is checked out (sparse) and returned."""
+    url, _, sub = url.partition("#")
     d = os.path.join(CACHE, name)
     if not os.path.isdir(os.path.join(d, ".git")):
         os.makedirs(d, exist_ok=True)
         subprocess.run(["git", "init", "-q", d], check=True)
         subprocess.run(["git", "-C", d, "remote", "add", "origin", url], check=True)
+        if sub:
+            subprocess.run(["git", "-C", d, "sparse-checkout", "set", sub], check=True)
     have = subprocess.run(["git", "-C", d, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     if have != commit:
-        subprocess.run(["git", "-C", d, "fetch", "-q", "--depth", "1", "origin", commit], check=True)
+        subprocess.run(["git", "-C", d, "fetch", "-q", "--depth", "1", "--filter=blob:none", "origin", commit], check=True)
         subprocess.run(["git", "-C", d, "checkout", "-q", commit], check=True)
-    return d
+    return os.path.join(d, sub) if sub else d
 
 
 def main():
@@ -93,6 +123,8 @@ def main():
         d = checkout(name, url, commit)
         for page in ("order-detail", "holdings"):
             exp = EXPECTED.get((name, page))
+            if isinstance(exp, str):
+                exp = globals()[exp]
             if not exp:
                 continue
             with tempfile.TemporaryDirectory() as out:

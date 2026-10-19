@@ -476,7 +476,15 @@ func ScanAndroid(root string) *Report {
 		// under a Material theme the inflater already turns <Button> / <CheckBox> / <RadioButton> into
 		// MaterialButton / MaterialCheckBox / MaterialRadioButton: nothing was bypassed
 		if alt != nil && alt.Source == "Material Components" && (family == "material" || family == "material3") && materialInflated[o.simple] {
+			// the platform widget already is the Material one; the project's own component (RoundButton)
+			// would still be the reuse, if it has one
 			alt = nil
+			for _, a := range assets {
+				if a.Concept == o.concept && a.Kind != "ui-lib" && a.Kind != "page-local" && a.Usage > 0 && usable(a) && len(specialWords(a.Name, a.Concept)) == 0 &&
+					(alt == nil || a.Usage > alt.Usage || a.Usage == alt.Usage && a.Name < alt.Name) {
+					alt = a
+				}
+			}
 		}
 		if alt != nil && (alt.Kind != "ui-lib" || alt.Usage > 0) && len(specialWords(alt.Name, alt.Concept)) == 0 {
 			r.Metrics.RawPrimitives++

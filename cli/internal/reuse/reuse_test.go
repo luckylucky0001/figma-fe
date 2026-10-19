@@ -1040,3 +1040,27 @@ internal fun Screen() {
 		t.Errorf("wrapped=%v", wrapped)
 	}
 }
+
+func TestReviewPlausibleFixes(t *testing.T) {
+	if got := mdTags("原生 <input><button> 和 `<view>`"); got != "原生 `<input>``<button>` 和 `<view>`" {
+		t.Errorf("mdTags = %q", got)
+	}
+	if javaPackage("chart.js") || javaPackage("@scope/x.y") || !javaPackage("per.goweii.actionbarex") || !javaPackage("com.lihang") {
+		t.Error("javaPackage")
+	}
+	// Material theme: <Button> is MaterialButton already, but the project's own RoundButton is still the reuse
+	root := t.TempDir()
+	write(t, root, "app/src/main/AndroidManifest.xml", `<manifest><application android:theme="@style/AppTheme"/></manifest>`)
+	write(t, root, "app/src/main/res/values/styles.xml", `<resources><style name="AppTheme" parent="Theme.MaterialComponents.Light"/></resources>`)
+	write(t, root, "app/src/main/java/a/RoundButton.java", "package a;\npublic class RoundButton extends MaterialButton {\n}")
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><a.RoundButton/><a.RoundButton/><com.google.android.material.button.MaterialButton/><com.google.android.material.button.MaterialButton/><com.google.android.material.button.MaterialButton/><Button/></LinearLayout>`)
+	var hints []string
+	for _, f := range ScanAndroid(root).Findings {
+		if f.Rule == "missed-reuse" {
+			hints = append(hints, f.Hint)
+		}
+	}
+	if len(hints) != 1 || !strings.Contains(hints[0], "RoundButton") {
+		t.Errorf("hints=%v", hints)
+	}
+}

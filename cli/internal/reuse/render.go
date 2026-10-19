@@ -8,10 +8,24 @@ import (
 )
 
 // rawTagRe: a literal element name in prose (原生 <input>) would render as a real element in markdown.
-var rawTagRe = regexp.MustCompile("(^|[^`])(<[A-Za-z][\\w.-]*>)")
+var rawTagRe = regexp.MustCompile(`<[A-Za-z][\w.-]*>`)
 
-// mdTags wraps literal tags in backticks so markdown viewers show them as text.
-func mdTags(s string) string { return rawTagRe.ReplaceAllString(s, "$1`$2`") }
+// mdTags wraps literal tags in backticks so markdown viewers show them as text (adjacent ones too:
+// "<input><button>"), leaving tags that are already inside backticks alone.
+func mdTags(s string) string {
+	var b strings.Builder
+	last := 0
+	for _, m := range rawTagRe.FindAllStringIndex(s, -1) {
+		if m[0] > 0 && s[m[0]-1] == '`' || m[1] < len(s) && s[m[1]] == '`' {
+			continue
+		}
+		b.WriteString(s[last:m[0]])
+		b.WriteString("`" + s[m[0]:m[1]] + "`")
+		last = m[1]
+	}
+	b.WriteString(s[last:])
+	return b.String()
+}
 
 // Markdown renders the brownfield reuse check report.
 func (r *Report) Markdown() string {

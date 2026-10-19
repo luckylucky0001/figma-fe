@@ -517,6 +517,20 @@ func preference(a Asset, concept string) int {
 	return p
 }
 
+// javaPackage: an uncatalogued Android view library named by its package (per.goweii.actionbarex),
+// not an npm package that happens to contain a dot (chart.js, @scope/x.y).
+func javaPackage(s string) bool {
+	if !strings.Contains(s, ".") || strings.ContainsAny(s, " /@") || strings.HasSuffix(s, ".js") || strings.HasSuffix(s, ".css") {
+		return false
+	}
+	for _, p := range strings.Split(s, ".") {
+		if p == "" || strings.ToLower(p) != p {
+			return false
+		}
+	}
+	return true
+}
+
 // featureNamed: the name says the component is made for one feature (@layout/feed_statistics_card,
 // VueImageVerify): ≥2 words beyond its concept, or a purpose word. Judged against the concept the name
 // itself says (NavBar.vue that is really a tab bar is still a generic name).
@@ -562,7 +576,7 @@ func techOf(a Asset) string {
 	case a.Kind == "composable" || isComposeLib(a.Source):
 		return "（Compose）"
 	case a.Kind == "custom-view" || a.Kind == "view-helper" || strings.HasPrefix(a.Name, "@layout/") || a.Source == "Android SDK widgets" || a.Source == "Material Components" || a.Source == "QMUI" ||
-		a.Source == "AppCompat" || a.Kind == "ui-lib" && strings.Count(a.Source, ".") >= 1 && !strings.Contains(a.Source, " "):
+		a.Source == "AppCompat" || a.Source == "AndroidX" || a.Kind == "ui-lib" && javaPackage(a.Source):
 		return "（View）"
 	}
 	return ""

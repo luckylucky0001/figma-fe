@@ -25,6 +25,7 @@ PROJECTS = {
     "jetsnack": ("https://github.com/android/compose-samples.git#Jetsnack", "0bc770fd28510b5a16395349e7281f11386ac82f", "android"),
     "litemall": ("https://github.com/linlinjava/litemall.git#litemall-vue", "a1ef964a718b7277925b19ea26afe78ea3a1d325", "h5"),
     "hello-uniapp": ("https://github.com/dcloudio/hello-uniapp.git", "ab80c34681013d844be2a9feb362bf96ffeca3ee", "h5"),
+    "taro-ui-demo": ("https://github.com/NervJS/taro-ui-demo.git", "8d87bb2e3da32fe5577b1f7daebaa6261b5b3f72", "h5"),
     "newpipe": ("https://github.com/TeamNewPipe/NewPipe.git", "32eb85d0fb09ef9022421751fd96bee564b9223b", "android"),
     "vant-demo-vue3": ("https://github.com/youzan/vant-demo.git#vant/vue3-ts", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
     "vant-demo-vue2": ("https://github.com/youzan/vant-demo.git#vant/vue2", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
@@ -107,6 +108,16 @@ EXPECTED = {
         "导航栏": (["NavBar"], []), "公告通知栏": (["NoticeBar"], []), "资产卡片": (["Card"], []), "标签页": (["SegmentedControl"], []),
         "持仓列表": (["List"], []), "持仓列表项": (["ListItem"], []), "涨跌标签": (["Tag"], []), "收盘倒计时": (["Countdown"], []),
         "底部操作栏": (["GoodsNav"], []), "买入按钮": (["Button[uni-app 内置组件]"], []), "卖出按钮": (["Button[uni-app 内置组件]"], []), "更多按钮": (["Button[uni-app 内置组件]"], []),
+    },
+    ("taro-ui-demo", "order-detail"): {
+        "NavBar": (["AtNavBar"], []), "NoticeBar": (["AtNoticebar"], []), "Card": (["AtCard"], []), "Tag": (["AtTag"], []),
+        "CountDown": (["AtCountdown"], []), "Divider": (["AtDivider"], []), "Cell": (["AtListItem"], []), "ProductCard": (["—", "AtCard"], []),
+        "Price": (["—"], []), "ActionBar": (["—"], []), "Button": (["AtButton"], []),
+    },
+    ("taro-ui-demo", "holdings"): {
+        "导航栏": (["AtNavBar"], []), "公告通知栏": (["AtNoticebar"], []), "资产卡片": (["AtCard"], []), "标签页": (["AtTabs", "AtSegmentedControl"], []),
+        "持仓列表": (["AtList", "—"], []), "持仓列表项": (["AtListItem"], []), "涨跌标签": (["AtTag"], []), "收盘倒计时": (["AtCountdown"], []),
+        "底部操作栏": (["—"], []), "买入按钮": (["AtButton"], []), "卖出按钮": (["AtButton"], []), "更多按钮": (["AtButton"], []),
     },
     ("newpipe", "order-detail"): {
         "NavBar": (["Toolbar", "MaterialToolbar", "@layout/toolbar_layout"], []), "NoticeBar": (["—"], []), "Card": (["CardView", "MaterialCardView"], []), "Tag": (["Chip"], ["—"]),

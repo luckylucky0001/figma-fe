@@ -27,6 +27,8 @@ var (
 
 var htmlTags = map[string]bool{}
 
+var jsxInJS = regexp.MustCompile(`(?m)(return\s*\(?\s*<[A-Za-z]|=>\s*\(?\s*<[A-Za-z]|render\s*\(\)\s*\{)`)
+
 var globalCompRe = regexp.MustCompile(`(?:Vue|app)\.component\(\s*([^,()]+?)\s*,\s*(\w+)\s*\)`)
 
 // uniTags: uni-app / mini-program built-in components, written as lowercase tags like HTML.
@@ -111,6 +113,9 @@ func ScanH5(root string) *Report {
 			return nil
 		}
 		b, _ := os.ReadFile(p)
+		if kind == "js" && jsxInJS.Match(b) && (strings.Contains(string(b), "from 'react'") || strings.Contains(string(b), `from "react"`) || strings.Contains(string(b), "@tarojs/")) {
+			kind = "jsx" // React / Taro components written in plain .js
+		}
 		f := srcFile{path: p, rel: relPath(root, p), kind: kind, text: string(b)}
 		switch kind {
 		case "vue":
@@ -320,9 +325,11 @@ func ScanH5(root string) *Report {
 			if m[1] == "" {
 				continue
 			}
-			if a := thirdAsset(m[1], m[3]); a != nil {
-				alias[strings.ToLower(m[1])] = a
-				continue
+			if strings.Contains(f.markup, "<"+m[1]) {
+				if a := thirdAsset(m[1], m[3]); a != nil { // only when it is rendered as a tag here
+					alias[strings.ToLower(m[1])] = a
+					continue
+				}
 			}
 			base := strings.TrimSuffix(filepath.Base(m[3]), ".vue")
 			for rel, a := range fileAsset {

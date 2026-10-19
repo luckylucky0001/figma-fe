@@ -496,3 +496,17 @@ func TestInconsistentChoice(t *testing.T) {
 		t.Errorf("inconsistent=%+v pass=%v", pc.Inconsistent, pc.Pass)
 	}
 }
+
+func TestTaroJSXInPlainJS(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"@tarojs/taro":"^3.0.0","taro-ui":"^2.2.0","prop-types":"^15.0.0"}}`)
+	write(t, root, "src/pages/index/index.js", "import Taro from '@tarojs/taro'\nimport PropTypes from 'prop-types'\nimport { AtButton, AtList, AtListItem } from 'taro-ui'\nexport default class Index extends Taro.Component {\n  render() {\n    return (<AtList><AtListItem title='a'/><AtButton type='primary'>ok</AtButton></AtList>)\n  }\n}\n")
+	r := ScanH5(root)
+	use := map[string]int{}
+	for _, a := range r.Assets {
+		use[a.Name] = a.Usage
+	}
+	if use["AtButton"] != 1 || use["AtListItem"] != 1 || len(r.Libraries) != 1 {
+		t.Errorf("usage=%v libraries=%+v", use, r.Libraries)
+	}
+}

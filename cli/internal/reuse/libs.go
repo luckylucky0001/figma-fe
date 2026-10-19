@@ -27,6 +27,12 @@ var uiLibs = []uiLib{
 	// uni-app's built-in components are lowercase tags (<button>, <navigator>); active when the project has pages.json
 	{Name: "uni-app 内置组件", Packages: []string{"@dcloudio/uni-app"}, Platform: "h5", Components: []string{
 		"Button", "Navigator", "ScrollView", "Swiper", "Switch", "Checkbox", "Radio", "Picker", "Progress", "Image", "Input", "Textarea", "Slider", "Icon"}},
+	{Name: "taro-ui", Packages: []string{"taro-ui", "taro-ui-vue3"}, Import: []string{"taro-ui", "taro-ui-vue3"}, Platform: "h5", Components: []string{
+		"AtActionSheet", "AtActionSheetItem", "AtActivityIndicator", "AtAccordion", "AtAvatar", "AtBadge", "AtButton", "AtCalendar", "AtCard", "AtCheckbox",
+		"AtCountdown", "AtCurtain", "AtDivider", "AtDrawer", "AtFab", "AtFloatLayout", "AtForm", "AtGrid", "AtIcon", "AtImagePicker", "AtIndexes", "AtInput",
+		"AtInputNumber", "AtList", "AtListItem", "AtLoadMore", "AtMessage", "AtModal", "AtModalAction", "AtModalContent", "AtModalHeader", "AtNavBar",
+		"AtNoticebar", "AtPagination", "AtProgress", "AtRadio", "AtRange", "AtRate", "AtSearchBar", "AtSegmentedControl", "AtSlider", "AtSteps",
+		"AtSwipeAction", "AtSwitch", "AtTabBar", "AtTabs", "AtTabsPane", "AtTag", "AtTextarea", "AtTimeline", "AtToast"}},
 	{Name: "uni-ui", Packages: []string{"@dcloudio/uni-ui"}, TagPrefix: "uni-", Import: []string{"@dcloudio/uni-ui"}, Platform: "h5", Components: []string{
 		"Badge", "Breadcrumb", "Calendar", "Card", "Collapse", "CollapseItem", "Combox", "Countdown", "DataCheckbox", "DataPicker", "DatetimePicker", "Drawer",
 		"Easyinput", "Fab", "Fav", "FilePicker", "Forms", "FormsItem", "GoodsNav", "Grid", "GridItem", "Group", "Icons", "IndexedList", "Link", "List",
@@ -70,6 +76,15 @@ var libConcept = map[string]string{
 	"uni-app 内置组件/ScrollView":                      "",
 	"uni-app 内置组件/Picker":                          "",
 	"uni-app 内置组件/Slider":                          "",
+	"taro-ui/AtListItem":                           "cell",
+	"taro-ui/AtList":                               "card",
+	"taro-ui/AtNoticebar":                          "notice",
+	"taro-ui/AtSegmentedControl":                   "tabs",
+	"taro-ui/AtActivityIndicator":                  "loading",
+	"taro-ui/AtLoadMore":                           "loading",
+	"taro-ui/AtTabsPane":                           "",
+	"taro-ui/AtFloatLayout":                        "popup",
+	"taro-ui/AtInputNumber":                        "stepper",
 	"uni-ui/ListItem":                              "cell",
 	"uni-ui/Section":                               "",
 	"uni-ui/Title":                                 "",

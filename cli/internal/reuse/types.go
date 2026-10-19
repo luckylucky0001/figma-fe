@@ -295,8 +295,8 @@ func ConceptOf(name string) string {
 func clusters(assets []Asset, libAll []Asset) []Cluster {
 	by := map[string][]Asset{}
 	for _, a := range assets {
-		if a.Concept == "" || a.Kind == "page-local" && a.Usage == 0 {
-			continue
+		if a.Concept == "" || a.Kind == "page-local" && a.Usage == 0 || featureOnly(a) || a.WrappedBy != "" {
+			continue // a feature's own component (SnackItem(snack: Snack), a page helper) is not a duplicate to converge
 		}
 		by[a.Concept] = append(by[a.Concept], a)
 	}
@@ -422,4 +422,21 @@ func conceptCanonical(concept string, _ []Asset) string {
 		}
 	}
 	return concept
+}
+
+// featureOnly: a component made for one feature — it needs an app data model, or it is only used
+// inside the file that defines it.
+func featureOnly(a Asset) bool {
+	if hasModelParam(a.Required) {
+		return true
+	}
+	if (a.Kind == "composable" || a.Kind == "custom-view") && len(a.UsageFiles) > 0 && !inDesignSystem(a.Source) {
+		for _, f := range a.UsageFiles {
+			if f != a.Source {
+				return false
+			}
+		}
+		return true
+	}
+	return false
 }

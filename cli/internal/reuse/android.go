@@ -399,6 +399,11 @@ func ScanAndroid(root string) *Report {
 			}
 			lines := strings.Split(f.text, "\n")
 			for _, c := range l.Components {
+				// the project defines a composable of the same name (Jetsnack's FilterChip): only an
+				// explicit import makes a call the library one
+				if compos[c] != nil && !strings.Contains(f.text, "import "+l.Import[0]+c) && !strings.Contains(f.text, "import "+l.Import[0]+"*") {
+					continue
+				}
 				for _, m := range regexp.MustCompile(`(?:^|[^\w.])`+c+`\s*\(`).FindAllStringIndex(f.text, -1) {
 					ln := strings.Count(f.text[:m[0]], "\n") + 1
 					calls = append(calls, call{f, c, ln, strings.TrimSpace(lines[ln-1])})
@@ -420,7 +425,7 @@ func ScanAndroid(root string) *Report {
 					best = a
 				}
 			}
-			if best != nil {
+			if best != nil && best.Name != k.c {
 				lib.WrappedBy = best.Name
 			}
 		}

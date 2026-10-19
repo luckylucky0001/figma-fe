@@ -21,6 +21,13 @@ func (r *Report) Markdown() string {
 		fmt.Fprintf(&b, "| 硬编码尺寸 | %d 处 |\n", m.HardcodedSizes)
 	}
 
+	if todo := r.Priorities(); len(todo) > 0 {
+		b.WriteString("\n## 0. 优先处理（按影响面排序）\n\n")
+		for i, t := range todo {
+			fmt.Fprintf(&b, "%d. %s\n", i+1, t)
+		}
+	}
+
 	if len(r.Libraries) > 0 {
 		b.WriteString("\n## 1. 三方组件库使用\n\n| 组件库 | 使用次数 | 最常用 |\n|---|---|---|\n")
 		for _, l := range r.Libraries {
@@ -143,4 +150,50 @@ func infoCount(fs []Finding) int {
 		}
 	}
 	return n
+}
+
+// Priorities picks the few changes with the widest effect, so a team knows where to start.
+func (r *Report) Priorities() []string {
+	type item struct {
+		weight int
+		text   string
+	}
+	var items []item
+	for _, c := range r.Clusters {
+		if len(c.Members) >= 2 && c.TotalUsage >= 3 {
+			items = append(items, item{c.TotalUsage, fmt.Sprintf("「%s」有 %d 种实现（共用 %d 次）→ 统一到 `%s`", c.Concept, len(c.Members), c.TotalUsage, c.Recommend)})
+		}
+	}
+	bypass, missed := map[string]int{}, map[string]int{}
+	for _, f := range r.Findings {
+		switch {
+		case f.Rule == "bypass":
+			bypass[f.Hint]++
+		case f.Rule == "missed-reuse" && f.Severity != "info":
+			missed[f.Hint]++
+		}
+	}
+	for h, n := range bypass {
+		items = append(items, item{n * 3, fmt.Sprintf("%d 处%s", n, strings.TrimPrefix(h, "直接用了 "))})
+	}
+	for h, n := range missed {
+		items = append(items, item{n * 2, fmt.Sprintf("%d 处%s", n, h)})
+	}
+	if r.Metrics.TokenizableColors > 0 {
+		items = append(items, item{r.Metrics.TokenizableColors, fmt.Sprintf("%d 处写死的颜色已有同值 token，可以直接替换（见第 6 节）", r.Metrics.TokenizableColors)})
+	}
+	for _, c := range r.Clones {
+		if c.Elements*len(c.Locations) >= 20 {
+			items = append(items, item{len(c.Locations) * 2, fmt.Sprintf("%d 个元素的结构被复制了 %d 次（%s 等）→ 抽成组件", c.Elements, len(c.Locations), c.Locations[0])})
+		}
+	}
+	sort.SliceStable(items, func(i, j int) bool { return items[i].weight > items[j].weight })
+	var out []string
+	for i, it := range items {
+		if i == 5 {
+			break
+		}
+		out = append(out, it.text)
+	}
+	return out
 }

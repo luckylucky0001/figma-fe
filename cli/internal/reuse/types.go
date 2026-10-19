@@ -110,8 +110,9 @@ var concepts = []struct {
 	{"navbar", []string{"navbar", "topbar", "appbar", "titlebar", "toolbar", "header", "topappbar"}},
 	{"price", []string{"price", "amount", "money", "pricetext"}},
 	{"dialog", []string{"dialog", "modal", "alert", "confirm"}},
-	{"toast", []string{"toast", "snackbar", "notify", "tips"}},
-	{"popup", []string{"popup", "sheet", "actionsheet", "bottomsheet", "drawer", "popover", "floatingpanel"}},
+	{"toast", []string{"toast", "snackbar", "notify", "tips", "tipdialog", "hud"}},
+	{"popup", []string{"popup", "drawer", "popover", "floatingpanel", "floatlayout"}},
+	{"sheet", []string{"sheet", "actionsheet", "bottomsheet", "sharesheet", "bottomsheetdialog"}},
 	{"tabs", []string{"tabs", "tab", "segment", "segmented", "tabrow", "tabsegment"}},
 	{"tabbar", []string{"tabbar", "navigationbar", "bottomnavigation", "bottomnavigationview", "bottomnav", "navigationrail", "navigationsuite", "navigationitem", "navigationbaritem"}},
 	{"input", []string{"input", "field", "edittext", "textfield", "textarea", "inputitem", "easyinput"}},
@@ -197,7 +198,7 @@ var zhConcepts = []struct{ kw, concept string }{
 	{"单元格", "cell"}, {"列表项", "cell"}, {"信息行", "cell"}, {"分割线", "divider"}, {"分隔线", "divider"},
 	{"商品卡", "goods"}, {"商品", "goods"}, {"价格", "price"}, {"金额", "price"}, {"按钮", "button"},
 	{"标签", "tag"}, {"徽标", "badge"}, {"角标", "badge"}, {"卡片", "card"}, {"弹窗", "dialog"}, {"对话框", "dialog"},
-	{"轻提示", "toast"}, {"吐司", "toast"}, {"弹出层", "popup"}, {"面板", "popup"}, {"输入框", "input"}, {"搜索", "search"}, {"K线", "chart"}, {"k线", "chart"}, {"分时", "chart"}, {"走势图", "chart"}, {"图表", "chart"},
+	{"轻提示", "toast"}, {"吐司", "toast"}, {"弹出层", "popup"}, {"动作面板", "sheet"}, {"底部弹窗", "sheet"}, {"分享面板", "sheet"}, {"面板", "popup"}, {"输入框", "input"}, {"搜索", "search"}, {"K线", "chart"}, {"k线", "chart"}, {"分时", "chart"}, {"走势图", "chart"}, {"图表", "chart"},
 	{"图片", "image"}, {"头像", "image"}, {"空状态", "empty"}, {"加载", "loading"}, {"开关", "switch"}, {"复选框", "checkbox"}, {"勾选", "checkbox"},
 	{"单选", "radio"}, {"步进器", "stepper"}, {"轮播", "carousel"}, {"图标", "icon"}, {"列表", "list"},
 }
@@ -308,19 +309,20 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 		if a.Concept == "" || a.Kind == "page-local" && a.Usage == 0 || featureOnly(a) || a.WrappedBy != "" {
 			continue // a feature's own component (SnackItem(snack: Snack), a page helper) is not a duplicate to converge
 		}
-		by[a.Concept] = append(by[a.Concept], a)
+		by[a.Concept+techOf(a)] = append(by[a.Concept+techOf(a)], a)
 	}
 	// An unused library component of the same concept is the classic "built our own wheel" case.
 	for _, l := range libAll {
 		if l.Usage > 0 || l.Concept == "" || l.Source == "Android SDK widgets" {
 			continue
 		}
+		k := l.Concept + techOf(l)
 		hasProject := false
-		for _, a := range by[l.Concept] {
+		for _, a := range by[k] {
 			hasProject = hasProject || a.Kind != "ui-lib"
 		}
-		if hasProject && strings.EqualFold(l.Name, conceptCanonical(l.Concept, by[l.Concept])) {
-			by[l.Concept] = append(by[l.Concept], l)
+		if hasProject && strings.EqualFold(l.Name, conceptCanonical(l.Concept, by[k])) {
+			by[k] = append(by[k], l)
 		}
 	}
 	var out []Cluster
@@ -486,4 +488,16 @@ func preference(a Asset, concept string) int {
 		}
 	}
 	return p
+}
+
+// techOf separates Android View and Compose implementations: they are not interchangeable, so a
+// duplicate cluster never asks an XML page to converge on a composable. "" for H5.
+func techOf(a Asset) string {
+	switch {
+	case a.Kind == "composable" || isComposeLib(a.Source):
+		return "（Compose）"
+	case a.Kind == "custom-view" || strings.HasPrefix(a.Name, "@layout/") || a.Source == "Android SDK widgets" || a.Source == "Material Components" || a.Source == "QMUI":
+		return "（View）"
+	}
+	return ""
 }

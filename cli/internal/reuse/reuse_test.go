@@ -1170,3 +1170,15 @@ func TestMultiLineTagsAndQuotedAngles(t *testing.T) {
 		t.Errorf("parsed %d roots / %+v", len(ns), ns)
 	}
 }
+
+// review 3: every object-syntax prop is found (not just the first), nested keys are not props, and
+// an inline array works too
+func TestVuePropsParsing(t *testing.T) {
+	obj := "export default {\n  props: {\n    title: { type: String, default: '' },\n    size: { type: String, validator: (v) => ['a', 'b'].includes(v) },\n    'is-link': Boolean,\n  },\n}"
+	if got := strings.Join(vueProps(obj), ","); got != "title,size,is-link" {
+		t.Errorf("object props = %q", got)
+	}
+	if got := strings.Join(vueProps("export default { props: ['label', 'value'] }"), ","); got != "label,value" {
+		t.Errorf("inline array props = %q", got)
+	}
+}

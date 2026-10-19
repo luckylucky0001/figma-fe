@@ -22,7 +22,8 @@ var (
 	cssVarDefRe   = regexp.MustCompile(`(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
 	preVarDefRe   = regexp.MustCompile(`([@$][\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
 	definePropsRe = regexp.MustCompile(`(?s)defineProps(?:<\s*\{(.*?)\}\s*>)?\(\s*(\{.*?\}|\[.*?\])?\s*\)`)
-	propsObjRe    = regexp.MustCompile(`(?s)props\s*:\s*(\{.*?\}|\[.*?\])\s*,?\s*\n`)
+	propIdentRe   = regexp.MustCompile(`^[\w-]+$`)
+	propsKeyRe    = regexp.MustCompile(`\bprops\s*:\s*`)
 	fixedRe       = regexp.MustCompile(`position:\s*fixed`)
 	fixedBottomRe = regexp.MustCompile(`(?s)position:\s*fixed[^}]*?(?:^|[;{\s])bottom:\s*0|(?:^|[;{\s])bottom:\s*0[^}]*?position:\s*fixed`) // not border-bottom: 0
 	propNameRe    = regexp.MustCompile(`(?:^|[{,;\n])\s*['"]?(\w+)['"]?\??\s*:`)
@@ -634,8 +635,16 @@ func vueProps(src string) []string {
 	var body string
 	if m := definePropsRe.FindStringSubmatch(src); m != nil {
 		body = m[1] + m[2]
-	} else if m := propsObjRe.FindStringSubmatch(src); m != nil {
-		body = m[1]
+	} else if loc := propsKeyRe.FindStringIndex(src); loc != nil {
+		// props: { title: {…}, size: {…} } — cut the block by bracket matching; a lazy regex stopped
+		// at the first "},"
+		if b := balanced(src[loc[1]:]); b != "" {
+			if strings.HasPrefix(b, "[") {
+				body = b
+			} else {
+				return topLevelKeys(b)
+			}
+		}
 	}
 	var out []string
 	if strings.HasPrefix(strings.TrimSpace(body), "[") {
@@ -677,6 +686,60 @@ func bestAsset(assets map[string]*Asset, concept string) *Asset {
 		}
 	}
 	return best
+}
+
+// balanced returns the {…} or […] block s starts with (quotes respected), or "".
+func balanced(s string) string {
+	if s == "" || s[0] != '{' && s[0] != '[' {
+		return ""
+	}
+	depth, q := 0, byte(0)
+	for i := 0; i < len(s); i++ {
+		switch c := s[i]; {
+		case q != 0:
+			if c == q && s[i-1] != '\\' {
+				q = 0
+			}
+		case c == '"' || c == '\'' || c == '`':
+			q = c
+		case c == '{' || c == '[':
+			depth++
+		case c == '}' || c == ']':
+			if depth--; depth == 0 {
+				return s[:i+1]
+			}
+		}
+	}
+	return ""
+}
+
+// topLevelKeys lists the keys of an object literal's first level ({ title: {type: String}, size: … }).
+func topLevelKeys(obj string) []string {
+	var out []string
+	depth, q, start := 0, byte(0), 1
+	for i := 0; i < len(obj); i++ {
+		switch c := obj[i]; {
+		case q != 0:
+			if c == q && obj[i-1] != '\\' {
+				q = 0
+			}
+		case c == '"' || c == '\'' || c == '`':
+			q = c
+		case c == '{' || c == '[' || c == '(':
+			depth++
+		case c == '}' || c == ']' || c == ')':
+			depth--
+		case c == ',' && depth == 1:
+			start = i + 1
+		case c == ':' && depth == 1:
+			k := strings.Trim(strings.TrimSpace(obj[start:i]), `'"`)
+			if k != "" && propIdentRe.MatchString(k) && !contains(out, k) {
+				out = append(out, k)
+			}
+			start = len(obj) // the value follows; the next key starts after the next top-level comma
+		}
+	}
+	return out
 }
 
 // openTag returns the opening tag at the start of s, up to the first '>' outside quotes (at most 600 bytes).

@@ -55,6 +55,9 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 		}
 	}
 	for _, a := range r.Assets {
+		if a.Source == "uni-app 内置组件" {
+			continue // the platform's own <input> / <button>: primitives, judged as missed reuse instead
+		}
 		for _, f := range a.UsageFiles {
 			if in(f) && !(in(a.Source) && a.Kind != "ui-lib") {
 				pc.Used = append(pc.Used, a.Name+"（"+kindLabel(a.Kind)+"）")

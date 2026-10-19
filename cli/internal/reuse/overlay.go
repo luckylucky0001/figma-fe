@@ -54,7 +54,7 @@ func (m *MatchResult) HTML(exp *figma.Export, img string) string {
 			}
 			var ok []string // resolved mappings only; the unresolved notes stay in the .md for the agent
 			for _, p := range c.Props {
-				if strings.Contains(p, "→") {
+				if strings.Contains(p, "→") || strings.HasPrefix(p, "项目惯用") {
 					ok = append(ok, p)
 				}
 			}

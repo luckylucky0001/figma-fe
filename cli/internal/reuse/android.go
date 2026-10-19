@@ -23,6 +23,8 @@ var (
 )
 
 // view base classes that make a class a reusable View component
+var styleAttrRe = regexp.MustCompile(`\bstyle="@style/([\w.]+)"`)
+
 var viewBases = regexp.MustCompile(`(View|Layout|Button|TextView|ImageView|EditText|Toolbar|Bar|Group|Dialog|Popup|Fragment)$`)
 
 // layout containers are structure, not reusable components
@@ -312,7 +314,22 @@ func ScanAndroid(root string) *Report {
 			if containers[tag] || containers[simple] {
 				continue
 			}
+			style := ""
+			if end := strings.IndexByte(f.text[m[0]:], '>'); end > 0 {
+				if sm := styleAttrRe.FindStringSubmatch(f.text[m[0] : m[0]+end]); sm != nil {
+					style = sm[1]
+				}
+			}
+			noteStyle := func(a *Asset) {
+				if style != "" {
+					if a.Styles == nil {
+						a.Styles = map[string]int{}
+					}
+					a.Styles[style]++
+				}
+			}
 			if a, ok := custom[simple]; ok && (strings.Contains(tag, ".") || true) {
+				noteStyle(a)
 				use(a, f.rel, ln, line)
 				continue
 			}
@@ -328,6 +345,7 @@ func ScanAndroid(root string) *Report {
 						continue
 					}
 				}
+				noteStyle(a)
 				use(a, f.rel, ln, line)
 			}
 		}

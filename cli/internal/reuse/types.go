@@ -29,7 +29,8 @@ type Asset struct {
 	Unavailable bool                `json:"unavailable,omitempty"` // the installed library version does not ship it
 	WrappedBy   string              `json:"wrappedBy,omitempty"`
 	Enums       map[string][]string `json:"enums,omitempty"`    // enum-like props → allowed values
-	Required    []string            `json:"required,omitempty"` // parameters without a default (composables)   // the design-system component that wraps this library component
+	Required    []string            `json:"required,omitempty"` // parameters without a default (composables)
+	Styles      map[string]int      `json:"styles,omitempty"`   // XML style="@style/…" applied with it, by count   // the design-system component that wraps this library component
 }
 
 type Finding struct {

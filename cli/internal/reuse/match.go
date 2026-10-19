@@ -221,7 +221,11 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			if ex == "" && as.Kind == "ui-lib" {
 				ex, at = libSnippet(as), "（"+as.Source+" 标准用法，项目未用过）"
 			}
-			item.Candidates = append(item.Candidates, Candidate{as.Name, as.Kind, as.Source, round2(sc), as.Usage, ex, at, why, PropHints(item.Variants, as)})
+			hints := PropHints(item.Variants, as)
+			if st, n := topStyle(as.Styles); n >= 3 {
+				hints = append(hints, fmt.Sprintf(`项目惯用 style="@style/%s"（%d 处）`, st, n))
+			}
+			item.Candidates = append(item.Candidates, Candidate{as.Name, as.Kind, as.Source, round2(sc), as.Usage, ex, at, why, hints})
 		}
 		sort.SliceStable(item.Candidates, func(i, j int) bool {
 			ci, cj := item.Candidates[i], item.Candidates[j]
@@ -849,4 +853,15 @@ func FeatureSummary(ms []*MatchResult) string {
 	}
 	fmt.Fprintf(&b, "\n这个需求共要用到 %d 个组件：直接复用 %d · 需确认 %d · 需新建 %d。需新建的组件只做一次、放进组件库，所有页面共用。\n", len(order), n["reuse"], n["confirm"], n["new"])
 	return b.String()
+}
+
+// topStyle: the style the project applies most often with a component.
+func topStyle(m map[string]int) (string, int) {
+	best, n := "", 0
+	for k, v := range m {
+		if v > n || v == n && k < best {
+			best, n = k, v
+		}
+	}
+	return best, n
 }

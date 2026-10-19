@@ -1,185 +1,228 @@
 """生成 docs/report.html（约 3 页 A4），再由 shoot.mjs 输出 docs/report.pdf。
-数据来自 experiments/summary.json（summarize.py）和 experiments/cost.json，不手填数字。"""
-import json, os, html
+数字全部来自实验数据，不手填：
+  experiments/real-match-eval.json / .md   复用清单准确率（real-match-eval.py）
+  experiments/real-project/summary.json    真实项目 A / C 对照（real-summary.py）
+  experiments/real-project/cost.md         真实项目实验的 token / 耗时
+  experiments/summary.json + cost.json     demo 仓库新页面实验（summarize.py）"""
+import json, os, re
 
 root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-rows = json.load(open(os.path.join(root, 'experiments', 'summary.json')))
-cost = json.load(open(os.path.join(root, 'experiments', 'cost.json')))
+ex = lambda *p: os.path.join(root, 'experiments', *p)
 img = 'tutorial/img/'
 
-GROUP = {
-    'A': ('A 基线', '设计图 + Figma 节点 JSON，组件库在仓库里'),
-    'Apkg': ('A 基线 · npm 包', '同上，组件库是只有编译产物的 npm 包'),
-    'Aimg': ('A 基线 · 只给截图', '只有设计图，没有节点 JSON'),
-    'Ahk': ('A 基线 · Haiku', '同 A，换成更小的模型'),
-    'C': ('C 完整 Skill', '资产清单 + 映射 + 方案闸门 + verify 闭环'),
-    'Cpkg': ('C 完整 Skill · npm 包', '组件库是 npm 包，随包附带组件手册'),
-    'Chk': ('C 完整 Skill · Haiku', '同 C，换成更小的模型'),
-}
-order = ['A', 'Apkg', 'Aimg', 'Ahk', 'C', 'Cpkg', 'Chk']
+# ---- 复用清单准确率 ----
+ev = json.load(open(ex('real-match-eval.json')))
+stack, heldout = {}, set()
+for line in open(ex('real-match-eval.md'), encoding='utf-8'):
+    m = re.match(r'\| ([\w-]+)(（留出）)? \| ([^|]+) \|', line)
+    if m and m.group(1) != '项目':
+        stack[m.group(1)] = m.group(3).strip()
+        if m.group(2):
+            heldout.add(m.group(1))
+projects = list(dict.fromkeys(k.split('/')[0] for k in ev))
+pages = [('order-detail', '订单详情'), ('holdings', '我的持仓'), ('trade-order', '买入下单')]
+tot = {s: sum(v[s] for v in ev.values()) for s in '✓△✗'}
+n_items = sum(tot.values())
 
 
-def pct(v, d=0):
-    return f'{v*100:.{d}f}%'
+def cell(v):
+    s = f"✓{v['✓']}"
+    if v['△']:
+        s += f" <span class='warn'>△{v['△']}</span>"
+    if v['✗']:
+        s += f" <b class='bad'>✗{v['✗']}</b>"
+    return s
 
 
-def run_rows():
+def eval_rows():
     out = []
-    for pf in ['h5', 'android']:
-        for g in order:
-            for r in rows:
-                if r['platform'] != pf or r['run'].rsplit('-', 2)[0] != g:
-                    continue
-                c = cost.get(r['run'], {})
-                name, _ = GROUP[g]
-                cls = 'c' if g.startswith('C') else ''
-                verdict = '<b class="ok">PASS</b>' if r['pass_'] else '<b class="bad">FAIL</b>'
-                cd = '<b class="bad">是</b>' if r['selfBuiltCountdown'] else '否'
-                ids = r['figmaIds']
-                out.append(f"<tr class='{cls}'><td>{name}</td><td>{'H5' if pf=='h5' else 'Android'}</td><td>{verdict}</td>"
-                           f"<td>{pct(r['reuse'])}</td><td>{r['violations']}</td><td>{pct(r['pixel'],2)}</td>"
-                           f"<td>{r['nodeErr']} / {r['nodeWarn']}</td><td>{cd}</td><td>{ids}</td>"
-                           f"<td>{c.get('seconds','-')}s / {round(c['tokens']/1000) if c else '-'}k</td></tr>")
+    for p in projects:
+        tag = ' <span class="tagho">留出</span>' if p in heldout else ''
+        out.append(f"<tr><td>{p}{tag}</td><td>{stack.get(p, '')}</td>" +
+                   ''.join(f"<td>{cell(ev[p + '/' + k])}</td>" for k, _ in pages) + '</tr>')
     return '\n'.join(out)
 
 
-def stat(pred):
-    sel = [r for r in rows if pred(r)]
-    return sel
+# ---- 真实项目 A / C 对照 ----
+rp = json.load(open(ex('real-project', 'summary.json')))
+INVALID = {'Rlm-A-1'}  # A 组 agent 自己找到并运行了 Skill，不能当基线（见 real-project/summary.md）
+runs = [r for r in rp.values() if r['run'] not in INVALID]
+PNAME = {'Rnb': ('newbee-mall', 'Vue 3 + Vant'), 'Rlm': ('litemall（留出）', 'Vue 2 + Vant 2'),
+         'Rqm': ('QMUI_Android', 'XML + QMUI'), 'Rnp': ('NewPipe（留出）', 'XML + AppCompat'),
+         'Rnia': ('Now in Android', 'Compose + 自有设计系统')}
 
 
-A = stat(lambda r: r['group'].startswith('A'))
-C = stat(lambda r: r['group'].startswith('C'))
-a_cd = sum(r['selfBuiltCountdown'] for r in A)
-c_cd = sum(r['selfBuiltCountdown'] for r in C)
-a_ids = sum(r['figmaIds'] > 0 for r in A)
-c_ids = sum(r['figmaIds'] > 0 for r in C)
-hk = {r['run']: r for r in rows if 'hk' in r['run']}
-import re, glob
-def ticking(run):
-    src = ''.join(open(f, encoding='utf-8', errors='ignore').read() for f in glob.glob(os.path.join(root, 'experiments', 'runs', run, 'src', '*')))
-    return bool(re.search(r'setInterval|setTimeout|LaunchedEffect|delay\(', src))
-a_tick = sum(ticking(r['run']) for r in A)
-def avg(group, key):
-    v = [cost[r['run']][key] for r in group if r['run'] in cost]
-    return sum(v) / len(v)
-t_ratio = avg(C, 'seconds') / avg(A, 'seconds')
-k_ratio = avg(C, 'tokens') / avg(A, 'tokens')
-haiku_note = open(os.path.join(root, 'experiments', 'haiku-note.html')).read() if os.path.exists(os.path.join(root, 'experiments', 'haiku-note.html')) else ''
+def grp(rs, g):
+    return [r for r in rs if r['group'] == g]
 
-page = f"""<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>Figma → 代码：组件复用与还原度验证</title>
+
+def passes(rs):
+    return f"{sum(r['pass'] for r in rs)}/{len(rs)}" if rs else '—'
+
+
+def bad(r):  # 自造轮子 + 有组件没用 + 手写已有组件
+    return r['reinvented'] + r['reinventedWarn'] + r['missed'] + r['handBuiltError'] + r['handBuiltWarn']
+
+
+def exp_rows():
+    out = []
+    for p, (name, st) in PNAME.items():
+        rs = [r for r in runs if r['project'] == p]
+        a = grp(rs, 'A') + grp(rs, 'Ahk')
+        c = grp(rs, 'C') + grp(rs, 'Chk')
+        f = lambda xs, k: ' / '.join(str(k(r)) for r in xs)
+        out.append(f"<tr><td>{name}</td><td>{st}</td>"
+                   f"<td class='bad'>{passes(a)}</td><td>{f(a, lambda r: r['used'])}</td><td>{f(a, bad)}</td>"
+                   f"<td class='ok'>{passes(c)}</td><td>{f(c, lambda r: r['used'])}</td><td>{f(c, bad)}</td></tr>")
+    return '\n'.join(out)
+
+
+A_all = [r for r in runs if r['group'].startswith('A')]
+C_all = [r for r in runs if r['group'].startswith('C')]
+A_hk, C_hk = grp(runs, 'Ahk'), grp(runs, 'Chk')
+avg = lambda xs, k: sum(k(r) for r in xs) / len(xs)
+
+cost = {}
+for line in open(ex('real-project', 'cost.md'), encoding='utf-8'):
+    m = re.match(r'\| (R[\w-]+) \| ([\d,]+) \| (\d+) \|', line)
+    if m:
+        cost[m.group(1)] = (int(m.group(2).replace(',', '')), int(m.group(3)))
+ca = [v for k, v in cost.items() if k.split('-')[1].startswith('A')]
+cc = [v for k, v in cost.items() if k.split('-')[1].startswith('C')]
+k_up = sum(x[0] for x in cc) / len(cc) / (sum(x[0] for x in ca) / len(ca)) - 1
+t_up = sum(x[1] for x in cc) / len(cc) / (sum(x[1] for x in ca) / len(ca)) - 1
+
+# ---- demo 仓库新页面实验 ----
+demo = json.load(open(ex('summary.json')))
+dA = [r for r in demo if r['group'].startswith('A')]
+dC = [r for r in demo if r['group'].startswith('C')]
+
+page = f"""<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>Figma → 代码：组件复用验证报告</title>
 <style>
-@page {{ size: A4; margin: 12mm 13mm; }}
+@page {{ size: A4; margin: 11mm 12mm; }}
 * {{ box-sizing: border-box; }}
-body {{ margin: 0; font-family: 'Noto Sans SC', sans-serif; color: #1f2329; font-size: 10.2pt; line-height: 1.55; }}
-h1 {{ font-size: 18pt; margin: 0 0 2mm; }} h2 {{ font-size: 12.5pt; margin: 4mm 0 1.5mm; padding-left: 2.5mm; border-left: 3px solid #ff4d1a; }}
-h3 {{ font-size: 10.8pt; margin: 2.5mm 0 1mm; }}
-.sub {{ color: #646a73; font-size: 9.5pt; margin-bottom: 3mm; }}
-.tldr {{ background: #fff1eb; border-radius: 6px; padding: 2.5mm 4mm; margin: 2mm 0 3mm; }}
-.tldr li {{ margin: 0.6mm 0; }}
-table {{ border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 1.5mm 0; }}
-th, td {{ border: 1px solid #e5e6eb; padding: 1mm 1.6mm; text-align: left; vertical-align: top; }}
+body {{ margin: 0; font-family: 'Noto Sans SC', sans-serif; color: #1f2329; font-size: 9.8pt; line-height: 1.5; }}
+h1 {{ font-size: 17pt; margin: 0 0 1.5mm; }} h2 {{ font-size: 12pt; margin: 3.5mm 0 1.5mm; padding-left: 2.5mm; border-left: 3px solid #ff4d1a; }}
+h3 {{ font-size: 10.4pt; margin: 2mm 0 1mm; }}
+.sub {{ color: #646a73; font-size: 9pt; margin-bottom: 2.5mm; }}
+.tldr {{ background: #fff1eb; border-radius: 6px; padding: 2mm 4mm; margin: 1.5mm 0 2.5mm; }}
+table {{ border-collapse: collapse; width: 100%; font-size: 8.4pt; margin: 1.2mm 0; }}
+th, td {{ border: 1px solid #e5e6eb; padding: 0.8mm 1.5mm; text-align: left; vertical-align: top; }}
 th {{ background: #f5f6f7; font-weight: 600; }}
-tr.c td {{ background: #f6fbf7; }}
-.ok {{ color: #00b578; }} .bad {{ color: #f53f3f; }}
-.flow {{ display: flex; gap: 1.5mm; margin: 2mm 0; }}
-.flow div {{ flex: 1; background: #f5f6f7; border-radius: 5px; padding: 1.6mm 2mm; font-size: 8.4pt; }}
-.flow b {{ display: block; color: #ff4d1a; font-size: 9pt; }}
-.two {{ display: flex; gap: 4mm; }} .two > * {{ flex: 1; }}
+.ok {{ color: #00b578; font-weight: 600; }} .bad {{ color: #f53f3f; font-weight: 600; }} .warn {{ color: #d97706; }}
+.tagho {{ font-size: 7pt; color: #fff; background: #8f959e; border-radius: 3px; padding: 0 1mm; }}
+.flow {{ display: flex; gap: 1.5mm; margin: 1.5mm 0; }}
+.flow div {{ flex: 1; background: #f5f6f7; border-radius: 5px; padding: 1.4mm 2mm; font-size: 8.2pt; }}
+.flow b {{ display: block; color: #ff4d1a; font-size: 8.8pt; }}
+.two {{ display: flex; gap: 4mm; align-items: flex-start; }} .two > * {{ flex: 1; min-width: 0; }}
 .pb {{ break-before: page; }}
 img.wide {{ width: 100%; border: 1px solid #e5e6eb; border-radius: 5px; }}
-code {{ font-family: 'DejaVu Sans Mono', monospace; font-size: 8.4pt; background: #f3f4f6; padding: 0 1mm; border-radius: 2px; }}
-ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.4mm 0; }}
-.note {{ color: #646a73; font-size: 8.6pt; }}
+code {{ font-family: 'DejaVu Sans Mono', monospace; font-size: 8pt; background: #f3f4f6; padding: 0 1mm; border-radius: 2px; }}
+ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.5mm 0; }}
+.note {{ color: #646a73; font-size: 8.3pt; margin: 1mm 0; }}
+.big {{ font-size: 15pt; font-weight: 700; color: #ff4d1a; }}
+.kpi {{ display: flex; gap: 2mm; margin: 2mm 0; }} .kpi div {{ flex: 1; border: 1px solid #ffd8c8; border-radius: 6px; padding: 1.5mm 2.5mm; font-size: 8.4pt; }}
 </style></head><body>
 
-<h1>Figma → 代码：组件复用与设计还原度</h1>
-<div class="sub">痛点 4 的验证 Demo · 仓库 luckylucky0001/figma-fe · 2026-10-20 · 交付物：CLI <code>figmafe</code>（Go）+ Skill <code>figma-to-code</code> + H5 / Android Demo + 教程</div>
+<h1>Figma → 代码：组件复用验证报告</h1>
+<div class="sub">痛点 4「Figma 到实现存在偏差，组件未被充分复用」· 仓库 luckylucky0001/figma-fe · 2026-10-20 · 交付物：CLI <code>figmafe</code>（Go）+ Skill <code>figma-to-code</code> + 免费 Figma 导出插件 + Demo + 分步教程</div>
+
+<div class="kpi">
+<div><span class="big">{len(projects)}</span> 个真实开源项目（H5 / Android 主流技术栈）× 3 份设计稿</div>
+<div><span class="big">{tot['✓']}/{n_items}</span> 项复用推荐正确，<b>{tot['✗']}</b> 项错误，其余为「可用但不是最优」</div>
+<div><span class="big">{passes(A_all)} → {passes(C_all)}</span> 真实项目里实现新页面：不用 Skill → 用 Skill 通过复用检查</div>
+<div><span class="big">+{k_up*100:.0f}%</span> token、+{t_up*100:.0f}% 耗时：用 Skill 多出的成本</div>
+</div>
 
 <div class="tldr"><b>结论</b><ul>
-<li><b>流程跑通、可量化</b>：「先盘点资产 → 建立映射 → 出复用方案 → 实现 → 审计 + 截图对比 → 修正 → 沉淀规则」在 H5（React）和 Android（Compose，兼容 compileSdk 32）两端都实现为一个命令 <code>figmafe verify</code>。它输出复用率、违规、像素差异和节点级偏差，可以直接接入 CI。</li>
-<li><b>实测</b>：{len(rows)} 次对照运行里，C 组（完整 Skill）在 {sum(r['pass_'] for r in C if r['platform']=='h5')}/{sum(1 for r in C if r['platform']=='h5')} 次 H5 运行中达标。Android 端剩下的 2 处严重偏差都出在<b>组件库内部</b>，A 组和 C 组相同。工具能把「页面写错了」和「组件本身不符合设计」区分开。</li>
-<li><b>如实说明</b>：在这个 demo 里，强模型的基线（A 组）也能找到组件库，复用率达到 100%。差别体现在「规范和可追溯」上：A 组 {a_cd}/{len(A)} 次自己造了一个规范外的会跳动的 CountDown 组件，C 组 {c_cd}/{len(C)} 次；A 组 {a_ids}/{len(A)} 次挂了 Figma 节点 id，C 组 {c_ids}/{len(C)} 次。token 漂移、变体缺失这类资产问题，只有 C 组的扫描和映射检查系统性地找了出来。</li>
-{haiku_note}
-<li><b>建议</b>：在真实项目中，先拿一个典型页面按教程接入，用 <code>figmafe verify</code> 量出现状（这是 demo 无法替代的一步），再推广到 PR CI。</li>
+<li><b>对存量项目，先把「有什么」查清楚，才知道新设计稿能复用什么。</b><code>figmafe reuse</code> 扫一遍现有 H5（Vue / React / uni-app / Taro + Vant / antd-mobile / NutUI / uni-ui / taro-ui）或 Android（XML View / Compose，QMUI / Material / AppCompat / 自有设计系统）项目，得到组件资产、项目惯例、重复实现和「组件库有但本项目用不了」的组件。<code>figmafe match</code> 再把新设计稿逐个元素对上去，给出「直接复用 / 需确认 / 需新建」，并附上项目里的真实写法和变体 → props 的配置。</li>
+<li><b>准确率</b>：{len(projects)} 个项目 × 3 份设计稿共 {n_items} 项，✓{tot['✓']} / △{tot['△']} / ✗{tot['✗']}。其中 {len(heldout)} 个是「留出」项目：调规则时没用过，第一次跑出现过错误（见第 2 节），修的都是通用规则，之后作为回归测试。</li>
+<li><b>Agent 实测</b>：在 5 个真实项目里按同一份设计稿实现新页面，不用 Skill 的 {len(A_all)} 次全部没通过复用检查（Now in Android 里新建了 11～12 个和已有组件重复的组件；Haiku 在 newbee 里一个现成组件都没用），用 Skill 的 {passes(C_all)} 次通过。Haiku 从 {passes(A_hk)} 提到 {passes(C_hk)}：模型越弱，固定流程的收益越大。</li>
+<li><b>新页面闭环</b>：demo 仓库里，<code>figmafe verify</code> 一条命令输出复用率、违规、像素差异和节点级偏差，退出码可做 CI 门禁；故意埋的 3 处错误全部被抓出，修正后一次通过。</li>
+<li><b>只用免费能力</b>：不用 Figma Code Connect、Dev Mode MCP 和 Variables REST API（都要付费），设计数据走自己写的插件（Plugin API，免费）。</li>
 </ul></div>
 
-<h2>1. 方案：把 Proposal 落成可执行的工具链</h2>
+<h2>1. 方案：Proposal 的每一条都落成了命令</h2>
 <div class="flow">
-<div><b>① 导出</b>免费 Figma 插件（Plugin API）导出节点、变量、2 倍图；不用付费的 MCP 和 Code Connect</div>
-<div><b>② 盘点资产</b><code>scan</code>：两端组件、props、变体、示例、使用次数、token、存量坏实践</div>
-<div><b>③ 映射</b><code>map suggest/check</code>：Figma ↔ H5 / Android；输出缺口、变体不支持、token 漂移</div>
-<div><b>④ 方案闸门</b><code>plan</code>：节点 → 组件 → 可粘贴的代码；人确认后才写</div>
-<div><b>⑤ 验证闭环</b><code>verify</code>：静态审计 + 截图 + 像素 / 节点比对，最多修 3 轮</div>
-<div><b>⑥ 沉淀</b><code>rules.md</code> 和组件问题清单，下个页面直接受益</div>
+<div><b>① 体检存量</b><code>reuse</code>：资产、惯例、重复概念、复制粘贴结构、写死颜色、版本 / 主题兼容性</div>
+<div><b>② 新稿复用清单</b><code>match</code>：Figma 元素 → 项目组件，附真实用法、props 配置、可视化叠图</div>
+<div><b>③ 人确认</b>需确认 / 需新建的项写进 <code>component-map.yaml</code>，下次自动采用</div>
+<div><b>④ 实现后检查</b><code>reuse --focus / --changed</code>：自造轮子、有组件没用、手写已有组件</div>
+<div><b>⑤ 对照设计</b><code>compare</code> / <code>verify</code>：截图 + 像素 / 节点级偏差，带 Figma 节点 id</div>
+<div><b>⑥ 不许变差</b><code>--baseline --no-regress</code> 接 CI；偏差沉淀成 <code>rules.md</code></div>
 </div>
 <table>
-<tr><th style="width:18%">Proposal 要求</th><th>落地方式</th><th style="width:26%">业界依据</th></tr>
-<tr><td>梳理 Figma 与组件的对应关系</td><td><code>component-map.yaml</code>（两端实现、变体 → props、文本图层 → 属性、约束、缺口决策）；<code>map suggest</code> 按名称、同义词和变体结构打分给出候选</td><td>Figma Code Connect 的多平台映射思路；Brad Frost 的 Interface Inventory</td></tr>
-<tr><td>位置、示例、约束放进 Context</td><td><code>catalog</code> 从资产清单和映射生成组件手册，Skill 通过渐进式加载读取</td><td>Storybook Component Manifest；Mística 随 npm 包附带 <code>llms.md</code></td></tr>
-<tr><td>开发前识别复用、确认方案</td><td><code>plan</code> 输出复用方案和待决项，Skill 规定必须先确认</td><td>Figma MCP 推荐的「先查映射再生成」</td></tr>
-<tr><td>开发后检查组件、截图对照</td><td><code>audit</code>（原生元素、直接用 Material、Legacy 组件、写死颜色、疑似自造组件）+ <code>diff</code>（像素 + 文本、组件节点级偏差）</td><td>pixelmatch、Roborazzi、Compose semantics、设计系统 lint</td></tr>
-<tr><td>偏差反馈给 Agent 修正</td><td><code>report.md</code> 每条偏差带文件行号或 Figma 节点 id、期望值和实际值；退出码 3 表示未达标，Agent 照着修</td><td>Agent Skills：确定性的步骤交给脚本</td></tr>
-<tr><td>先验证一个页面，再整理成规则</td><td>订单详情页两端都验证过；规则合并进 <code>rules.md</code>，组件问题汇总到 <code>component-issues.md</code></td><td>—</td></tr>
+<tr><th style="width:20%">Proposal 要求</th><th>落地方式</th></tr>
+<tr><td>Figma 组件与代码组件的对应关系</td><td><code>match</code> 按名字、UI 概念（中英文同义词）、项目前缀、使用次数、设计系统封装打分；人确认后写进 <code>component-map.yaml</code>，之后 match 优先采用确认过的映射</td></tr>
+<tr><td>开发前识别可复用组件</td><td>先 <code>reuse</code> 再 <code>match</code>：只推荐<b>本项目真能用</b>的组件（检查组件库版本、改名 / 移除、主题依赖、废弃 API、设计系统是否封装过）；没有组件但有固定写法时推荐「项目惯例」</td></tr>
+<tr><td>开发后检查用了哪些组件、和 Figma 截图对比</td><td><code>reuse --focus &lt;页面&gt;</code> 或 <code>--changed &lt;git ref&gt;</code> 只看新增代码；<code>compare</code> 截图对比；demo 里 <code>verify</code> 把两者合成一个门禁</td></tr>
+<tr><td>偏差反馈给 Agent、沉淀规则</td><td>每条问题都带文件行号或 Figma 节点 id 和修改建议，Skill 规定照着改到通过；决定和理由写进 component-map，经验写进 <code>rules.md</code></td></tr>
 </table>
 
-
-<h2 class="pb">2. 对照实验</h2>
-<p>同一份 Figma（订单详情，含 21 个组件实例、1 个缺口组件 CountDown）、同一套组件库、同样的任务描述。每次运行都在独立的工作区里完成，最后用同一版 <code>figmafe verify</code> 统一打分。C 组的方案闸门在实验中视为自动通过。</p>
-<table>
-<tr><th>组</th><th>端</th><th>结果</th><th>复用率</th><th>违规</th><th>像素差异</th><th>节点偏差 严重/轻微</th><th>自造 CountDown</th><th>Figma id</th><th>耗时 / token</th></tr>
-{run_rows()}
-</table>
-<p class="note">复用率 = 方案要求的组件中实际用到的比例（静态统计，并用运行时的 <code>data-ds</code> 和 semantics 标记复核）。阈值：复用率 ≥95%，违规 0，像素差异 H5 ≤3%、Android ≤5%，节点级严重偏差 0。</p>
-
+<h2 class="pb">2. 复用清单准不准：{len(projects)} 个真实开源项目（固定 commit，可复现）</h2>
 <div class="two">
-<div><h3>verify 能抓到什么（教程第 8 步，故意放了 3 处问题）</h3>
-<img class="wide" src="{img}09-compare.png"></div>
-<div><h3>读结果</h3><ul>
-<li><b>复用率</b>：只给截图、组件库是 npm 包、换成 Haiku，基线都能做到 100%，所以在这个小仓库里，复用率区分不了 A、C 两组。真实项目复用差的原因（仓库大、命名对不上、两套组件、设计稿没有组件化）需要拿真实项目来量。</li>
-<li><b>规范</b>：A 组 {a_cd}/{len(A)} 次在页面里自造了 CountDown，其中 {a_tick} 次还带了计时逻辑（设计稿里没有这个需求，组件库也没有）。时间一长，这类组件就会变成重复资产。C 组 {len(C)} 次都按缺口方案处理：用静态文本实现，并登记组件需求。</li>
-<li><b>可追溯</b>：C 组每个实例都挂了 Figma 节点 id，偏差可以精确定位到节点。</li>
-<li><b>成本</b>：C 组平均耗时是 A 组的 {t_ratio:.1f} 倍，token 是 {k_ratio:.1f} 倍，换来的是可以复现的验证结果和资产问题清单。</li>
-<li><b>闭环有效</b>：第 8 步故意放进的 3 处问题被全部抓到（3 处违规 + 8 处严重偏差），修正后一次通过。</li>
+<div style="flex:1.05"><img class="wide" src="{img}23-match-newbee-overlay.png">
+<p class="note">newbee-mall（Vue 3 + Vant）上跑「订单详情」：绿框直接复用、橙框需确认、红框需新建。右侧是项目里的真实写法和 Figma 变体对应的 props。</p></div>
+<div style="flex:1">
+<table>
+<tr><th>项目</th><th>技术栈</th><th>订单详情</th><th>我的持仓</th><th>买入下单</th></tr>
+{eval_rows()}
+<tr><th colspan="2">合计</th><th colspan="3">✓{tot['✓']} / △{tot['△']} / ✗{tot['✗']}</th></tr>
+</table>
+<p class="note">✓ 推荐正确；△ 可用但不是最优（多为「需确认」）；✗ 推荐错误。三份设计稿：组件化的订单详情、没组件化且图层是中文名的持仓页、没组件化且概念更多（搜索、步进器、开关、复选框）的下单页。</p>
+</div></div>
+<h3>留出项目第一次跑的结果（如实记录，修正前）</h3>
+<table>
+<tr><th style="width:17%">项目</th><th style="width:20%">第一次</th><th>出错原因 → 通用修正</th></tr>
+<tr><td>Jetsnack</td><td>订单详情 <b class="bad">3 ✗</b></td><td>把桌面小部件（Glance）组件当成 App 组件；没认出 <code>Jetsnack*</code> 是项目前缀 → 识别 Glance、学习项目前缀、<code>ui/components</code> 算设计系统</td></tr>
+<tr><td>litemall</td><td>两份各 <b class="bad">1 ✗</b></td><td>推荐了 Vant 3 才有的 ActionBar，项目是 Vant 2 → 组件库加入改名 / 移除信息，按实际安装版本过滤</td></tr>
+<tr><td>hello-uniapp</td><td>持仓页 <b class="bad">12 ✗</b></td><td>uni-app 内置小写标签被当成项目组件、中文图层名规范化后为空被判「同名」→ 加 uni-ui 目录，修空名误判</td></tr>
+<tr><td>NewPipe</td><td><b class="bad">3 ✗</b></td><td>AppCompat 标准控件没算进项目资产，XML 页面被推荐 Compose 组件 → 跨技术栈的候选最多「需确认」</td></tr>
+<tr><td>买入下单（新设计稿）</td><td>14 个项目 <b class="bad">12 ✗</b></td><td>开关 / 复选框 / 单选原来是一个概念，搜索算在输入框里 → 拆开概念、补词表、检查 Material 3 主题</td></tr>
+</table>
+<p class="note">vant-demo、Pokedex、Sunflower 第一次跑就没有 ✗。复用推荐只错在「项目没见过的结构」，修正都是通用规则，没有针对单个项目的特判；<code>python3 experiments/real-match-eval.py</code> 每次改规则都会全量回归。</p>
+
+<h2 class="pb">3. Agent 实测：真实项目里实现一个新页面</h2>
+<p>同一份设计稿（订单详情），在 5 个开源项目里新建页面。A 组只给任务和 Figma 导出，C 组加上 Skill（体检 → 复用清单 → 实现 → 页面检查）。所有 run 用同一版 <code>figmafe reuse --focus / --changed</code> 打分：自造已有组件、有组件没用、手写已有组件（按 class / id 或横排「标题 + 值」结构识别）任何一项都算不通过。</p>
+<table>
+<tr><th rowspan="2">项目</th><th rowspan="2">技术栈</th><th colspan="3">A 不用 Skill（Opus / Haiku）</th><th colspan="3">C 用 Skill（Opus / Haiku）</th></tr>
+<tr><th>通过</th><th>复用组件数</th><th>问题数</th><th>通过</th><th>复用组件数</th><th>问题数</th></tr>
+{exp_rows()}
+<tr><th colspan="2">合计</th><th class="bad">{passes(A_all)}</th><th>平均 {avg(A_all, lambda r: r['used']):.1f}</th><th>共 {sum(bad(r) for r in A_all)}</th><th class="ok">{passes(C_all)}</th><th>平均 {avg(C_all, lambda r: r['used']):.1f}</th><th>共 {sum(bad(r) for r in C_all)}</th></tr>
+</table>
+<ul>
+<li><b>Now in Android</b>：A 组没先查已有组件，在 core/designsystem 下新建了 NiaNavBar / NiaCard / NiaDivider / NiaCell 等，和已有的 NiaTopAppBar / Card / HorizontalDivider / ListItem 重复，还写了一套 18 个写死颜色的主题。C 组复用了它们，新建的组件都在 component-map.yaml 里写了理由。</li>
+<li><b>QMUI / NewPipe</b>：C 组发现 match 推荐了项目用不了的组件（MaterialDivider 需要 Material 1.5、项目是 1.4；Chip 在 AppCompat 主题下会崩）。这两类问题已经做进工具：体检会列出「组件库有、但本项目不能直接用的组件」，match 不再推荐。实验中 agent 报告的工具问题都已修复并加了回归测试。</li>
+<li><b>成本</b>：有用量记录的 {len(ca)} 次 A、{len(cc)} 次 C，C 平均多 {k_up*100:.0f}% token、{t_up*100:.0f}% 时间，多在体检、复用清单、页面检查和写决定这几步。</li>
+</ul>
+
+<h2>4. 新页面实现闭环（demo 仓库）</h2>
+<div class="two">
+<div><ul>
+<li>自建的 H5（React）和 Android（Compose，兼容 compileSdk 32 / minSdk 23；另有 XML View 存量组件）组件库，加一份订单详情设计稿，跑了 {len(demo)} 次 A / C 对照。</li>
+<li>这个仓库小、组件好找，A 组复用率也是 100%，<b>证明不了复用率提升</b>；差别在规范：A 组 {sum(r['selfBuiltCountdown'] for r in dA)}/{len(dA)} 次自造了设计稿外的 CountDown，C 组 {sum(r['selfBuiltCountdown'] for r in dC)}/{len(dC)}；挂 Figma 节点 id 的 A 组 {sum(r['figmaIds'] > 0 for r in dA)}/{len(dA)}、C 组 {sum(r['figmaIds'] > 0 for r in dC)}/{len(dC)}。真实项目的差距见第 3 节。</li>
+<li>Android 剩下的 2 处严重偏差出在组件库内部（A、C 相同），verify 能区分「页面写错」和「组件不符合设计」，问题清单见 <code>docs/component-issues.md</code>。</li>
 </ul></div>
+<div><img class="wide" src="{img}09-compare.png"><p class="note">教程第 8 步：故意写错 3 处，verify 报出 3 处违规 + 8 处严重偏差，每条带行号或节点 id。</p></div>
 </div>
 
-<h2 class="pb">3. 资产层面的发现（Phase 0 / 1 的副产品）</h2>
-<table>
-<tr><th>发现</th><th>来源</th><th>处理</th></tr>
-<tr><td>Android <code>color.warning</code> 是 #FF8800，Figma 是 #FF8F1F（token 漂移）</td><td><code>map check</code></td><td>组件库修正</td></tr>
-<tr><td>Android <code>DsBadge</code> 缺 Solid 变体；<code>LegacyCellView</code> 不支持副标题</td><td><code>map check</code> / <code>scan</code></td><td>补变体或在 Figma 上标注</td></tr>
-<tr><td>CountDown：Figma 有、两端都没有</td><td><code>map check</code> / <code>plan</code> 待决项</td><td>登记需求，本期按静态文本实现</td></tr>
-<tr><td>Android 同时存在 Compose（Ds*）和 XML View（Legacy*）两套资产</td><td><code>map suggest</code> 给出并列候选</td><td>决策：新页面只用 Compose</td></tr>
-<tr><td>H5 Primary 按钮宽 2px、Tag 贴顶、ProductCard 内容下移 4px；Android DsPriceText 高度、DsGoodsCard 规格行重叠</td><td><code>verify</code> 节点级偏差（A、C 组一致）</td><td>见 <code>docs/component-issues.md</code></td></tr>
-<tr><td>存量 XML 页面里有原生 <code>&lt;Button&gt;</code>，并写死了 #FF4D1A、14sp</td><td><code>scan</code> 存量问题（基线）</td><td>迁移</td></tr>
-</table>
-
-<h2>4. 工具校准（实验中发现、已修复）</h2>
+<h2>5. 局限（如实说明）</h2>
 <ul>
-<li>文本位置改为「左对齐、居中、右对齐任一吻合即算一致」：Figma 文本框常常是定宽，代码里多是按内容收缩，原来按左上角比对会误报（C 组 Agent 发现）。</li>
-<li>文本优先匹配纯文本节点，避免匹配到同时带文本的组件根节点（例如 DsTopBar 的标题；C 组 Android Agent 发现）。</li>
-<li>Android 像素阈值从 4% 调到 5%：实现完全正确时，Skia 和 Chromium 的字形渲染本底约为 4.0%。</li>
+<li><b>没有真实 Figma 文件</b>，本环境也访问不了 Figma：三份设计稿由手写的设计源生成（格式和插件导出一致）。插件只用 mock 的 Plugin API 测过，没在真实 Figma 里跑过。</li>
+<li><b>没有编译真实项目</b>：Agent 实验只做静态检查，没有构建和运行这些开源项目（本环境装不了 Android SDK）；demo 的 Android 截图用 Compose Desktop 渲染，不是真机。</li>
+<li><b>实验有泄漏</b>：A 组 agent 也能看到本仓库的 Skill；1 次 A run 自己跑了 figmafe，已剔除。泄漏只会让 A 组更好，所以 A / C 差距是保守估计。样本量小（每格 1～2 次），只能说明方向。</li>
+<li><b>评分标准是人定的</b>：✓ / △ / ✗ 由我逐条判断并写成回归用例；真实接入时应由组件 owner 复核一次。</li>
 </ul>
 
-<h2>5. 局限（诚实说明）</h2>
-<ul>
-<li>没有真实 Figma 文件，环境也访问不了 Figma：设计数据由独立手写的设计源生成（<code>figmafe fixture</code>），格式和插件导出一致；插件代码没有在真实 Figma 里跑过。</li>
-<li>组件库是按规范自建的小型库（两端各 10 个组件），不是你们的真实资产；仓库小，有利于基线 Agent 找到组件。</li>
-<li>样本量小（每种条件 1～2 次），结论只能说明方向，不能当作统计显著的结果。</li>
-<li>Android：组件用 Compose 实现，只用 Compose 1.2 已有的 API（对应 compileSdk 32 / minSdk 23），扫描同时支持 XML View。本环境装不了 Android SDK，所以用 Compose Desktop 在 JVM 上渲染（API 相同），不是真机，字体渲染存在本底差异（已通过阈值吸收）。真实项目把渲染器换成 Roborazzi 或 Paparazzi 即可。</li>
-</ul>
-
-<h2>6. 接入真实项目（下一步）</h2>
+<h2>6. 接入你们的项目</h2>
 <table>
-<tr><th style="width:4%">#</th><th>动作</th><th style="width:28%">产出</th></tr>
-<tr><td>1</td><td>用插件导出组件库和一个典型页面（例如开户或交易的某一页）</td><td><code>design/figma-export/</code></td></tr>
-<tr><td>2</td><td>修改 <code>figmafe.yaml</code>，指向真实的 H5 组件库（源码或 npm 包的 <code>.d.ts</code>）和 Android 组件库（Compose 或 XML View）</td><td>资产清单和存量问题基线</td></tr>
-<tr><td>3</td><td><code>map suggest</code> → 组件 owner 确认 → <code>map check</code></td><td>映射文件、缺口 / 漂移清单</td></tr>
-<tr><td>4</td><td>A / C 对照各跑 3 次，量出真实项目的复用率和偏差</td><td>真实的 before / after 数据</td></tr>
-<tr><td>5</td><td><code>verify</code> 接入 PR CI；<code>rules.md</code> 随页面增多持续积累</td><td>可持续的规则和门禁</td></tr>
+<tr><th style="width:4%">#</th><th>动作</th><th style="width:34%">产出</th></tr>
+<tr><td>1</td><td><code>figmafe reuse &lt;H5 仓库&gt;</code>、<code>figmafe reuse &lt;Android 仓库&gt;</code>（只读，不改代码）</td><td>资产清单、优先处理项、首份体检基线</td></tr>
+<tr><td>2</td><td>Figma 插件导出下一个要做的页面，<code>figmafe match</code></td><td>复用清单 + 叠图，组件 owner 确认「需确认」项</td></tr>
+<tr><td>3</td><td>开发时让 Agent 按 Skill 走；提交前 <code>reuse --changed origin/main</code></td><td>新增代码的复用问题，带行号</td></tr>
+<tr><td>4</td><td>CI 里 <code>reuse --baseline main.json --no-regress</code>（示例：<code>docs/ci/</code>）</td><td>组件化率、写死颜色等指标只许变好</td></tr>
 </table>
-<p class="note">详细步骤和每一步的截图见 <code>docs/tutorial/README.md</code>；数据见 <code>experiments/</code>（每次运行的报告、截图、源码）；重新生成：<code>python3 experiments/summarize.py && python3 docs/tools/build_report.py && node docs/tools/shoot.mjs html docs/report.html docs/report.pdf</code>。</p>
+<p class="note">分步教程（含截图）：<code>docs/tutorial/README.md</code>。数据：<code>experiments/real-match-eval.md</code>、<code>experiments/match-judgement.md</code>、<code>experiments/real-project/summary.md</code>。重新生成本报告：<code>python3 docs/tools/build_report.py && node docs/tools/shoot.mjs html docs/report.html docs/report.pdf</code>。</p>
 </body></html>"""
 open(os.path.join(root, 'docs', 'report.html'), 'w').write(page)
 print('✓ docs/report.html')

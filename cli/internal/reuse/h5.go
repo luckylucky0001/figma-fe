@@ -407,6 +407,12 @@ func ScanH5(root string) *Report {
 						libOcc[a] = append(libOcc[a], occ{f.rel, ln, t, tag})
 					}
 					a.Usage++
+					for _, at := range habitAttrs(t) {
+						if a.Attrs == nil {
+							a.Attrs = map[string]int{}
+						}
+						a.Attrs[at]++
+					}
 					if !contains(a.UsageFiles, f.rel) {
 						a.UsageFiles = append(a.UsageFiles, f.rel)
 					}
@@ -688,4 +694,58 @@ func contains(xs []string, s string) bool {
 		}
 	}
 	return false
+}
+
+var attrRe = regexp.MustCompile(`\s(:?[a-zA-Z][\w-]*)(?:=("[^"]*"|'[^']*'|\{[^}]*\}))?`)
+
+// contentAttrs carry page content, not a styling habit.
+var contentAttrs = map[string]bool{"title": true, "label": true, "text": true, "value": true, "placeholder": true, "content": true, "name": true,
+	"src": true, "alt": true, "to": true, "href": true, "key": true, "class": true, "classname": true, "style": true, "id": true, "ref": true,
+	"desc": true, "price": true, "num": true, "thumb": true, "time": true, "left-text": true, "right-text": true, "icon": true, "onclick": true}
+
+// habitAttrs: the static props of one usage that can express a project habit (round, block,
+// type="primary", color="#1baeae"); bound expressions, events and content are skipped.
+func habitAttrs(tag string) []string {
+	var out []string
+	if i := strings.IndexAny(tag, " \t"); i > 0 {
+		tag = tag[i:]
+	} else {
+		return nil
+	}
+	for _, m := range attrRe.FindAllStringSubmatch(tag, -1) {
+		name, val := m[1], m[2]
+		bound := strings.HasPrefix(name, ":")
+		key := strings.ToLower(strings.TrimPrefix(name, ":"))
+		if contentAttrs[key] || strings.HasPrefix(key, "v-") || strings.HasPrefix(key, "on") || strings.HasPrefix(key, "data-") || strings.HasPrefix(key, "@") {
+			continue
+		}
+		v := strings.Trim(val, `"`)
+		if bound || strings.HasPrefix(val, "{") {
+			// :color="'#1baeae'" / color={'#1baeae'} are literals; :title="item.name" is data
+			inner := strings.Trim(strings.Trim(v, "{}"), " ")
+			if !(strings.HasPrefix(inner, "'") || strings.HasPrefix(inner, `"`) || inner == "true" || inner == "false" || isNumber(inner)) {
+				continue
+			}
+			v = strings.Trim(inner, `'"`)
+		}
+		switch {
+		case val == "":
+			out = append(out, key)
+		case len(v) <= 20:
+			out = append(out, key+`="`+v+`"`)
+		}
+	}
+	return out
+}
+
+func isNumber(s string) bool {
+	if s == "" {
+		return false
+	}
+	for _, r := range s {
+		if (r < '0' || r > '9') && r != '.' {
+			return false
+		}
+	}
+	return true
 }

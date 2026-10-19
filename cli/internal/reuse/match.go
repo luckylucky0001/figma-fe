@@ -225,6 +225,9 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			if st, n := topStyle(as.Styles); n >= 3 {
 				hints = append(hints, fmt.Sprintf(`项目惯用 style="@style/%s"（%d 处）`, st, n))
 			}
+			if habits := habitList(as.Attrs, as.Usage); len(habits) > 0 {
+				hints = append(hints, "项目惯用写法："+strings.Join(habits, " "))
+			}
 			item.Candidates = append(item.Candidates, Candidate{as.Name, as.Kind, as.Source, round2(sc), as.Usage, ex, at, why, hints})
 		}
 		sort.SliceStable(item.Candidates, func(i, j int) bool {
@@ -864,4 +867,32 @@ func topStyle(m map[string]int) (string, int) {
 		}
 	}
 	return best, n
+}
+
+// habitList: props passed in at least 3 usages and 40% of them — the project's way of using it.
+func habitList(attrs map[string]int, usage int) []string {
+	best := map[string]string{} // prop → its most used value (size="small" vs size="large")
+	for k, n := range attrs {
+		if n < 3 || float64(n) < 0.4*float64(usage) {
+			continue
+		}
+		prop := strings.SplitN(k, "=", 2)[0]
+		if cur, ok := best[prop]; !ok || n > attrs[cur] || n == attrs[cur] && k < cur {
+			best[prop] = k
+		}
+	}
+	var out []string
+	for _, k := range best {
+		out = append(out, k)
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if attrs[out[i]] != attrs[out[j]] {
+			return attrs[out[i]] > attrs[out[j]]
+		}
+		return out[i] < out[j]
+	})
+	if len(out) > 4 {
+		out = out[:4]
+	}
+	return out
 }

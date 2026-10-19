@@ -572,3 +572,14 @@ func TestCompareMetrics(t *testing.T) {
 		t.Errorf("regression not flagged: %s", s)
 	}
 }
+
+func TestHabitAttrs(t *testing.T) {
+	got := strings.Join(habitAttrs(`<van-button round :color="'#1baeae'" type="primary" @click="go" :title="item.name" block>`), " ")
+	if got != `round color="#1baeae" type="primary" block` {
+		t.Errorf("habitAttrs=%q", got)
+	}
+	h := habitList(map[string]int{`size="small"`: 5, `size="large"`: 3, "round": 4, "plain": 1}, 8)
+	if strings.Join(h, " ") != `size="small" round` {
+		t.Errorf("habitList=%v", h)
+	}
+}

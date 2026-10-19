@@ -30,7 +30,8 @@ type Asset struct {
 	WrappedBy   string              `json:"wrappedBy,omitempty"`
 	Enums       map[string][]string `json:"enums,omitempty"`    // enum-like props → allowed values
 	Required    []string            `json:"required,omitempty"` // parameters without a default (composables)
-	Styles      map[string]int      `json:"styles,omitempty"`   // XML style="@style/…" applied with it, by count   // the design-system component that wraps this library component
+	Styles      map[string]int      `json:"styles,omitempty"`   // XML style="@style/…" applied with it, by count
+	Attrs       map[string]int      `json:"attrs,omitempty"`    // H5 static props the project passes, by count (round, color="#1baeae")   // the design-system component that wraps this library component
 }
 
 type Finding struct {

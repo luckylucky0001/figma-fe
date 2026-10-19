@@ -93,3 +93,24 @@ figma-plugin/                          Figma 导出插件（免费 Plugin API）
 - 这个设计源是**独立手写的绝对尺寸 HTML**，不 import 任何一端的组件库
 - 用 `figmafe fixture` 渲染后，按第 5 节格式导出节点树和 @2x 图
 - 拿到真实 Figma 后，用 `figma-plugin/` 导出同格式产物替换即可，后续流程不变
+
+## 7. 存量项目：`reuse` / `match` / `compare` 的输入输出
+
+这三条命令不依赖 demo 仓库，可以直接对任何 H5 / Android 项目运行（只读，不改项目代码）。
+
+| 命令 | 输出目录（默认） | 文件 |
+|---|---|---|
+| `figmafe reuse <项目>` | `<项目>/.figmafe/reuse/` | `<h5\|android>.md`（体检报告）、`<h5\|android>.json`（`Report`） |
+| `… --focus <文件/目录>` 或 `--changed <git ref>` | 同上 | 另加 `<平台>.page.json`（`PageCheck`），报告顶部是页面检查；不通过时退出码 3 |
+| `… --baseline <旧 json> [--no-regress]` | 同上 | 报告顶部是指标对比；有指标变差且带 `--no-regress` 时退出码 3 |
+| `figmafe match <项目> --figma <页面导出目录>` | `<项目>/.figmafe/match/` | `<平台>.md`（复用清单）、`<平台>.json`（`MatchResult`）、`<平台>.html`（叠在设计图上的可视化）、`component-map.draft.<平台>.yaml` |
+| `… --figma <多个页面的父目录>` | 每个页面一个子目录 | 同上，另加 `<平台>.summary.md`（整个需求的汇总：哪些组件被多个页面用到、要新建什么） |
+| `figmafe compare --url <页面> --figma <页面导出目录>` | `-o` 指定 | 截图、差异图、像素差异 / 文本位置偏差报告 |
+
+主要 JSON 字段（完整定义见 `cli/internal/reuse/types.go`、`match.go`、`focus.go`）：
+
+- `Report`：`platform`、`stack`、`libraries`（组件库及常用组件）、`assets`（每个组件的 `kind` / `concept` / `usage` / 真实用法 `example` + `exampleAt`；兼容性 `caveat`、`unavailable`；设计系统封装 `wrappedBy`；可配置项 `enums`、`required`、`styles`、`attrs`）、`conventions`（项目惯例写法）、`clusters`（同一概念的多个实现）、`findings`（有组件却没用 / 绕过封装）、`clones`（复制粘贴结构）、`colors`、`metrics`（组件化率等，`--baseline` 比较的就是它）。
+- `MatchResult`：`items[]` 每项是一个 Figma 元素：`figma`、`nodeIds`、`variants`、`verdict`（`reuse` ≥0.8 / `confirm` / `new`）、`decision`（component-map 里登记过的决定）、`candidates[]`（`name`、`score`、`why`、`example`、`props`：Figma 变体 → 组件属性的写法）。
+- `PageCheck`：`used`、`reinvented`、`missedReuse`、`handBuilt`、`inconsistent`、`colors`、`localTokens`、`pass`。
+
+项目里 `design/component-map.yaml`、`.figmafe/component-map.yaml` 或根目录 `component-map.yaml`（按这个顺序找）里登记的映射和缺口决定会被 `match` 优先采用，也会让页面检查不再把「已决定新建」的组件判成自造轮子。格式错误时命令直接报错，不会静默忽略。

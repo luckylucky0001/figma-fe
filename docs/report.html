@@ -17,6 +17,7 @@ th { background: #f5f6f7; font-weight: 600; }
 .flow b { display: block; color: #ff4d1a; font-size: 8.8pt; }
 .two { display: flex; gap: 4mm; align-items: flex-start; } .two > * { flex: 1; min-width: 0; }
 .pb { break-before: page; }
+.ev td, .ev th { white-space: nowrap; }
 img.wide { width: 100%; border: 1px solid #e5e6eb; border-radius: 5px; }
 code { font-family: 'DejaVu Sans Mono', monospace; font-size: 8pt; background: #f3f4f6; padding: 0 1mm; border-radius: 2px; }
 ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
@@ -52,40 +53,37 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <div><b>⑤ 对照设计</b><code>compare</code> / <code>verify</code>：截图 + 像素 / 节点级偏差，带 Figma 节点 id</div>
 <div><b>⑥ 不许变差</b><code>--baseline --no-regress</code> 接 CI；偏差沉淀成 <code>rules.md</code></div>
 </div>
-<table>
-<tr><th style="width:20%">Proposal 要求</th><th>落地方式</th></tr>
+<div class="two"><div style="flex:1.45"><table>
+<tr><th style="width:24%">Proposal 要求</th><th>落地方式</th></tr>
 <tr><td>Figma 组件与代码组件的对应关系</td><td><code>match</code> 按名字、UI 概念（中英文同义词）、项目前缀、使用次数、设计系统封装打分；人确认后写进 <code>component-map.yaml</code>，之后 match 优先采用确认过的映射</td></tr>
 <tr><td>开发前识别可复用组件</td><td>先 <code>reuse</code> 再 <code>match</code>：只推荐<b>本项目真能用</b>的组件（检查组件库版本、改名 / 移除、主题依赖、废弃 API、设计系统是否封装过）；没有组件但有固定写法时推荐「项目惯例」</td></tr>
 <tr><td>开发后检查用了哪些组件、和 Figma 截图对比</td><td><code>reuse --focus &lt;页面&gt;</code> 或 <code>--changed &lt;git ref&gt;</code> 只看新增代码；<code>compare</code> 截图对比；demo 里 <code>verify</code> 把两者合成一个门禁</td></tr>
 <tr><td>偏差反馈给 Agent、沉淀规则</td><td>每条问题都带文件行号或 Figma 节点 id 和修改建议，Skill 规定照着改到通过；决定和理由写进 component-map，经验写进 <code>rules.md</code></td></tr>
-</table>
+</table></div>
+<div><img class="wide" src="tutorial/img/23-match-newbee-overlay.png">
+<p class="note">newbee-mall（Vue 3 + Vant）上跑「订单详情」的复用清单：绿框直接复用、橙框需确认、红框需新建；右侧是项目里的真实写法和 Figma 变体对应的 props。</p></div></div>
 
 <h2 class="pb">2. 复用清单准不准：15 个真实开源项目（固定 commit，可复现）</h2>
-<div class="two">
-<div style="flex:1.05"><img class="wide" src="tutorial/img/23-match-newbee-overlay.png">
-<p class="note">newbee-mall（Vue 3 + Vant）上跑「订单详情」：绿框直接复用、橙框需确认、红框需新建。右侧是项目里的真实写法和 Figma 变体对应的 props。</p></div>
-<div style="flex:1">
-<table>
-<tr><th>项目</th><th>技术栈</th><th>订单详情</th><th>我的持仓</th><th>买入下单</th></tr>
-<tr><td>newbee</td><td>Vue 3 + Vant</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><td>qmui</td><td>XML + QMUI</td><td>✓11</td><td>✓12</td><td>✓8 <span class='warn'>△2</span></td></tr>
-<tr><td>nia</td><td>Compose + 自有设计系统</td><td>✓11</td><td>✓12</td><td>✓9 <span class='warn'>△1</span></td></tr>
-<tr><td>antdm-template</td><td>React + antd-mobile</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><td>antdm-mobile</td><td>React + antd-mobile</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><td>jetsnack <span class="tagho">留出</span></td><td>Compose + 自有设计系统</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓10</td></tr>
-<tr><td>litemall <span class="tagho">留出</span></td><td>Vue 2 + Vant 2</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><td>hello-uniapp <span class="tagho">留出</span></td><td>uni-app + uni-ui</td><td>✓10 <span class='warn'>△1</span></td><td>✓12</td><td>✓9 <span class='warn'>△1</span></td></tr>
-<tr><td>taro-ui-demo <span class="tagho">留出</span></td><td>Taro + taro-ui</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><td>nutui-vite <span class="tagho">留出</span></td><td>Vue 3 + NutUI</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><td>sunflower <span class="tagho">留出</span></td><td>Compose + Material3（无自有设计系统）</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓10</td></tr>
-<tr><td>pokedex <span class="tagho">留出</span></td><td>XML + Material（MaterialComponents 主题）</td><td>✓11</td><td>✓12</td><td>✓9 <span class='warn'>△1</span></td></tr>
-<tr><td>newpipe <span class="tagho">留出</span></td><td>XML（AppCompat）+ 少量 Compose</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓7 <span class='warn'>△3</span></td></tr>
-<tr><td>vant-demo-vue3 <span class="tagho">留出</span></td><td>Vue 3 + Vant</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><td>vant-demo-vue2 <span class="tagho">留出</span></td><td>Vue 2 + Vant 2</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
-<tr><th colspan="2">合计</th><th colspan="3">✓480 / △15 / ✗0</th></tr>
+<table class="ev">
+<tr><th>项目</th><th>技术栈</th><th>留出</th><th>订单详情（组件化）</th><th>我的持仓（未组件化、中文图层）</th><th>买入下单（未组件化、新概念）</th></tr>
+<tr><td>newbee</td><td>Vue 3 + Vant</td><td></td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><td>qmui</td><td>XML + QMUI</td><td></td><td>✓11</td><td>✓12</td><td>✓8 <span class='warn'>△2</span></td></tr>
+<tr><td>nia</td><td>Compose + 自有设计系统</td><td></td><td>✓11</td><td>✓12</td><td>✓9 <span class='warn'>△1</span></td></tr>
+<tr><td>antdm-template</td><td>React + antd-mobile</td><td></td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><td>antdm-mobile</td><td>React + antd-mobile</td><td></td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><td>jetsnack</td><td>Compose + 自有设计系统</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓10</td></tr>
+<tr><td>litemall</td><td>Vue 2 + Vant 2</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><td>hello-uniapp</td><td>uni-app + uni-ui</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓12</td><td>✓9 <span class='warn'>△1</span></td></tr>
+<tr><td>taro-ui-demo</td><td>Taro + taro-ui</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><td>nutui-vite</td><td>Vue 3 + NutUI</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><td>sunflower</td><td>Compose + Material3 无自有设计系统</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓10</td></tr>
+<tr><td>pokedex</td><td>XML + Material MaterialComponents 主题</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓9 <span class='warn'>△1</span></td></tr>
+<tr><td>newpipe</td><td>XML AppCompat+ 少量 Compose</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓7 <span class='warn'>△3</span></td></tr>
+<tr><td>vant-demo-vue3</td><td>Vue 3 + Vant</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><td>vant-demo-vue2</td><td>Vue 2 + Vant 2</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
+<tr><th colspan="3">合计</th><th colspan="3">✓480 / △15 / ✗0</th></tr>
 </table>
-<p class="note">✓ 推荐正确；△ 可用但不是最优（多为「需确认」）；✗ 推荐错误。三份设计稿：组件化的订单详情、没组件化且图层是中文名的持仓页、没组件化且概念更多（搜索、步进器、开关、复选框）的下单页。</p>
-</div></div>
+<p class="note">✓ 推荐正确；△ 可用但不是最优（多为「需确认」）；✗ 推荐错误。留出 = 调规则时没用过的项目。</p>
 <h3>留出项目第一次跑的结果（如实记录，修正前）</h3>
 <table>
 <tr><th style="width:17%">项目</th><th style="width:20%">第一次</th><th>出错原因 → 通用修正</th></tr>
@@ -96,6 +94,13 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <tr><td>买入下单（新设计稿）</td><td>14 个项目 <b class="bad">12 ✗</b></td><td>开关 / 复选框 / 单选原来是一个概念，搜索算在输入框里 → 拆开概念、补词表、检查 Material 3 主题</td></tr>
 </table>
 <p class="note">vant-demo、Pokedex、Sunflower 第一次跑就没有 ✗。复用推荐只错在「项目没见过的结构」，修正都是通用规则，没有针对单个项目的特判；<code>python3 experiments/real-match-eval.py</code> 每次改规则都会全量回归。</p>
+
+<div class="two">
+<div><h3>体检：组件库有，不等于本项目能用</h3><img class="wide" src="tutorial/img/21-qmui-compat.png">
+<p class="note">QMUI_Android 用的是 AppCompat 主题和 Material 1.4：这些组件会崩溃或编译失败，match 不会推荐。</p></div>
+<div><h3>写完检查：有现成组件却手写</h3><img class="wide" src="tutorial/img/26-check-a.png">
+<p class="note">不用 Skill 的实现（newbee，A 组）：分割线、商品卡、底部操作栏都是手写的，每条带行号和应复用的组件。</p></div>
+</div>
 
 <h2 class="pb">3. Agent 实测：真实项目里实现一个新页面</h2>
 <p>同一份设计稿（订单详情），在 5 个开源项目里新建页面。A 组只给任务和 Figma 导出，C 组加上 Skill（体检 → 复用清单 → 实现 → 页面检查）。所有 run 用同一版 <code>figmafe reuse --focus / --changed</code> 打分：自造已有组件、有组件没用、手写已有组件（按 class / id 或横排「标题 + 值」结构识别）任何一项都算不通过。</p>
@@ -116,15 +121,10 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 </ul>
 
 <h2>4. 新页面实现闭环（demo 仓库）</h2>
-<div class="two">
-<div><ul>
-<li>自建的 H5（React）和 Android（Compose，兼容 compileSdk 32 / minSdk 23；另有 XML View 存量组件）组件库，加一份订单详情设计稿，跑了 13 次 A / C 对照。</li>
-<li>这个仓库小、组件好找，A 组复用率也是 100%，<b>证明不了复用率提升</b>；差别在规范：A 组 7/8 次自造了设计稿外的 CountDown，C 组 0/5；挂 Figma 节点 id 的 A 组 2/8、C 组 5/5。真实项目的差距见第 3 节。</li>
-<li>Android 剩下的 2 处严重偏差出在组件库内部（A、C 相同），verify 能区分「页面写错」和「组件不符合设计」，问题清单见 <code>docs/component-issues.md</code>。</li>
-</ul></div>
-<div><img class="wide" src="tutorial/img/09-compare.png"><p class="note">教程第 8 步：故意写错 3 处，verify 报出 3 处违规 + 8 处严重偏差，每条带行号或节点 id。</p></div>
-</div>
-
+<ul>
+<li>自建的 H5（React）和 Android（Compose，兼容 compileSdk 32 / minSdk 23；另有 XML View 存量组件）组件库加一份订单详情设计稿，跑了 13 次 A / C 对照。<code>verify</code> 能区分「页面写错」和「组件本身不符合设计」（Android 剩下的 2 处严重偏差出在组件库内部，见 <code>docs/component-issues.md</code>）；教程第 8 步故意写错 3 处，全部被抓出。</li>
+<li>这个仓库小、组件好找，A 组复用率也是 100%，<b>证明不了复用率提升</b>；差别在规范：A 组 7/8 次自造了设计稿外的 CountDown，C 组 0/5。复用率的差距要在真实项目里看（第 3 节）。</li>
+</ul>
 <h2>5. 局限（如实说明）</h2>
 <ul>
 <li><b>没有真实 Figma 文件</b>，本环境也访问不了 Figma：三份设计稿由手写的设计源生成（格式和插件导出一致）。插件只用 mock 的 Plugin API 测过，没在真实 Figma 里跑过。</li>
@@ -141,5 +141,5 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <tr><td>3</td><td>开发时让 Agent 按 Skill 走；提交前 <code>reuse --changed origin/main</code></td><td>新增代码的复用问题，带行号</td></tr>
 <tr><td>4</td><td>CI 里 <code>reuse --baseline main.json --no-regress</code>（示例：<code>docs/ci/</code>）</td><td>组件化率、写死颜色等指标只许变好</td></tr>
 </table>
-<p class="note">分步教程（含截图）：<code>docs/tutorial/README.md</code>。数据：<code>experiments/real-match-eval.md</code>、<code>experiments/match-judgement.md</code>、<code>experiments/real-project/summary.md</code>。重新生成本报告：<code>python3 docs/tools/build_report.py && node docs/tools/shoot.mjs html docs/report.html docs/report.pdf</code>。</p>
+<p class="note">教程：<code>docs/tutorial/README.md</code> · 数据：<code>experiments/real-match-eval.md</code>、<code>match-judgement.md</code>、<code>real-project/summary.md</code> · 重新生成：<code>python3 docs/tools/build_report.py</code></p>
 </body></html>

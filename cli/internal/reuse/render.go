@@ -197,3 +197,51 @@ func (r *Report) Priorities() []string {
 	}
 	return out
 }
+
+// CompareMetrics reports how the project moved since an earlier report; worse is true when any
+// metric got worse (for a "no regression" gate while the backlog is paid down gradually).
+func CompareMetrics(old, cur *Report) (string, bool) {
+	missed := func(r *Report) int {
+		n := 0
+		for _, f := range r.Findings {
+			if (f.Rule == "missed-reuse" || f.Rule == "bypass") && f.Severity != "info" {
+				n++
+			}
+		}
+		return n
+	}
+	type row struct {
+		name     string
+		was, now float64
+		pct      bool
+		higher   bool // higher is better
+	}
+	rows := []row{
+		{"组件化率", old.Metrics.Componentization * 100, cur.Metrics.Componentization * 100, true, true},
+		{"有组件却没用 / 绕过封装", float64(missed(old)), float64(missed(cur)), false, false},
+		{"重复概念", float64(old.Metrics.DuplicateConcepts), float64(cur.Metrics.DuplicateConcepts), false, false},
+		{"重复结构", float64(old.Metrics.CloneGroups), float64(cur.Metrics.CloneGroups), false, false},
+		{"硬编码颜色", float64(old.Metrics.HardcodedColors), float64(cur.Metrics.HardcodedColors), false, false},
+	}
+	var b strings.Builder
+	b.WriteString("## 和上次体检相比\n\n| 指标 | 上次 | 现在 | 变化 |\n|---|---|---|---|\n")
+	worse := false
+	for _, r := range rows {
+		f := func(v float64) string {
+			if r.pct {
+				return fmt.Sprintf("%.0f%%", v)
+			}
+			return fmt.Sprintf("%.0f", v)
+		}
+		mark := "持平"
+		switch d := r.now - r.was; {
+		case d > 0.5 && r.higher, d < -0.5 && !r.higher:
+			mark = "✅ 变好"
+		case d > 0.5 && !r.higher, d < -0.5 && r.higher:
+			mark = "❌ 变差"
+			worse = true
+		}
+		fmt.Fprintf(&b, "| %s | %s | %s | %s |\n", r.name, f(r.was), f(r.now), mark)
+	}
+	return b.String() + "\n", worse
+}

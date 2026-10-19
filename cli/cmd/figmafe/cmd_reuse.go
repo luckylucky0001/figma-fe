@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
@@ -26,6 +27,8 @@ func runReuse(args []string) error {
 	quiet := fs.Bool("q", false, "quiet")
 	focus := fs.String("focus", "", "only judge this page dir/file (relative to project); the whole project is the asset pool")
 	changed := fs.String("changed", "", "PR gate: judge files changed vs this git ref (e.g. origin/main)")
+	baseline := fs.String("baseline", "", "earlier <platform>.json report: print what improved / got worse")
+	noRegress := fs.Bool("no-regress", false, "with --baseline: exit 3 when any project-wide metric got worse")
 	pos := parse(fs, args)
 	root := "."
 	if len(pos) > 0 {
@@ -58,6 +61,12 @@ func runReuse(args []string) error {
 		lines = addedLines(root, *changed)
 		fmt.Printf("· 检查改动的 %d 个 UI 文件（已有文件只看新增的行）\n", len(files))
 	}
+	regressed := false
+	defer func() {
+		if regressed {
+			os.Exit(3)
+		}
+	}()
 	for _, p := range plats {
 		var r *reuse.Report
 		if p == "h5" {
@@ -72,6 +81,18 @@ func runReuse(args []string) error {
 			pc = r.CheckFocusLines(*focus, lines)
 			md = pc.Markdown() + "\n---\n\n" + md
 			writeJSON(filepath.Join(*out, p+".page.json"), pc)
+		}
+		if *baseline != "" {
+			var old reuse.Report
+			if b, err := os.ReadFile(*baseline); err != nil || json.Unmarshal(b, &old) != nil {
+				return fmt.Errorf("--baseline %s: not a figmafe reuse report", *baseline)
+			}
+			text, worse := reuse.CompareMetrics(&old, r)
+			md = text + "\n---\n\n" + md
+			fmt.Print(text)
+			if worse && *noRegress {
+				regressed = true
+			}
 		}
 		_ = os.WriteFile(filepath.Join(*out, p+".md"), []byte(md), 0o644)
 		writeJSON(filepath.Join(*out, p+".json"), r)

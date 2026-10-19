@@ -361,8 +361,8 @@ func checkHandBuilt(pc *PageCheck, r *Report, pool []Asset, used, seen map[strin
 		if xmlCtx && (b.Kind == "composable" || isComposeLib(b.Source)) {
 			continue
 		}
-		if b.Kind == "ui-lib" && len(specialWords(b.Name, b.Concept)) > 0 && len(splitWords(b.Name)) > 1 {
-			continue // FloatingActionButton is no replacement for a hand-built button
+		if b.Kind == "ui-lib" && b.Usage < 10 && len(specialWords(b.Name, b.Concept)) > 0 && len(splitWords(b.Name)) > 1 {
+			continue // FloatingActionButton is no replacement for a hand-built button; a library view used ≥10 times (ActionBarCommon × 24) is the project's own toolkit
 		}
 		if b.Concept == concept && !in(b.Source) && b.Source != "Android SDK widgets" && (best == nil || pref(b) > pref(best) || pref(b) == pref(best) && len(b.Name) < len(best.Name)) {
 			best = b

@@ -861,3 +861,29 @@ func TestFeatureAndWeakNamesStayOutOfClusters(t *testing.T) {
 		}
 	}
 }
+
+// WanAndroid's top bar is the third-party ActionBarCommon (× 24): a hand-built top bar must point to it,
+// while a FloatingActionButton used a few times is still no replacement for a hand-built button
+func TestHandBuiltPointsToEstablishedThirdPartyView(t *testing.T) {
+	root := t.TempDir()
+	var bars, fabs string
+	for i := 0; i < 12; i++ {
+		bars += `<per.goweii.actionbarex.common.ActionBarCommon/>`
+	}
+	for i := 0; i < 3; i++ {
+		fabs += `<com.google.android.material.floatingactionbutton.FloatingActionButton/>`
+	}
+	write(t, root, "app/src/main/res/layout/old.xml", "<LinearLayout>"+bars+fabs+"</LinearLayout>")
+	write(t, root, "app/src/main/res/layout/page.xml", `<LinearLayout>
+<RelativeLayout android:id="@+id/top_bar"><ImageView android:id="@+id/iv_back"/><TextView android:id="@+id/tv_title"/></RelativeLayout>
+<TextView android:id="@+id/btn_buy"/></LinearLayout>`)
+	pc := ScanAndroid(root).CheckFocus("app/src/main/res/layout/page.xml")
+	var hints []string
+	for _, f := range pc.HandBuilt {
+		hints = append(hints, f.Hint)
+	}
+	s := strings.Join(hints, "|")
+	if !strings.Contains(s, "已有 ActionBarCommon") || strings.Contains(s, "FloatingActionButton") {
+		t.Errorf("hints=%v", hints)
+	}
+}

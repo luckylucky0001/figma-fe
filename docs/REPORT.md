@@ -80,6 +80,7 @@
 ## 已知未解决的问题
 
 - **「重复实现」的判断仍有争议项**：Android 端按使用次数选推荐（QMUI 的 Compose 按钮推荐用得最多的 `CommonImageButton`，而不是更通用的 `CommonButton`）；「原生 ImageButton → MaterialButton」在 Material 3 里成立（IconButton 样式），在老项目里只能当参考。
+- **Compose 项目的按钮聚类**：Seal 的「button 有 17 种实现」推荐统一到 `ActionSheetPrimaryButton`（一个底部弹层专用按钮），应该是 Material3 的 `Button`；复用清单（match）给的是 `Button`，只有体检的聚类建议有这个问题。
 - **按名字识别概念的边界**：靠弱词（line / item / row）沾上概念的组件已降权，但新的命名习惯仍可能误判；遇到时在 `component-map.yaml` 里登记决定，之后 match 和页面检查都会采用。
 - **组件库目录需要维护**：没收录的 H5 组件库（例如 jeecg 用的 wot-design-uni 在加入前）会整个看不到。Android 布局里的三方 View 会自动收录，H5 的需要在 `cli/internal/reuse/libs.go` 里补一条。
 - **主题判断**：应用主题在代码里切换、又不使用 Theme.* 命名时，工具判断不出主题，Material 组件的可用性按「未知」处理（不报不可用）。

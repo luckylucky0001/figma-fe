@@ -252,3 +252,58 @@ func TestCheckFocusAndroidLayout(t *testing.T) {
 		t.Errorf("localTokens=%d colors=%+v", pc.LocalTokens, pc.Colors)
 	}
 }
+
+func TestCompatVersionAndTheme(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "buildSrc/Dep.kt", `const val material = "com.google.android.material:material:1.4.0"`)
+	write(t, root, "app/build.gradle", `dependencies { implementation(Dep.material) }`)
+	write(t, root, "app/src/main/AndroidManifest.xml", `<manifest><application android:theme="@style/AppTheme"/></manifest>`)
+	write(t, root, "app/src/main/res/values/themes.xml", `<resources>
+<style name="AppTheme" parent="Base.NoActionBar"/>
+<style name="Base"  parent="Theme.AppCompat.Light"/>
+<style name="Base.NoActionBar"/>
+</resources>`)
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><TextView/><com.google.android.material.button.MaterialButton/></LinearLayout>`)
+	r := ScanAndroid(root)
+	bad := map[string]string{}
+	for _, a := range r.LibAll {
+		if !usable(&a) {
+			bad[a.Name] = a.Caveat
+		}
+	}
+	if !strings.Contains(bad["MaterialDivider"], "1.5.0") || !strings.Contains(bad["Chip"], "AppCompat") {
+		t.Errorf("caveats=%v", bad)
+	}
+	if _, ok := bad["MaterialButton"]; ok {
+		t.Errorf("MaterialButton is used by the project, so it evidently works: %v", bad["MaterialButton"])
+	}
+	exp := &figma.Export{
+		Frame:         &figma.Node{Type: "FRAME", Children: []*figma.Node{{ID: "1:2", Type: "INSTANCE", ComponentID: "c1"}, {ID: "1:3", Type: "INSTANCE", ComponentID: "c2"}}},
+		Components:    map[string]figma.Component{"c1": {ComponentSetID: "s1"}, "c2": {ComponentSetID: "s2"}},
+		ComponentSets: map[string]figma.ComponentSet{"s1": {Name: "Divider"}, "s2": {Name: "Tag"}},
+	}
+	for _, it := range Match(exp, r).Items {
+		for _, c := range it.Candidates {
+			if c.Name == "MaterialDivider" || c.Name == "Chip" && c.Score >= 0.8 {
+				t.Errorf("%s → %+v", it.Figma, c)
+			}
+		}
+	}
+}
+
+func TestConventionsAndVantVersion(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^2.6.0","vant":"^2.12.0"}}`)
+	for i, n := range []string{"A", "B", "C"} {
+		write(t, root, "src/views/"+n+".vue", `<template><div class="head van-hairline--bottom">`+itoa(i)+`</div><van-button>x</van-button></template>`)
+	}
+	r := ScanH5(root)
+	if len(r.Conventions) != 1 || r.Conventions[0].Usage != 3 {
+		t.Fatalf("conventions=%+v", r.Conventions)
+	}
+	for _, a := range r.LibAll {
+		if a.Name == "DatePicker" && usable(&a) {
+			t.Errorf("Vant 2 has no DatePicker: %+v", a)
+		}
+	}
+}

@@ -309,7 +309,10 @@ func ConceptOf(name string) string {
 func clusters(assets []Asset, libAll []Asset) []Cluster {
 	by := map[string][]Asset{}
 	for _, a := range assets {
-		if a.Concept == "" || a.Kind == "page-local" && a.Usage == 0 || featureOnly(a) || a.WrappedBy != "" {
+		// H5 feature components (SelectUserModal) and names tied to the concept only by a weak word
+		// (JFlyLineMap, an echarts line chart) are not alternative implementations to converge
+		if a.Concept == "" || a.Kind == "page-local" && a.Usage == 0 || featureOnly(a) || a.WrappedBy != "" ||
+			a.Kind != "ui-lib" && techOf(a) == "" && (featureNamed(a, a.Concept) || weakOnly(a.Name, a.Concept)) {
 			continue // a feature's own component (SnackItem(snack: Snack), a page helper) is not a duplicate to converge
 		}
 		by[a.Concept+techOf(a)] = append(by[a.Concept+techOf(a)], a)

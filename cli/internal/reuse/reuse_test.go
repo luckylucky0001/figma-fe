@@ -845,3 +845,19 @@ func TestUniBuiltinMissedReuse(t *testing.T) {
 		}
 	}
 }
+
+// jeecg: echarts line charts (JFlyLineMap) reach "divider" only through "line", and SelectUserModal is
+// a feature dialog: neither is an alternative implementation to converge (H5)
+func TestFeatureAndWeakNamesStayOutOfClusters(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","vant":"4.8.0"}}`)
+	write(t, root, "src/components/JFlyLineMap.vue", `<template><div class="chart"></div></template>`)
+	write(t, root, "src/components/SelectUserModal.vue", `<template><div class="modal"></div></template>`)
+	write(t, root, "src/components/SelectDeptModal.vue", `<template><div class="modal"></div></template>`)
+	write(t, root, "src/pages/a.vue", `<template><div><JFlyLineMap/><JFlyLineMap/><JFlyLineMap/><SelectUserModal/><SelectUserModal/><SelectDeptModal/><van-dialog/></div></template>`)
+	for _, c := range ScanH5(root).Clusters {
+		if c.Concept == "divider" || c.Concept == "dialog" {
+			t.Errorf("cluster %+v", c)
+		}
+	}
+}

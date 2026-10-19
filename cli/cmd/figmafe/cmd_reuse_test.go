@@ -103,4 +103,3 @@ func TestChangedFilesAndAddedLines(t *testing.T) {
 		t.Errorf("a chmod-only change adds no lines, got %v (present %v)", l, ok)
 	}
 }
-

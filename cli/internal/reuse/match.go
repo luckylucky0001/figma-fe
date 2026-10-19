@@ -29,7 +29,7 @@ type MatchItem struct {
 	Instances  int         `json:"instances"`
 	NodeIDs    []string    `json:"nodeIds"`
 	Variants   []string    `json:"variants,omitempty"`
-	Verdict    string      `json:"verdict"` // reuse | confirm | new
+	Verdict    string      `json:"verdict"`            // reuse | confirm | new
 	Decision   string      `json:"decision,omitempty"` // confirmed gap decision
 	Candidates []Candidate `json:"candidates"`
 }

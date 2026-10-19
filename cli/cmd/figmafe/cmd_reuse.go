@@ -4,7 +4,9 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 
@@ -21,6 +23,7 @@ func runReuse(args []string) error {
 	out := fs.String("o", "", "output dir (default <root>/.figmafe/reuse)")
 	quiet := fs.Bool("q", false, "quiet")
 	focus := fs.String("focus", "", "only judge this page dir/file (relative to project); the whole project is the asset pool")
+	changed := fs.String("changed", "", "PR gate: judge files changed vs this git ref (e.g. origin/main)")
 	pos := parse(fs, args)
 	root := "."
 	if len(pos) > 0 {
@@ -37,6 +40,18 @@ func runReuse(args []string) error {
 		if len(plats) == 0 {
 			return fmt.Errorf("%s: no H5 (package.json) or Android (build.gradle) project found", root)
 		}
+	}
+	if *changed != "" {
+		files, err := changedUIFiles(root, *changed)
+		if err != nil {
+			return err
+		}
+		if len(files) == 0 {
+			fmt.Println("✓ 没有改动 UI 文件，跳过页面复用检查")
+			return nil
+		}
+		*focus = strings.Join(files, ",")
+		fmt.Printf("· 检查改动的 %d 个 UI 文件\n", len(files))
 	}
 	for _, p := range plats {
 		var r *reuse.Report
@@ -124,4 +139,25 @@ func runMatch(args []string) error {
 		fmt.Printf("\n✓ [%s] Figma 组件 %d 个：可直接复用 %d · 需确认 %d · 需新建 %d → %s\n", p, len(m.Items), m.Reuse, m.Confirm, m.New, filepath.Join(*out, p+".md"))
 	}
 	return nil
+}
+
+// changedUIFiles lists added / modified UI source files vs ref (git diff --diff-filter=AM).
+func changedUIFiles(root, ref string) ([]string, error) {
+	out, err := exec.Command("git", "-C", root, "diff", "--name-only", "--relative", "--diff-filter=AM", ref, "--").Output()
+	if err != nil {
+		return nil, fmt.Errorf("git diff %s: %w", ref, err)
+	}
+	untracked, _ := exec.Command("git", "-C", root, "ls-files", "--others", "--exclude-standard").Output()
+	var files []string
+	seen := map[string]bool{}
+	for _, f := range strings.Fields(string(out) + "\n" + string(untracked)) {
+		ext := filepath.Ext(f)
+		ui := ext == ".vue" || ext == ".tsx" || ext == ".jsx" || ext == ".kt" || ext == ".java" ||
+			ext == ".xml" && strings.Contains("/"+f, "/res/layout")
+		if ui && !seen[f] {
+			seen[f] = true
+			files = append(files, f)
+		}
+	}
+	return files, nil
 }

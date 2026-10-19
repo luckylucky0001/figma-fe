@@ -28,6 +28,15 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 | Rqm-C-2 | C 用 Skill（Opus） | ✅ PASS | 8 | 0 / 0 | 0 | 0 / 0 | 8 | 0 | QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBarLayout、QDTagView、QDProductCardView |
 | Rqm-Chk-1 | C 用 Skill（Haiku） | ✅ PASS | 8 | 0 / 0 | 0 | 0 / 0 | 10 | 0 | 无（Tag / Price / CountDown / 商品行用 QMUICommonListItemView 的标题、描述、accessory 和 span 实现，决定写进 component-map.yaml） |
 
+## litemall-vue（Vue 2 + Vant 2，留出项目）
+
+新建 `src/views/order/order-detail-v2.vue`；打分：`figmafe reuse <项目> --changed HEAD`
+
+| run | 组 | 结果 | 复用现成组件 | 自造轮子（确定/疑似） | 有组件没用 | 手写已有组件（确定/疑似） | 新增颜色变量 | 写死颜色 | 新建组件 |
+|---|---|---|---|---|---|---|---|---|---|
+| Rlm-A-1 | A 只给任务（Opus）（无效：A 组 agent 自己找到了本仓库的 Skill 并运行了 figmafe，不能当基线） | ✅ PASS | 11 | 0 / 0 | 0 | 0 / 0 | 0 | 0 | Price.vue |
+| Rlm-C-1 | C 用 Skill（Opus） | ✅ PASS | 10 | 0 / 0 | 0 | 0 / 0 | 0 | 0 | Price.vue（md-price；决定写进 component-map.yaml） |
+
 ## Now in Android（Jetpack Compose + Material3 + 自有设计系统 Nia*）
 
 新建 `OrderDetailScreen.kt`，通用组件放哪由 agent 决定；打分：`figmafe reuse <项目> --changed HEAD`
@@ -41,6 +50,7 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 
 ## 说明
 
+- **实验的局限**：A 组和 C 组都在同一个会话里以子 agent 运行，A 组也能看到本仓库的 Skill（实验环境所限）。Rnia-A-1、Rnia-A-2、Rqm-Ahk-1 读到了 Skill 但没按它做；Rlm-A-1 自己运行了 figmafe，已标为无效。这种「泄漏」只会让 A 组更好，所以 A / C 的差距是保守估计。
 - newbee：A 组页面里手写了商品卡、分割线、底部操作栏，还自建了 10 个颜色变量；C 组直接用 Vant 的 Card / Divider / ActionBar 和项目已有的 SimpleHeader，缺的 Price 放进组件目录。
 - Haiku 不带 Skill 时一个现成组件都没用（0 个），带 Skill 后复用 10 个、检查通过：Skill 把「先查再写」变成了固定流程，模型能力弱时收益更大。
 - QMUI + Haiku：不带 Skill 时没用任何列表组件（FAIL）；带 Skill 时复用 QMUIGroupListView / QMUICommonListItemView ×7 / QMUIRoundButton，检查 PASS。它还指出 Skill 的 catalog / workflow 文件讲的是 demo 组件库，在别的项目里会误导，已拆分说明。

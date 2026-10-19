@@ -39,6 +39,8 @@ bin/figmafe compare --url http://localhost:5173/order --figma design/figma-expor
 make fonts && make build && make test
 bin/figmafe scan && bin/figmafe map suggest && bin/figmafe map check
 bin/figmafe plan   --page OrderDetail --platform h5     # 复用方案（闸门）
+# 页面由 Agent 按 Skill 实现到 h5/src/pages/OrderDetail；只想看 verify 效果，可以先拷一份实验里的实现：
+#   mkdir -p h5/src/pages/OrderDetail && cp experiments/runs/C-h5-1/src/* h5/src/pages/OrderDetail/
 bin/figmafe verify --page OrderDetail --platform h5     # 审计 + 截图对比（0=PASS 3=未达标）
 ```
 

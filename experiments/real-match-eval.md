@@ -15,8 +15,9 @@
 | hello-uniapp（留出） | uni-app + uni-ui | ✓10 △1 ✗0 | ✓12 △0 ✗0 |
 | taro-ui-demo（留出） | Taro + taro-ui | ✓11 △0 ✗0 | ✓12 △0 ✗0 |
 | nutui-vite（留出） | Vue 3 + NutUI | ✓11 △0 ✗0 | ✓12 △0 ✗0 |
+| pokedex（留出） | XML + Material（MaterialComponents 主题） | ✓11 △0 ✗0 | ✓12 △0 ✗0 |
 | newpipe（留出） | XML（AppCompat）+ 少量 Compose | ✓10 △1 ✗0 | ✓11 △1 ✗0 |
 | vant-demo-vue3（留出） | Vue 3 + Vant | ✓11 △0 ✗0 | ✓12 △0 ✗0 |
 | vant-demo-vue2（留出） | Vue 2 + Vant 2 | ✓11 △0 ✗0 | ✓12 △0 ✗0 |
 
-**合计 ✓294 / △5 / ✗0**
+**合计 ✓317 / △5 / ✗0**

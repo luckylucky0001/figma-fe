@@ -12,7 +12,7 @@ for p in sorted(glob.glob(os.path.join(os.path.dirname(__file__), 'runs', '*', '
             src += open(f, encoding='utf-8', errors='ignore').read()
     changed = open(os.path.join(os.path.dirname(p), 'changed-files.txt')).read()
     extra = [l.split()[-1] for l in changed.splitlines() if l.startswith('??') and 'OrderDetail' not in l]
-    countdown_custom = bool(re.search(r'(function|fun|const)\s+\w*Count[Dd]own', src) or re.search(r'setInterval|LaunchedEffect|delay\(1000', src))
+    countdown_custom = bool(re.search(r'(function|fun|const)\s+\w*Count[Dd]own', src) or re.search(r'setInterval|setTimeout|LaunchedEffect|delay\(', src))
     rows.append(dict(run=run, group=run.split('-')[0], platform=r['platform'], pass_=r['pass'],
         reuse=m['reuseRate'], runtime=m['runtimeReuse'], violations=m['violations'], warnings=m['warnings'],
         pixel=m['pixelMismatch'], nodeErr=m['nodeErrors'], nodeWarn=m['nodeWarnings'], textCov=m['textCoverage'],

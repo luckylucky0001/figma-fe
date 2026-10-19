@@ -1,3 +1,5 @@
+> **实现状态（2026-10-20）**：方案 A（真实组件库）所需的真实资产尚未提供，demo 按本 plan 用自建的两端组件库和 Figma fixture 实现，交付物见根目录 README.md；结果见 docs/REPORT.md。
+
 # Plan v3：先盘资产，再识别复用 —— Figma → H5 / Android 双端组件复用
 
 > v1 → v2 变化：

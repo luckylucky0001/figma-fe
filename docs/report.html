@@ -29,8 +29,9 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.4mm 0; }
 
 <div class="tldr"><b>结论</b><ul>
 <li><b>流程跑通、可量化</b>：「先盘点资产 → 建立映射 → 出复用方案 → 实现 → 审计 + 截图对比 → 修正 → 沉淀规则」在 H5（React）和 Android（Compose，兼容 compileSdk 32）两端都实现为一个命令 <code>figmafe verify</code>。它输出复用率、违规、像素差异和节点级偏差，可以直接接入 CI。</li>
-<li><b>实测</b>：10 次对照运行里，C 组（完整 Skill）在 2/2 次 H5 运行中达标。Android 端剩下的 2 处严重偏差都出在<b>组件库内部</b>，A 组和 C 组相同。工具能把「页面写错了」和「组件本身不符合设计」区分开。</li>
-<li><b>如实说明</b>：在这个 demo 里，强模型的基线（A 组）也能找到组件库，复用率达到 100%。差别体现在「规范和可追溯」上：A 组 7/7 次自己造了一个规范外的会跳动的 CountDown 组件，C 组 0/3 次；A 组 1/7 次挂了 Figma 节点 id，C 组 3/3 次。token 漂移、变体缺失这类资产问题，只有 C 组的扫描和映射检查系统性地找了出来。</li>
+<li><b>实测</b>：13 次对照运行里，C 组（完整 Skill）在 3/3 次 H5 运行中达标。Android 端剩下的 2 处严重偏差都出在<b>组件库内部</b>，A 组和 C 组相同。工具能把「页面写错了」和「组件本身不符合设计」区分开。</li>
+<li><b>如实说明</b>：在这个 demo 里，强模型的基线（A 组）也能找到组件库，复用率达到 100%。差别体现在「规范和可追溯」上：A 组 7/8 次自己造了一个规范外的会跳动的 CountDown 组件，C 组 0/5 次；A 组 2/8 次挂了 Figma 节点 id，C 组 5/5 次。token 漂移、变体缺失这类资产问题，只有 C 组的扫描和映射检查系统性地找了出来。</li>
+<li><b>换成小模型（Haiku）</b>：结论一样。两端的复用率和还原度都和大模型持平，C 组同样 0 次自造组件。Skill 的价值不依赖模型大小：把「找组件、定方案、验收」做成确定性的工具步骤，模型只负责按方案写代码和修正。</li>
 
 <li><b>建议</b>：在真实项目中，先拿一个典型页面按教程接入，用 <code>figmafe verify</code> 量出现状（这是 demo 无法替代的一步），再推广到 PR CI。</li>
 </ul></div>
@@ -53,7 +54,7 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.4mm 0; }
 <tr><td>偏差反馈给 Agent 修正</td><td><code>report.md</code> 每条偏差带文件行号或 Figma 节点 id、期望值和实际值；退出码 3 表示未达标，Agent 照着修</td><td>Agent Skills：确定性的步骤交给脚本</td></tr>
 <tr><td>先验证一个页面，再整理成规则</td><td>订单详情页两端都验证过；规则合并进 <code>rules.md</code>，组件问题汇总到 <code>component-issues.md</code></td><td>—</td></tr>
 </table>
-<p class="note">安卓端：组件用 Compose 实现，只用 Compose 1.2 已有的 API（对应 compileSdk 32 / minSdk 23）；扫描同时支持 XML View（<code>attrs.xml</code>、layout）。本环境装不了 Android SDK，所以用 Compose Desktop 在 JVM 上渲染（API 相同）。真实项目把渲染器换成 Roborazzi 或 Paparazzi 即可，对比逻辑不用改。</p>
+
 
 <h2 class="pb">2. 对照实验</h2>
 <p>同一份 Figma（订单详情，含 21 个组件实例、1 个缺口组件 CountDown）、同一套组件库、同样的任务描述。每次运行都在独立的工作区里完成，最后用同一版 <code>figmafe verify</code> 统一打分。C 组的方案闸门在实验中视为自动通过。</p>
@@ -66,9 +67,12 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.4mm 0; }
 <tr class=''><td>A 基线 · Haiku</td><td>H5</td><td><b class="ok">PASS</b></td><td>100%</td><td>0</td><td>0.65%</td><td>0 / 5</td><td><b class="bad">是</b></td><td>0</td><td>96s / 93k</td></tr>
 <tr class='c'><td>C 完整 Skill</td><td>H5</td><td><b class="ok">PASS</b></td><td>100%</td><td>0</td><td>0.65%</td><td>0 / 5</td><td>否</td><td>27</td><td>212s / 123k</td></tr>
 <tr class='c'><td>C 完整 Skill · npm 包</td><td>H5</td><td><b class="ok">PASS</b></td><td>100%</td><td>0</td><td>0.65%</td><td>0 / 5</td><td>否</td><td>27</td><td>186s / 102k</td></tr>
+<tr class='c'><td>C 完整 Skill · Haiku</td><td>H5</td><td><b class="ok">PASS</b></td><td>100%</td><td>0</td><td>0.65%</td><td>0 / 5</td><td>否</td><td>24</td><td>194s / 144k</td></tr>
 <tr class=''><td>A 基线</td><td>Android</td><td><b class="bad">FAIL</b></td><td>100%</td><td>0</td><td>4.00%</td><td>2 / 6</td><td><b class="bad">是</b></td><td>28</td><td>143s / 105k</td></tr>
 <tr class=''><td>A 基线 · 只给截图</td><td>Android</td><td><b class="bad">FAIL</b></td><td>100%</td><td>0</td><td>4.00%</td><td>2 / 6</td><td><b class="bad">是</b></td><td>0</td><td>245s / 114k</td></tr>
+<tr class=''><td>A 基线 · Haiku</td><td>Android</td><td><b class="bad">FAIL</b></td><td>100%</td><td>0</td><td>4.00%</td><td>2 / 6</td><td>否</td><td>27</td><td>182s / 121k</td></tr>
 <tr class='c'><td>C 完整 Skill</td><td>Android</td><td><b class="bad">FAIL</b></td><td>100%</td><td>0</td><td>4.00%</td><td>2 / 6</td><td>否</td><td>27</td><td>301s / 129k</td></tr>
+<tr class='c'><td>C 完整 Skill · Haiku</td><td>Android</td><td><b class="bad">FAIL</b></td><td>100%</td><td>0</td><td>4.00%</td><td>2 / 6</td><td>否</td><td>27</td><td>260s / 163k</td></tr>
 </table>
 <p class="note">复用率 = 方案要求的组件中实际用到的比例（静态统计，并用运行时的 <code>data-ds</code> 和 semantics 标记复核）。阈值：复用率 ≥95%，违规 0，像素差异 H5 ≤3%、Android ≤5%，节点级严重偏差 0。</p>
 
@@ -76,10 +80,10 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.4mm 0; }
 <div><h3>verify 能抓到什么（教程第 8 步，故意放了 3 处问题）</h3>
 <img class="wide" src="tutorial/img/09-compare.png"></div>
 <div><h3>读结果</h3><ul>
-<li><b>复用率</b>：在组件库就在仓库里、Figma 带组件实例信息的情况下，强模型基线已经能做到 100%。所以在这个 demo 里，复用率不是区分 A、C 两组的指标。真实项目里复用差，通常有这些原因：组件库是独立的包、命名和 Figma 对不上、存在 Legacy 和 Compose 两套组件、仓库太大、设计稿没有组件化。这些需要拿真实项目来量。</li>
-<li><b>规范</b>：A 组每次都自己写了一个带计时逻辑的 CountDown（设计稿里没有这个需求，组件库也没有）。时间一长，这类组件就会变成重复资产。C 组按缺口方案，用静态文本实现，并登记组件需求。</li>
+<li><b>复用率</b>：只给截图、组件库是 npm 包、换成 Haiku，基线都能做到 100%，所以在这个小仓库里，复用率区分不了 A、C 两组。真实项目复用差的原因（仓库大、命名对不上、两套组件、设计稿没有组件化）需要拿真实项目来量。</li>
+<li><b>规范</b>：A 组 7/8 次在页面里自造了 CountDown，其中 6 次还带了计时逻辑（设计稿里没有这个需求，组件库也没有）。时间一长，这类组件就会变成重复资产。C 组 5 次都按缺口方案处理：用静态文本实现，并登记组件需求。</li>
 <li><b>可追溯</b>：C 组每个实例都挂了 Figma 节点 id，偏差可以精确定位到节点。</li>
-<li><b>成本</b>：C 组平均多用约 1.5～2 倍时间，token 多约 20%，换来的是可以复现的验证结果。</li>
+<li><b>成本</b>：C 组平均耗时是 A 组的 1.5 倍，token 是 1.3 倍，换来的是可以复现的验证结果和资产问题清单。</li>
 <li><b>闭环有效</b>：第 8 步故意放进的 3 处问题被全部抓到（3 处违规 + 8 处严重偏差），修正后一次通过。</li>
 </ul></div>
 </div>
@@ -107,7 +111,7 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.4mm 0; }
 <li>没有真实 Figma 文件，环境也访问不了 Figma：设计数据由独立手写的设计源生成（<code>figmafe fixture</code>），格式和插件导出一致；插件代码没有在真实 Figma 里跑过。</li>
 <li>组件库是按规范自建的小型库（两端各 10 个组件），不是你们的真实资产；仓库小，有利于基线 Agent 找到组件。</li>
 <li>样本量小（每种条件 1～2 次），结论只能说明方向，不能当作统计显著的结果。</li>
-<li>Android 渲染用的是 Compose Desktop，不是真机；字体渲染存在本底差异（已经通过阈值吸收）。</li>
+<li>Android：组件用 Compose 实现，只用 Compose 1.2 已有的 API（对应 compileSdk 32 / minSdk 23），扫描同时支持 XML View。本环境装不了 Android SDK，所以用 Compose Desktop 在 JVM 上渲染（API 相同），不是真机，字体渲染存在本底差异（已通过阈值吸收）。真实项目把渲染器换成 Roborazzi 或 Paparazzi 即可。</li>
 </ul>
 
 <h2>6. 接入真实项目（下一步）</h2>

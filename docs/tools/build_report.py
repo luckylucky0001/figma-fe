@@ -55,6 +55,16 @@ c_cd = sum(r['selfBuiltCountdown'] for r in C)
 a_ids = sum(r['figmaIds'] > 0 for r in A)
 c_ids = sum(r['figmaIds'] > 0 for r in C)
 hk = {r['run']: r for r in rows if 'hk' in r['run']}
+import re, glob
+def ticking(run):
+    src = ''.join(open(f, encoding='utf-8', errors='ignore').read() for f in glob.glob(os.path.join(root, 'experiments', 'runs', run, 'src', '*')))
+    return bool(re.search(r'setInterval|setTimeout|LaunchedEffect|delay\(', src))
+a_tick = sum(ticking(r['run']) for r in A)
+def avg(group, key):
+    v = [cost[r['run']][key] for r in group if r['run'] in cost]
+    return sum(v) / len(v)
+t_ratio = avg(C, 'seconds') / avg(A, 'seconds')
+k_ratio = avg(C, 'tokens') / avg(A, 'tokens')
 haiku_note = open(os.path.join(root, 'experiments', 'haiku-note.html')).read() if os.path.exists(os.path.join(root, 'experiments', 'haiku-note.html')) else ''
 
 page = f"""<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>Figma → 代码：组件复用与还原度验证</title>
@@ -112,7 +122,7 @@ ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.4mm 0; }}
 <tr><td>偏差反馈给 Agent 修正</td><td><code>report.md</code> 每条偏差带文件行号或 Figma 节点 id、期望值和实际值；退出码 3 表示未达标，Agent 照着修</td><td>Agent Skills：确定性的步骤交给脚本</td></tr>
 <tr><td>先验证一个页面，再整理成规则</td><td>订单详情页两端都验证过；规则合并进 <code>rules.md</code>，组件问题汇总到 <code>component-issues.md</code></td><td>—</td></tr>
 </table>
-<p class="note">安卓端：组件用 Compose 实现，只用 Compose 1.2 已有的 API（对应 compileSdk 32 / minSdk 23）；扫描同时支持 XML View（<code>attrs.xml</code>、layout）。本环境装不了 Android SDK，所以用 Compose Desktop 在 JVM 上渲染（API 相同）。真实项目把渲染器换成 Roborazzi 或 Paparazzi 即可，对比逻辑不用改。</p>
+
 
 <h2 class="pb">2. 对照实验</h2>
 <p>同一份 Figma（订单详情，含 21 个组件实例、1 个缺口组件 CountDown）、同一套组件库、同样的任务描述。每次运行都在独立的工作区里完成，最后用同一版 <code>figmafe verify</code> 统一打分。C 组的方案闸门在实验中视为自动通过。</p>
@@ -126,10 +136,10 @@ ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.4mm 0; }}
 <div><h3>verify 能抓到什么（教程第 8 步，故意放了 3 处问题）</h3>
 <img class="wide" src="{img}09-compare.png"></div>
 <div><h3>读结果</h3><ul>
-<li><b>复用率</b>：在组件库就在仓库里、Figma 带组件实例信息的情况下，强模型基线已经能做到 100%。所以在这个 demo 里，复用率不是区分 A、C 两组的指标。真实项目里复用差，通常有这些原因：组件库是独立的包、命名和 Figma 对不上、存在 Legacy 和 Compose 两套组件、仓库太大、设计稿没有组件化。这些需要拿真实项目来量。</li>
-<li><b>规范</b>：A 组每次都自己写了一个带计时逻辑的 CountDown（设计稿里没有这个需求，组件库也没有）。时间一长，这类组件就会变成重复资产。C 组按缺口方案，用静态文本实现，并登记组件需求。</li>
+<li><b>复用率</b>：只给截图、组件库是 npm 包、换成 Haiku，基线都能做到 100%，所以在这个小仓库里，复用率区分不了 A、C 两组。真实项目复用差的原因（仓库大、命名对不上、两套组件、设计稿没有组件化）需要拿真实项目来量。</li>
+<li><b>规范</b>：A 组 {a_cd}/{len(A)} 次在页面里自造了 CountDown，其中 {a_tick} 次还带了计时逻辑（设计稿里没有这个需求，组件库也没有）。时间一长，这类组件就会变成重复资产。C 组 {len(C)} 次都按缺口方案处理：用静态文本实现，并登记组件需求。</li>
 <li><b>可追溯</b>：C 组每个实例都挂了 Figma 节点 id，偏差可以精确定位到节点。</li>
-<li><b>成本</b>：C 组平均多用约 1.5～2 倍时间，token 多约 20%，换来的是可以复现的验证结果。</li>
+<li><b>成本</b>：C 组平均耗时是 A 组的 {t_ratio:.1f} 倍，token 是 {k_ratio:.1f} 倍，换来的是可以复现的验证结果和资产问题清单。</li>
 <li><b>闭环有效</b>：第 8 步故意放进的 3 处问题被全部抓到（3 处违规 + 8 处严重偏差），修正后一次通过。</li>
 </ul></div>
 </div>
@@ -157,7 +167,7 @@ ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.4mm 0; }}
 <li>没有真实 Figma 文件，环境也访问不了 Figma：设计数据由独立手写的设计源生成（<code>figmafe fixture</code>），格式和插件导出一致；插件代码没有在真实 Figma 里跑过。</li>
 <li>组件库是按规范自建的小型库（两端各 10 个组件），不是你们的真实资产；仓库小，有利于基线 Agent 找到组件。</li>
 <li>样本量小（每种条件 1～2 次），结论只能说明方向，不能当作统计显著的结果。</li>
-<li>Android 渲染用的是 Compose Desktop，不是真机；字体渲染存在本底差异（已经通过阈值吸收）。</li>
+<li>Android：组件用 Compose 实现，只用 Compose 1.2 已有的 API（对应 compileSdk 32 / minSdk 23），扫描同时支持 XML View。本环境装不了 Android SDK，所以用 Compose Desktop 在 JVM 上渲染（API 相同），不是真机，字体渲染存在本底差异（已通过阈值吸收）。真实项目把渲染器换成 Roborazzi 或 Paparazzi 即可。</li>
 </ul>
 
 <h2>6. 接入真实项目（下一步）</h2>

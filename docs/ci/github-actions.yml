@@ -1,4 +1,5 @@
 # 组件复用 PR 闸门（GitHub Actions 示例）：只检查这个 PR 改动的 UI 文件。
+# 说明：工具代码目前在 claude/figma-to-code-plan 分支，合并到主分支后去掉 -b 参数；也可以把编译好的 figmafe 放进内部制品库。
 # 自造了已有组件、用原生元素代替现成组件、绕过设计系统封装、手写列表行 → 退出码 3，PR 检查失败。
 # 有意新建 / 不用推荐组件的，把决定写进 component-map.yaml 的 gaps，闸门会认可。
 name: component-reuse
@@ -12,7 +13,7 @@ jobs:
       - uses: actions/setup-go@v5
         with: { go-version: '1.25' }
       - name: build figmafe
-        run: git clone --depth 1 https://github.com/luckylucky0001/figma-fe /tmp/figma-fe && (cd /tmp/figma-fe/cli && go build -o /usr/local/bin/figmafe ./cmd/figmafe)
+        run: git clone --depth 1 -b claude/figma-to-code-plan https://github.com/luckylucky0001/figma-fe /tmp/figma-fe && (cd /tmp/figma-fe/cli && go build -o /usr/local/bin/figmafe ./cmd/figmafe)
       - name: page reuse check (changed files only)
         run: figmafe reuse . --changed origin/${{ github.base_ref }} -q    # 多端仓库可加 --platform h5|android
       - uses: actions/upload-artifact@v4

@@ -244,8 +244,8 @@ def main():
             print(f"{name:15s} {page:13s} ✓{counts['✓']:2d} △{counts['△']} ✗{counts['✗']}")
             print("\n".join(lines)) if lines else None
     print(f"合计 ✓{total['✓']} △{total['△']} ✗{total['✗']}")
-    json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
-    if not only:
+    if not only:  # a partial run must not overwrite the full results
+        json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
         held = {"pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",

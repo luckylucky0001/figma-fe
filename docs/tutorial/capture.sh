@@ -130,7 +130,7 @@ echo "Step 11 沉淀规则"
 md 12-rules "沉淀规则（references/rules.md）" .claude/skills/figma-to-code/references/rules.md
 
 echo "Part 2 存量项目（真实开源项目，固定 commit，由 experiments/real-match-eval.py 拉取到 experiments/.cache/）"
-python3 "$repo/experiments/real-match-eval.py" newbee qmui nia >/dev/null 2>&1 || true
+python3 "$repo/experiments/real-match-eval.py" newbee qmui nia >/dev/null 2>&1 || true   # 只拉取 / 更新这三个项目
 cache=$repo/experiments/.cache
 # html <img-name> <file.html>
 html() { shoot html "$2" "$img/$1.png"; echo "  📸 $1"; }
@@ -151,6 +151,9 @@ term 24-match-qmui "同一份设计稿 → QMUI（XML）" "bin/figmafe match --f
 html 24-match-qmui-overlay "$t/m-qm/android.html"
 term 25-match-holdings "没组件化、中文图层名的设计稿 → newbee" "bin/figmafe match --figma design/figma-export/holdings $cache/newbee -o $t/m-h -q"
 html 25-match-holdings-overlay "$t/m-h/h5.html"
+
+term 25b-match-trade "第三份设计稿（买入下单）→ Now in Android（Compose）" "bin/figmafe match --figma design/figma-export/trade-order $cache/nia -o $t/m-to -q"
+html 25b-match-trade-overlay "$t/m-to/android.html"
 
 term 26-check-a "页面复用检查：不用 Skill 的实现（newbee，A 组）" "cat $repo/experiments/real-project/Rnb-A-1.txt | sed -n '1,22p'"
 term 26-check-c "页面复用检查：用 Skill 的实现（newbee，C 组）" "cat $repo/experiments/real-project/Rnb-C-1.txt | sed -n '1,12p'"

@@ -59,6 +59,7 @@ func Detect(root string) []string {
 // ScanAndroid inventories an Android project: XML layouts, custom Views (Kotlin / Java), composables.
 func ScanAndroid(root string) *Report {
 	r := &Report{Platform: "android", Root: root}
+	ign := ignoreList(root)
 	type file struct{ path, rel, text string }
 	var layouts, code, values []file
 	gradle := ""
@@ -67,7 +68,7 @@ func ScanAndroid(root string) *Report {
 			return nil
 		}
 		if info.IsDir() {
-			if skipDir(info.Name()) {
+			if skipDir(info.Name()) || ignored(ign, relPath(root, p)) {
 				return filepath.SkipDir
 			}
 			return nil

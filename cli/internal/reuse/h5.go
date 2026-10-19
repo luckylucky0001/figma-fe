@@ -51,12 +51,13 @@ type srcFile struct {
 // ScanH5 inventories a Vue / React mobile project at root.
 func ScanH5(root string) *Report {
 	r := &Report{Platform: "h5", Root: root}
+	ign := ignoreList(root)
 	deps := map[string]bool{}
 	_ = filepath.Walk(root, func(p string, info os.FileInfo, err error) error {
 		if err != nil {
 			return nil
 		}
-		if info.IsDir() && skipDir(info.Name()) {
+		if info.IsDir() && (skipDir(info.Name()) || ignored(ign, relPath(root, p))) {
 			return filepath.SkipDir
 		}
 		if info.Name() == "package.json" {
@@ -83,7 +84,7 @@ func ScanH5(root string) *Report {
 			return nil
 		}
 		if info.IsDir() {
-			if skipDir(info.Name()) {
+			if skipDir(info.Name()) || ignored(ign, relPath(root, p)) {
 				return filepath.SkipDir
 			}
 			return nil
@@ -489,6 +490,31 @@ func expandHex(h string) string {
 		h = string([]byte{h[0], h[0], h[1], h[1], h[2], h[2]})
 	}
 	return "#" + h
+}
+
+// ignoreList reads <root>/.figmafeignore: one path prefix per line (relative to root), # comments.
+func ignoreList(root string) []string {
+	b, err := os.ReadFile(filepath.Join(root, ".figmafeignore"))
+	if err != nil {
+		return nil
+	}
+	var out []string
+	for _, l := range strings.Split(string(b), "\n") {
+		l = strings.TrimSpace(l)
+		if l != "" && !strings.HasPrefix(l, "#") {
+			out = append(out, strings.TrimSuffix(filepath.ToSlash(l), "/"))
+		}
+	}
+	return out
+}
+
+func ignored(ign []string, rel string) bool {
+	for _, p := range ign {
+		if rel == p || strings.HasPrefix(rel, p+"/") {
+			return true
+		}
+	}
+	return false
 }
 
 func skipDir(n string) bool {

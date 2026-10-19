@@ -146,18 +146,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			}
 		}
 	}
-	famPrefixes = map[string]bool{}
-	firstWords := map[string]int{}
-	for _, a := range pool {
-		if ws := splitWords(a.Name); len(ws) > 1 && a.Kind != "ui-lib" {
-			firstWords[ws[0]]++
-		}
-	}
-	for w, n := range firstWords {
-		if n >= 4 && ConceptOf(w) == "" {
-			famPrefixes[w] = true
-		}
-	}
+	setFamilyPrefixes(pool)
 	for _, name := range order {
 		a := sets[name]
 		item := MatchItem{Figma: name, Instances: len(a.ids), NodeIDs: a.ids}
@@ -300,32 +289,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	}
 	// specialised components (AddressList, ContactCard, CouponCell) carry domain words the design does not
 	if s < 0.9 && a.Concept != "" && a.Kind != "convention" {
-		ws := splitWords(a.Name)
-		for len(ws) > 1 && (vendorPrefix[ws[0]] || projectPrefix(ws) || familyPrefix(ws[0])) {
-			ws = ws[1:]
-		}
-		var conceptWords []string
-		for _, c := range concepts {
-			if c.Name == a.Concept {
-				conceptWords = c.Words
-			}
-		}
-		// drop the concept's own words (longest n-gram first: top+app+bar) and neutral style words
-		var residual []string
-		for i := 0; i < len(ws); {
-			n := 0
-			for k := min(3, len(ws)-i); k >= 1 && n == 0; k-- {
-				g := strings.Join(ws[i:i+k], "")
-				if contains(conceptWords, g) || contains(conceptWords, strings.TrimSuffix(g, "s")) || k == 1 && contains(styleWords, g) {
-					n = k
-				}
-			}
-			if n == 0 {
-				residual = append(residual, ws[i])
-				n = 1
-			}
-			i += n
-		}
+		residual := specialWords(a.Name, a.Concept)
 		joined := strings.Join(residual, "")
 		lowerFigma := strings.ToLower(figmaName)
 		specialised := len(joined) >= 3 && !strings.Contains(lowerFigma, joined)
@@ -621,4 +585,52 @@ func compoundOf(l uiLib, name string) string {
 		}
 	}
 	return ""
+}
+
+// specialWords: the words of a component name beyond its concept, vendor / family prefix and
+// neutral style words — StatusTag → [status], NewsResourceCardExpanded → [news resource expanded].
+func specialWords(name, concept string) []string {
+	ws := splitWords(name)
+	for len(ws) > 1 && (vendorPrefix[ws[0]] || projectPrefix(ws) || familyPrefix(ws[0])) {
+		ws = ws[1:]
+	}
+	var conceptWords []string
+	for _, c := range concepts {
+		if c.Name == concept {
+			conceptWords = c.Words
+		}
+	}
+	// drop the concept's own words (longest n-gram first: top+app+bar) and neutral style words
+	var residual []string
+	for i := 0; i < len(ws); {
+		n := 0
+		for k := min(3, len(ws)-i); k >= 1 && n == 0; k-- {
+			g := strings.Join(ws[i:i+k], "")
+			if contains(conceptWords, g) || contains(conceptWords, strings.TrimSuffix(g, "s")) || k == 1 && contains(styleWords, g) {
+				n = k
+			}
+		}
+		if n == 0 {
+			residual = append(residual, ws[i])
+			n = 1
+		}
+		i += n
+	}
+	return residual
+}
+
+// setFamilyPrefixes learns project family prefixes (Nia, Ds, QD …) from the asset pool.
+func setFamilyPrefixes(pool []Asset) {
+	famPrefixes = map[string]bool{}
+	firstWords := map[string]int{}
+	for _, a := range pool {
+		if ws := splitWords(a.Name); len(ws) > 1 && a.Kind != "ui-lib" {
+			firstWords[ws[0]]++
+		}
+	}
+	for w, n := range firstWords {
+		if n >= 4 && ConceptOf(w) == "" {
+			famPrefixes[w] = true
+		}
+	}
 }

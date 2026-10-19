@@ -46,6 +46,7 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 		return false
 	}
 	pc := &PageCheck{Focus: focus}
+	setFamilyPrefixes(r.Assets)
 	var pool []Asset
 	for _, a := range append(append([]Asset{}, r.Assets...), r.LibAll...) {
 		if usable(&a) {
@@ -68,12 +69,29 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 		if _, modified := lines[a.Source]; modified {
 			continue // the component predates this change; only newly added components are judged
 		}
-		var existing *Asset
+		// an existing component of the same concept that is generic or made for the same purpose
+		// (StatusTag vs Tag / OrderStatusTag) is reinvention; one made for another purpose
+		// (StatusTag vs FilterChip) only deserves a look
+		if accepted(a.Name, r.Platform) {
+			continue // a recorded decision in component-map.yaml settles it
+		}
+		mine := specialWords(a.Name, a.Concept)
+		var existing, other *Asset
 		for i := range pool {
 			b := &pool[i]
-			if b.Concept == a.Concept && !in(b.Source) && b.Source != "Android SDK widgets" && (existing == nil || rank(*b) > rank(*existing)) {
-				existing = b
+			if b.Concept != a.Concept || in(b.Source) || b.Source == "Android SDK widgets" {
+				continue
 			}
+			if subset(specialWords(b.Name, b.Concept), mine) {
+				if existing == nil || rank(*b) > rank(*existing) {
+					existing = b
+				}
+			} else if other == nil || rank(*b) > rank(*other) {
+				other = b
+			}
+		}
+		if existing == nil && other != nil {
+			pc.Reinvented = append(pc.Reinvented, Finding{"reinvented", "warn", a.Source, 0, a.Name, "新建了 " + a.Name + "；同类已有 " + other.Name + "（" + kindLabel(other.Kind) + "），用途可能不同（" + strings.Join(specialWords(other.Name, other.Concept), " ") + "），请确认"})
 		}
 		if existing != nil {
 			// an unused library component is a suggestion; a component the project already relies on is a must
@@ -331,4 +349,32 @@ func (pc *PageCheck) Markdown() string {
 		b.WriteString("  - · " + f.File + ":" + itoa(f.Line) + " " + f.Text + "：" + f.Hint + "\n")
 	}
 	return b.String()
+}
+
+func subset(a, b []string) bool {
+	for _, x := range a {
+		if !contains(b, x) {
+			return false
+		}
+	}
+	return true
+}
+
+// accepted: the team already decided this component should exist — it is the confirmed
+// implementation of a Figma component, or named in a gap decision of component-map.yaml.
+func accepted(name, platform string) bool {
+	if Confirmed == nil {
+		return false
+	}
+	for _, e := range Confirmed.Components {
+		if im := e.Impl(platform); im != nil && im.Component == name {
+			return true
+		}
+	}
+	for _, g := range Confirmed.Gaps {
+		if (g.Platform == platform || g.Platform == "all") && strings.Contains(g.Decision, name) {
+			return true
+		}
+	}
+	return false
 }

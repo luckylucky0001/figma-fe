@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/luckylucky0001/figma-fe/cli/internal/mapping"
+
 	"github.com/luckylucky0001/figma-fe/cli/internal/figma"
 )
 
@@ -354,5 +356,33 @@ func TestPropHints(t *testing.T) {
 	}
 	if p := tsProps("export interface CellProps extends X {\n  title: string;\n  arrow?: boolean;\n}\n"); strings.Join(p, ",") != "title,arrow" {
 		t.Errorf("ts props: %v", p)
+	}
+}
+
+func TestReinventionPurposeAndDecision(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^3.4.0"}}`)
+	write(t, root, "src/components/FilterChip.vue", `<template><span/></template>`)
+	write(t, root, "src/components/BaseCell.vue", `<template><div/></template>`)
+	write(t, root, "src/views/Old.vue", `<template><FilterChip/><FilterChip/><BaseCell/><BaseCell/></template>`)
+	write(t, root, "src/components/StatusChip.vue", `<template><span/></template>`)
+	write(t, root, "src/components/OrderCell.vue", `<template><div/></template>`)
+	r := ScanH5(root)
+	pc := r.CheckFocus("src/components/StatusChip.vue,src/components/OrderCell.vue")
+	sev := map[string]string{}
+	for _, f := range pc.Reinvented {
+		sev[f.Text] = f.Severity
+	}
+	// StatusChip vs FilterChip: different purpose → only a look; OrderCell vs the generic BaseCell → reinvention
+	if sev["StatusChip"] != "warn" || sev["OrderCell"] != "error" {
+		t.Fatalf("reinvented=%+v", pc.Reinvented)
+	}
+	Confirmed = &mapping.Map{Gaps: []mapping.Gap{{Figma: "Cell", Platform: "all", Decision: "新建 OrderCell：订单行需要右侧金额对齐"}}}
+	defer func() { Confirmed = nil }()
+	pc = r.CheckFocus("src/components/StatusChip.vue,src/components/OrderCell.vue")
+	for _, f := range pc.Reinvented {
+		if f.Text == "OrderCell" {
+			t.Errorf("a recorded decision should settle OrderCell: %+v", f)
+		}
 	}
 }

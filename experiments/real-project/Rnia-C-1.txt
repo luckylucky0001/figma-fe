@@ -1,0 +1,13 @@
+· 检查改动的 9 个 UI 文件（已有文件只看新增的行）
+
+## 页面复用检查：core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/icon/NiaIcons.kt,app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/ActionBar.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Countdown.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/ListItem.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Price.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Status.kt,core/ui/src/main/kotlin/com/google/samples/apps/nowinandroid/core/ui/ProductCard.kt  ❌ FAIL
+
+- 复用的现成组件（6）：Card（组件库）、CenterAlignedTopAppBar（组件库）、DynamicAsyncImage（Composable）、HorizontalDivider（组件库）、NiaButton（Composable）、NiaOutlinedButton（Composable）
+- 自造轮子（2）
+  - ✗ core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/ListItem.kt：页面里自造了 NiaListItem，已有 ListItem（组件库 Compose Material3）
+  - · core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Status.kt：页面里自造了 NiaStatusTag，已有 Badge（组件库 Compose Material3）（组件库标准组件，项目还没用过，请确认）
+- 有组件却没用（0）
+- 疑似手写已有组件（0）
+- 写死颜色（0）
+
+✓ [android] 82 个资产 · 组件化率 100% · 重复概念 13 · 重复结构 0 组 · 硬编码颜色 62 → experiments/real-project/Rnia-C-1/android.md

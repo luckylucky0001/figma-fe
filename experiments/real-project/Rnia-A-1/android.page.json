@@ -1,0 +1,207 @@
+{
+  "focus": "app/src/main/res/values/strings.xml,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/icon/NiaIcons.kt,app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailMockData.kt,app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/ActionBar.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/Card.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/Cell.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/CountDown.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/NavBar.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/NoticeBar.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/PillButton.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/Price.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/ProductCard.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/StatusTag.kt,core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+  "used": [
+    "DynamicAsyncImage（Composable）",
+    "HorizontalDivider（组件库）"
+  ],
+  "reinvented": [
+    {
+      "rule": "reinvented",
+      "severity": "error",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/Cell.kt",
+      "line": 0,
+      "text": "NiaCell",
+      "hint": "页面里自造了 NiaCell，已有 ListItem（组件库 Compose Material3）"
+    },
+    {
+      "rule": "reinvented",
+      "severity": "error",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/PillButton.kt",
+      "line": 0,
+      "text": "NiaPillButton",
+      "hint": "页面里自造了 NiaPillButton，已有 NiaTextButton（Composable core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/Button.kt）"
+    },
+    {
+      "rule": "reinvented",
+      "severity": "error",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/Card.kt",
+      "line": 0,
+      "text": "NiaDivider",
+      "hint": "页面里自造了 NiaDivider，已有 HorizontalDivider（组件库 Compose Material3）"
+    },
+    {
+      "rule": "reinvented",
+      "severity": "error",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/Card.kt",
+      "line": 0,
+      "text": "NiaCard",
+      "hint": "页面里自造了 NiaCard，已有 Card（组件库 Compose Material3）"
+    },
+    {
+      "rule": "reinvented",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/StatusTag.kt",
+      "line": 0,
+      "text": "NiaStatusTag",
+      "hint": "页面里自造了 NiaStatusTag，已有 Badge（组件库 Compose Material3）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "reinvented",
+      "severity": "error",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/commerce/NavBar.kt",
+      "line": 0,
+      "text": "NiaNavBar",
+      "hint": "页面里自造了 NiaNavBar，已有 NiaTopAppBar（Composable core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/TopAppBar.kt）"
+    }
+  ],
+  "missedReuse": null,
+  "handBuilt": null,
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 34,
+      "text": "Color(0xFFFF4D1A)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 35,
+      "text": "Color(0xFFFFEDE8)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 36,
+      "text": "Color(0xFFFFFFFF)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 37,
+      "text": "Color(0xFF1F2329)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 38,
+      "text": "Color(0xFF646A73)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 39,
+      "text": "Color(0xFF8F959E)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 40,
+      "text": "Color(0xFFF5F6F7)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 41,
+      "text": "Color(0xFFFFFFFF)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 42,
+      "text": "Color(0xFFF2F3F5)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 43,
+      "text": "Color(0xFFE5E6EB)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 44,
+      "text": "Color(0xFF165DFF)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 45,
+      "text": "Color(0xFFE8F3FF)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 46,
+      "text": "Color(0xFF00B42A)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 47,
+      "text": "Color(0xFFE8FFEA)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 48,
+      "text": "Color(0xFFFF8F1F)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 49,
+      "text": "Color(0xFFFFF3E8)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 50,
+      "text": "Color(0xFFF53F3F)",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/theme/CommerceTheme.kt",
+      "line": 51,
+      "text": "Color(0xFFFFECE8)",
+      "hint": "写死颜色"
+    }
+  ],
+  "localTokens": 0,
+  "pass": false
+}

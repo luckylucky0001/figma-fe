@@ -111,7 +111,7 @@ var concepts = []struct {
 	{"toast", []string{"toast", "snackbar", "notify", "tips"}},
 	{"popup", []string{"popup", "sheet", "actionsheet", "bottomsheet", "drawer", "popover", "floatingpanel"}},
 	{"tabs", []string{"tabs", "tab", "segment", "segmented", "tabrow", "tabsegment"}},
-	{"tabbar", []string{"tabbar", "navigationbar", "bottomnavigation", "bottomnavigationview", "bottomnav"}},
+	{"tabbar", []string{"tabbar", "navigationbar", "bottomnavigation", "bottomnavigationview", "bottomnav", "navigationrail", "navigationsuite", "navigationitem", "navigationbaritem"}},
 	{"input", []string{"input", "field", "edittext", "textfield", "search", "searchbar", "textarea"}},
 	{"carousel", []string{"swipe", "swiper", "carousel", "banner", "viewpager"}},
 	{"icon", []string{"icon"}},

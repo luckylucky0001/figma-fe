@@ -65,6 +65,7 @@ func runReuse(args []string) error {
 			r = reuse.ScanAndroid(root)
 		}
 		md := r.Markdown()
+		reuse.Confirmed = loadConfirmed(root)
 		var pc *reuse.PageCheck
 		if *focus != "" {
 			pc = r.CheckFocusLines(*focus, lines)
@@ -126,13 +127,8 @@ func runMatch(args []string) error {
 				fmt.Printf("· 未指定 --target，按项目主流写法推断新页面用 %s（不对请显式传 --target xml|compose）\n", reuse.Target)
 			}
 		}
-		reuse.Confirmed = nil
-		for _, cand := range []string{"design/component-map.yaml", ".figmafe/component-map.yaml", "component-map.yaml"} {
-			if cm, err := mapping.Load(filepath.Join(root, cand)); err == nil {
-				reuse.Confirmed = cm
-				fmt.Printf("· 使用已确认映射 %s\n", cand)
-				break
-			}
+		if reuse.Confirmed = loadConfirmed(root); reuse.Confirmed != nil {
+			fmt.Println("· 使用已确认映射 component-map.yaml")
 		}
 		m := reuse.Match(exp, r)
 		md := m.Markdown()
@@ -198,4 +194,14 @@ func addedLines(root, ref string) map[string]map[int]bool {
 		}
 	}
 	return res
+}
+
+// loadConfirmed reads the project's confirmed component map, if it has one.
+func loadConfirmed(root string) *mapping.Map {
+	for _, cand := range []string{"design/component-map.yaml", ".figmafe/component-map.yaml", "component-map.yaml"} {
+		if cm, err := mapping.Load(filepath.Join(root, cand)); err == nil {
+			return cm
+		}
+	}
+	return nil
 }

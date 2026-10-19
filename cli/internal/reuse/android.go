@@ -33,7 +33,7 @@ var viewBases = regexp.MustCompile(`(View|Layout|Button|TextView|ImageView|EditT
 
 // layout containers are structure, not reusable components
 var containers = map[string]bool{"LinearLayout": true, "FrameLayout": true, "RelativeLayout": true, "ConstraintLayout": true, "androidx.constraintlayout.widget.ConstraintLayout": true, "merge": true, "include": true, "layout": true, "data": true, "variable": true, "ScrollView": true, "androidx.core.widget.NestedScrollView": true, "androidx.coordinatorlayout.widget.CoordinatorLayout": true, "Space": true, "View": true, "ViewStub": true, "requestFocus": true, "tag": true, "import": true, "fragment": true, "androidx.fragment.app.FragmentContainerView": true,
-	"DrawerLayout": true, "SwipeRefreshLayout": true, "SmartRefreshLayout": true, "MotionLayout": true}
+	"DrawerLayout": true, "SwipeRefreshLayout": true, "SmartRefreshLayout": true, "MotionLayout": true, "Barrier": true, "Guideline": true}
 
 // Detect returns the platforms present under root.
 func Detect(root string) []string {
@@ -281,6 +281,13 @@ func ScanAndroid(root string) *Report {
 			}
 		}
 	}
+	// the project's own packages (org.schabi.newpipe): views from them are never a third-party library
+	ownPkgs := map[string]bool{}
+	for _, f := range code {
+		if m := pkgDeclRe.FindStringSubmatch(f.text); m != nil {
+			ownPkgs[pkgRoot(m[1])] = true
+		}
+	}
 	// colour tokens
 	colorTokens := map[string]string{}
 	for _, f := range values {
@@ -382,7 +389,7 @@ func ScanAndroid(root string) *Report {
 			}
 			// a fully-qualified view from a library the catalog does not know (WanAndroid's
 			// per.goweii.actionbarex ActionBarCommon × 24, androidx SwitchCompat): still the project's toolkit
-			if i := strings.LastIndex(tag, "."); i > 0 && !strings.HasPrefix(tag, "android.") && !strings.HasPrefix(simple, "AppCompat") && !catalogued(tag) {
+			if i := strings.LastIndex(tag, "."); i > 0 && !strings.HasPrefix(tag, "android.") && !strings.HasPrefix(simple, "AppCompat") && !catalogued(tag) && !ownPkgs[pkgRoot(tag[:i])] {
 				src := thirdPartySource(tag[:i])
 				a := get("ui-lib", simple, src)
 				if a.Concept == "" || a.Concept == "actionbar" && strings.HasPrefix(simple, "ActionBar") {
@@ -636,6 +643,16 @@ func thirdPartySource(pkg string) string {
 	}
 	if ps := strings.Split(pkg, "."); len(ps) > 3 {
 		pkg = strings.Join(ps[:3], ".")
+	}
+	return pkg
+}
+
+var pkgDeclRe = regexp.MustCompile(`(?m)^\s*package\s+([\w.]+)`)
+
+// pkgRoot: the first three segments of a package (org.schabi.newpipe.views → org.schabi.newpipe).
+func pkgRoot(pkg string) string {
+	if ps := strings.Split(pkg, "."); len(ps) > 3 {
+		return strings.Join(ps[:3], ".")
 	}
 	return pkg
 }

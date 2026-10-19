@@ -494,6 +494,13 @@ func preference(a Asset, concept string) int {
 			p += 1500
 		}
 	}
+	// a project component named for nothing but the concept (QMUILoadingView, CommonButton) is the generic
+	// one; QMUIProgressBar / CommonImageButton are variants
+	if a.Kind != "ui-lib" {
+		if c := strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）"); ConceptOf(a.Name) == c && len(specialWords(a.Name, c)) == 0 {
+			p += 800
+		}
+	}
 	// a feature-specific member (@layout/feed_statistics_card: ≥2 feature words, as in match) is never the convergence
 	// target over a generic one
 	if a.Kind != "ui-lib" && !inDesignSystem(a.Source) && featureNamed(a, strings.TrimSuffix(strings.TrimSuffix(concept, "（View）"), "（Compose）")) {

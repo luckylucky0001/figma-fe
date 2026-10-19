@@ -11,12 +11,12 @@
       "usage": 92,
       "top": [
         "Button×17",
-        "Tab×9",
         "Field×9",
+        "Tab×9",
         "Icon×7",
-        "Divider×4",
         "Skeleton×4",
-        "Cell×3",
+        "Divider×4",
+        "Card×3",
         "CellGroup×3"
       ]
     }
@@ -94,6 +94,22 @@
       "exampleAt": "src/components/NavBar.vue:23"
     },
     {
+      "name": "Divider",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "divider",
+      "usage": 4,
+      "usageFiles": [
+        "src/views/About.vue",
+        "src/views/OrderDetailV2.vue"
+      ],
+      "example": "\u003cvan-divider :style=\"{ color: '#1baeae', borderColor: '#1baeae', fontSize: '20px', fontWeight: 500 }\"\u003e简介\u003c/van-divider\u003e",
+      "exampleAt": "src/views/About.vue:14",
+      "attrs": {
+        "hairline=\"false\"": 2
+      }
+    },
+    {
       "name": "Skeleton",
       "kind": "ui-lib",
       "source": "Vant",
@@ -111,34 +127,6 @@
       }
     },
     {
-      "name": "Divider",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "divider",
-      "usage": 4,
-      "usageFiles": [
-        "src/views/About.vue",
-        "src/views/OrderDetailV2.vue"
-      ],
-      "example": "\u003cvan-divider :style=\"{ color: '#1baeae', borderColor: '#1baeae', fontSize: '20px', fontWeight: 500 }\"\u003e简介\u003c/van-divider\u003e",
-      "exampleAt": "src/views/About.vue:14",
-      "attrs": {
-        "hairline=\"false\"": 2
-      }
-    },
-    {
-      "name": "Cell",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "cell",
-      "usage": 3,
-      "usageFiles": [
-        "src/views/OrderDetailV2.vue"
-      ],
-      "example": "\u003cvan-cell",
-      "exampleAt": "src/views/OrderDetailV2.vue:37"
-    },
-    {
       "name": "Card",
       "kind": "ui-lib",
       "source": "Vant",
@@ -151,6 +139,18 @@
       ],
       "example": "\u003cvan-card",
       "exampleAt": "src/views/Order.vue:36"
+    },
+    {
+      "name": "Cell",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "cell",
+      "usage": 3,
+      "usageFiles": [
+        "src/views/OrderDetailV2.vue"
+      ],
+      "example": "\u003cvan-cell",
+      "exampleAt": "src/views/OrderDetailV2.vue:37"
     },
     {
       "name": "CellGroup",
@@ -185,16 +185,52 @@
       }
     },
     {
-      "name": "Checkbox",
+      "name": "PullRefresh",
       "kind": "ui-lib",
       "source": "Vant",
-      "concept": "checkbox",
       "usage": 2,
       "usageFiles": [
-        "src/views/Cart.vue"
+        "src/views/Order.vue",
+        "src/views/ProductList.vue"
       ],
-      "example": "\u003cvan-checkbox :name=\"item.cartItemId\" /\u003e",
-      "exampleAt": "src/views/Cart.vue:18"
+      "example": "\u003cvan-pull-refresh v-model=\"state.refreshing\" @refresh=\"onRefresh\" class=\"order-list-refresh\"\u003e",
+      "exampleAt": "src/views/Order.vue:23"
+    },
+    {
+      "name": "AddressList",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "list",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/Address.vue"
+      ],
+      "example": "\u003cvan-address-list",
+      "exampleAt": "src/views/Address.vue:14"
+    },
+    {
+      "name": "Form",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/Login.vue"
+      ],
+      "example": "\u003cvan-form @submit=\"onSubmit\"\u003e",
+      "exampleAt": "src/views/Login.vue:16"
+    },
+    {
+      "name": "SwipeItem",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "carousel",
+      "usage": 2,
+      "usageFiles": [
+        "src/components/Swiper.vue",
+        "src/views/ProductDetail.vue"
+      ],
+      "example": "\u003cvan-swipe-item v-for=\"(item, index) in list\" :key=\"index\"\u003e",
+      "exampleAt": "src/components/Swiper.vue:13"
     },
     {
       "name": "List",
@@ -208,6 +244,43 @@
       ],
       "example": "\u003cvan-list",
       "exampleAt": "src/views/Order.vue:24"
+    },
+    {
+      "name": "Popup",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "popup",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/CreateOrder.vue",
+        "src/views/OrderDetail.vue"
+      ],
+      "example": "\u003cvan-popup",
+      "exampleAt": "src/views/CreateOrder.vue:45"
+    },
+    {
+      "name": "ActionBarIcon",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "icon",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/ProductDetail.vue"
+      ],
+      "example": "\u003cvan-action-bar-icon icon=\"chat-o\" text=\"客服\" /\u003e",
+      "exampleAt": "src/views/ProductDetail.vue:43"
+    },
+    {
+      "name": "Checkbox",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "checkbox",
+      "usage": 2,
+      "usageFiles": [
+        "src/views/Cart.vue"
+      ],
+      "example": "\u003cvan-checkbox :name=\"item.cartItemId\" /\u003e",
+      "exampleAt": "src/views/Cart.vue:18"
     },
     {
       "name": "ActionBarButton",
@@ -226,18 +299,6 @@
       }
     },
     {
-      "name": "AddressList",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "list",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/Address.vue"
-      ],
-      "example": "\u003cvan-address-list",
-      "exampleAt": "src/views/Address.vue:14"
-    },
-    {
       "name": "ActionBar",
       "kind": "ui-lib",
       "source": "Vant",
@@ -249,67 +310,6 @@
       ],
       "example": "\u003cvan-action-bar class=\"od-action-bar\" data-figma-id=\"1:56\"\u003e",
       "exampleAt": "src/views/OrderDetailV2.vue:104"
-    },
-    {
-      "name": "Form",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/Login.vue"
-      ],
-      "example": "\u003cvan-form @submit=\"onSubmit\"\u003e",
-      "exampleAt": "src/views/Login.vue:16"
-    },
-    {
-      "name": "ActionBarIcon",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "icon",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/ProductDetail.vue"
-      ],
-      "example": "\u003cvan-action-bar-icon icon=\"chat-o\" text=\"客服\" /\u003e",
-      "exampleAt": "src/views/ProductDetail.vue:43"
-    },
-    {
-      "name": "Popup",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "popup",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/CreateOrder.vue",
-        "src/views/OrderDetail.vue"
-      ],
-      "example": "\u003cvan-popup",
-      "exampleAt": "src/views/CreateOrder.vue:45"
-    },
-    {
-      "name": "SwipeItem",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "carousel",
-      "usage": 2,
-      "usageFiles": [
-        "src/components/Swiper.vue",
-        "src/views/ProductDetail.vue"
-      ],
-      "example": "\u003cvan-swipe-item v-for=\"(item, index) in list\" :key=\"index\"\u003e",
-      "exampleAt": "src/components/Swiper.vue:13"
-    },
-    {
-      "name": "PullRefresh",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "usage": 2,
-      "usageFiles": [
-        "src/views/Order.vue",
-        "src/views/ProductList.vue"
-      ],
-      "example": "\u003cvan-pull-refresh v-model=\"state.refreshing\" @refresh=\"onRefresh\" class=\"order-list-refresh\"\u003e",
-      "exampleAt": "src/views/Order.vue:23"
     },
     {
       "name": "Tabs",
@@ -330,19 +330,28 @@
       }
     },
     {
-      "name": "SwipeCell",
+      "name": "CheckboxGroup",
       "kind": "ui-lib",
       "source": "Vant",
-      "concept": "cell",
+      "concept": "checkbox",
       "usage": 1,
       "usageFiles": [
         "src/views/Cart.vue"
       ],
-      "example": "\u003cvan-swipe-cell :right-width=\"50\" v-for=\"(item, index) in state.list\" :key=\"index\"\u003e",
-      "exampleAt": "src/views/Cart.vue:16",
-      "attrs": {
-        "right-width=\"50\"": 1
-      }
+      "example": "\u003cvan-checkbox-group @change=\"groupChange\" v-model=\"state.result\" ref=\"checkboxGroup\"\u003e",
+      "exampleAt": "src/views/Cart.vue:15"
+    },
+    {
+      "name": "Stepper",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "stepper",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/Cart.vue"
+      ],
+      "example": "\u003cvan-stepper",
+      "exampleAt": "src/views/Cart.vue:27"
     },
     {
       "name": "SubmitBar",
@@ -355,30 +364,6 @@
       ],
       "example": "\u003cvan-submit-bar",
       "exampleAt": "src/views/Cart.vue:51"
-    },
-    {
-      "name": "Image",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "image",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/OrderDetailV2.vue"
-      ],
-      "example": "\u003cvan-image",
-      "exampleAt": "src/views/OrderDetailV2.vue:61"
-    },
-    {
-      "name": "CheckboxGroup",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "checkbox",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/Cart.vue"
-      ],
-      "example": "\u003cvan-checkbox-group @change=\"groupChange\" v-model=\"state.result\" ref=\"checkboxGroup\"\u003e",
-      "exampleAt": "src/views/Cart.vue:15"
     },
     {
       "name": "CountDown",
@@ -405,18 +390,6 @@
       "exampleAt": "src/views/OrderDetailV2.vue:9"
     },
     {
-      "name": "Stepper",
-      "kind": "ui-lib",
-      "source": "Vant",
-      "concept": "stepper",
-      "usage": 1,
-      "usageFiles": [
-        "src/views/Cart.vue"
-      ],
-      "example": "\u003cvan-stepper",
-      "exampleAt": "src/views/Cart.vue:27"
-    },
-    {
       "name": "AddressEdit",
       "kind": "ui-lib",
       "source": "Vant",
@@ -426,6 +399,33 @@
       ],
       "example": "\u003cvan-address-edit",
       "exampleAt": "src/views/AddressEdit.vue:14"
+    },
+    {
+      "name": "SwipeCell",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "cell",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/Cart.vue"
+      ],
+      "example": "\u003cvan-swipe-cell :right-width=\"50\" v-for=\"(item, index) in state.list\" :key=\"index\"\u003e",
+      "exampleAt": "src/views/Cart.vue:16",
+      "attrs": {
+        "right-width=\"50\"": 1
+      }
+    },
+    {
+      "name": "Image",
+      "kind": "ui-lib",
+      "source": "Vant",
+      "concept": "image",
+      "usage": 1,
+      "usageFiles": [
+        "src/views/OrderDetailV2.vue"
+      ],
+      "example": "\u003cvan-image",
+      "exampleAt": "src/views/OrderDetailV2.vue:61"
     },
     {
       "name": "Tag",
@@ -486,6 +486,21 @@
       "exampleAt": "src/views/Cart.vue:66"
     },
     {
+      "name": "ListScroll",
+      "kind": "business",
+      "source": "src/components/ListScroll.vue",
+      "concept": "list",
+      "props": [
+        "probeType"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "src/views/Category.vue"
+      ],
+      "example": "\u003clist-scroll :scroll-data=\"state.categoryData\" class=\"nav-side-wrapper\"\u003e",
+      "exampleAt": "src/views/Category.vue:24"
+    },
+    {
       "name": "Price",
       "kind": "business",
       "source": "src/components/Price.vue",
@@ -521,21 +536,6 @@
       ],
       "example": "\u003cvue-img-verify ref=\"verifyRef\" /\u003e",
       "exampleAt": "src/views/Login.vue:40"
-    },
-    {
-      "name": "ListScroll",
-      "kind": "business",
-      "source": "src/components/ListScroll.vue",
-      "concept": "list",
-      "props": [
-        "probeType"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "src/views/Category.vue"
-      ],
-      "example": "\u003clist-scroll :scroll-data=\"state.categoryData\" class=\"nav-side-wrapper\"\u003e",
-      "exampleAt": "src/views/Category.vue:24"
     },
     {
       "name": "Swiper",
@@ -754,15 +754,6 @@
       ]
     },
     {
-      "value": "#666666",
-      "count": 5,
-      "sample": [
-        "src/components/NavBar.vue",
-        "src/views/Category.vue",
-        "src/views/Home.vue"
-      ]
-    },
-    {
       "value": "#252525",
       "count": 5,
       "sample": [
@@ -781,10 +772,12 @@
       ]
     },
     {
-      "value": "#FF6C6C",
-      "count": 4,
+      "value": "#666666",
+      "count": 5,
       "sample": [
-        "src/views/CreateOrder.vue"
+        "src/components/NavBar.vue",
+        "src/views/Category.vue",
+        "src/views/Home.vue"
       ]
     },
     {
@@ -807,12 +800,10 @@
       ]
     },
     {
-      "value": "#F9F9F9",
-      "count": 3,
+      "value": "#FF6C6C",
+      "count": 4,
       "sample": [
-        "src/views/CreateOrder.vue",
-        "src/views/Home.vue",
-        "src/views/Order.vue"
+        "src/views/CreateOrder.vue"
       ]
     },
     {
@@ -822,6 +813,15 @@
         "src/views/Category.vue",
         "src/views/Home.vue",
         "src/views/ProductList.vue"
+      ]
+    },
+    {
+      "value": "#F9F9F9",
+      "count": 3,
+      "sample": [
+        "src/views/CreateOrder.vue",
+        "src/views/Home.vue",
+        "src/views/Order.vue"
       ]
     },
     {
@@ -864,45 +864,10 @@
       ]
     },
     {
-      "value": "#098888",
-      "count": 1,
-      "sample": [
-        "src/views/ProductDetail.vue"
-      ]
-    },
-    {
-      "value": "#51C7C7",
-      "count": 1,
-      "sample": [
-        "src/views/User.vue"
-      ]
-    },
-    {
-      "value": "#269090",
-      "count": 1,
-      "sample": [
-        "src/views/User.vue"
-      ]
-    },
-    {
       "value": "#0DC3C3",
       "count": 1,
       "sample": [
         "src/views/ProductDetail.vue"
-      ]
-    },
-    {
-      "value": "#6BD8D8",
-      "count": 1,
-      "sample": [
-        "src/views/ProductDetail.vue"
-      ]
-    },
-    {
-      "value": "#F6F6F6",
-      "count": 1,
-      "sample": [
-        "src/views/Home.vue"
       ]
     },
     {
@@ -913,11 +878,46 @@
       ]
     },
     {
+      "value": "#F6F6F6",
+      "count": 1,
+      "sample": [
+        "src/views/Home.vue"
+      ]
+    },
+    {
       "value": "#2C3E50",
       "count": 1,
       "token": "var(--vt-c-indigo)",
       "sample": [
         "src/App.vue"
+      ]
+    },
+    {
+      "value": "#6BD8D8",
+      "count": 1,
+      "sample": [
+        "src/views/ProductDetail.vue"
+      ]
+    },
+    {
+      "value": "#098888",
+      "count": 1,
+      "sample": [
+        "src/views/ProductDetail.vue"
+      ]
+    },
+    {
+      "value": "#269090",
+      "count": 1,
+      "sample": [
+        "src/views/User.vue"
+      ]
+    },
+    {
+      "value": "#51C7C7",
+      "count": 1,
+      "sample": [
+        "src/views/User.vue"
       ]
     }
   ],

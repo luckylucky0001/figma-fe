@@ -887,3 +887,21 @@ func TestHandBuiltPointsToEstablishedThirdPartyView(t *testing.T) {
 		t.Errorf("hints=%v", hints)
 	}
 }
+
+// NewPipe's own org.schabi.newpipe.* views are not a third-party library; QMUILoadingView (named for
+// nothing but loading) leads the loading cluster over the QMUIProgressBar variant
+func TestOwnPackageAndGenericClusterLead(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/java/org/schabi/newpipe/App.kt", "package org.schabi.newpipe.app\n\nclass App")
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><org.schabi.newpipe.views.AnimatedProgressBar/><per.goweii.actionbarex.common.ActionBarCommon/></LinearLayout>`)
+	for _, l := range ScanAndroid(root).Libraries {
+		if l.Name == "org.schabi.newpipe" {
+			t.Errorf("own package listed as a library: %+v", l)
+		}
+	}
+	a := Asset{Name: "QMUILoadingView", Kind: "custom-view", Concept: "loading", Usage: 5}
+	b := Asset{Name: "QMUIProgressBar", Kind: "custom-view", Concept: "loading", Usage: 6}
+	if preference(a, "loading（View）") <= preference(b, "loading（View）") {
+		t.Errorf("generic QMUILoadingView should lead QMUIProgressBar")
+	}
+}

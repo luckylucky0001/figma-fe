@@ -1150,3 +1150,23 @@ func TestMarkupLineNumbersAreFileLines(t *testing.T) {
 		t.Errorf("conventions = %+v", r.Conventions)
 	}
 }
+
+// review 3: multi-line tags keep their attributes (habits); quoted "<" in attributes does not break parsing
+func TestMultiLineTagsAndQuotedAngles(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","vant":"4.8.0"}}`)
+	var tags string
+	for i := 0; i < 4; i++ {
+		tags += "<van-button\n  type=\"primary\"\n  round\n>ok</van-button>\n"
+	}
+	write(t, root, "src/views/A.vue", "<template>\n<div>\n"+tags+"</div>\n</template>\n")
+	for _, a := range ScanH5(root).Assets {
+		if a.Name == "Button" && a.Attrs[`type="primary"`] != 4 {
+			t.Errorf("habit attrs = %v (example %q)", a.Attrs, a.Example)
+		}
+	}
+	ns := parseMarkup(`<div><p v-if="a < b">x</p><span :show="n > 0"/></div>`)
+	if len(ns) != 1 || len(ns[0].children) != 2 {
+		t.Errorf("parsed %d roots / %+v", len(ns), ns)
+	}
+}

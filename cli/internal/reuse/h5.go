@@ -111,7 +111,7 @@ func ScanH5(root string) *Report {
 			return nil
 		}
 		ext := filepath.Ext(p)
-		kind := map[string]string{".vue": "vue", ".tsx": "jsx", ".jsx": "jsx", ".css": "style", ".less": "style", ".scss": "style", ".sass": "style", ".ts": "js", ".js": "js"}[ext]
+		kind := map[string]string{".vue": "vue", ".nvue": "vue", ".tsx": "jsx", ".jsx": "jsx", ".css": "style", ".less": "style", ".scss": "style", ".sass": "style", ".ts": "js", ".js": "js"}[ext]
 		if kind == "" || strings.HasSuffix(p, ".d.ts") || strings.Contains(p, ".min.") || info.Size() > 400_000 {
 			return nil
 		}
@@ -205,7 +205,7 @@ func ScanH5(root string) *Report {
 		kind := classify(f.rel)
 		switch f.kind {
 		case "vue":
-			name := strings.TrimSuffix(filepath.Base(f.path), ".vue")
+			name := strings.TrimSuffix(filepath.Base(f.path), filepath.Ext(f.path))
 			if strings.EqualFold(name, "index") {
 				name = filepath.Base(filepath.Dir(f.path))
 			}
@@ -325,7 +325,15 @@ func ScanH5(root string) *Report {
 	optName := map[string]*Asset{}
 	for _, f := range files {
 		if a := fileAsset[f.rel]; a != nil {
-			if m := vueNameOptRe.FindStringSubmatch(f.text); m != nil {
+			def := f.text // the component's own name: after export default / defineOptions, not a route list in data()
+			if i := strings.Index(def, "export default"); i >= 0 {
+				def = def[i:]
+			} else if i := strings.Index(def, "defineOptions("); i >= 0 {
+				def = def[i:]
+			} else {
+				def = ""
+			}
+			if m := vueNameOptRe.FindStringSubmatch(def); m != nil {
 				// name: 'Button' must not turn every raw <button> into a use of it
 				if k := strings.ToLower(strings.ReplaceAll(m[1], "-", "")); !htmlTags[k] && !uniTags[k] && !htmlTags[m[1]] && !uniTags[m[1]] {
 					optName[k] = a
@@ -378,6 +386,10 @@ func ScanH5(root string) *Report {
 			start := strings.LastIndex(f.text[:idx], "\n") + 1
 			rest := f.text[idx:]
 			if e := strings.IndexByte(rest, '\n'); e >= 0 {
+				if !strings.Contains(rest[:e], ">") {
+					// Prettier-style tag over several lines: up to its closing '>' (outside quotes), on one line
+					return ln + 1, clip(oneLine(openTag(rest)), 140)
+				}
 				rest = rest[:e]
 			}
 			if e := strings.Index(rest, "</"); e > 0 {
@@ -665,6 +677,24 @@ func bestAsset(assets map[string]*Asset, concept string) *Asset {
 		}
 	}
 	return best
+}
+
+// openTag returns the opening tag at the start of s, up to the first '>' outside quotes (at most 600 bytes).
+func openTag(s string) string {
+	var q byte
+	for i := 0; i < len(s) && i < 600; i++ {
+		switch c := s[i]; {
+		case q != 0:
+			if c == q {
+				q = 0
+			}
+		case c == '"' || c == '\'':
+			q = c
+		case c == '>':
+			return s[:i+1]
+		}
+	}
+	return strings.SplitN(s, "\n", 2)[0]
 }
 
 // markupLine: how many lines of the file come before its markup (the <template> body).

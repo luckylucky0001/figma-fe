@@ -36,8 +36,8 @@
         "src/views/OrderDetailV2.vue",
         "src/views/Setting.vue"
       ],
-      "example": "\u003cvan-button round color=\"#1baeae\" type=\"primary\" @click=\"goTo\" block\u003e前往选购\u003c/van-button\u003e",
-      "exampleAt": "src/views/Cart.vue:64",
+      "example": "\u003cvan-button square icon=\"delete\" type=\"danger\" class=\"delete-button\" @click=\"deleteGood(item.cartItemId)\" /\u003e",
+      "exampleAt": "src/views/Cart.vue:40",
       "attrs": {
         "block": 13,
         "color=\"#1989fa\"": 2,
@@ -46,6 +46,8 @@
         "native-type=\"submit\"": 2,
         "round": 8,
         "size=\"small\"": 3,
+        "square": 1,
+        "type=\"danger\"": 1,
         "type=\"primary\"": 5
       }
     },
@@ -59,10 +61,16 @@
         "src/views/Login.vue",
         "src/views/Setting.vue"
       ],
-      "example": "\u003cvan-field v-model=\"state.nickName\" label=\"昵称\" /\u003e",
-      "exampleAt": "src/views/Setting.vue:15",
+      "example": "\u003cvan-field v-model=\"state.username\" name=\"username\" label=\"用户名\" placeholder=\"用户名\" :rules=\"[{ required: true, message: '请填写…",
+      "exampleAt": "src/views/Login.vue:17",
       "attrs": {
-        "type=\"'password'\"": 1
+        "center": 2,
+        "clearable": 2,
+        "message": 4,
+        "required": 4,
+        "true": 4,
+        "type=\"'password'\"": 1,
+        "type=\"password\"": 2
       }
     },
     {
@@ -137,7 +145,7 @@
         "src/views/OrderDetail.vue",
         "src/views/OrderDetailV2.vue"
       ],
-      "example": "\u003cvan-card",
+      "example": "\u003cvan-card v-for=\"one in item.newBeeMallOrderItemVOS\" :key=\"one.orderId\" :num=\"one.goodsCount\" :price=\"one.sellingPrice\" desc=\"全场包邮\" …",
       "exampleAt": "src/views/Order.vue:36"
     },
     {
@@ -149,8 +157,12 @@
       "usageFiles": [
         "src/views/OrderDetailV2.vue"
       ],
-      "example": "\u003cvan-cell",
-      "exampleAt": "src/views/OrderDetailV2.vue:37"
+      "example": "\u003cvan-cell data-figma-id=\"1:15\" :title=\"`${order.address.name} ${order.address.phone}`\" :label=\"order.address.detail\" :border=\"false\" is-link…",
+      "exampleAt": "src/views/OrderDetailV2.vue:37",
+      "attrs": {
+        "border=\"false\"": 1,
+        "is-link": 1
+      }
     },
     {
       "name": "CellGroup",
@@ -217,8 +229,11 @@
       "usageFiles": [
         "src/views/Address.vue"
       ],
-      "example": "\u003cvan-address-list",
-      "exampleAt": "src/views/Address.vue:14"
+      "example": "\u003cvan-address-list v-if=\"state.from != 'mine'\" v-model=\"state.chosenAddressId\" :list=\"state.list\" default-tag-text=\"默认\" @add=\"onAdd\" @edi…",
+      "exampleAt": "src/views/Address.vue:14",
+      "attrs": {
+        "default-tag-text=\"默认\"": 2
+      }
     },
     {
       "name": "Checkbox",
@@ -253,8 +268,11 @@
         "src/views/Order.vue",
         "src/views/ProductList.vue"
       ],
-      "example": "\u003cvan-list",
-      "exampleAt": "src/views/Order.vue:24"
+      "example": "\u003cvan-list v-model:loading=\"state.loading\" :finished=\"state.finished\" finished-text=\"没有更多了\" @load=\"onLoad\" @offset=\"10\" \u003e",
+      "exampleAt": "src/views/Order.vue:24",
+      "attrs": {
+        "finished-text=\"没有更多了\"": 1
+      }
     },
     {
       "name": "Popup",
@@ -266,8 +284,13 @@
         "src/views/CreateOrder.vue",
         "src/views/OrderDetail.vue"
       ],
-      "example": "\u003cvan-popup",
-      "exampleAt": "src/views/CreateOrder.vue:45"
+      "example": "\u003cvan-popup closeable :close-on-click-overlay=\"false\" v-model:show=\"state.showPay\" position=\"bottom\" :style=\"{ height: '30%' }\" @close=\"close…",
+      "exampleAt": "src/views/CreateOrder.vue:45",
+      "attrs": {
+        "close-on-click-overlay=\"false\"": 1,
+        "closeable": 1,
+        "position=\"bottom\"": 2
+      }
     },
     {
       "name": "PullRefresh",
@@ -337,8 +360,11 @@
       "usageFiles": [
         "src/views/AddressEdit.vue"
       ],
-      "example": "\u003cvan-address-edit",
-      "exampleAt": "src/views/AddressEdit.vue:14"
+      "example": "\u003cvan-address-edit class=\"edit\" :area-list=\"state.areaList\" :address-info=\"state.addressInfo\" :show-delete=\"state.type == 'edit'\" show-set-de…",
+      "exampleAt": "src/views/AddressEdit.vue:14",
+      "attrs": {
+        "show-set-de": 1
+      }
     },
     {
       "name": "CheckboxGroup",
@@ -361,8 +387,11 @@
       "usageFiles": [
         "src/views/OrderDetailV2.vue"
       ],
-      "example": "\u003cvan-count-down",
-      "exampleAt": "src/views/OrderDetailV2.vue:28"
+      "example": "\u003cvan-count-down class=\"od-status__countdown\" data-figma-id=\"1:11\" :time=\"order.remainTime\" format=\"剩余 HH:mm:ss\" /\u003e",
+      "exampleAt": "src/views/OrderDetailV2.vue:28",
+      "attrs": {
+        "format=\"剩余 HH:mm:ss\"": 1
+      }
     },
     {
       "name": "Image",
@@ -373,8 +402,14 @@
       "usageFiles": [
         "src/views/OrderDetailV2.vue"
       ],
-      "example": "\u003cvan-image",
-      "exampleAt": "src/views/OrderDetailV2.vue:61"
+      "example": "\u003cvan-image class=\"od-goods__thumb\" data-figma-id=\"1:21\" :src=\"goods.thumb\" width=\"80\" height=\"80\" radius=\"8\" :show-loading=\"false\" /\u003e",
+      "exampleAt": "src/views/OrderDetailV2.vue:61",
+      "attrs": {
+        "height=\"80\"": 1,
+        "radius=\"8\"": 1,
+        "show-loading=\"false\"": 1,
+        "width=\"80\"": 1
+      }
     },
     {
       "name": "NoticeBar",
@@ -385,8 +420,12 @@
       "usageFiles": [
         "src/views/OrderDetailV2.vue"
       ],
-      "example": "\u003cvan-notice-bar",
-      "exampleAt": "src/views/OrderDetailV2.vue:9"
+      "example": "\u003cvan-notice-bar class=\"od-notice\" data-figma-id=\"1:4\" :text=\"order.notice\" :scrollable=\"false\" color=\"var(--ds-color-warning)\" background=\"v…",
+      "exampleAt": "src/views/OrderDetailV2.vue:9",
+      "attrs": {
+        "background": 1,
+        "scrollable=\"false\"": 1
+      }
     },
     {
       "name": "Stepper",
@@ -397,8 +436,14 @@
       "usageFiles": [
         "src/views/Cart.vue"
       ],
-      "example": "\u003cvan-stepper",
-      "exampleAt": "src/views/Cart.vue:27"
+      "example": "\u003cvan-stepper integer :min=\"1\" :max=\"5\" :model-value=\"item.goodsCount\" :name=\"item.cartItemId\" async-change @change=\"onChange\" /\u003e",
+      "exampleAt": "src/views/Cart.vue:27",
+      "attrs": {
+        "async-change": 1,
+        "integer": 1,
+        "max=\"5\"": 1,
+        "min=\"1\"": 1
+      }
     },
     {
       "name": "SubmitBar",
@@ -409,8 +454,12 @@
       "usageFiles": [
         "src/views/Cart.vue"
       ],
-      "example": "\u003cvan-submit-bar",
-      "exampleAt": "src/views/Cart.vue:51"
+      "example": "\u003cvan-submit-bar v-if=\"state.list.length \u003e 0\" class=\"submit-all van-hairline--top\" :price=\"total * 100\" button-text=\"结算\" button-type=\"pri…",
+      "exampleAt": "src/views/Cart.vue:51",
+      "attrs": {
+        "button-text=\"结算\"": 1,
+        "button-type": 1
+      }
     },
     {
       "name": "SwipeCell",
@@ -436,7 +485,7 @@
       "usageFiles": [
         "src/views/OrderDetailV2.vue"
       ],
-      "example": "\u003cvan-tag",
+      "example": "\u003cvan-tag class=\"od-status__tag\" data-figma-id=\"1:8\" color=\"var(--ds-color-warning-light)\" text-color=\"var(--ds-color-warning)\" \u003e",
       "exampleAt": "src/views/OrderDetailV2.vue:21"
     },
     {
@@ -671,7 +720,7 @@
       "severity": "warn",
       "file": "src/views/ProductList.vue",
       "line": 18,
-      "text": "\u003cinput",
+      "text": "\u003cinput type=\"text\" class=\"search-title\" v-model=\"state.keyword\"/\u003e",
       "hint": "原生 \u003cinput\u003e：项目里已有 Field（组件库）"
     },
     {

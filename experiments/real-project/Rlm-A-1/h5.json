@@ -50,13 +50,14 @@
         "src/views/user/tabbar-user-order.vue",
         "src/views/user/user-information-set/index.vue"
       ],
-      "example": "\u003cvan-cell title=\"团购专区\"",
+      "example": "\u003cvan-cell title=\"团购专区\" isLink\u003e",
       "exampleAt": "src/views/home/tabbar-home.vue:76",
       "attrs": {
         "arrow-direction=\"down\"": 1,
-        "border=\"false\"": 6,
-        "is-link": 2,
-        "islink": 14,
+        "border=\"false\"": 7,
+        "cent": 1,
+        "is-link": 3,
+        "islink": 20,
         "true": 4
       }
     },
@@ -118,11 +119,15 @@
       "exampleAt": "src/views/login/forget/index.vue:22",
       "attrs": {
         "bottomaction": 1,
+        "i": 1,
+        "round": 5,
         "size=\"large\"": 10,
         "size=\"mini\"": 1,
-        "size=\"small\"": 11,
-        "type=\"danger\"": 8,
-        "type=\"primary\"": 2
+        "size=\"normal\"": 3,
+        "size=\"small\"": 12,
+        "type=\"danger\"": 16,
+        "type=\"default\"": 2,
+        "type=\"primary\"": 3
       }
     },
     {
@@ -171,7 +176,7 @@
         "src/views/user/order-list/index.vue",
         "src/views/user/refund-list/index.vue"
       ],
-      "example": "\u003cvan-card :thumb-link=\"goDetail(grouponGood.id)\"",
+      "example": "\u003cvan-card :thumb-link=\"goDetail(grouponGood.id)\" v-for=\"(grouponGood ,index) in shopInfos.grouponList\" :key=\"index\" :title=\"grouponGood.name…",
       "exampleAt": "src/views/home/tabbar-home.vue:53"
     },
     {
@@ -187,8 +192,8 @@
         "src/views/user/tabbar-user-coupon.vue",
         "src/views/user/tabbar-user-order.vue"
       ],
-      "example": "\u003cvan-col span=\"8\"\u003e{{str[0]}}\u003c/van-col\u003e",
-      "exampleAt": "src/views/items/detail/popup-props.vue:9",
+      "example": "\u003cvan-col span=\"12\" v-for=\"(newGood ,index) in shopInfos.newGoodsList\" :key=\"index\"\u003e",
+      "exampleAt": "src/views/home/tabbar-home.vue:110",
       "attrs": {
         "span=\"12\"": 3,
         "span=\"16\"": 1,
@@ -212,7 +217,11 @@
       "example": "\u003cvan-field v-model=\"message\" placeholder=\"请输入备注\" label=\"订单备注\"\u003e",
       "exampleAt": "src/views/order/checkout.vue:59",
       "attrs": {
-        "size=\"large\"": 1
+        "autosize": 1,
+        "center": 1,
+        "clearable": 1,
+        "size=\"large\"": 1,
+        "type=\"password\"": 3
       }
     },
     {
@@ -234,8 +243,12 @@
         "src/views/user/order-list/index.vue",
         "src/views/user/refund-list/index.vue"
       ],
-      "example": "\u003cvan-list v-model=\"loading\"",
-      "exampleAt": "src/views/items/brand-list/index.vue:3"
+      "example": "\u003cvan-list v-model=\"loading\" :finished=\"finished\" :immediate-check=\"false\" finished-text=\"没有更多了\" @load=\"getBrandList\"\u003e",
+      "exampleAt": "src/views/items/brand-list/index.vue:3",
+      "attrs": {
+        "finished-text=\"没有更多了\"": 10,
+        "immediate-check=\"false\"": 11
+      }
     },
     {
       "name": "Tag",
@@ -252,11 +265,13 @@
         "src/views/order/tabbar-cart.vue",
         "src/views/user/order-list/index.vue"
       ],
-      "example": "\u003cvan-tag plain style=\"margin-right:6px;\" v-for=\"(spec, index) in item.specifications\" :key=\"index\"\u003e",
-      "exampleAt": "src/views/order/checkout.vue:42",
+      "example": "\u003cvan-tag plain type=\"primary\"\u003e",
+      "exampleAt": "src/views/home/tabbar-home.vue:64",
       "attrs": {
         "order": 1,
         "plain": 8,
+        "type=\"danger\"": 2,
+        "type=\"primary\"": 2,
         "type=\"warning\"": 1
       }
     },
@@ -327,7 +342,7 @@
         "src/views/user/order-list/index.vue",
         "src/views/user/refund-list/index.vue"
       ],
-      "example": "\u003cvan-tab v-for=\"(nav, index) in navList\"",
+      "example": "\u003cvan-tab v-for=\"(nav, index) in navList\" :title=\"nav.name\" :key=\"index\"\u003e",
       "exampleAt": "src/views/items/category/index.vue:5"
     },
     {
@@ -342,11 +357,12 @@
         "src/views/user/order-list/index.vue",
         "src/views/user/refund-list/index.vue"
       ],
-      "example": "\u003cvan-tabs v-model=\"activeIndex\"",
-      "exampleAt": "src/views/user/coupon-list/index.vue:3",
+      "example": "\u003cvan-tabs v-model=\"navActive\" @click=\"handleTabClick\"\u003e",
+      "exampleAt": "src/views/items/category/index.vue:3",
       "attrs": {
-        "sticky": 1,
-        "swipe-threshold=\"5\"": 1
+        "sticky": 2,
+        "swipe-threshold=\"5\"": 2,
+        "type=\"card\"": 1
       }
     },
     {
@@ -363,7 +379,8 @@
       "example": "\u003cvan-nav-bar :title=\"title\" left-text=\"返回\" left-arrow @click-left=\"goBack\" v-show=\"showHeader\"/\u003e",
       "exampleAt": "src/components/Header/index.vue:3",
       "attrs": {
-        "left-arrow": 2
+        "border=\"false\"": 1,
+        "left-arrow": 3
       }
     },
     {
@@ -377,8 +394,11 @@
         "src/views/items/search/index.vue",
         "src/views/items/tabbar-catalog.vue"
       ],
-      "example": "\u003cvan-search placeholder=\"点击前往搜索\"",
-      "exampleAt": "src/views/home/tabbar-home.vue:4"
+      "example": "\u003cvan-search placeholder=\"点击前往搜索\" @click=\"$router.push({ name: 'search' })\" /\u003e",
+      "exampleAt": "src/views/home/tabbar-home.vue:4",
+      "attrs": {
+        "autofocus": 1
+      }
     },
     {
       "name": "Checkbox",
@@ -458,10 +478,11 @@
       "usageFiles": [
         "src/views/home/tabbar-home.vue"
       ],
-      "example": "\u003cvan-grid clickable",
+      "example": "\u003cvan-grid clickable :column-num=\"2\"\u003e",
       "exampleAt": "src/views/home/tabbar-home.vue:86",
       "attrs": {
-        "clickable": 2
+        "clickable": 2,
+        "column-num=\"2\"": 2
       }
     },
     {
@@ -473,7 +494,7 @@
       "usageFiles": [
         "src/views/home/tabbar-home.vue"
       ],
-      "example": "\u003cvan-grid-item v-for=\"(brand ,index) in shopInfos.brandList\"",
+      "example": "\u003cvan-grid-item v-for=\"(brand ,index) in shopInfos.brandList\" :key=\"index\" :text=\"brand.name\" :url=\"goBrand(brand.id)\"\u003e",
       "exampleAt": "src/views/home/tabbar-home.vue:88"
     },
     {
@@ -486,7 +507,11 @@
         "src/views/user/user-information-set/index.vue"
       ],
       "example": "\u003cvan-picker :columns=\"types\" @change=\"onType\" /\u003e",
-      "exampleAt": "src/views/user/module-feedback/index.vue:26"
+      "exampleAt": "src/views/user/module-feedback/index.vue:26",
+      "attrs": {
+        "false": 1,
+        "showtoolbar": 1
+      }
     },
     {
       "name": "Radio",
@@ -510,8 +535,12 @@
         "src/views/order/checkout.vue",
         "src/views/order/tabbar-cart.vue"
       ],
-      "example": "\u003cvan-submit-bar",
-      "exampleAt": "src/views/order/checkout.vue:64"
+      "example": "\u003cvan-submit-bar :price=\"actualPrice*100\" label=\"总计：\" buttonText=\"提交订单\" :disabled=\"isDisabled\" @submit=\"onSubmit\" /\u003e",
+      "exampleAt": "src/views/order/checkout.vue:64",
+      "attrs": {
+        "buttontext=\"提交订单\"": 1,
+        "la": 1
+      }
     },
     {
       "name": "Swipe",
@@ -523,10 +552,11 @@
         "src/views/home/tabbar-home.vue",
         "src/views/items/detail/index.vue"
       ],
-      "example": "\u003cvan-swipe :autoplay=\"3000\"\u003e",
-      "exampleAt": "src/views/items/detail/index.vue:3",
+      "example": "\u003cvan-swipe :autoplay=\"3000\" indicator-color=\"white\"\u003e",
+      "exampleAt": "src/views/home/tabbar-home.vue:8",
       "attrs": {
-        "autoplay=\"3000\"": 2
+        "autoplay=\"3000\"": 2,
+        "indicator-color=\"white\"": 1
       }
     },
     {
@@ -539,7 +569,7 @@
         "src/views/home/tabbar-home.vue",
         "src/views/items/detail/index.vue"
       ],
-      "example": "\u003cvan-swipe-item v-for=\"(banner, index) in shopInfos.banner\"",
+      "example": "\u003cvan-swipe-item v-for=\"(banner, index) in shopInfos.banner\" :key=\"index\"\u003e",
       "exampleAt": "src/views/home/tabbar-home.vue:10"
     },
     {
@@ -550,8 +580,12 @@
       "usageFiles": [
         "src/views/user/module-address-edit/index.vue"
       ],
-      "example": "\u003cvan-address-edit",
-      "exampleAt": "src/views/user/module-address-edit/index.vue:4"
+      "example": "\u003cvan-address-edit style=\"background-color: #fff;\" :areaList=\"areaList\" :addressInfo=\"addressInfo\" show-set-default show-delete @save=\"onSave…",
+      "exampleAt": "src/views/user/module-address-edit/index.vue:4",
+      "attrs": {
+        "show-delete": 1,
+        "show-set-default": 1
+      }
     },
     {
       "name": "AddressList",
@@ -612,7 +646,7 @@
       "usageFiles": [
         "src/views/order/checkout.vue"
       ],
-      "example": "\u003cvan-coupon-list",
+      "example": "\u003cvan-coupon-list :coupons=\"coupons\" :chosen-coupon=\"chosenCoupon\" :disabled-coupons=\"disabledCoupons\" @change=\"onChange\" @exchange=\"onExchan…",
       "exampleAt": "src/views/order/checkout.vue:23"
     },
     {
@@ -641,8 +675,11 @@
       "usageFiles": [
         "src/views/order/order-detail-v2.vue"
       ],
-      "example": "\u003cvan-notice-bar",
-      "exampleAt": "src/views/order/order-detail-v2.vue:12"
+      "example": "\u003cvan-notice-bar class=\"od-notice\" :text=\"order.notice\" :scrollable=\"false\" data-figma-id=\"1:4\" /\u003e",
+      "exampleAt": "src/views/order/order-detail-v2.vue:12",
+      "attrs": {
+        "scrollable=\"false\"": 1
+      }
     },
     {
       "name": "RadioGroup",
@@ -692,7 +729,7 @@
       "usageFiles": [
         "src/components/Tabbar/index.vue"
       ],
-      "example": "\u003cvan-tabbar-item",
+      "example": "\u003cvan-tabbar-item v-for=\"(tab, index) in tabbar\" :icon=\"tab.icon\" :to=\"tab.path\" :dot=\"tab.dot\" :info=\"tab.info\" :key=\"index\"\u003e",
       "exampleAt": "src/components/Tabbar/index.vue:3"
     },
     {
@@ -722,8 +759,12 @@
         "src/views/login/register-getCode/index.vue",
         "src/views/login/register-submit/index.vue"
       ],
-      "example": "\u003cmd-field v-model=\"code\" icon=\"mobile\" placeholder=\"请输入验证码\"\u003e",
-      "exampleAt": "src/views/login/register-submit/index.vue:3"
+      "example": "\u003cmd-field v-model=\"mobile\" icon=\"mobile\" placeholder=\"请输入手机号\"/\u003e",
+      "exampleAt": "src/views/login/forget/index.vue:3",
+      "attrs": {
+        "right-icon=\"clear-full\"": 1,
+        "type=\"password\"": 1
+      }
     },
     {
       "name": "FieldGroup",
@@ -833,7 +874,7 @@
       "severity": "info",
       "file": "src/views/home/tabbar-home.vue",
       "line": 12,
-      "text": "\u003cimg :src=\"banner.url\"",
+      "text": "\u003cimg :src=\"banner.url\" style=\"height:230px\"\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -841,7 +882,7 @@
       "severity": "info",
       "file": "src/views/home/tabbar-home.vue",
       "line": 22,
-      "text": "\u003cimg :src=\"channel.iconUrl\"",
+      "text": "\u003cimg :src=\"channel.iconUrl\" background-size=\"cover\" /\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -849,7 +890,7 @@
       "severity": "info",
       "file": "src/views/home/tabbar-home.vue",
       "line": 92,
-      "text": "\u003cimg :src=\"brand.picUrl\"",
+      "text": "\u003cimg :src=\"brand.picUrl\" style=\"width: 80%;\" /\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -857,7 +898,7 @@
       "severity": "info",
       "file": "src/views/home/tabbar-home.vue",
       "line": 114,
-      "text": "\u003cimg :src=\"newGood.picUrl\"",
+      "text": "\u003cimg :src=\"newGood.picUrl\" style=\"width:180px;height:180px;\"\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -865,7 +906,7 @@
       "severity": "info",
       "file": "src/views/home/tabbar-home.vue",
       "line": 161,
-      "text": "\u003cimg :src=\"topic.picUrl\"",
+      "text": "\u003cimg :src=\"topic.picUrl\" style=\"width: 90%; max-height: 150px;\" /\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -873,7 +914,7 @@
       "severity": "info",
       "file": "src/views/items/brand/index.vue",
       "line": 5,
-      "text": "\u003cimg class=\"img\"",
+      "text": "\u003cimg class=\"img\" :src=\"brand.picUrl\" background-size=\"cover\" /\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -881,7 +922,7 @@
       "severity": "info",
       "file": "src/views/items/brand/index.vue",
       "line": 23,
-      "text": "\u003cimg :src=\"goods.picUrl\"",
+      "text": "\u003cimg :src=\"goods.picUrl\" style=\"width:150px;height:150px;\"\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -889,7 +930,7 @@
       "severity": "info",
       "file": "src/views/items/brand-list/index.vue",
       "line": 13,
-      "text": "\u003cimg class=\"img\"",
+      "text": "\u003cimg class=\"img\" :src=\"brand.picUrl\" background-size=\"cover\" /\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -921,7 +962,7 @@
       "severity": "info",
       "file": "src/views/items/topic/index.vue",
       "line": 12,
-      "text": "\u003cimg :src=\"goods.picUrl\"",
+      "text": "\u003cimg :src=\"goods.picUrl\" style=\"width:150px;height:150px;\"\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -929,7 +970,7 @@
       "severity": "info",
       "file": "src/views/items/topic-list/index.vue",
       "line": 13,
-      "text": "\u003cimg class=\"img\"",
+      "text": "\u003cimg class=\"img\" :src=\"topic.picUrl\" background-size=\"cover\" /\u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     },
     {
@@ -969,7 +1010,7 @@
       "severity": "info",
       "file": "src/views/user/user-information-set/index.vue",
       "line": 7,
-      "text": "\u003cimg",
+      "text": "\u003cimg :src=\"avatar + '?x-oss-process=image/resize,m_fill,h_50,w_50'\" alt=\"你的头像\" v-if=\"avatar\" \u003e",
       "hint": "原生 \u003cimg\u003e：项目里已有 Image（组件库）"
     }
   ],

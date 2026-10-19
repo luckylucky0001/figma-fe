@@ -20,7 +20,8 @@ type mnode struct {
 	sig      string
 }
 
-var tagRe = regexp.MustCompile(`<(/?)([A-Za-z][\w.:-]*)([^<>]*?)(/?)>`)
+// attribute values may contain < and > (v-if="a < b", :show="n > 0")
+var tagRe = regexp.MustCompile(`<(/?)([A-Za-z][\w.:-]*)((?:[^<>"']|"[^"]*"|'[^']*')*?)(/?)>`)
 
 // parseMarkup builds a forest from markup; unbalanced tags are tolerated.
 func parseMarkup(src string) []*mnode {

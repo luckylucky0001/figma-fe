@@ -162,7 +162,7 @@ func splitWords(s string) []string {
 	return out
 }
 
-var vendorPrefix = map[string]bool{"material": true, "qmui": true, "van": true, "nut": true, "ds": true, "legacy": true, "app": true, "common": true, "base": true, "my": true, "custom": true, "ui": true, "md": true, "t": true}
+var vendorPrefix = map[string]bool{"vue": true, "react": true, "material": true, "qmui": true, "van": true, "nut": true, "ds": true, "legacy": true, "app": true, "common": true, "base": true, "my": true, "custom": true, "ui": true, "md": true, "t": true}
 
 var viewSuffix = map[string]bool{"view": true, "layout": true, "widget": true, "component": true, "comp": true}
 

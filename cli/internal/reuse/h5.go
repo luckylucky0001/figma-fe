@@ -27,6 +27,8 @@ var (
 
 var htmlTags = map[string]bool{}
 
+var globalCompRe = regexp.MustCompile(`(?:Vue|app)\.component\(\s*([^,()]+?)\s*,\s*(\w+)\s*\)`)
+
 // uniTags: uni-app / mini-program built-in components, written as lowercase tags like HTML.
 var uniTags = map[string]bool{}
 
@@ -242,6 +244,42 @@ func ScanH5(root string) *Report {
 		tag  string
 	}
 	libOcc := map[*Asset][]occ{}
+	// Third-party single-component packages (@chenfengyuan/vue-countdown, vue-awesome-swiper …),
+	// registered globally (Vue.component / app.component) or imported where used.
+	knownPkg := map[string]bool{"vue": true, "react": true, "react-dom": true, "vue-router": true, "vuex": true, "pinia": true}
+	for _, l := range uiLibs {
+		for _, p := range l.Packages {
+			knownPkg[p] = true
+		}
+	}
+	thirdParty := map[string]*Asset{} // lower-case tag alias → asset
+	thirdAsset := func(ident, pkg string) *Asset {
+		if pkg == "" || strings.HasPrefix(pkg, ".") || strings.HasPrefix(pkg, "@/") || strings.HasPrefix(pkg, "~") || strings.HasPrefix(pkg, "/") || knownPkg[pkg] || ident == "" || ident[0] < 'A' || ident[0] > 'Z' {
+			return nil
+		}
+		a := get("ui-lib", ident, pkg)
+		base := strings.TrimPrefix(strings.TrimPrefix(pkg[strings.LastIndex(pkg, "/")+1:], "vue-"), "react-")
+		for _, k := range []string{ident, base, "vue" + base} {
+			thirdParty[strings.ToLower(strings.ReplaceAll(k, "-", ""))] = a
+		}
+		return a
+	}
+	for _, f := range files {
+		if !strings.Contains(f.text, ".component(") {
+			continue
+		}
+		imports := map[string]string{}
+		for _, m := range importRe.FindAllStringSubmatch(f.text, -1) {
+			imports[m[1]] = m[3]
+		}
+		for _, m := range globalCompRe.FindAllStringSubmatch(f.text, -1) {
+			if a := thirdAsset(m[2], imports[m[2]]); a != nil {
+				if lit := strings.Trim(m[1], `'" `); lit != m[1] {
+					thirdParty[strings.ToLower(strings.ReplaceAll(lit, "-", ""))] = a
+				}
+			}
+		}
+	}
 	// Usage: tags in templates / JSX.
 	colorTokens := map[string]string{}
 	for _, f := range files {
@@ -275,8 +313,15 @@ func ScanH5(root string) *Report {
 		}
 		// aliased imports: import sHeader from '@/components/SimpleHeader.vue' → <s-header>
 		alias := map[string]*Asset{}
+		for k, a := range thirdParty {
+			alias[k] = a
+		}
 		for _, m := range importRe.FindAllStringSubmatch(f.text, -1) {
 			if m[1] == "" {
+				continue
+			}
+			if a := thirdAsset(m[1], m[3]); a != nil {
+				alias[strings.ToLower(m[1])] = a
 				continue
 			}
 			base := strings.TrimSuffix(filepath.Base(m[3]), ".vue")

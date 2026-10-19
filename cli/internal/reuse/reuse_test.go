@@ -464,3 +464,21 @@ func TestSameNameAcrossLibraries(t *testing.T) {
 		t.Errorf("XML <Button> and Compose Button() must be counted separately: %v", use)
 	}
 }
+
+func TestThirdPartyComponentPackage(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"^2.6.0","vant":"^2.12.0","@chenfengyuan/vue-countdown":"^1.1.2"}}`)
+	write(t, root, "src/main.js", "import Vue from 'vue'\nimport VueCountdown from '@chenfengyuan/vue-countdown'\nVue.component(VueCountdown.name, VueCountdown)\n")
+	write(t, root, "src/views/A.vue", `<template><div><countdown :time="60000"/></div></template>`)
+	write(t, root, "src/views/B.vue", `<template><div><countdown :time="1000"/></div></template>`)
+	r := ScanH5(root)
+	for _, a := range r.Assets {
+		if a.Name == "VueCountdown" {
+			if a.Usage != 2 || a.Concept != "countdown" || a.Source != "@chenfengyuan/vue-countdown" {
+				t.Errorf("%+v", a)
+			}
+			return
+		}
+	}
+	t.Errorf("third-party countdown not found: %+v", r.Assets)
+}

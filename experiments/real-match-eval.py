@@ -54,6 +54,9 @@ VANT_H = {
 # Vant 2 has no ActionBar: its action bar is GoodsAction (renamed in Vant 3)
 VANT2 = dict(VANT, ActionBar=(["GoodsAction"], []))
 VANT2_H = dict(VANT_H, 底部操作栏=(["GoodsAction"], []))
+# litemall registers @chenfengyuan/vue-countdown globally and uses it on 5 pages: that is its countdown
+LITEMALL = dict(VANT2, CountDown=(["VueCountdown"], ["CountDown"]))
+LITEMALL_H = dict(VANT2_H, 收盘倒计时=(["VueCountdown"], ["CountDown"]))
 EXPECTED = {
     ("newbee", "order-detail"): {
         "NavBar": (["SimpleHeader"], ["NavBar"]), "NoticeBar": (["NoticeBar"], []), "Card": (["CellGroup"], []), "Tag": (["Tag"], []),
@@ -117,7 +120,7 @@ EXPECTED = {
     },
     ("vant-demo-vue3", "order-detail"): "VANT", ("vant-demo-vue3", "holdings"): "VANT_H",
     ("vant-demo-vue2", "order-detail"): "VANT2", ("vant-demo-vue2", "holdings"): "VANT2_H",
-    ("litemall", "order-detail"): "VANT2", ("litemall", "holdings"): "VANT2_H",
+    ("litemall", "order-detail"): "LITEMALL", ("litemall", "holdings"): "LITEMALL_H",
     ("antdm-template", "order-detail"): ANTD, ("antdm-template", "holdings"): ANTD_H,
     ("antdm-mobile", "order-detail"): ANTD, ("antdm-mobile", "holdings"): ANTD_H,
 }

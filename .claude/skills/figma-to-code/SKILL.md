@@ -1,6 +1,6 @@
 ---
 name: figma-to-code
-description: 按 Figma 设计稿实现或还原 H5 / Android 页面时使用（「照 Figma 做」「还原设计稿」「实现这个页面」「按设计稿改 UI」「这个设计稿哪些组件能复用」）。强制流程：先盘点现有组件资产，再根据新设计稿找出可直接复用的组件、出方案并等人确认，最后实现并验证，避免重复造轮子。支持常见栈：Vue / React（Vant、NutUI、antd-mobile、TDesign）与 Android XML View / Compose（Material、QMUI）。
+description: 按 Figma 设计稿实现或还原 H5 / Android 页面时使用（「照 Figma 做」「还原设计稿」「实现这个页面」「按设计稿改 UI」「这个设计稿哪些组件能复用」）。强制流程：先盘点现有组件资产，再根据新设计稿找出可直接复用的组件、出方案并等人确认，最后实现并验证，避免重复造轮子。支持常见栈：Vue / React / uni-app（Vant、React Vant、NutUI、antd-mobile、TDesign、uView、Element Plus）与 Android XML View / Compose（Material、QMUI、项目自有设计系统）。
 ---
 
 # Figma → 代码（H5 / Android）
@@ -11,7 +11,7 @@ description: 按 Figma 设计稿实现或还原 H5 / Android 页面时使用（�
 ## 先判断走哪条流程
 
 - 仓库根目录**有 `figmafe.yaml`**（已经接入：映射、组件手册、截图比对都配好了）→ 按下面的完整流程做。
-- **没有**（普通的存量项目）→ 按 `references/brownfield.md` 做：`figmafe reuse` 体检 → `figmafe match` 拿到新设计稿的复用清单（作为方案闸门）→ 实现 → `figmafe reuse --focus` 做页面复用检查。
+- **没有**（普通的存量项目）→ 按 `references/brownfield.md` 做：`figmafe reuse` 体检 → `figmafe match` 拿到新设计稿的复用清单（每个组件：用什么、怎么配置；`.html` 是叠在设计图上的可视版，方案闸门时给人看）→ 实现 → `figmafe reuse --focus`（或 `--changed <ref>`）做页面复用检查 → 不采纳推荐 / 新建组件的决定写进 `component-map.yaml`。
 
 ## 硬性规则
 

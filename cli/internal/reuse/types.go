@@ -369,8 +369,8 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 // rank prefers design-system / UI-library assets, then usage.
 func rank(a Asset) int {
 	w := map[string]int{"design-system": 3000, "ui-lib": 2000, "custom-view": 1000, "composable": 1000, "business": 500, "page-local": 0}[a.Kind]
-	if a.Source == "Android SDK widgets" {
-		w = 100 // framework widgets are the thing projects wrap, never the recommendation
+	if builtinLib(a.Source) {
+		w = 100 // framework widgets (Android SDK, uni-app <image>) are what projects wrap, never the recommendation
 	}
 	if (a.Kind == "composable" || a.Kind == "custom-view") && inDesignSystem(a.Source) {
 		w = 3000 // an Android design-system module (core/designsystem, ds, uikit)

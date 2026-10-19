@@ -129,5 +129,34 @@ compare 11-compare "Android（Compose）" 02-design.png "Figma 设计稿" 11-scr
 echo "Step 11 沉淀规则"
 md 12-rules "沉淀规则（references/rules.md）" .claude/skills/figma-to-code/references/rules.md
 
+echo "Part 2 存量项目（真实开源项目，固定 commit，由 experiments/real-match-eval.py 拉取到 experiments/.cache/）"
+python3 "$repo/experiments/real-match-eval.py" newbee qmui nia >/dev/null 2>&1 || true
+cache=$repo/experiments/.cache
+# html <img-name> <file.html>
+html() { shoot html "$2" "$img/$1.png"; echo "  📸 $1"; }
+# section <img-name> <title> <md file> <from-heading-regex> <to-heading-regex>
+section() { sed -n "/$4/,/$5/p" "$3" | sed '$d' > "$t/$1.md"; shoot md "$2" "$t/$1.md" "$img/$1.png"; echo "  📸 $1"; }
+
+term 20-reuse-newbee "存量体检：newbee-mall（Vue 3 + Vant）" "bin/figmafe reuse $cache/newbee -o $t/nb -q"
+head -n 40 "$t/nb/h5.md" > "$t/20-report.md"; shoot md "体检报告节选（.figmafe/reuse/h5.md）" "$t/20-report.md" "$img/20-reuse-report.png"; echo "  📸 20-reuse-report"
+term 21-reuse-qmui "存量体检：QMUI_Android（XML + QMUI）" "bin/figmafe reuse $cache/qmui -o $t/qm -q"
+section 21-qmui-compat "QMUI：组件库里有、但本项目不能直接用的组件" "$t/qm/android.md" "组件库里有" "^## 2"
+term 22-reuse-nia "存量体检：Now in Android（Compose + 自有设计系统）" "bin/figmafe reuse $cache/nia -o $t/nia -q"
+section 22-nia-wrappers "Now in Android：设计系统封装" "$t/nia/android.md" "设计系统封装" "^## 2"
+
+term 23-match-newbee "新设计稿 → newbee 的复用清单" "bin/figmafe match --figma design/figma-export/order-detail $cache/newbee -o $t/m-nb"
+html 23-match-newbee-overlay "$t/m-nb/h5.html"
+section 23-match-props "变体 → 属性（推荐组件怎么配置）" "$t/m-nb/h5.md" "^## 变体" "^## 候选"
+term 24-match-qmui "同一份设计稿 → QMUI（XML）" "bin/figmafe match --figma design/figma-export/order-detail $cache/qmui -o $t/m-qm -q"
+html 24-match-qmui-overlay "$t/m-qm/android.html"
+term 25-match-holdings "没组件化、中文图层名的设计稿 → newbee" "bin/figmafe match --figma design/figma-export/holdings $cache/newbee -o $t/m-h -q"
+html 25-match-holdings-overlay "$t/m-h/h5.html"
+
+term 26-check-a "页面复用检查：不用 Skill 的实现（newbee，A 组）" "cat $repo/experiments/real-project/Rnb-A-1.txt | sed -n '1,22p'"
+term 26-check-c "页面复用检查：用 Skill 的实现（newbee，C 组）" "cat $repo/experiments/real-project/Rnb-C-1.txt | sed -n '1,12p'"
+term 27-gate "PR 闸门：只检查改动的文件（Now in Android，C 组，决定已写进 component-map.yaml）" "cat $repo/experiments/real-project/Rnia-C-2.txt | sed -n '1,14p'"
+md 28-eval "match 回归评测（14 个真实开源项目）" "$repo/experiments/real-match-eval.md"
+md 29-summary "真实项目对照实验汇总" "$repo/experiments/real-project/summary.md" 60
+
 cd "$repo" && git worktree remove --force "$ws" >/dev/null 2>&1
 echo "✓ screenshots → docs/tutorial/img/"

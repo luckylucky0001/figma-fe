@@ -52,8 +52,14 @@ func (m *MatchResult) HTML(exp *figma.Export, img string) string {
 			if c.Example != "" {
 				ex = "<code>" + html.EscapeString(c.Example) + "</code>"
 			}
-			if len(c.Props) > 0 {
-				ex += "<br><em>" + html.EscapeString(strings.Join(c.Props, "；")) + "</em>"
+			var ok []string // resolved mappings only; the unresolved notes stay in the .md for the agent
+			for _, p := range c.Props {
+				if strings.Contains(p, "→") {
+					ok = append(ok, p)
+				}
+			}
+			if len(ok) > 0 {
+				ex += "<br><em>" + html.EscapeString(strings.Join(ok, "；")) + "</em>"
 			}
 		}
 		fmt.Fprintf(&rows, `<tr><td>%s</td><td><b style="color:%s">%s</b></td><td><code>%s</code></td><td>%s</td><td>%s</td></tr>`,
@@ -71,7 +77,7 @@ body{margin:0;font:13px/1.5 -apple-system,"PingFang SC","Noto Sans SC",sans-seri
 .side{flex:1;min-width:360px}
 h1{font-size:18px;margin:0 0 4px}.sum{color:#646a73;margin:0 0 12px}
 table{border-collapse:collapse;width:100%%;background:#fff}td,th{border:1px solid #e5e6eb;padding:6px 8px;text-align:left;vertical-align:top}
-th{background:#f2f3f5}td:nth-child(-n+3){white-space:nowrap}code{font-size:12px;word-break:break-all}em{color:#646a73;font-style:normal}
+th{background:#f2f3f5}td:nth-child(-n+3){white-space:nowrap}td:last-child{min-width:300px}code{font-size:12px;word-break:break-all}em{color:#646a73;font-style:normal}
 </style></head><body><div class="wrap">
 <div class="frame"><img src="%s" alt="Figma frame">%s</div>
 <div class="side"><h1>新设计稿复用清单：%s</h1>

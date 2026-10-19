@@ -20,7 +20,7 @@
         "ProgressBar×22",
         "Button×15",
         "CardView×7",
-        "RadioButton×5"
+        "Toolbar×5"
       ]
     },
     {
@@ -29,12 +29,12 @@
       "top": [
         "ShapeableImageView×16",
         "AppBarLayout×5",
-        "FloatingActionButton×3",
         "TabLayout×3",
-        "NavigationView×1",
+        "FloatingActionButton×3",
         "Chip×1",
         "TextInputLayout×1",
-        "ChipGroup×1"
+        "ChipGroup×1",
+        "NavigationView×1"
       ]
     },
     {
@@ -171,6 +171,23 @@
       "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:30"
     },
     {
+      "name": "ImageButton",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "button",
+      "usage": 22,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/subscription_groups_header.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003cImageButton",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:165"
+    },
+    {
       "name": "ProgressBar",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
@@ -200,23 +217,6 @@
       ],
       "example": "\u003cProgressBar",
       "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:226"
-    },
-    {
-      "name": "ImageButton",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "concept": "button",
-      "usage": 22,
-      "usageFiles": [
-        "app/src/main/res/layout/activity_player_queue_control.xml",
-        "app/src/main/res/layout/dialog_feed_group_create.xml",
-        "app/src/main/res/layout/fragment_video_detail.xml",
-        "app/src/main/res/layout/subscription_groups_header.xml",
-        "app/src/main/res/layout-land/activity_player_queue_control.xml",
-        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
-      ],
-      "example": "\u003cImageButton",
-      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:165"
     },
     {
       "name": "ShapeableImageView",
@@ -281,6 +281,35 @@
       "exampleAt": "app/src/main/res/layout/feed_group_add_new_grid_item.xml:2"
     },
     {
+      "name": "RadioButton",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "radio",
+      "usage": 5,
+      "usageFiles": [
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/item_instance.xml",
+        "app/src/main/res/layout/list_radio_icon_item.xml"
+      ],
+      "example": "\u003cRadioButton",
+      "exampleAt": "app/src/main/res/layout/download_dialog.xml:43"
+    },
+    {
+      "name": "TextButton",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "button",
+      "usage": 5,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt"
+      ],
+      "example": "TextButton(onClick = { showDialog = false }) {",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:104"
+    },
+    {
       "name": "AppBarLayout",
       "kind": "ui-lib",
       "source": "Material Components",
@@ -294,20 +323,6 @@
       ],
       "example": "\u003ccom.google.android.material.appbar.AppBarLayout",
       "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:11"
-    },
-    {
-      "name": "RadioButton",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "concept": "switch",
-      "usage": 5,
-      "usageFiles": [
-        "app/src/main/res/layout/download_dialog.xml",
-        "app/src/main/res/layout/item_instance.xml",
-        "app/src/main/res/layout/list_radio_icon_item.xml"
-      ],
-      "example": "\u003cRadioButton",
-      "exampleAt": "app/src/main/res/layout/download_dialog.xml:43"
     },
     {
       "name": "Toolbar",
@@ -326,34 +341,6 @@
       "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:18"
     },
     {
-      "name": "TextButton",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "button",
-      "usage": 5,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt"
-      ],
-      "example": "TextButton(onClick = { showDialog = false }) {",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:104"
-    },
-    {
-      "name": "Spinner",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "concept": "loading",
-      "usage": 4,
-      "usageFiles": [
-        "app/src/main/res/layout/download_dialog.xml",
-        "app/src/main/res/layout/instance_spinner_layout.xml"
-      ],
-      "example": "\u003cSpinner",
-      "exampleAt": "app/src/main/res/layout/download_dialog.xml:63"
-    },
-    {
       "name": "ViewPager",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
@@ -367,21 +354,6 @@
       ],
       "example": "\u003candroidx.viewpager.widget.ViewPager",
       "exampleAt": "app/src/main/res/layout/fragment_channel.xml:156"
-    },
-    {
-      "name": "LazyColumn",
-      "kind": "ui-lib",
-      "source": "Compose Foundation",
-      "concept": "list",
-      "usage": 4,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/SettingsHomeScreen.kt"
-      ],
-      "example": "LazyColumn(",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt:78"
     },
     {
       "name": "ListItem",
@@ -399,6 +371,34 @@
       "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:68"
     },
     {
+      "name": "LazyColumn",
+      "kind": "ui-lib",
+      "source": "Compose Foundation",
+      "concept": "list",
+      "usage": 4,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/SettingsHomeScreen.kt"
+      ],
+      "example": "LazyColumn(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt:78"
+    },
+    {
+      "name": "Spinner",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "loading",
+      "usage": 4,
+      "usageFiles": [
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/instance_spinner_layout.xml"
+      ],
+      "example": "\u003cSpinner",
+      "exampleAt": "app/src/main/res/layout/download_dialog.xml:63"
+    },
+    {
       "name": "FloatingActionButton",
       "kind": "ui-lib",
       "source": "Material Components",
@@ -411,6 +411,20 @@
       ],
       "example": "\u003ccom.google.android.material.floatingactionbutton.FloatingActionButton",
       "exampleAt": "app/src/main/res/layout/fragment_choose_tabs.xml:35"
+    },
+    {
+      "name": "TabLayout",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "concept": "tabs",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003ccom.google.android.material.tabs.TabLayout",
+      "exampleAt": "app/src/main/res/layout/fragment_channel.xml:145"
     },
     {
       "name": "TopAppBar",
@@ -428,7 +442,7 @@
       "name": "CheckBox",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
-      "concept": "switch",
+      "concept": "checkbox",
       "usage": 3,
       "usageFiles": [
         "app/src/main/res/layout/dialog_playback_parameter.xml",
@@ -436,20 +450,6 @@
       ],
       "example": "\u003cCheckBox",
       "exampleAt": "app/src/main/res/layout/dialog_playback_parameter.xml:503"
-    },
-    {
-      "name": "TabLayout",
-      "kind": "ui-lib",
-      "source": "Material Components",
-      "concept": "tabs",
-      "usage": 3,
-      "usageFiles": [
-        "app/src/main/res/layout/fragment_channel.xml",
-        "app/src/main/res/layout/fragment_video_detail.xml",
-        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
-      ],
-      "example": "\u003ccom.google.android.material.tabs.TabLayout",
-      "exampleAt": "app/src/main/res/layout/fragment_channel.xml:145"
     },
     {
       "name": "AlertDialog",
@@ -465,31 +465,6 @@
       "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:77"
     },
     {
-      "name": "Chip",
-      "kind": "ui-lib",
-      "source": "Material Components",
-      "concept": "tag",
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/res/layout/chip.xml"
-      ],
-      "example": "\u003ccom.google.android.material.chip.Chip xmlns:android=\"http://schemas.android.com/apk/res/android\"",
-      "exampleAt": "app/src/main/res/layout/chip.xml:4",
-      "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
-    },
-    {
-      "name": "HorizontalPager",
-      "kind": "ui-lib",
-      "source": "Compose Foundation",
-      "concept": "carousel",
-      "usage": 1,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
-      ],
-      "example": "HorizontalPager(modifier = Modifier.fillMaxSize(), state = pagerState) { page -\u003e",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:104"
-    },
-    {
       "name": "Tab",
       "kind": "ui-lib",
       "source": "Compose Material3",
@@ -500,41 +475,6 @@
       ],
       "example": "Tab(",
       "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:87"
-    },
-    {
-      "name": "NavigationView",
-      "kind": "ui-lib",
-      "source": "Material Components",
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/res/layout/drawer_layout.xml"
-      ],
-      "example": "\u003ccom.google.android.material.navigation.NavigationView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
-      "exampleAt": "app/src/main/res/layout/drawer_layout.xml:2"
-    },
-    {
-      "name": "TextInputLayout",
-      "kind": "ui-lib",
-      "source": "Material Components",
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/res/layout/dialog_feed_group_create.xml"
-      ],
-      "example": "\u003ccom.google.android.material.textfield.TextInputLayout",
-      "exampleAt": "app/src/main/res/layout/dialog_feed_group_create.xml:34",
-      "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
-    },
-    {
-      "name": "RadioButton",
-      "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "switch",
-      "usage": 1,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt"
-      ],
-      "example": "RadioButton(selected = entry.value == selectedValue, onClick = null)",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97"
     },
     {
       "name": "ChipGroup",
@@ -550,16 +490,16 @@
       "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
     },
     {
-      "name": "Switch",
+      "name": "TextInputLayout",
       "kind": "ui-lib",
-      "source": "Compose Material3",
-      "concept": "switch",
+      "source": "Material Components",
       "usage": 1,
       "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt"
+        "app/src/main/res/layout/dialog_feed_group_create.xml"
       ],
-      "example": "Switch(",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt:64"
+      "example": "\u003ccom.google.android.material.textfield.TextInputLayout",
+      "exampleAt": "app/src/main/res/layout/dialog_feed_group_create.xml:34",
+      "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
     },
     {
       "name": "SeekBar",
@@ -573,10 +513,69 @@
       "exampleAt": "app/src/main/res/layout/download_dialog.xml:137"
     },
     {
+      "name": "NavigationView",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/drawer_layout.xml"
+      ],
+      "example": "\u003ccom.google.android.material.navigation.NavigationView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/drawer_layout.xml:2"
+    },
+    {
+      "name": "HorizontalPager",
+      "kind": "ui-lib",
+      "source": "Compose Foundation",
+      "concept": "carousel",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "HorizontalPager(modifier = Modifier.fillMaxSize(), state = pagerState) { page -\u003e",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:104"
+    },
+    {
+      "name": "Chip",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "concept": "tag",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/chip.xml"
+      ],
+      "example": "\u003ccom.google.android.material.chip.Chip xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/chip.xml:4",
+      "caveat": "需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃"
+    },
+    {
+      "name": "RadioButton",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "radio",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt"
+      ],
+      "example": "RadioButton(selected = entry.value == selectedValue, onClick = null)",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97"
+    },
+    {
+      "name": "Switch",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "switch",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt"
+      ],
+      "example": "Switch(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt:64"
+    },
+    {
       "name": "SwitchPreference",
       "kind": "composable",
       "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt",
-      "concept": "switch",
       "props": [
         "title",
         "checked",
@@ -603,10 +602,95 @@
       ]
     },
     {
+      "name": "CustomCollapsingToolbarLayout",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/CustomCollapsingToolbarLayout.java",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.CustomCollapsingToolbarLayout",
+      "exampleAt": "app/src/main/res/layout/fragment_channel.xml:17"
+    },
+    {
+      "name": "AboutPage",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
+      "props": [
+        "shareHandler"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "Page.ABOUT -\u003e AboutPage()",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:51"
+    },
+    {
+      "name": "PreferenceCategoryTitle",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt",
+      "props": [
+        "title",
+        "modifier"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt"
+      ],
+      "example": "PreferenceCategoryTitle(title = \"Player\")",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt:35",
+      "required": [
+        "title"
+      ]
+    },
+    {
+      "name": "LinkListItem",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
+      "concept": "cell",
+      "props": [
+        "modifier",
+        "link",
+        "onAction"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/about/LinkListItemTest.kt"
+      ],
+      "example": "LinkListItem(link = link)",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt:64",
+      "required": [
+        "link",
+        "link:Link"
+      ]
+    },
+    {
+      "name": "NewPipeEditText",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeEditText.java",
+      "concept": "input",
+      "usage": 6,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_error.xml",
+        "app/src/main/res/layout/dialog_edit_text.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout/fragment_import.xml",
+        "app/src/main/res/layout/toolbar_search_layout.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.NewPipeEditText",
+      "exampleAt": "app/src/main/res/layout/activity_error.xml:112"
+    },
+    {
       "name": "ListPreference",
       "kind": "composable",
       "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt",
-      "concept": "list",
       "props": [
         "title",
         "entries",
@@ -634,73 +718,10 @@
       ]
     },
     {
-      "name": "NewPipeEditText",
-      "kind": "custom-view",
-      "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeEditText.java",
-      "concept": "input",
-      "usage": 6,
-      "usageFiles": [
-        "app/src/main/res/layout/activity_error.xml",
-        "app/src/main/res/layout/dialog_edit_text.xml",
-        "app/src/main/res/layout/dialog_feed_group_create.xml",
-        "app/src/main/res/layout/download_dialog.xml",
-        "app/src/main/res/layout/fragment_import.xml",
-        "app/src/main/res/layout/toolbar_search_layout.xml"
-      ],
-      "example": "\u003corg.schabi.newpipe.views.NewPipeEditText",
-      "exampleAt": "app/src/main/res/layout/activity_error.xml:112"
-    },
-    {
-      "name": "LinkListItem",
+      "name": "Render",
       "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
-      "concept": "cell",
-      "props": [
-        "modifier",
-        "link",
-        "onAction"
-      ],
-      "usage": 3,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
-        "shared/src/commonTest/kotlin/net/newpipe/app/composable/about/LinkListItemTest.kt"
-      ],
-      "example": "LinkListItem(link = link)",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt:64",
-      "required": [
-        "link",
-        "link:Link"
-      ]
-    },
-    {
-      "name": "ExoPlayerSettingsSections",
-      "kind": "composable",
-      "source": "shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt",
-      "concept": "card",
-      "props": [
-        "viewModel"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt"
-      ],
-      "example": "override fun Render() = ExoPlayerSettingsSections()",
-      "exampleAt": "shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt:17"
-    },
-    {
-      "name": "AboutPage",
-      "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt",
-      "props": [
-        "shareHandler"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
-      ],
-      "example": "Page.ABOUT -\u003e AboutPage()",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:51"
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/platform/PlayerSettingsSections.kt",
+      "usage": 0
     },
     {
       "name": "TopAppBar",
@@ -730,6 +751,33 @@
       "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt:45"
     },
     {
+      "name": "PreferenceRow",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt",
+      "props": [
+        "title",
+        "modifier",
+        "icon",
+        "summary",
+        "enabled",
+        "onClick"
+      ],
+      "usage": 12,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/AppearanceSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/DebugSettingsScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/SettingsHomeScreen.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/composable/PreferenceRowTest.kt"
+      ],
+      "example": "PreferenceRow(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt:62",
+      "required": [
+        "title"
+      ]
+    },
+    {
       "name": "LibraryListItem",
       "kind": "composable",
       "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LibraryListItem.kt",
@@ -751,92 +799,6 @@
         "library",
         "library:Library"
       ]
-    },
-    {
-      "name": "NavDisplay",
-      "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/navigation/NavDisplay.kt",
-      "props": [
-        "startDestination",
-        "onCloseRequest",
-        "navigator"
-      ],
-      "usage": 2,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/App.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/navigation/NavDisplay.kt"
-      ],
-      "example": "NavDisplay(",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/App.kt:37",
-      "required": [
-        "startDestination",
-        "startDestination:Destination",
-        "onCloseRequest"
-      ]
-    },
-    {
-      "name": "LicensePage",
-      "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
-      "props": [
-        "viewModel",
-        "shareHandler"
-      ],
-      "usage": 1,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
-      ],
-      "example": "Page.LICENSE -\u003e LicensePage()",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:52"
-    },
-    {
-      "name": "LicenseDialog",
-      "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
-      "concept": "dialog",
-      "props": [
-        "modifier",
-        "license",
-        "onOpenWebsite",
-        "onDismiss"
-      ],
-      "usage": 3,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
-        "shared/src/commonTest/kotlin/net/newpipe/app/screen/about/LicenseDialogTest.kt"
-      ],
-      "example": "LicenseDialog(",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt:92",
-      "required": [
-        "license",
-        "license:License"
-      ]
-    },
-    {
-      "name": "PreferenceCategoryTitle",
-      "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt",
-      "props": [
-        "title",
-        "modifier"
-      ],
-      "usage": 3,
-      "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt"
-      ],
-      "example": "PreferenceCategoryTitle(title = \"Player\")",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt:35",
-      "required": [
-        "title"
-      ]
-    },
-    {
-      "name": "Render",
-      "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/platform/PlayerSettingsSections.kt",
-      "usage": 0
     },
     {
       "name": "NewPipeTextView",
@@ -925,70 +887,86 @@
       "exampleAt": "app/src/main/res/layout/activity_error.xml:29"
     },
     {
-      "name": "PreferenceRow",
+      "name": "NavDisplay",
       "kind": "composable",
-      "source": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt",
-      "concept": "cell",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/navigation/NavDisplay.kt",
       "props": [
-        "title",
-        "modifier",
-        "icon",
-        "summary",
-        "enabled",
-        "onClick"
+        "startDestination",
+        "onCloseRequest",
+        "navigator"
       ],
-      "usage": 12,
+      "usage": 2,
       "usageFiles": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/AppearanceSettingsScreen.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/DebugSettingsScreen.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/SettingsHomeScreen.kt",
-        "shared/src/commonMain/kotlin/net/newpipe/app/screen/settings/VideoAudioSettingsScreen.kt",
-        "shared/src/commonTest/kotlin/net/newpipe/app/composable/PreferenceRowTest.kt"
+        "shared/src/commonMain/kotlin/net/newpipe/app/App.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/navigation/NavDisplay.kt"
       ],
-      "example": "PreferenceRow(",
-      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt:62",
+      "example": "NavDisplay(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/App.kt:37",
       "required": [
-        "title"
+        "startDestination",
+        "startDestination:Destination",
+        "onCloseRequest"
       ]
     },
     {
-      "name": "CustomCollapsingToolbarLayout",
-      "kind": "custom-view",
-      "source": "app/src/main/java/org/schabi/newpipe/views/CustomCollapsingToolbarLayout.java",
+      "name": "ExoPlayerSettingsSections",
+      "kind": "composable",
+      "source": "shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt",
+      "concept": "card",
+      "props": [
+        "viewModel"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt"
+      ],
+      "example": "override fun Render() = ExoPlayerSettingsSections()",
+      "exampleAt": "shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt:17"
+    },
+    {
+      "name": "LicenseDialog",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+      "concept": "dialog",
+      "props": [
+        "modifier",
+        "license",
+        "onOpenWebsite",
+        "onDismiss"
+      ],
       "usage": 3,
       "usageFiles": [
-        "app/src/main/res/layout/fragment_channel.xml",
-        "app/src/main/res/layout/fragment_video_detail.xml",
-        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt",
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
+        "shared/src/commonTest/kotlin/net/newpipe/app/screen/about/LicenseDialogTest.kt"
       ],
-      "example": "\u003corg.schabi.newpipe.views.CustomCollapsingToolbarLayout",
-      "exampleAt": "app/src/main/res/layout/fragment_channel.xml:17"
+      "example": "LicenseDialog(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt:92",
+      "required": [
+        "license",
+        "license:License"
+      ]
     },
     {
-      "name": "PlayerFastSeekOverlay",
-      "kind": "custom-view",
-      "source": "app/src/main/java/org/schabi/newpipe/views/player/PlayerFastSeekOverlay.kt",
-      "usage": 2,
-      "usageFiles": [
-        "app/src/main/res/layout/player.xml",
-        "app/src/main/java/org/schabi/newpipe/player/ui/VideoPlayerUi.java"
+      "name": "LicensePage",
+      "kind": "composable",
+      "source": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicensePage.kt",
+      "props": [
+        "viewModel",
+        "shareHandler"
       ],
-      "example": "\u003corg.schabi.newpipe.views.player.PlayerFastSeekOverlay",
-      "exampleAt": "app/src/main/res/layout/player.xml:824"
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "Page.LICENSE -\u003e LicensePage()",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:52"
     },
     {
-      "name": "NewPipeRecyclerView",
+      "name": "FocusAwareSeekBar",
       "kind": "custom-view",
-      "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeRecyclerView.java",
-      "concept": "list",
-      "usage": 2,
-      "usageFiles": [
-        "app/src/main/res/layout/fragment_comments.xml",
-        "app/src/main/res/layout/fragment_kiosk.xml"
-      ],
-      "example": "\u003corg.schabi.newpipe.views.NewPipeRecyclerView",
-      "exampleAt": "app/src/main/res/layout/fragment_comments.xml:7"
+      "source": "app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java",
+      "usage": 0
     },
     {
       "name": "ScrollableTabLayout",
@@ -1000,17 +978,6 @@
       ],
       "example": "\u003corg.schabi.newpipe.views.ScrollableTabLayout",
       "exampleAt": "app/src/main/res/layout/fragment_main.xml:8"
-    },
-    {
-      "name": "ExpandableSurfaceView",
-      "kind": "custom-view",
-      "source": "app/src/main/java/org/schabi/newpipe/views/ExpandableSurfaceView.java",
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/res/layout/player.xml"
-      ],
-      "example": "\u003corg.schabi.newpipe.views.ExpandableSurfaceView",
-      "exampleAt": "app/src/main/res/layout/player.xml:11"
     },
     {
       "name": "CircleClipTapView",
@@ -1035,10 +1002,40 @@
       "exampleAt": "app/src/main/res/layout/player_fast_seek_overlay.xml:15"
     },
     {
-      "name": "FocusAwareSeekBar",
+      "name": "ExpandableSurfaceView",
       "kind": "custom-view",
-      "source": "app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java",
-      "usage": 0
+      "source": "app/src/main/java/org/schabi/newpipe/views/ExpandableSurfaceView.java",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/player.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.ExpandableSurfaceView",
+      "exampleAt": "app/src/main/res/layout/player.xml:11"
+    },
+    {
+      "name": "NewPipeRecyclerView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/NewPipeRecyclerView.java",
+      "concept": "list",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/fragment_comments.xml",
+        "app/src/main/res/layout/fragment_kiosk.xml"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.NewPipeRecyclerView",
+      "exampleAt": "app/src/main/res/layout/fragment_comments.xml:7"
+    },
+    {
+      "name": "PlayerFastSeekOverlay",
+      "kind": "custom-view",
+      "source": "app/src/main/java/org/schabi/newpipe/views/player/PlayerFastSeekOverlay.kt",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/player.xml",
+        "app/src/main/java/org/schabi/newpipe/player/ui/VideoPlayerUi.java"
+      ],
+      "example": "\u003corg.schabi.newpipe.views.player.PlayerFastSeekOverlay",
+      "exampleAt": "app/src/main/res/layout/player.xml:824"
     },
     {
       "name": "@layout/error_panel",
@@ -1187,16 +1184,6 @@
       "totalUsage": 32
     },
     {
-      "concept": "cell",
-      "members": [
-        "ListItem（组件库，用 4 次）",
-        "PreferenceRow（Composable，用 12 次）",
-        "@layout/order_detail_cell（业务组件，用 6 次）"
-      ],
-      "recommend": "ListItem",
-      "totalUsage": 22
-    },
-    {
       "concept": "empty",
       "members": [
         "@layout/error_panel（业务组件，用 14 次）",
@@ -1204,6 +1191,15 @@
       ],
       "recommend": "@layout/error_panel",
       "totalUsage": 20
+    },
+    {
+      "concept": "cell",
+      "members": [
+        "ListItem（组件库，用 4 次）",
+        "@layout/order_detail_cell（业务组件，用 6 次）"
+      ],
+      "recommend": "ListItem",
+      "totalUsage": 10
     },
     {
       "concept": "card",
@@ -1324,7 +1320,7 @@
       ]
     },
     {
-      "value": "#FFF8F7",
+      "value": "#534342",
       "count": 3,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
@@ -1338,7 +1334,7 @@
       ]
     },
     {
-      "value": "#534342",
+      "value": "#FFF8F7",
       "count": 3,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
@@ -1349,6 +1345,37 @@
       "count": 3,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#392E2D",
+      "count": 2,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#60000000",
+      "count": 2,
+      "sample": [
+        "app/src/main/res/layout/player.xml"
+      ]
+    },
+    {
+      "value": "#64000000",
+      "count": 2,
+      "token": "@color/video_overlay_color",
+      "sample": [
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ]
+    },
+    {
+      "value": "#C0000000",
+      "count": 2,
+      "sample": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml"
       ]
     },
     {
@@ -1369,21 +1396,7 @@
       ]
     },
     {
-      "value": "#FFB3AC",
-      "count": 2,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
       "value": "#904A45",
-      "count": 2,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FEDEA6",
       "count": 2,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
@@ -1397,84 +1410,23 @@
       ]
     },
     {
-      "value": "#60000000",
+      "value": "#FFB3AC",
       "count": 2,
       "sample": [
-        "app/src/main/res/layout/player.xml"
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FEDEA6",
+      "count": 2,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
       ]
     },
     {
       "value": "#000000",
       "count": 2,
       "token": "@color/black_background_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#C0000000",
-      "count": 2,
-      "sample": [
-        "app/src/main/res/layout/activity_player_queue_control.xml",
-        "app/src/main/res/layout-land/activity_player_queue_control.xml"
-      ]
-    },
-    {
-      "value": "#392E2D",
-      "count": 2,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#64000000",
-      "count": 2,
-      "token": "@color/video_overlay_color",
-      "sample": [
-        "app/src/main/res/layout/fragment_video_detail.xml",
-        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
-      ]
-    },
-    {
-      "value": "#CD201F",
-      "count": 1,
-      "token": "@color/ic_launcher_background",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#2C1513",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#A34700",
-      "count": 1,
-      "token": "@color/dark_peertube_primary_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#775653",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#410002",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#F6E4E2",
-      "count": 1,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
       ]
@@ -1487,52 +1439,7 @@
       ]
     },
     {
-      "value": "#3D3231",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#BA1A1A",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#F5DDDB",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#A35300",
-      "count": 1,
-      "token": "@color/dark_soundcloud_primary_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#17A0C4",
-      "count": 1,
-      "token": "@color/light_bandcamp_primary_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#1383A1",
-      "count": 1,
-      "token": "@color/dark_bandcamp_primary_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#261900",
+      "value": "#FFEDEB",
       "count": 1,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
@@ -1547,32 +1454,25 @@
       ]
     },
     {
-      "value": "#140C0B",
+      "value": "#3B0908",
       "count": 1,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
       ]
     },
     {
-      "value": "#E53935",
+      "value": "#442927",
       "count": 1,
-      "token": "@color/light_settings_accent_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#A35300",
+      "count": 1,
+      "token": "@color/dark_soundcloud_primary_color",
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#FFEDEB",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#571E1B",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
       ]
     },
     {
@@ -1583,143 +1483,7 @@
       ]
     },
     {
-      "value": "#A08C8A",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
       "value": "#402D04",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#F57C00",
-      "count": 1,
-      "token": "@color/light_soundcloud_primary_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#E8D6D4",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#584419",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#857371",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#3B0908",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#E7BDB8",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FFB4AB",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#73332F",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#AAFF0000",
-      "count": 1,
-      "sample": [
-        "app/src/main/res/layout/player.xml"
-      ]
-    },
-    {
-      "value": "#725B2E",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#E1C38C",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#423735",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#271D1C",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FFF0EF",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#992722",
-      "count": 1,
-      "token": "@color/dark_youtube_primary_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#322827",
-      "count": 1,
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
-      ]
-    },
-    {
-      "value": "#FF6F00",
-      "count": 1,
-      "token": "@color/light_peertube_primary_color",
-      "sample": [
-        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
-      ]
-    },
-    {
-      "value": "#FCEAE8",
       "count": 1,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
@@ -1734,7 +1498,160 @@
       ]
     },
     {
-      "value": "#442927",
+      "value": "#AAFF0000",
+      "count": 1,
+      "sample": [
+        "app/src/main/res/layout/player.xml"
+      ]
+    },
+    {
+      "value": "#FFF0EF",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#775653",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#A08C8A",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FFB4AB",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F5DDDB",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#584419",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#423735",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#140C0B",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FCEAE8",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#CD201F",
+      "count": 1,
+      "token": "@color/ic_launcher_background",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F57C00",
+      "count": 1,
+      "token": "@color/light_soundcloud_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#E53935",
+      "count": 1,
+      "token": "@color/light_settings_accent_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#73332F",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#FF6F00",
+      "count": 1,
+      "token": "@color/light_peertube_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#A34700",
+      "count": 1,
+      "token": "@color/dark_peertube_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#1383A1",
+      "count": 1,
+      "token": "@color/dark_bandcamp_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#E1C38C",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#3D3231",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#F6E4E2",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#571E1B",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#E7BDB8",
       "count": 1,
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
@@ -1746,6 +1663,85 @@
       "sample": [
         "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
       ]
+    },
+    {
+      "value": "#261900",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#410002",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#857371",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#725B2E",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#992722",
+      "count": 1,
+      "token": "@color/dark_youtube_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
+    },
+    {
+      "value": "#E8D6D4",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#271D1C",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#322827",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#BA1A1A",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#2C1513",
+      "count": 1,
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt"
+      ]
+    },
+    {
+      "value": "#17A0C4",
+      "count": 1,
+      "token": "@color/light_bandcamp_primary_color",
+      "sample": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt"
+      ]
     }
   ],
   "conventions": [
@@ -1755,8 +1751,8 @@
       "source": "项目惯例",
       "concept": "divider",
       "usage": 14,
-      "example": "\u003cView android:id=\"@+id/separator\" android:layout_width=\"match_parent\" android:layout_height=\"1dp\" android:layout_below=\"@+id/playlist_duplic…",
-      "exampleAt": "app/src/main/res/layout/dialog_playlists.xml:52"
+      "example": "\u003cView android:layout_width=\"match_parent\" android:layout_height=\"1dp\" android:background=\"?attr/separator_color\" /\u003e",
+      "exampleAt": "app/src/main/res/layout/dialog_feed_group_reorder.xml:19"
     }
   ],
   "metrics": {

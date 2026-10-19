@@ -29,8 +29,8 @@
 
 | 组件库 | 使用次数 | 最常用 |
 |---|---|---|
-| Android SDK widgets | 223 | ImageView×65、TextView×44、RecyclerView×26、ImageButton×22、ProgressBar×22、Button×15、CardView×7、RadioButton×5 |
-| Material Components | 31 | ShapeableImageView×16、AppBarLayout×5、FloatingActionButton×3、TabLayout×3、NavigationView×1、Chip×1、TextInputLayout×1、ChipGroup×1 |
+| Android SDK widgets | 223 | ImageView×65、TextView×44、RecyclerView×26、ImageButton×22、ProgressBar×22、Button×15、CardView×7、Toolbar×5 |
+| Material Components | 31 | ShapeableImageView×16、AppBarLayout×5、TabLayout×3、FloatingActionButton×3、Chip×1、TextInputLayout×1、ChipGroup×1、NavigationView×1 |
 | Compose Material3 | 17 | TextButton×5、ListItem×4、TopAppBar×3、AlertDialog×2、Switch×1、RadioButton×1、Tab×1 |
 | Compose Foundation | 5 | LazyColumn×4、HorizontalPager×1 |
 
@@ -46,11 +46,13 @@
 - `MaterialCardView`：需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃
 - `MaterialDivider`：需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃
 - `MaterialSwitch`：需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃
+- `SearchBar`：需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃
+- `SearchView`：需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃
 - `Slider`：需要 Theme.MaterialComponents 主题，项目主题 OpeningTheme 继承 AppCompat，直接用会崩溃
 
 **项目惯例写法**（没有组件、但项目里固定这么写；新设计稿里没有对应组件时沿用它，不要另造）：
 
-- divider：1px View 细线，14 处，例 `<View android:id="@+id/separator" android:layout_width="match_parent" android:layout_height="1dp" android:layout_below="@+id/playlist_duplic…` app/src/main/res/layout/dialog_playlists.xml:52
+- divider：1px View 细线，14 处，例 `<View android:layout_width="match_parent" android:layout_height="1dp" android:background="?attr/separator_color" />` app/src/main/res/layout/dialog_feed_group_reorder.xml:19
 
 ## 2. 组件资产（可复用的现成组件）
 
@@ -59,56 +61,56 @@
 | `ImageView` | 组件库 | image | 65 | `<ImageView` app/src/main/res/layout/comment_replies_header.xml:54 |
 | `TextView` | 组件库 |  | 44 | `<TextView` app/src/main/res/layout/fragment_order_detail.xml:35 |
 | `RecyclerView` | 组件库 | list | 26 | `<androidx.recyclerview.widget.RecyclerView` app/src/main/res/layout/activity_player_queue_control.xml:30 |
-| `ProgressBar` | 组件库 | loading | 22 | `<ProgressBar` app/src/main/res/layout/activity_player_queue_control.xml:226 |
 | `ImageButton` | 组件库 | button | 22 | `<ImageButton` app/src/main/res/layout/activity_player_queue_control.xml:165 |
+| `ProgressBar` | 组件库 | loading | 22 | `<ProgressBar` app/src/main/res/layout/activity_player_queue_control.xml:226 |
 | `ShapeableImageView` | 组件库 | image | 16 | `<com.google.android.material.imageview.ShapeableImageView` app/src/main/res/layout/comment_replies_header.xml:8 |
 | `Button` | 组件库 | button | 15 | `<Button` app/src/main/res/layout/activity_error.xml:118 |
 | `CardView` | 组件库 | card | 7 | `<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/feed_group_add_new_grid_item.xml:2 |
-| `AppBarLayout` | 组件库 |  | 5 | `<com.google.android.material.appbar.AppBarLayout` app/src/main/res/layout/activity_player_queue_control.xml:11 |
-| `RadioButton` | 组件库 | switch | 5 | `<RadioButton` app/src/main/res/layout/download_dialog.xml:43 |
-| `Toolbar` | 组件库 | navbar | 5 | `<androidx.appcompat.widget.Toolbar` app/src/main/res/layout/activity_player_queue_control.xml:18 |
+| `RadioButton` | 组件库 | radio | 5 | `<RadioButton` app/src/main/res/layout/download_dialog.xml:43 |
 | `TextButton` | 组件库 | button | 5 | `TextButton(onClick = { showDialog = false }) {` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:104 |
-| `Spinner` | 组件库 | loading | 4 | `<Spinner` app/src/main/res/layout/download_dialog.xml:63 |
+| `AppBarLayout` | 组件库 |  | 5 | `<com.google.android.material.appbar.AppBarLayout` app/src/main/res/layout/activity_player_queue_control.xml:11 |
+| `Toolbar` | 组件库 | navbar | 5 | `<androidx.appcompat.widget.Toolbar` app/src/main/res/layout/activity_player_queue_control.xml:18 |
 | `ViewPager` | 组件库 | carousel | 4 | `<androidx.viewpager.widget.ViewPager` app/src/main/res/layout/fragment_channel.xml:156 |
-| `LazyColumn` | 组件库 | list | 4 | `LazyColumn(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt:78 |
 | `ListItem` | 组件库 | cell | 4 | `ListItem(` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:68 |
+| `LazyColumn` | 组件库 | list | 4 | `LazyColumn(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutPage.kt:78 |
+| `Spinner` | 组件库 | loading | 4 | `<Spinner` app/src/main/res/layout/download_dialog.xml:63 |
 | `FloatingActionButton` | 组件库 | button | 3 | `<com.google.android.material.floatingactionbutton.FloatingActionButton` app/src/main/res/layout/fragment_choose_tabs.xml:35 |
-| `TopAppBar` | 组件库 | navbar | 3 | `fun TopAppBar(` shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt:37 |
-| `CheckBox` | 组件库 | switch | 3 | `<CheckBox` app/src/main/res/layout/dialog_playback_parameter.xml:503 |
 | `TabLayout` | 组件库 | tabs | 3 | `<com.google.android.material.tabs.TabLayout` app/src/main/res/layout/fragment_channel.xml:145 |
+| `TopAppBar` | 组件库 | navbar | 3 | `fun TopAppBar(` shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt:37 |
+| `CheckBox` | 组件库 | checkbox | 3 | `<CheckBox` app/src/main/res/layout/dialog_playback_parameter.xml:503 |
 | `AlertDialog` | 组件库 | dialog | 2 | `AlertDialog(` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:77 |
-| `Chip` | 组件库 | tag | 1 | `<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/chip.xml:4 |
-| `HorizontalPager` | 组件库 | carousel | 1 | `HorizontalPager(modifier = Modifier.fillMaxSize(), state = pagerState) { page ->` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:104 |
 | `Tab` | 组件库 | tabs | 1 | `Tab(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:87 |
-| `NavigationView` | 组件库 |  | 1 | `<com.google.android.material.navigation.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/drawer_layout.xml:2 |
-| `TextInputLayout` | 组件库 |  | 1 | `<com.google.android.material.textfield.TextInputLayout` app/src/main/res/layout/dialog_feed_group_create.xml:34 |
-| `RadioButton` | 组件库 | switch | 1 | `RadioButton(selected = entry.value == selectedValue, onClick = null)` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97 |
 | `ChipGroup` | 组件库 | tag | 1 | `<com.google.android.material.chip.ChipGroup` app/src/main/res/layout/item_metadata_tags.xml:22 |
-| `Switch` | 组件库 | switch | 1 | `Switch(` shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt:64 |
+| `TextInputLayout` | 组件库 |  | 1 | `<com.google.android.material.textfield.TextInputLayout` app/src/main/res/layout/dialog_feed_group_create.xml:34 |
 | `SeekBar` | 组件库 |  | 1 | `<SeekBar` app/src/main/res/layout/download_dialog.xml:137 |
-| `SwitchPreference` | Composable | switch | 25 | `SwitchPreference(` shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt:112 |
-| `ListPreference` | Composable | list | 20 | `ListPreference(` shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt:102 |
-| `NewPipeEditText` | 自定义 View | input | 6 | `<org.schabi.newpipe.views.NewPipeEditText` app/src/main/res/layout/activity_error.xml:112 |
-| `LinkListItem` | Composable | cell | 3 | `LinkListItem(link = link)` shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt:64 |
-| `ExoPlayerSettingsSections` | Composable | card | 1 | `override fun Render() = ExoPlayerSettingsSections()` shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt:17 |
-| `AboutPage` | Composable |  | 1 | `Page.ABOUT -> AboutPage()` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:51 |
-| `TopAppBar` | Composable | navbar | 10 | `TopAppBar(` shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt:45 |
-| `LibraryListItem` | Composable | cell | 3 | `LibraryListItem(library = library)` shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LibraryListItem.kt:72 |
-| `NavDisplay` | Composable |  | 2 | `NavDisplay(` shared/src/commonMain/kotlin/net/newpipe/app/App.kt:37 |
-| `LicensePage` | Composable |  | 1 | `Page.LICENSE -> LicensePage()` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:52 |
-| `LicenseDialog` | Composable | dialog | 3 | `LicenseDialog(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt:92 |
-| `PreferenceCategoryTitle` | Composable |  | 3 | `PreferenceCategoryTitle(title = "Player")` shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt:35 |
-| `Render` | Composable |  | 0 | shared/src/commonMain/kotlin/net/newpipe/app/platform/PlayerSettingsSections.kt |
-| `NewPipeTextView` | 自定义 View |  | 261 | `<org.schabi.newpipe.views.NewPipeTextView` app/src/main/res/layout/activity_error.xml:29 |
-| `PreferenceRow` | Composable | cell | 12 | `PreferenceRow(` shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt:62 |
+| `NavigationView` | 组件库 |  | 1 | `<com.google.android.material.navigation.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/drawer_layout.xml:2 |
+| `HorizontalPager` | 组件库 | carousel | 1 | `HorizontalPager(modifier = Modifier.fillMaxSize(), state = pagerState) { page ->` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:104 |
+| `Chip` | 组件库 | tag | 1 | `<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/chip.xml:4 |
+| `RadioButton` | 组件库 | radio | 1 | `RadioButton(selected = entry.value == selectedValue, onClick = null)` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97 |
+| `Switch` | 组件库 | switch | 1 | `Switch(` shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt:64 |
+| `SwitchPreference` | Composable |  | 25 | `SwitchPreference(` shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt:112 |
 | `CustomCollapsingToolbarLayout` | 自定义 View |  | 3 | `<org.schabi.newpipe.views.CustomCollapsingToolbarLayout` app/src/main/res/layout/fragment_channel.xml:17 |
-| `PlayerFastSeekOverlay` | 自定义 View |  | 2 | `<org.schabi.newpipe.views.player.PlayerFastSeekOverlay` app/src/main/res/layout/player.xml:824 |
-| `NewPipeRecyclerView` | 自定义 View | list | 2 | `<org.schabi.newpipe.views.NewPipeRecyclerView` app/src/main/res/layout/fragment_comments.xml:7 |
+| `AboutPage` | Composable |  | 1 | `Page.ABOUT -> AboutPage()` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:51 |
+| `PreferenceCategoryTitle` | Composable |  | 3 | `PreferenceCategoryTitle(title = "Player")` shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceCategoryTitle.kt:35 |
+| `LinkListItem` | Composable | cell | 3 | `LinkListItem(link = link)` shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LinkListItem.kt:64 |
+| `NewPipeEditText` | 自定义 View | input | 6 | `<org.schabi.newpipe.views.NewPipeEditText` app/src/main/res/layout/activity_error.xml:112 |
+| `ListPreference` | Composable |  | 20 | `ListPreference(` shared/src/androidMain/kotlin/net/newpipe/app/screen/ExoPlayerSettingsSections.kt:102 |
+| `Render` | Composable |  | 0 | shared/src/commonMain/kotlin/net/newpipe/app/platform/PlayerSettingsSections.kt |
+| `TopAppBar` | Composable | navbar | 10 | `TopAppBar(` shared/src/commonMain/kotlin/net/newpipe/app/composable/TopAppBar.kt:45 |
+| `PreferenceRow` | Composable |  | 12 | `PreferenceRow(` shared/src/commonMain/kotlin/net/newpipe/app/composable/PreferenceRow.kt:62 |
+| `LibraryListItem` | Composable | cell | 3 | `LibraryListItem(library = library)` shared/src/commonMain/kotlin/net/newpipe/app/composable/about/LibraryListItem.kt:72 |
+| `NewPipeTextView` | 自定义 View |  | 261 | `<org.schabi.newpipe.views.NewPipeTextView` app/src/main/res/layout/activity_error.xml:29 |
+| `NavDisplay` | Composable |  | 2 | `NavDisplay(` shared/src/commonMain/kotlin/net/newpipe/app/App.kt:37 |
+| `ExoPlayerSettingsSections` | Composable | card | 1 | `override fun Render() = ExoPlayerSettingsSections()` shared/src/androidMain/kotlin/net/newpipe/app/platform/AndroidPlayerSettingsSections.kt:17 |
+| `LicenseDialog` | Composable | dialog | 3 | `LicenseDialog(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/LicenseDialog.kt:92 |
+| `LicensePage` | Composable |  | 1 | `Page.LICENSE -> LicensePage()` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:52 |
+| `FocusAwareSeekBar` | 自定义 View |  | 0 | app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java |
 | `ScrollableTabLayout` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.ScrollableTabLayout` app/src/main/res/layout/fragment_main.xml:8 |
-| `ExpandableSurfaceView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.ExpandableSurfaceView` app/src/main/res/layout/player.xml:11 |
 | `CircleClipTapView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.player.CircleClipTapView` app/src/main/res/layout/player_fast_seek_overlay.xml:8 |
 | `SecondsView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.player.SecondsView` app/src/main/res/layout/player_fast_seek_overlay.xml:15 |
-| `FocusAwareSeekBar` | 自定义 View |  | 0 | app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java |
+| `ExpandableSurfaceView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.ExpandableSurfaceView` app/src/main/res/layout/player.xml:11 |
+| `NewPipeRecyclerView` | 自定义 View | list | 2 | `<org.schabi.newpipe.views.NewPipeRecyclerView` app/src/main/res/layout/fragment_comments.xml:7 |
+| `PlayerFastSeekOverlay` | 自定义 View |  | 2 | `<org.schabi.newpipe.views.player.PlayerFastSeekOverlay` app/src/main/res/layout/player.xml:824 |
 | `@layout/error_panel` | 业务组件 | empty | 14 | include |
 | `@layout/toolbar_layout` | 业务组件 | navbar | 6 | include |
 | `@layout/list_empty_view` | 业务组件 | empty | 6 | include |
@@ -124,8 +126,8 @@
 |---|---|---|
 | navbar | TopAppBar（组件库，用 3 次）<br>TopAppBar（Composable，用 10 次）<br>@layout/toolbar_layout（业务组件，用 6 次）<br>Toolbar（组件库，用 5 次）<br>@layout/settings_category_header_title（业务组件，用 1 次） | `TopAppBar` |
 | list | LazyColumn（组件库，用 4 次）<br>RecyclerView（组件库，用 26 次）<br>NewPipeRecyclerView（自定义 View，用 2 次） | `LazyColumn` |
-| cell | ListItem（组件库，用 4 次）<br>PreferenceRow（Composable，用 12 次）<br>@layout/order_detail_cell（业务组件，用 6 次） | `ListItem` |
 | empty | @layout/error_panel（业务组件，用 14 次）<br>@layout/list_empty_view（业务组件，用 6 次） | `@layout/error_panel` |
+| cell | ListItem（组件库，用 4 次）<br>@layout/order_detail_cell（业务组件，用 6 次） | `ListItem` |
 | card | Card（Compose Material3，项目未使用）<br>ExoPlayerSettingsSections（Composable，用 1 次） | `Card` |
 
 ## 5. 重复结构（复制粘贴的 UI 片段，可抽成组件）
@@ -175,12 +177,12 @@
 | #FFFFFF | 15 | `@color/light_license_background_color` | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt、shared/src/commonMain/kotlin/net/newpipe/app/theme/ServiceTheme.kt |
 | #FFDAD6 | 6 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
 | #F1DEDC | 4 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
-| #FFF8F7 | 3 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
-| #231918 | 3 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
 | #534342 | 3 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
+| #231918 | 3 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
+| #FFF8F7 | 3 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
 | #1A1110 | 3 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
+| #392E2D | 2 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
+| #60000000 | 2 | — | app/src/main/res/layout/player.xml |
+| #64000000 | 2 | `@color/video_overlay_color` | app/src/main/res/layout/fragment_video_detail.xml、app/src/main/res/layout-large-land/fragment_video_detail.xml |
+| #C0000000 | 2 | — | app/src/main/res/layout/activity_player_queue_control.xml、app/src/main/res/layout-land/activity_player_queue_control.xml |
 | #00000000 | 2 | `@color/transparent_background_color` | app/src/main/res/layout/activity_player_queue_control.xml、app/src/main/res/layout-land/activity_player_queue_control.xml |
-| #23000000 | 2 | — | app/src/main/res/layout/fragment_video_detail.xml、app/src/main/res/layout-large-land/fragment_video_detail.xml |
-| #FFB3AC | 2 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
-| #904A45 | 2 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |
-| #FEDEA6 | 2 | — | shared/src/commonMain/kotlin/net/newpipe/app/theme/Color.kt |

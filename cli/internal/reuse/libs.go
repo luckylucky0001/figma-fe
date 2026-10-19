@@ -32,6 +32,8 @@ var uiLibs = []uiLib{
 		"MaterialButton", "MaterialCardView", "Chip", "ChipGroup", "MaterialToolbar", "AppBarLayout", "CollapsingToolbarLayout", "BottomNavigationView", "NavigationView", "TabLayout", "TextInputLayout", "TextInputEditText", "FloatingActionButton", "ExtendedFloatingActionButton", "Snackbar", "BottomSheetDialog", "MaterialDivider", "MaterialSwitch", "SwitchMaterial", "MaterialCheckBox", "MaterialRadioButton", "Slider", "CircularProgressIndicator", "LinearProgressIndicator", "BadgeDrawable", "ShapeableImageView", "MaterialAlertDialogBuilder", "MaterialButtonToggleGroup"}},
 	{Name: "QMUI Android", Packages: []string{"com.qmuiteam"}, Import: []string{"com.qmuiteam.qmui."}, Platform: "android", Components: []string{
 		"QMUITopBar", "QMUITopBarLayout", "QMUIRoundButton", "QMUIAlphaButton", "QMUICommonListItemView", "QMUIGroupListView", "QMUIEmptyView", "QMUITipDialog", "QMUIDialog", "QMUIBottomSheet", "QMUITabSegment", "QMUIRadiusImageView", "QMUIProgressBar", "QMUILoadingView", "QMUIPopup", "QMUIFloatLayout", "QMUISpanTouchFixTextView", "QMUIQQFaceView", "QMUIPullRefreshLayout", "QMUISlider", "QMUIRoundFrameLayout", "QMUIRoundLinearLayout", "QMUIContinuousNestedScrollLayout", "QMUISkinManager", "QMUISeekBar", "QMUINotchHelper"}},
+	{Name: "Compose Foundation", Packages: []string{"androidx.compose.foundation.lazy", "androidx.compose.foundation.pager"}, Import: []string{"androidx.compose.foundation.lazy."}, Platform: "android", Components: []string{
+		"LazyColumn", "LazyRow", "LazyVerticalGrid", "LazyHorizontalGrid", "LazyVerticalStaggeredGrid", "HorizontalPager", "VerticalPager"}},
 	{Name: "Compose Material3", Packages: []string{"androidx.compose.material3"}, Import: []string{"androidx.compose.material3."}, Platform: "android", Components: []string{
 		"Button", "OutlinedButton", "TextButton", "FilledTonalButton", "ElevatedButton", "Card", "OutlinedCard", "ElevatedCard", "TopAppBar", "CenterAlignedTopAppBar", "BottomAppBar", "NavigationBar", "AssistChip", "FilterChip", "SuggestionChip", "InputChip", "Badge", "Divider", "HorizontalDivider", "ListItem", "TextField", "OutlinedTextField", "Switch", "Checkbox", "RadioButton", "Slider", "AlertDialog", "ModalBottomSheet", "Snackbar", "CircularProgressIndicator", "LinearProgressIndicator", "TabRow", "Tab", "FloatingActionButton", "SearchBar"}},
 	{Name: "Android SDK widgets", Packages: []string{"android"}, Platform: "android", Components: []string{
@@ -46,40 +48,46 @@ var rawAndroid = map[string]string{"Button": "button", "ImageButton": "button", 
 
 // libConcept overrides the name-derived concept where a library uses a misleading name.
 var libConcept = map[string]string{
-	"Vant/Card":                           "goods", // van-card is a product card
-	"antd-mobile/ListItem":                "cell",
-	"antd-mobile/FormItem":                "", // a form row (label + control), not a list cell
-	"antd-mobile/GridItem":                "",
-	"antd-mobile/CollapsePanel":           "",
-	"antd-mobile/ErrorBlock":              "empty",
-	"antd-mobile/Result":                  "empty",
-	"Vant/SubmitBar":                      "actionbar", // price + submit: a specialised action bar
-	"Vant/Row":                            "",          // grid layout, not a list row
-	"Material Components/BadgeDrawable":   "",          // a drawable overlay, not a View to place
-	"Vant/Col":                            "",
-	"Vant/Space":                          "",
-	"React Vant/Card":                     "goods",
-	"Vant/ActionBar":                      "actionbar",
-	"Vant/Field":                          "input",
-	"Vant/CellGroup":                      "card",
-	"uView/Row":                           "",
-	"uView/Col":                           "",
-	"uView/Line":                          "divider",
-	"uView/Navbar":                        "navbar",
-	"Element Plus/Row":                    "",
-	"Element Plus/Col":                    "",
-	"Element Plus/Descriptions":           "cell",
-	"NutUI/Card":                          "goods",
-	"NutUI/Price":                         "price",
-	"NutUI/Countdown":                     "countdown",
-	"TDesign Mobile/Navbar":               "navbar",
-	"QMUI Android/QMUICommonListItemView": "cell",
-	"QMUI Android/QMUIGroupListView":      "card",
-	"QMUI Android/QMUIRoundButton":        "button",
-	"QMUI Android/QMUITopBar":             "navbar",
-	"QMUI Android/QMUITopBarLayout":       "navbar",
-	"Material Components/MaterialToolbar": "navbar",
-	"Material Components/Chip":            "tag",
-	"Compose Material3/ListItem":          "cell",
-	"Compose Material3/AssistChip":        "tag",
+	"Vant/Card":                                    "goods", // van-card is a product card
+	"antd-mobile/ListItem":                         "cell",
+	"antd-mobile/FormItem":                         "", // a form row (label + control), not a list cell
+	"antd-mobile/GridItem":                         "",
+	"antd-mobile/CollapsePanel":                    "",
+	"antd-mobile/ErrorBlock":                       "empty",
+	"antd-mobile/Result":                           "empty",
+	"Vant/SubmitBar":                               "actionbar", // price + submit: a specialised action bar
+	"Vant/Row":                                     "",          // grid layout, not a list row
+	"Material Components/BadgeDrawable":            "",          // a drawable overlay, not a View to place
+	"Vant/Col":                                     "",
+	"Vant/Space":                                   "",
+	"React Vant/Card":                              "goods",
+	"Vant/ActionBar":                               "actionbar",
+	"Vant/Field":                                   "input",
+	"Vant/CellGroup":                               "card",
+	"uView/Row":                                    "",
+	"uView/Col":                                    "",
+	"uView/Line":                                   "divider",
+	"uView/Navbar":                                 "navbar",
+	"Element Plus/Row":                             "",
+	"Element Plus/Col":                             "",
+	"Element Plus/Descriptions":                    "cell",
+	"NutUI/Card":                                   "goods",
+	"NutUI/Price":                                  "price",
+	"NutUI/Countdown":                              "countdown",
+	"TDesign Mobile/Navbar":                        "navbar",
+	"QMUI Android/QMUICommonListItemView":          "cell",
+	"QMUI Android/QMUIGroupListView":               "card",
+	"QMUI Android/QMUIRoundButton":                 "button",
+	"QMUI Android/QMUITopBar":                      "navbar",
+	"QMUI Android/QMUITopBarLayout":                "navbar",
+	"Material Components/MaterialToolbar":          "navbar",
+	"Material Components/Chip":                     "tag",
+	"Compose Foundation/LazyRow":                   "list",
+	"Compose Foundation/LazyVerticalGrid":          "",
+	"Compose Foundation/LazyHorizontalGrid":        "",
+	"Compose Foundation/LazyVerticalStaggeredGrid": "",
+	"Compose Foundation/HorizontalPager":           "carousel",
+	"Compose Foundation/VerticalPager":             "carousel",
+	"Compose Material3/ListItem":                   "cell",
+	"Compose Material3/AssistChip":                 "tag",
 }

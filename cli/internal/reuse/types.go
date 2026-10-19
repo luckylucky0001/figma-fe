@@ -28,7 +28,8 @@ type Asset struct {
 	Caveat      string              `json:"caveat,omitempty"`
 	Unavailable bool                `json:"unavailable,omitempty"` // the installed library version does not ship it
 	WrappedBy   string              `json:"wrappedBy,omitempty"`
-	Enums       map[string][]string `json:"enums,omitempty"` // enum-like props → allowed values   // the design-system component that wraps this library component
+	Enums       map[string][]string `json:"enums,omitempty"`    // enum-like props → allowed values
+	Required    []string            `json:"required,omitempty"` // parameters without a default (composables)   // the design-system component that wraps this library component
 }
 
 type Finding struct {

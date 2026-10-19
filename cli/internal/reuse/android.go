@@ -216,6 +216,9 @@ func ScanAndroid(root string) *Report {
 					if kv := strings.SplitN(strings.TrimSpace(prm), ":", 2); len(kv) == 2 {
 						pn := strings.TrimSpace(strings.TrimPrefix(kv[0], "@"))
 						a.Props = append(a.Props, pn)
+						if !strings.Contains(kv[1], "=") {
+							a.Required = append(a.Required, pn)
+						}
 						typ := strings.TrimSuffix(strings.TrimSpace(strings.SplitN(kv[1], "=", 2)[0]), "?")
 						if vals := ktEnums[typ]; len(vals) > 0 {
 							if a.Enums == nil {
@@ -369,7 +372,7 @@ func ScanAndroid(root string) *Report {
 	}
 	// Compose material3 / library calls
 	for _, l := range libs {
-		if l.Name != "Compose Material3" {
+		if !isComposeLib(l.Name) {
 			continue
 		}
 		type call struct {
@@ -380,7 +383,11 @@ func ScanAndroid(root string) *Report {
 		}
 		var calls []call
 		for _, f := range code {
-			if !strings.Contains(f.text, "androidx.compose.material3") {
+			uses := false
+			for _, p := range l.Packages {
+				uses = uses || strings.Contains(f.text, p)
+			}
+			if !uses {
 				continue
 			}
 			lines := strings.Split(f.text, "\n")
@@ -440,10 +447,10 @@ func bestProjectAsset(assets map[string]*Asset, concept, prefer string) *Asset {
 	var best *Asset
 	score := func(a *Asset) int {
 		s := rank(*a)
-		if a.Kind == prefer || prefer == "custom-view" && a.Kind == "ui-lib" && a.Source != "Compose Material3" {
+		if a.Kind == prefer || prefer == "custom-view" && a.Kind == "ui-lib" && !isComposeLib(a.Source) {
 			s += 5000
 		}
-		if prefer == "custom-view" && (a.Kind == "composable" || a.Source == "Compose Material3") {
+		if prefer == "custom-view" && (a.Kind == "composable" || isComposeLib(a.Source)) {
 			s -= 5000 // a composable cannot be dropped into an XML layout
 		}
 		return s
@@ -509,3 +516,6 @@ func refineConcept(a *Asset) {
 		}
 	}
 }
+
+// isComposeLib: a Jetpack Compose library catalog (composables, not Views).
+func isComposeLib(source string) bool { return strings.HasPrefix(source, "Compose ") }

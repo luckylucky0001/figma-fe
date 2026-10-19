@@ -287,7 +287,7 @@ func checkHandBuilt(pc *PageCheck, r *Report, pool []Asset, used, seen map[strin
 	var best *Asset
 	for i := range pool {
 		b := &pool[i]
-		if xmlCtx && (b.Kind == "composable" || b.Source == "Compose Material3") {
+		if xmlCtx && (b.Kind == "composable" || isComposeLib(b.Source)) {
 			continue
 		}
 		if b.Concept == concept && !in(b.Source) && b.Source != "Android SDK widgets" && (best == nil || pref(b) > pref(best) || pref(b) == pref(best) && len(b.Name) < len(best.Name)) {

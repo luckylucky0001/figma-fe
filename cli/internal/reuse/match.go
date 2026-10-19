@@ -55,7 +55,7 @@ func InferTarget(r *Report) string {
 	var views, compose int
 	for _, a := range r.Assets {
 		switch {
-		case a.Kind == "composable" || a.Source == "Compose Material3":
+		case a.Kind == "composable" || isComposeLib(a.Source):
 			compose += a.Usage
 		case a.Kind == "custom-view" || a.Kind == "ui-lib":
 			views += a.Usage
@@ -228,7 +228,8 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			var attrs []string
 			for i := range pool {
 				as := &pool[i]
-				if as.Concept != "" || as.Usage == 0 || best != nil && as.Usage <= best.Usage {
+				// among established containers (≥3 uses) the plainest one: QMUIFrameLayout over QMUIPriorityLinearLayout
+				if as.Concept != "" || as.Usage == 0 || best != nil && !(as.Usage >= 3 && (best.Usage < 3 || len(as.Name) < len(best.Name)) || best.Usage < 3 && as.Usage > best.Usage) {
 					continue
 				}
 				var da []string
@@ -307,6 +308,18 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s -= 0.1
 		why = append(why, "是容器组件（"+a.Name+"s / Group / Row）的子项")
 	}
+	// a feature component: several required business parameters (InterestsItem needs following,
+	// topicImageUrl, onFollowButtonClick); design-system components are exempt by definition
+	if dr := domainRequired(a.Required); len(dr) >= 3 && !inDesignSystem(a.Source) {
+		s -= 0.12
+		why = append(why, "业务专用（必填 "+strings.Join(dr, "、")+"）")
+	}
+	// a selectable component (FilterChip: selected / onSelectedChange) for a design element that has
+	// no selected state is the wrong interaction
+	if selectable(a.Props) && !hasAxis(variants, "selected", "checked", "active", "state", "on") {
+		s -= 0.06
+		why = append(why, "可选中组件，设计稿里是静态展示")
+	}
 	// the library's canonical component of the concept (Cell for cell, Tag for tag) beats look-alikes
 	for _, c := range concepts {
 		if c.Name == a.Concept && (an == c.Words[0] || familyBase[a.Name]) && fn != an {
@@ -351,7 +364,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s -= 0.2
 		why = append(why, "页面私有，需先抽出")
 	}
-	compose := a.Kind == "composable" || a.Source == "Compose Material3"
+	compose := a.Kind == "composable" || isComposeLib(a.Source)
 	switch {
 	case Target == "xml" && compose:
 		s -= 0.25
@@ -633,4 +646,39 @@ func setFamilyPrefixes(pool []Asset) {
 			famPrefixes[w] = true
 		}
 	}
+}
+
+func selectable(props []string) bool {
+	for _, p := range props {
+		switch normProp(p) {
+		case "selected", "checked", "isselected", "onselectedchange", "oncheckedchange", "onselect":
+			return true
+		}
+	}
+	return false
+}
+
+func hasAxis(variants map[string]bool, names ...string) bool {
+	for v := range variants {
+		axis := strings.ToLower(strings.SplitN(v, "=", 2)[0])
+		for _, n := range names {
+			if axis == n {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+var genericParams = map[string]bool{"modifier": true, "onclick": true, "content": true, "text": true, "title": true, "label": true,
+	"icon": true, "enabled": true, "name": true, "value": true, "description": true, "subtitle": true, "image": true, "imageurl": true}
+
+func domainRequired(req []string) []string {
+	var out []string
+	for _, p := range req {
+		if !genericParams[normProp(p)] {
+			out = append(out, p)
+		}
+	}
+	return out
 }

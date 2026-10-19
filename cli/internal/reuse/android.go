@@ -541,6 +541,7 @@ func matchParen(s string, open int) int {
 // refineConcept resolves ambiguous names with the props: a "Banner" taking text / tone is a notice
 // bar, one taking images / items is a carousel.
 func refineConcept(a *Asset) {
+	refineBadge(a)
 	// a "bottom bar" that takes tabs / routes is bottom navigation, not an action bar
 	if a.Concept == "actionbar" {
 		for _, p := range a.Props {
@@ -596,4 +597,23 @@ func annotationsBefore(src string, at int) string {
 		ann = append(ann, l)
 	}
 	return strings.Join(ann, " ")
+}
+
+// refineBadge: a "badge" that takes text / tone and no count is a status tag (StatusBadge, DsBadge).
+func refineBadge(a *Asset) {
+	if a.Concept != "badge" {
+		return
+	}
+	text := false
+	for _, p := range a.Props {
+		switch normProp(p) {
+		case "count", "max", "dot", "isdot", "number", "badgecount", "showzero":
+			return
+		case "text", "label", "tone", "type", "content", "title":
+			text = true
+		}
+	}
+	if text {
+		a.Concept = "tag"
+	}
 }

@@ -27,6 +27,15 @@ var (
 
 var htmlTags = map[string]bool{}
 
+// uniTags: uni-app / mini-program built-in components, written as lowercase tags like HTML.
+var uniTags = map[string]bool{}
+
+func init() {
+	for _, t := range strings.Fields("view text image button label input textarea navigator scroll-view swiper swiper-item icon progress rich-text checkbox checkbox-group radio radio-group switch slider picker picker-view picker-view-column form editor map canvas video audio camera live-player web-view cover-view cover-image movable-area movable-view match-media page-container block template page-meta navigation-bar unicloud-db ad") {
+		uniTags[t] = true
+	}
+}
+
 func init() {
 	for _, t := range strings.Fields("div span p a ul ol li img button input select option textarea form label section header footer nav main article aside h1 h2 h3 h4 h5 h6 table tr td th tbody thead i b strong em small br hr svg path view text") {
 		htmlTags[t] = true
@@ -53,6 +62,9 @@ func ScanH5(root string) *Report {
 	r := &Report{Platform: "h5", Root: root}
 	ign := ignoreList(root)
 	deps := map[string]bool{}
+	if _, err := os.Stat(filepath.Join(root, "pages.json")); err == nil {
+		deps["@dcloudio/uni-app"] = true // a uni-app project (built-ins are lowercase tags)
+	}
 	depVer := map[string]string{}
 	_ = filepath.Walk(root, func(p string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -192,6 +204,7 @@ func ScanH5(root string) *Report {
 			a := get(kind, name, f.rel)
 			a.Props = vueProps(f.text)
 			a.Enums = unionEnums(f.text)
+			refineBadge(a)
 			if fixedBottomRe.MatchString(f.text) && fixedRe.MatchString(f.text) && (a.Concept == "navbar" || a.Concept == "") {
 				a.Concept = "tabbar" // a bar pinned to the bottom is a tab bar / action bar, whatever its name says
 				if regexp.MustCompile(`(?i)button|btn|submit`).MatchString(f.markup) {
@@ -216,6 +229,7 @@ func ScanH5(root string) *Report {
 						}
 					}
 				}
+				refineBadge(a)
 				projByName[name] = a
 			}
 		}
@@ -303,6 +317,12 @@ func ScanH5(root string) *Report {
 			for _, m := range jsxTagRe2.FindAllStringSubmatchIndex(f.markup, -1) {
 				tag := f.markup[m[2]:m[3]]
 				var a *Asset
+				if deps["@dcloudio/uni-app"] && uniTags[tag] {
+					a = assets["ui-lib|uni-app 内置组件|"+kebabToPascal(tag)] // nil for view / text: plain structure
+					if a == nil {
+						continue
+					}
+				}
 				for _, h := range libs {
 					if h.lib.TagPrefix != "" && strings.HasPrefix(tag, h.lib.TagPrefix) {
 						if n := kebabToPascal(strings.TrimPrefix(tag, h.lib.TagPrefix)); h.names[n] {
@@ -325,7 +345,7 @@ func ScanH5(root string) *Report {
 				if a == nil {
 					if pa, ok := alias[strings.ToLower(strings.ReplaceAll(tag, "-", ""))]; ok {
 						a = pa
-					} else if pa, ok := projByName[kebabToPascal(tag)]; ok && (f.kind == "vue" || tag == kebabToPascal(tag)) {
+					} else if pa, ok := projByName[kebabToPascal(tag)]; ok && (f.kind == "vue" && !htmlTags[tag] && !uniTags[tag] || tag == kebabToPascal(tag)) {
 						a = pa
 					}
 				}
@@ -598,7 +618,7 @@ func ignored(ign []string, rel string) bool {
 }
 
 func skipDir(n string) bool {
-	return n == "test" || n == "tests" || n == "androidTest" || n == "__tests__" || n == "e2e" || n == "testFixtures" || n == "screenshots" || n == "node_modules" || n == "dist" || n == "build" || n == ".git" || n == ".gradle" || n == ".idea" || n == "coverage" || n == ".figmafe" || n == "unpackage" || n == "miniprogram_npm"
+	return n == "test" || n == "tests" || n == "androidTest" || n == "__tests__" || n == "e2e" || n == "testFixtures" || n == "screenshots" || n == "node_modules" || n == "dist" || n == "build" || n == ".git" || n == ".gradle" || n == ".idea" || n == "coverage" || n == ".figmafe" || n == "unpackage" || n == "miniprogram_npm" || n == "uni_modules"
 }
 
 func relPath(root, p string) string {

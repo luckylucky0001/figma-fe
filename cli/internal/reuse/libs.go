@@ -24,6 +24,14 @@ var uiLibs = []uiLib{
 		"ListItem", "FormItem", "TabBarItem", "SwiperItem", "GridItem", "CollapsePanel", "ActionSheet", "AutoCenter", "Avatar", "Badge", "Button", "Calendar", "CapsuleTabs", "Card", "CascadePicker", "Cascader", "CenterPopup", "CheckList", "Checkbox", "Collapse", "DatePicker", "Dialog", "Divider", "DotLoading", "Dropdown", "Ellipsis", "Empty", "ErrorBlock", "FloatingBubble", "FloatingPanel", "Form", "Grid", "Image", "ImageUploader", "ImageViewer", "IndexBar", "InfiniteScroll", "Input", "JumboTabs", "List", "Loading", "Mask", "Modal", "NavBar", "NoticeBar", "NumberKeyboard", "PageIndicator", "PasscodeInput", "Picker", "Popover", "Popup", "ProgressBar", "ProgressCircle", "PullToRefresh", "Radio", "Rate", "Result", "SafeArea", "ScrollMask", "SearchBar", "Selector", "SideBar", "Skeleton", "Slider", "Space", "SpinLoading", "Stepper", "Steps", "SwipeAction", "Swiper", "Switch", "TabBar", "Tabs", "Tag", "TextArea", "Toast", "TreeSelect", "VirtualInput", "WaterMark"}},
 	{Name: "TDesign Mobile", Packages: []string{"tdesign-mobile-vue", "tdesign-mobile-react"}, TagPrefix: "t-", Import: []string{"tdesign-mobile-vue", "tdesign-mobile-react"}, Platform: "h5", Components: []string{
 		"ActionSheet", "Avatar", "BackTop", "Badge", "Button", "Calendar", "Cascader", "Cell", "CellGroup", "Checkbox", "Collapse", "CountDown", "DateTimePicker", "Dialog", "Divider", "Drawer", "DropdownMenu", "Empty", "Fab", "Form", "Grid", "Icon", "Image", "ImageViewer", "Indexes", "Input", "Link", "Loading", "Message", "Navbar", "NoticeBar", "Overlay", "Picker", "Popover", "Popup", "Progress", "PullDownRefresh", "Radio", "Rate", "Result", "Search", "SideBar", "Skeleton", "Slider", "Stepper", "Steps", "Sticky", "SwipeCell", "Swiper", "Switch", "TabBar", "Tabs", "Tag", "Textarea", "Toast", "Upload"}},
+	// uni-app's built-in components are lowercase tags (<button>, <navigator>); active when the project has pages.json
+	{Name: "uni-app 内置组件", Packages: []string{"@dcloudio/uni-app"}, Platform: "h5", Components: []string{
+		"Button", "Navigator", "ScrollView", "Swiper", "Switch", "Checkbox", "Radio", "Picker", "Progress", "Image", "Input", "Textarea", "Slider", "Icon"}},
+	{Name: "uni-ui", Packages: []string{"@dcloudio/uni-ui"}, TagPrefix: "uni-", Import: []string{"@dcloudio/uni-ui"}, Platform: "h5", Components: []string{
+		"Badge", "Breadcrumb", "Calendar", "Card", "Collapse", "CollapseItem", "Combox", "Countdown", "DataCheckbox", "DataPicker", "DatetimePicker", "Drawer",
+		"Easyinput", "Fab", "Fav", "FilePicker", "Forms", "FormsItem", "GoodsNav", "Grid", "GridItem", "Group", "Icons", "IndexedList", "Link", "List",
+		"ListItem", "ListChat", "LoadMore", "NavBar", "NoticeBar", "NumberBox", "Pagination", "Popup", "PopupDialog", "PopupMessage", "PopupShare", "Rate",
+		"Row", "Col", "SearchBar", "SegmentedControl", "Section", "Steps", "SwipeAction", "SwipeActionItem", "SwiperDot", "Table", "Tag", "Title", "Tooltip", "Transition"}},
 	{Name: "uView", Packages: []string{"uview-ui", "uview-plus"}, TagPrefix: "u-", Import: []string{"uview-ui", "uview-plus"}, Platform: "h5", Components: []string{
 		"ActionSheet", "Album", "Alert", "Avatar", "BackTop", "Badge", "Button", "Calendar", "Card", "Cell", "CellGroup", "Checkbox", "CodeInput", "Col", "Collapse", "CountDown", "CountTo", "DatetimePicker", "Divider", "Empty", "Form", "FormItem", "Gap", "Grid", "GridItem", "Icon", "Image", "IndexList", "Input", "Keyboard", "Line", "LineProgress", "Link", "List", "ListItem", "Loadmore", "LoadingIcon", "LoadingPage", "Modal", "Navbar", "NoNetwork", "NoticeBar", "Notify", "NumberBox", "Overlay", "Parse", "Picker", "Popup", "Radio", "Rate", "ReadMore", "Row", "RowNotice", "Search", "Skeleton", "Slider", "Status", "Steps", "Sticky", "Subsection", "SwipeAction", "Swiper", "Switch", "Tabbar", "Tabs", "Tag", "Text", "Textarea", "Toast", "Tooltip", "Transition", "Upload"}},
 	{Name: "Element Plus", Packages: []string{"element-plus", "element-ui"}, TagPrefix: "el-", Import: []string{"element-plus", "element-ui"}, Platform: "h5", Components: []string{
@@ -58,6 +66,22 @@ var libConcept = map[string]string{
 	"Vant/GoodsAction":                             "actionbar",
 	"Vant/GoodsActionButton":                       "button",
 	"Vant/GoodsActionIcon":                         "",
+	"uni-app 内置组件/Navigator":                       "",
+	"uni-app 内置组件/ScrollView":                      "",
+	"uni-app 内置组件/Picker":                          "",
+	"uni-app 内置组件/Slider":                          "",
+	"uni-ui/ListItem":                              "cell",
+	"uni-ui/Section":                               "",
+	"uni-ui/Title":                                 "",
+	"uni-ui/Group":                                 "card",
+	"uni-ui/GoodsNav":                              "actionbar",
+	"uni-ui/SegmentedControl":                      "tabs",
+	"uni-ui/Easyinput":                             "input",
+	"uni-ui/NumberBox":                             "stepper",
+	"uni-ui/LoadMore":                              "loading",
+	"uni-ui/SwiperDot":                             "carousel",
+	"uni-ui/Row":                                   "",
+	"uni-ui/Col":                                   "",
 	"Vant/SubmitBar":                               "actionbar", // price + submit: a specialised action bar
 	"Vant/Row":                                     "",          // grid layout, not a list row
 	"Material Components/BadgeDrawable":            "",          // a drawable overlay, not a View to place

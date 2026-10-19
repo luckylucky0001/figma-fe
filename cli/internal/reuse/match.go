@@ -134,6 +134,18 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		}
 	}
 	setFamilyPrefixes(pool)
+	libShare = map[string]float64{}
+	total := 0
+	for _, l := range r.Libraries {
+		if l.Name != "Android SDK widgets" {
+			total += l.Usage
+		}
+	}
+	for _, l := range r.Libraries {
+		if total > 0 {
+			libShare[l.Name] = float64(l.Usage) / float64(total)
+		}
+	}
 	familyBase = familyBases(pool)
 	libChild = map[string]bool{}
 	names := map[string]bool{}
@@ -277,9 +289,9 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	var s float64
 	var why []string
 	switch {
-	case fn == an && figmaConcept != "" && a.Concept != "" && figmaConcept != a.Concept:
+	case fn != "" && fn == an && figmaConcept != "" && a.Concept != "" && figmaConcept != a.Concept:
 		s, why = 0.6, append(why, "同名但用途不同（"+a.Concept+"），需确认")
-	case fn == an:
+	case fn != "" && fn == an:
 		s, why = 0.85, append(why, "同名")
 	case figmaConcept != "" && figmaConcept == a.Concept:
 		s, why = 0.72, append(why, "同为 "+figmaConcept)
@@ -328,6 +340,11 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	if _, primitive := rawAndroid[a.Name]; primitive && a.Source == "Android SDK widgets" {
 		s -= 0.15 // Button / EditText / Toolbar are what projects wrap: the project's own component wins
 		why = append(why, "系统原生控件")
+	}
+	// a library the project barely uses (one stray <van-button> in a uni-ui project) is not its toolkit
+	if share, ok := libShare[a.Source]; ok && a.Kind == "ui-lib" && a.Usage == 0 && share < 0.05 {
+		s -= 0.15
+		why = append(why, "项目几乎不用 "+a.Source)
 	}
 	// a selectable component (FilterChip: selected / onSelectedChange) for a design element that has
 	// no selected state is the wrong interaction
@@ -409,7 +426,10 @@ func normName(s string) string {
 	for _, p := range []string{"van", "nut", "ds", "legacy", "qmui", "material", "app"} {
 		j = strings.TrimPrefix(j, p)
 	}
-	return strings.TrimSuffix(strings.TrimSuffix(j, "view"), "component")
+	if t := strings.TrimSuffix(strings.TrimSuffix(j, "view"), "component"); t != "" {
+		return t
+	}
+	return j // "View" itself stays "view"
 }
 
 func round2(f float64) float64 { return float64(int(f*100+0.5)) / 100 }
@@ -555,6 +575,8 @@ func familyPrefix(w string) bool { return famPrefixes[w] }
 var famPrefixes = map[string]bool{}
 
 var libChild = map[string]bool{}
+
+var libShare = map[string]float64{}
 
 // familyBase marks a project family's base component: NiaButton among NiaTextButton /
 // NiaOutlinedButton, DsCell among DsCellGroup … (prefix + the concept's own word).

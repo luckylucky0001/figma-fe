@@ -103,7 +103,8 @@ var concepts = []struct {
 	Words []string
 }{
 	{"button", []string{"button", "btn"}},
-	{"tag", []string{"tag", "badge", "chip", "label", "pill"}},
+	{"tag", []string{"tag", "chip", "label", "pill"}},
+	{"badge", []string{"badge", "dot", "badgedrawable"}}, // a count / dot on an icon, not a tag
 	{"cell", []string{"cell", "listitem", "row", "item", "inforow", "commonlistitemview"}},
 	{"card", []string{"card", "panel", "section", "cellgroup", "grouplistview"}},
 	{"navbar", []string{"navbar", "topbar", "appbar", "titlebar", "toolbar", "header", "topappbar"}},
@@ -126,7 +127,7 @@ var concepts = []struct {
 	{"stepper", []string{"stepper", "counter"}},
 	{"countdown", []string{"countdown", "timer"}},
 	{"goods", []string{"goods", "product", "sku", "goodscard", "productcard"}},
-	{"actionbar", []string{"actionbar", "goodsaction", "bottombar", "bottomactionbar", "footerbar"}},
+	{"actionbar", []string{"actionbar", "goodsaction", "goodsnav", "bottombar", "bottomactionbar", "footerbar"}},
 }
 
 // noise words that never decide a concept on their own
@@ -191,7 +192,7 @@ var zhConcepts = []struct{ kw, concept string }{
 	{"通知栏", "notice"}, {"公告", "notice"}, {"提示条", "notice"}, {"倒计时", "countdown"},
 	{"单元格", "cell"}, {"列表项", "cell"}, {"信息行", "cell"}, {"分割线", "divider"}, {"分隔线", "divider"},
 	{"商品卡", "goods"}, {"商品", "goods"}, {"价格", "price"}, {"金额", "price"}, {"按钮", "button"},
-	{"标签", "tag"}, {"徽标", "tag"}, {"角标", "tag"}, {"卡片", "card"}, {"弹窗", "dialog"}, {"对话框", "dialog"},
+	{"标签", "tag"}, {"徽标", "badge"}, {"角标", "badge"}, {"卡片", "card"}, {"弹窗", "dialog"}, {"对话框", "dialog"},
 	{"轻提示", "toast"}, {"吐司", "toast"}, {"弹出层", "popup"}, {"面板", "popup"}, {"输入框", "input"}, {"搜索", "input"},
 	{"图片", "image"}, {"头像", "image"}, {"空状态", "empty"}, {"加载", "loading"}, {"开关", "switch"}, {"复选框", "switch"},
 	{"单选", "switch"}, {"步进器", "stepper"}, {"轮播", "carousel"}, {"图标", "icon"}, {"列表", "list"},

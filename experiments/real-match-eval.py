@@ -24,6 +24,7 @@ PROJECTS = {
     # held out: first run after the rules above were tuned (see match-judgement.md for the first-pass result)
     "jetsnack": ("https://github.com/android/compose-samples.git#Jetsnack", "0bc770fd28510b5a16395349e7281f11386ac82f", "android"),
     "litemall": ("https://github.com/linlinjava/litemall.git#litemall-vue", "a1ef964a718b7277925b19ea26afe78ea3a1d325", "h5"),
+    "hello-uniapp": ("https://github.com/dcloudio/hello-uniapp.git", "ab80c34681013d844be2a9feb362bf96ffeca3ee", "h5"),
     "newpipe": ("https://github.com/TeamNewPipe/NewPipe.git", "32eb85d0fb09ef9022421751fd96bee564b9223b", "android"),
     "vant-demo-vue3": ("https://github.com/youzan/vant-demo.git#vant/vue3-ts", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
     "vant-demo-vue2": ("https://github.com/youzan/vant-demo.git#vant/vue2", "c382aeba3cfea6ea31f6fee98a99b1c6604accc4", "h5"),
@@ -93,6 +94,16 @@ EXPECTED = {
         "导航栏": (["TopAppBar", "CenterAlignedTopAppBar"], ["—"]), "公告通知栏": (["—"], []), "资产卡片": (["JetsnackCard"], ["Card"]), "标签页": (["TabRow"], ["—"]),
         "持仓列表": (["LazyColumn"], []), "持仓列表项": (["ListItem"], ["—"]), "涨跌标签": (["—", "Badge"], ["FilterChip"]), "收盘倒计时": (["—"], []),
         "底部操作栏": (["—"], []), "买入按钮": (["JetsnackButton"], []), "卖出按钮": (["JetsnackButton"], []), "更多按钮": (["JetsnackButton"], []),
+    },
+    ("hello-uniapp", "order-detail"): {
+        "NavBar": (["NavBar"], []), "NoticeBar": (["NoticeBar"], []), "Card": (["Card"], []), "Tag": (["Tag"], []),
+        "CountDown": (["Countdown"], []), "Divider": (["—"], ["Divider"]), "Cell": (["ListItem"], []), "ProductCard": (["Card", "—"], []),
+        "Price": (["—"], []), "ActionBar": (["GoodsNav"], []), "Button": (["Button[uni-app 内置组件]"], []),
+    },
+    ("hello-uniapp", "holdings"): {
+        "导航栏": (["NavBar"], []), "公告通知栏": (["NoticeBar"], []), "资产卡片": (["Card"], []), "标签页": (["SegmentedControl"], []),
+        "持仓列表": (["List"], []), "持仓列表项": (["ListItem"], []), "涨跌标签": (["Tag"], []), "收盘倒计时": (["Countdown"], []),
+        "底部操作栏": (["GoodsNav"], []), "买入按钮": (["Button[uni-app 内置组件]"], []), "卖出按钮": (["Button[uni-app 内置组件]"], []), "更多按钮": (["Button[uni-app 内置组件]"], []),
     },
     ("newpipe", "order-detail"): {
         "NavBar": (["Toolbar", "MaterialToolbar", "@layout/toolbar_layout"], []), "NoticeBar": (["—"], []), "Card": (["CardView", "MaterialCardView"], []), "Tag": (["Chip"], ["—"]),

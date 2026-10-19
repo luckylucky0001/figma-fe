@@ -1,0 +1,28 @@
+.ds-notice-bar {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 var(--ds-space-md);
+  border-radius: var(--ds-radius-md);
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+}
+
+.ds-notice-bar__text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ds-notice-bar--info {
+  background: var(--ds-color-primary-light);
+  color: var(--ds-color-primary);
+}
+
+.ds-notice-bar--warning {
+  background: var(--ds-color-warning-light);
+  color: var(--ds-color-warning);
+}

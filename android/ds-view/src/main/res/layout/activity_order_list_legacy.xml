@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Existing legacy (XML View) order screen. Uses ds-view components, plus one raw <Button>
+     with hard-coded color / size that predates the design system (audit should flag it). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ds_color_bg_page"
+    android:orientation="vertical"
+    tools:context=".OrderListLegacyActivity">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/ds_color_bg_card"
+        android:gravity="center"
+        android:text="我的订单"
+        android:textColor="@color/ds_color_text_primary"
+        android:textSize="@dimen/ds_font_title"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ds_space_md"
+            android:background="@color/ds_color_bg_card"
+            android:orientation="vertical"
+            android:padding="@dimen/ds_space_lg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_shop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="数码好物旗舰店"
+                    android:textColor="@color/ds_color_text_primary"
+                    android:textSize="@dimen/ds_font_subtitle"
+                    android:textStyle="bold" />
+
+                <com.demo.dsview.LegacyTagView
+                    android:id="@+id/tag_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="待付款"
+                    app:tagTone="primary" />
+
+                <com.demo.dsview.LegacyTagView
+                    android:id="@+id/tag_risk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="@dimen/ds_space_xs"
+                    android:text="风险提示"
+                    app:tagTone="danger" />
+            </LinearLayout>
+
+            <com.demo.dsview.LegacyCellView
+                android:id="@+id/cell_order_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cellShowArrow="false"
+                app:cellTitle="订单编号"
+                app:cellValue="DD20261018093021" />
+
+            <com.demo.dsview.LegacyCellView
+                android:id="@+id/cell_created_at"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cellShowArrow="false"
+                app:cellTitle="下单时间"
+                app:cellValue="2026-10-18 09:30" />
+
+            <com.demo.dsview.LegacyCellView
+                android:id="@+id/cell_logistics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cellShowArrow="true"
+                app:cellTitle="物流信息"
+                app:cellValue="查看物流" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_space_md"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <!-- BAD PRACTICE (pre-design-system): raw Button with hard-coded color and size. -->
+                <Button
+                    android:id="@+id/btn_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="@dimen/ds_space_sm"
+                    android:background="@null"
+                    android:text="联系客服"
+                    android:textColor="#FF4D1A"
+                    android:textSize="14sp" />
+
+                <com.demo.dsview.LegacyButton
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/ds_space_sm"
+                    android:text="取消订单"
+                    app:btnSize="medium"
+                    app:btnType="default" />
+
+                <com.demo.dsview.LegacyButton
+                    android:id="@+id/btn_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="去支付"
+                    app:btnSize="medium"
+                    app:btnType="primary" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

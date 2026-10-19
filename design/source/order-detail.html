@@ -1,0 +1,147 @@
+<!doctype html>
+<!--
+  设计源：用来生成 Figma fixture（design/figma-export/order-detail/）。
+  诚实说明：没有真实 Figma 文件可用，所以由这份「独立手写、不依赖任何一端组件库」的 HTML 按 design/SPEC.md 画出设计稿，
+  再由 `figmafe fixture` 导出成与 Figma REST / 插件导出一致的节点树 + @2x 图。
+  标注约定：
+    data-fig="FRAME|INSTANCE|TEXT|RECTANGLE"   节点类型
+    data-fig-name="..."                         图层名
+    data-fig-set="Button"                       INSTANCE 所属组件集
+    data-fig-props='{"Type":"Primary"}'         变体属性
+-->
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; color: #1F2329; }
+  #frame { position: relative; width: 375px; height: 900px; background: #F5F6F7; overflow: hidden; }
+  .content { position: absolute; top: 44px; left: 0; right: 0; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+  .navbar { position: absolute; top: 0; left: 0; width: 375px; height: 44px; background: #fff; }
+  .navbar .back { position: absolute; left: 12px; top: 10px; width: 24px; height: 24px; }
+  .navbar .title { position: absolute; left: 0; right: 0; top: 10px; text-align: center; font-size: 17px; line-height: 24px; font-weight: 600; }
+  .notice { height: 36px; padding: 0 12px; border-radius: 8px; background: #FFF3E8; color: #FF8F1F; font-size: 12px; line-height: 36px; white-space: nowrap; }
+  .card { background: #fff; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; }
+  .card-title { font-size: 15px; line-height: 22px; font-weight: 600; margin-bottom: 12px; }
+  .status-row { display: flex; align-items: center; gap: 8px; height: 24px; }
+  .status-title { font-size: 17px; line-height: 24px; font-weight: 600; }
+  .countdown { font-size: 12px; line-height: 18px; color: #F53F3F; margin-left: auto; }
+  .status-desc { font-size: 12px; line-height: 18px; color: #8F959E; margin-top: 4px; margin-bottom: 12px; }
+  .tag { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: 4px; font-size: 12px; line-height: 20px; font-weight: 500; }
+  .tag.warning { background: #FFF3E8; color: #FF8F1F; }
+  .divider { height: 1px; background: #E5E6EB; }
+  .cell { display: flex; align-items: center; min-height: 44px; padding: 12px 0; }
+  .cell .left { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .cell .t { font-size: 14px; line-height: 20px; }
+  .cell .l { font-size: 12px; line-height: 18px; color: #8F959E; margin-top: 2px; }
+  .cell .v { font-size: 14px; line-height: 20px; color: #646A73; text-align: right; white-space: nowrap; }
+  .cell .arrow { width: 16px; height: 16px; margin-left: 4px; }
+  .product { display: flex; gap: 12px; height: 80px; margin-bottom: 12px; }
+  .thumb { width: 80px; height: 80px; border-radius: 8px; background: #F2F3F5; flex: none; }
+  .pinfo { flex: 1; min-width: 0; height: 80px; display: flex; flex-direction: column; }
+  .ptitle { font-size: 14px; line-height: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .pspec { font-size: 12px; line-height: 18px; color: #8F959E; margin-top: 4px; }
+  .pbottom { margin-top: auto; display: flex; align-items: flex-end; justify-content: space-between; }
+  .pcount { font-size: 12px; line-height: 18px; color: #8F959E; }
+  .price { display: inline-flex; align-items: baseline; font-weight: 700; white-space: nowrap; }
+  .price .s, .price .d { font-weight: 600; }
+  .price.m { color: #1F2329; }
+  .price.m .s, .price.m .d { font-size: 12px; } .price.m .i { font-size: 18px; }
+  .price.l { color: #FF4D1A; }
+  .price.l .s, .price.l .d { font-size: 14px; } .price.l .i { font-size: 22px; }
+  .price span { line-height: 1.2; }
+  .total-row { display: flex; align-items: center; justify-content: flex-end; gap: 8px; height: 32px; margin-top: 4px; }
+  .total-label { font-size: 14px; line-height: 20px; }
+  .actionbar { position: absolute; left: 0; bottom: 0; width: 375px; height: 56px; background: #fff; border-top: 1px solid #E5E6EB; padding: 0 16px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+  .btn { height: 32px; padding: 0 16px; border-radius: 16px; font-size: 14px; line-height: 20px; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; }
+  .btn.default { background: #fff; border: 1px solid #E5E6EB; color: #1F2329; }
+  .btn.primary { background: #FF4D1A; color: #fff; }
+</style>
+</head>
+<body>
+<div id="frame" data-fig="FRAME" data-fig-name="OrderDetail 订单详情">
+
+  <div class="navbar" data-fig="INSTANCE" data-fig-set="NavBar" data-fig-name="NavBar">
+    <svg class="back" viewBox="0 0 24 24" fill="none" stroke="#1F2329" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    <div class="title" data-fig="TEXT" data-fig-name="Title">订单详情</div>
+  </div>
+
+  <div class="content">
+    <div class="notice" data-fig="INSTANCE" data-fig-set="NoticeBar" data-fig-props='{"Tone":"Warning"}' data-fig-name="NoticeBar">
+      <span data-fig="TEXT" data-fig-name="Text">商家已接单，预计 10月22日 前发货</span>
+    </div>
+
+    <div class="card" data-fig="INSTANCE" data-fig-set="Card" data-fig-props='{"Title":"Off"}' data-fig-name="Card / 状态">
+      <div class="status-row" data-fig="FRAME" data-fig-name="StatusRow">
+        <span class="tag warning" data-fig="INSTANCE" data-fig-set="Tag" data-fig-props='{"Tone":"Warning","Variant":"Light"}' data-fig-name="Tag"><span data-fig="TEXT" data-fig-name="Label">待发货</span></span>
+        <span class="status-title" data-fig="TEXT" data-fig-name="StatusTitle">等待商家发货</span>
+        <span class="countdown" data-fig="INSTANCE" data-fig-set="CountDown" data-fig-name="CountDown"><span data-fig="TEXT" data-fig-name="Text">剩余 23:59:59</span></span>
+      </div>
+      <div class="status-desc" data-fig="TEXT" data-fig-name="StatusDesc">超时未发货将自动赔付 5 元无门槛券</div>
+      <div class="divider" data-fig="INSTANCE" data-fig-set="Divider" data-fig-name="Divider"></div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"On","Label":"On"}' data-fig-name="Cell / 地址">
+        <div class="left">
+          <div class="t" data-fig="TEXT" data-fig-name="Title">张三 138****8888</div>
+          <div class="l" data-fig="TEXT" data-fig-name="Label">上海市浦东新区世纪大道 100 号 8 楼</div>
+        </div>
+        <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="#8F959E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5l4.5 4.5L6 12.5"/></svg>
+      </div>
+    </div>
+
+    <div class="card" data-fig="INSTANCE" data-fig-set="Card" data-fig-props='{"Title":"On"}' data-fig-name="Card / 商品">
+      <div class="card-title" data-fig="TEXT" data-fig-name="CardTitle">商品信息</div>
+      <div class="product" data-fig="INSTANCE" data-fig-set="ProductCard" data-fig-name="ProductCard">
+        <div class="thumb" data-fig="RECTANGLE" data-fig-name="Thumb"></div>
+        <div class="pinfo">
+          <div class="ptitle" data-fig="TEXT" data-fig-name="Title">轻薄羽绒服 女款 短款连帽 冬季保暖外套</div>
+          <div class="pspec" data-fig="TEXT" data-fig-name="Spec">米白色 / M</div>
+          <div class="pbottom">
+            <span class="price m" data-fig="INSTANCE" data-fig-set="Price" data-fig-props='{"Size":"Medium","Tone":"Default"}' data-fig-name="Price"><span class="s" data-fig="TEXT" data-fig-name="Symbol">¥</span><span class="i" data-fig="TEXT" data-fig-name="Integer">299</span><span class="d" data-fig="TEXT" data-fig-name="Decimal">.00</span></span>
+            <span class="pcount" data-fig="TEXT" data-fig-name="Count">x1</span>
+          </div>
+        </div>
+      </div>
+      <div class="divider" data-fig="INSTANCE" data-fig-set="Divider" data-fig-name="Divider"></div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"Off","Label":"Off"}' data-fig-name="Cell / 商品总额">
+        <div class="left"><div class="t" data-fig="TEXT" data-fig-name="Title">商品总额</div></div>
+        <div class="v" data-fig="TEXT" data-fig-name="Value">¥299.00</div>
+      </div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"Off","Label":"Off"}' data-fig-name="Cell / 运费">
+        <div class="left"><div class="t" data-fig="TEXT" data-fig-name="Title">运费</div></div>
+        <div class="v" data-fig="TEXT" data-fig-name="Value">免运费</div>
+      </div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"Off","Label":"Off"}' data-fig-name="Cell / 优惠">
+        <div class="left"><div class="t" data-fig="TEXT" data-fig-name="Title">店铺优惠</div></div>
+        <div class="v" data-fig="TEXT" data-fig-name="Value">-¥30.00</div>
+      </div>
+      <div class="total-row" data-fig="FRAME" data-fig-name="TotalRow">
+        <span class="total-label" data-fig="TEXT" data-fig-name="TotalLabel">实付款</span>
+        <span class="price l" data-fig="INSTANCE" data-fig-set="Price" data-fig-props='{"Size":"Large","Tone":"Primary"}' data-fig-name="Price"><span class="s" data-fig="TEXT" data-fig-name="Symbol">¥</span><span class="i" data-fig="TEXT" data-fig-name="Integer">269</span><span class="d" data-fig="TEXT" data-fig-name="Decimal">.00</span></span>
+      </div>
+    </div>
+
+    <div class="card" data-fig="INSTANCE" data-fig-set="Card" data-fig-props='{"Title":"On"}' data-fig-name="Card / 订单信息">
+      <div class="card-title" data-fig="TEXT" data-fig-name="CardTitle">订单信息</div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"Off","Label":"Off"}' data-fig-name="Cell / 订单编号">
+        <div class="left"><div class="t" data-fig="TEXT" data-fig-name="Title">订单编号</div></div>
+        <div class="v" data-fig="TEXT" data-fig-name="Value">2026102012345678</div>
+      </div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"Off","Label":"Off"}' data-fig-name="Cell / 下单时间">
+        <div class="left"><div class="t" data-fig="TEXT" data-fig-name="Title">下单时间</div></div>
+        <div class="v" data-fig="TEXT" data-fig-name="Value">2026-10-20 10:24</div>
+      </div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"Off","Label":"Off"}' data-fig-name="Cell / 支付方式">
+        <div class="left"><div class="t" data-fig="TEXT" data-fig-name="Title">支付方式</div></div>
+        <div class="v" data-fig="TEXT" data-fig-name="Value">微信支付</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actionbar" data-fig="INSTANCE" data-fig-set="ActionBar" data-fig-name="ActionBar">
+    <span class="btn default" data-fig="INSTANCE" data-fig-set="Button" data-fig-props='{"Type":"Default","Size":"Medium"}' data-fig-name="Button"><span data-fig="TEXT" data-fig-name="Label">联系客服</span></span>
+    <span class="btn default" data-fig="INSTANCE" data-fig-set="Button" data-fig-props='{"Type":"Default","Size":"Medium"}' data-fig-name="Button"><span data-fig="TEXT" data-fig-name="Label">修改地址</span></span>
+    <span class="btn primary" data-fig="INSTANCE" data-fig-set="Button" data-fig-props='{"Type":"Primary","Size":"Medium"}' data-fig-name="Button"><span data-fig="TEXT" data-fig-name="Label">提醒发货</span></span>
+  </div>
+</div>
+</body>
+</html>

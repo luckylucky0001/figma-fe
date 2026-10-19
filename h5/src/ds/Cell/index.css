@@ -1,0 +1,51 @@
+.ds-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-md);
+  min-height: 44px;
+  padding: var(--ds-space-md) 0;
+}
+
+.ds-cell__left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ds-cell__title {
+  font-size: var(--ds-font-body-size);
+  line-height: var(--ds-font-body-line-height);
+  font-weight: var(--ds-font-body-weight);
+  color: var(--ds-color-text-primary);
+}
+
+.ds-cell__label {
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+  color: var(--ds-color-text-tertiary);
+}
+
+.ds-cell__right {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.ds-cell__value {
+  font-size: var(--ds-font-body-size);
+  line-height: var(--ds-font-body-line-height);
+  font-weight: var(--ds-font-body-weight);
+  color: var(--ds-color-text-secondary);
+  text-align: right;
+}
+
+.ds-cell__arrow {
+  display: block;
+  flex-shrink: 0;
+  color: var(--ds-color-text-tertiary);
+}

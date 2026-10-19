@@ -1,0 +1,31 @@
+.ds-price {
+  display: inline-flex;
+  align-items: baseline;
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-family: var(--ds-font-family);
+}
+
+.ds-price--primary { color: var(--ds-color-primary); }
+.ds-price--default { color: var(--ds-color-text-primary); }
+
+.ds-price__symbol,
+.ds-price__decimal {
+  font-weight: 600;
+}
+
+.ds-price__integer {
+  font-weight: 700;
+}
+
+.ds-price--large .ds-price__symbol,
+.ds-price--large .ds-price__decimal { font-size: 14px; line-height: 1.2; }
+.ds-price--large .ds-price__integer { font-size: 22px; line-height: 1.2; }
+
+.ds-price--medium .ds-price__symbol,
+.ds-price--medium .ds-price__decimal { font-size: 12px; line-height: 1.2; }
+.ds-price--medium .ds-price__integer { font-size: 18px; line-height: 1.2; }
+
+.ds-price--small .ds-price__symbol,
+.ds-price--small .ds-price__decimal { font-size: 12px; line-height: 1.2; }
+.ds-price--small .ds-price__integer { font-size: 14px; line-height: 1.2; }

@@ -185,6 +185,9 @@ func ScanAndroid(root string) *Report {
 					continue
 				}
 				a := get("custom-view", m[1], f.rel)
+				if lib := libOf[base]; lib != nil && lib.Source != "Android SDK widgets" && inDesignSystem(f.rel) && lib.WrappedBy == "" {
+					lib.WrappedBy = m[1] // class DsButton : MaterialButton
+				}
 				a.Props = styleable[m[1]]
 				refineConcept(a)
 				custom[m[1]] = a
@@ -270,6 +273,9 @@ func ScanAndroid(root string) *Report {
 				continue
 			}
 			if a, ok := libOf[simple]; ok {
+				if a.WrappedBy != "" && !inDesignSystem(f.rel) {
+					r.Findings = append(r.Findings, Finding{"bypass", "warn", f.rel, ln, line, "直接用了 " + simple + "（" + a.Source + "），项目设计系统已封装为 " + a.WrappedBy + "，应使用封装"})
+				}
 				if a.Source == "Android SDK widgets" {
 					if concept, raw := rawAndroid[simple]; raw {
 						if alt := bestProjectAsset(assets, concept, "custom-view"); alt != nil {
@@ -347,6 +353,13 @@ func ScanAndroid(root string) *Report {
 		if l.Name != "Compose Material3" {
 			continue
 		}
+		type call struct {
+			f    file
+			c    string
+			at   int
+			line string
+		}
+		var calls []call
 		for _, f := range code {
 			if !strings.Contains(f.text, "androidx.compose.material3") {
 				continue
@@ -355,8 +368,34 @@ func ScanAndroid(root string) *Report {
 			for _, c := range l.Components {
 				for _, m := range regexp.MustCompile(`(?:^|[^\w.])`+c+`\s*\(`).FindAllStringIndex(f.text, -1) {
 					ln := strings.Count(f.text[:m[0]], "\n") + 1
-					use(assets["ui-lib|"+c], f.rel, ln, strings.TrimSpace(lines[ln-1]))
+					calls = append(calls, call{f, c, ln, strings.TrimSpace(lines[ln-1])})
 				}
+			}
+		}
+		// a design-system file that calls a library composable wraps it (NiaButton → Button)
+		for _, k := range calls {
+			lib := assets["ui-lib|"+k.c]
+			if lib == nil || lib.WrappedBy != "" || !inDesignSystem(k.f.rel) {
+				continue
+			}
+			var best *Asset
+			for _, a := range compos {
+				if a.Source != k.f.rel || a.Concept != lib.Concept && !strings.HasSuffix(a.Name, k.c) {
+					continue
+				}
+				if best == nil || strings.HasSuffix(a.Name, k.c) && !strings.HasSuffix(best.Name, k.c) || len(a.Name) < len(best.Name) && strings.HasSuffix(a.Name, k.c) == strings.HasSuffix(best.Name, k.c) {
+					best = a
+				}
+			}
+			if best != nil {
+				lib.WrappedBy = best.Name
+			}
+		}
+		for _, k := range calls {
+			lib := assets["ui-lib|"+k.c]
+			use(lib, k.f.rel, k.at, k.line)
+			if lib != nil && lib.WrappedBy != "" && !inDesignSystem(k.f.rel) {
+				r.Findings = append(r.Findings, Finding{"bypass", "warn", k.f.rel, k.at, k.line, "直接用了 " + k.c + "（" + l.Name + "），项目设计系统已封装为 " + lib.WrappedBy + "，应使用封装"})
 			}
 		}
 	}

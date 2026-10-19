@@ -38,6 +38,16 @@ func (r *Report) Markdown() string {
 		}
 	}
 
+	var wraps []string
+	for _, a := range r.LibAll {
+		if a.WrappedBy != "" {
+			wraps = append(wraps, "`"+a.Name+"` → `"+a.WrappedBy+"`")
+		}
+	}
+	if len(wraps) > 0 {
+		sort.Strings(wraps)
+		b.WriteString("\n**设计系统封装**（组件库组件 → 项目的封装；新页面一律用右边的封装）：" + strings.Join(wraps, "、") + "\n")
+	}
 	if len(r.Conventions) > 0 {
 		b.WriteString("\n**项目惯例写法**（没有组件、但项目里固定这么写；新设计稿里没有对应组件时沿用它，不要另造）：\n\n")
 		for _, c := range r.Conventions {
@@ -74,12 +84,12 @@ func (r *Report) Markdown() string {
 
 	var missed []Finding
 	for _, f := range r.Findings {
-		if f.Rule == "missed-reuse" {
+		if f.Rule == "missed-reuse" || f.Rule == "bypass" {
 			missed = append(missed, f)
 		}
 	}
 	if len(missed) > 0 {
-		fmt.Fprintf(&b, "\n## 4. 有组件却没用（%d 处）\n\n", len(missed))
+		fmt.Fprintf(&b, "\n## 4. 有组件却没用（%d 处，含绕过设计系统封装直接用组件库）\n\n", len(missed))
 		for i, f := range missed {
 			if i >= 25 {
 				fmt.Fprintf(&b, "- … 还有 %d 处\n", len(missed)-i)

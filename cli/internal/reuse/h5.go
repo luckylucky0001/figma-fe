@@ -529,7 +529,7 @@ func ignored(ign []string, rel string) bool {
 }
 
 func skipDir(n string) bool {
-	return n == "node_modules" || n == "dist" || n == "build" || n == ".git" || n == ".gradle" || n == ".idea" || n == "coverage" || n == ".figmafe" || n == "unpackage" || n == "miniprogram_npm"
+	return n == "test" || n == "tests" || n == "androidTest" || n == "__tests__" || n == "e2e" || n == "testFixtures" || n == "screenshots" || n == "node_modules" || n == "dist" || n == "build" || n == ".git" || n == ".gradle" || n == ".idea" || n == "coverage" || n == ".figmafe" || n == "unpackage" || n == "miniprogram_npm"
 }
 
 func relPath(root, p string) string {

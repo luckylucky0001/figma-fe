@@ -132,6 +132,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			pool = append(pool, a)
 		}
 	}
+	familyBase = familyBases(pool)
 	for _, name := range order {
 		a := sets[name]
 		item := MatchItem{Figma: name, Instances: len(a.ids), NodeIDs: a.ids}
@@ -290,6 +291,9 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 			}
 		}
 		residual = strings.TrimSuffix(residual, "s")
+		for _, w := range styleWords {
+			residual = strings.Replace(residual, w, "", 1)
+		}
 		if len(residual) >= 3 && !strings.Contains(strings.ToLower(figmaName), residual) {
 			s -= 0.12
 			why = append(why, "专用组件（"+residual+"）")
@@ -297,7 +301,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	}
 	// the library's canonical component of the concept (Cell for cell, Tag for tag) beats look-alikes
 	for _, c := range concepts {
-		if c.Name == a.Concept && an == c.Words[0] && fn != an {
+		if c.Name == a.Concept && (an == c.Words[0] || familyBase[a.Name]) && fn != an {
 			s += 0.04
 			why = append(why, "标准组件")
 		}
@@ -327,10 +331,15 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s += math.Min(0.25, 0.05*math.Log2(float64(a.Usage)+1)) // proven in this codebase, more so when widely used
 		why = append(why, fmt.Sprintf("项目里已用 %d 次", a.Usage))
 	}
-	switch a.Kind {
-	case "design-system":
+	if a.WrappedBy != "" {
+		s -= 0.15
+		why = append(why, "项目设计系统已封装为 "+a.WrappedBy+"，应使用封装")
+	}
+	switch {
+	case a.Kind == "design-system" || (a.Kind == "composable" || a.Kind == "custom-view") && inDesignSystem(a.Source):
 		s += 0.05
-	case "page-local":
+		why = append(why, "设计系统组件")
+	case a.Kind == "page-local":
 		s -= 0.2
 		why = append(why, "页面私有，需先抽出")
 	}
@@ -479,4 +488,42 @@ func r2android(a Asset) bool {
 		}
 	}
 	return false
+}
+
+// styleWords are orientation / visual-style words, not a specialisation (HorizontalDivider,
+// OutlinedButton, FilledTonalButton are still the generic component).
+var styleWords = []string{"horizontal", "vertical", "outlined", "filled", "elevated", "tonal", "default", "basic", "simple", "standard", "normal"}
+
+// familyBase marks a project family's base component: NiaButton among NiaTextButton /
+// NiaOutlinedButton, DsCell among DsCellGroup … (prefix + the concept's own word).
+var familyBase map[string]bool
+
+func familyBases(pool []Asset) map[string]bool {
+	out := map[string]bool{}
+	for _, a := range pool {
+		if a.Concept == "" {
+			continue
+		}
+		var word string
+		for _, c := range concepts {
+			if c.Name == a.Concept {
+				word = c.Words[0]
+			}
+		}
+		n := normName(a.Name)
+		if !strings.HasSuffix(n, word) || n == word {
+			continue
+		}
+		prefix := strings.TrimSuffix(n, word)
+		kin := 0
+		for _, b := range pool {
+			if bn := normName(b.Name); b.Concept == a.Concept && bn != n && strings.HasPrefix(bn, prefix) {
+				kin++
+			}
+		}
+		if kin >= 2 {
+			out[a.Name] = true
+		}
+	}
+	return out
 }

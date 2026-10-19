@@ -8,6 +8,7 @@
 package reuse
 
 import (
+	"regexp"
 	"sort"
 	"strings"
 )
@@ -26,6 +27,7 @@ type Asset struct {
 	// compatibility with the project as it is (see compat.go)
 	Caveat      string `json:"caveat,omitempty"`
 	Unavailable bool   `json:"unavailable,omitempty"` // the installed library version does not ship it
+	WrappedBy   string `json:"wrappedBy,omitempty"`   // the design-system component that wraps this library component
 }
 
 type Finding struct {
@@ -102,12 +104,12 @@ var concepts = []struct {
 	{"tag", []string{"tag", "badge", "chip", "label", "pill"}},
 	{"cell", []string{"cell", "listitem", "row", "item", "inforow", "commonlistitemview"}},
 	{"card", []string{"card", "panel", "section", "cellgroup", "grouplistview"}},
-	{"navbar", []string{"navbar", "topbar", "appbar", "titlebar", "toolbar", "header"}},
+	{"navbar", []string{"navbar", "topbar", "appbar", "titlebar", "toolbar", "header", "topappbar"}},
 	{"price", []string{"price", "amount", "money", "pricetext"}},
 	{"dialog", []string{"dialog", "modal", "alert", "confirm"}},
 	{"toast", []string{"toast", "snackbar", "notify", "tips"}},
 	{"popup", []string{"popup", "sheet", "actionsheet", "bottomsheet", "drawer", "popover", "floatingpanel"}},
-	{"tabs", []string{"tabs", "tab", "tabbar", "segment", "segmented"}},
+	{"tabs", []string{"tabs", "tab", "tabbar", "segment", "segmented", "navigationbar", "bottomnavigation", "bottomnavigationview", "tabrow"}},
 	{"input", []string{"input", "field", "edittext", "textfield", "search", "searchbar", "textarea"}},
 	{"carousel", []string{"swipe", "swiper", "carousel", "banner", "viewpager"}},
 	{"icon", []string{"icon"}},
@@ -250,18 +252,34 @@ func ConceptOf(name string) string {
 		}
 	}
 	best, weakBest := "", ""
-	for _, w := range words {
-		w2 := strings.TrimSuffix(w, "s")
-		for _, c := range concepts {
-			for _, cw := range c.Words {
-				if w == cw || w2 == cw {
-					if weak[cw] {
-						weakBest = c.Name
-					} else {
-						best = c.Name
+	for e := range words {
+		// longest n-gram ending here: top+app+bar → topappbar, navigation+bar → navigationbar
+		for n := 3; n >= 1; n-- {
+			if e-n+1 < 0 {
+				continue
+			}
+			w := strings.Join(words[e-n+1:e+1], "")
+			w2 := strings.TrimSuffix(w, "s")
+			hit := ""
+			for _, c := range concepts {
+				for _, cw := range c.Words {
+					if w == cw || w2 == cw {
+						hit = c.Name
+						if n == 1 && weak[cw] {
+							hit = "~" + c.Name
+						}
 					}
 				}
 			}
+			if hit == "" {
+				continue
+			}
+			if strings.HasPrefix(hit, "~") {
+				weakBest = hit[1:]
+			} else {
+				best = hit
+			}
+			break
 		}
 	}
 	if best != "" {
@@ -333,6 +351,9 @@ func rank(a Asset) int {
 	if a.Source == "Android SDK widgets" {
 		w = 100 // framework widgets are the thing projects wrap, never the recommendation
 	}
+	if (a.Kind == "composable" || a.Kind == "custom-view") && inDesignSystem(a.Source) {
+		w = 3000 // an Android design-system module (core/designsystem, ds, uikit)
+	}
 	return w + a.Usage
 }
 
@@ -354,6 +375,15 @@ func collapseFamilies(as []Asset) []Asset {
 	}
 	return out
 }
+
+var dsPathRe = regexp.MustCompile(`/(ds|design-?system|ui-?kit|core-?ui|base-?ui|widget-?lib)/`)
+
+// inDesignSystem: the file lives in a design-system / UI-kit module or folder.
+func inDesignSystem(rel string) bool {
+	return dsPathRe.MatchString("/" + strings.ToLower(filepathToSlash(rel)))
+}
+
+func filepathToSlash(p string) string { return strings.ReplaceAll(p, "\\", "/") }
 
 func kindLabel(k string) string {
 	return map[string]string{"ui-lib": "组件库", "design-system": "设计系统", "business": "业务组件", "page-local": "页面内私有", "custom-view": "自定义 View", "composable": "Composable", "convention": "项目惯例"}[k]

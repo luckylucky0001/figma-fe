@@ -85,7 +85,7 @@ func (r *Report) CheckFocusLines(focus string, lines map[string]map[int]bool) *P
 		}
 	}
 	for _, f := range r.Findings {
-		if f.Rule == "missed-reuse" && in(f.File) && inLines(f.File, f.Line) {
+		if (f.Rule == "missed-reuse" || f.Rule == "bypass") && in(f.File) && inLines(f.File, f.Line) {
 			pc.MissedReuse = append(pc.MissedReuse, f)
 		}
 	}

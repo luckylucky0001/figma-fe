@@ -26,6 +26,11 @@ var libMinVersion = map[string]map[string]string{
 	},
 }
 
+// libDeprecated: component → its replacement in the same library.
+var libDeprecated = map[string]map[string]string{
+	"Compose Material3": {"Divider": "HorizontalDivider", "SwipeToDismiss": "SwipeToDismissBox"},
+}
+
 // materialThemed: Material Components widgets that enforce a Theme.MaterialComponents / Material3
 // ancestor ("The style on this component requires your app theme to be Theme.MaterialComponents").
 var materialThemed = map[string]bool{
@@ -131,6 +136,10 @@ func markCompat(assets map[string]*Asset, versions map[string]string, themeFamil
 		if min := libMinVersion[a.Source][a.Name]; min != "" && versionLess(versions[a.Source], min) {
 			a.Unavailable = true
 			a.Caveat = "需要 " + a.Source + " ≥ " + min + "，项目是 " + versions[a.Source] + "，用了会编译失败"
+			continue
+		}
+		if repl := libDeprecated[a.Source][a.Name]; repl != "" {
+			a.Caveat = "已废弃，改用 " + repl
 			continue
 		}
 		if a.Source == "Material Components" && materialThemed[a.Name] && themeFamily == "appcompat" {

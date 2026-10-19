@@ -147,6 +147,9 @@ func ScanH5(root string) *Report {
 	assets := map[string]*Asset{} // key kind|name
 	get := func(kind, name, source string) *Asset {
 		k := kind + "|" + name
+		if kind == "ui-lib" {
+			k = "ui-lib|" + source + "|" + name // SDK Button and Compose Material3 Button are different things
+		}
 		if a, ok := assets[k]; ok {
 			return a
 		}
@@ -303,19 +306,19 @@ func ScanH5(root string) *Report {
 				for _, h := range libs {
 					if h.lib.TagPrefix != "" && strings.HasPrefix(tag, h.lib.TagPrefix) {
 						if n := kebabToPascal(strings.TrimPrefix(tag, h.lib.TagPrefix)); h.names[n] {
-							a = assets["ui-lib|"+n]
+							a = assets["ui-lib|"+h.lib.Name+"|"+n]
 						}
 					}
 					pascal := kebabToPascal(tag)
 					if a == nil && h.names[pascal] {
 						if src, ok := imported[pascal]; ok && contains(h.lib.Import, src) {
-							a = assets["ui-lib|"+pascal]
+							a = assets["ui-lib|"+h.lib.Name+"|"+pascal]
 						}
 					}
 					// compound members: <List.Item>, <Form.Item> → ListItem, FormItem
 					if i := strings.IndexByte(tag, '.'); a == nil && i > 0 && h.names[strings.ReplaceAll(tag, ".", "")] {
 						if src, ok := imported[tag[:i]]; ok && contains(h.lib.Import, src) {
-							a = assets["ui-lib|"+strings.ReplaceAll(tag, ".", "")]
+							a = assets["ui-lib|"+h.lib.Name+"|"+strings.ReplaceAll(tag, ".", "")]
 						}
 					}
 				}

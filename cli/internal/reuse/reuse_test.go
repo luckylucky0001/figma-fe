@@ -447,3 +447,20 @@ func TestHandBuiltRowsH5(t *testing.T) {
 		t.Errorf("handBuilt=%+v", pc.HandBuilt)
 	}
 }
+
+func TestSameNameAcrossLibraries(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/build.gradle", `dependencies { implementation "androidx.compose.material3:material3:1.2.0" }`)
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><Button/><Button/></LinearLayout>`)
+	write(t, root, "app/src/main/java/x/S.kt", "import androidx.compose.material3.Button\n@Composable\nfun S() { Button(onClick = {}) {} }")
+	r := ScanAndroid(root)
+	use := map[string]int{}
+	for _, a := range r.Assets {
+		if a.Name == "Button" {
+			use[a.Source] = a.Usage
+		}
+	}
+	if use["Android SDK widgets"] != 2 || use["Compose Material3"] != 1 {
+		t.Errorf("XML <Button> and Compose Button() must be counted separately: %v", use)
+	}
+}

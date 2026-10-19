@@ -132,6 +132,9 @@ func ScanAndroid(root string) *Report {
 	assets := map[string]*Asset{}
 	get := func(kind, name, source string) *Asset {
 		k := kind + "|" + name
+		if kind == "ui-lib" {
+			k = "ui-lib|" + source + "|" + name // SDK Button and Compose Material3 Button are different things
+		}
 		if a, ok := assets[k]; ok {
 			return a
 		}
@@ -148,6 +151,9 @@ func ScanAndroid(root string) *Report {
 	for _, l := range libs {
 		for _, c := range l.Components {
 			a := get("ui-lib", c, l.Name)
+			if isComposeLib(l.Name) {
+				continue // composables never appear as XML tags
+			}
 			if _, ok := libOf[c]; !ok || l.Name != "Android SDK widgets" {
 				libOf[c] = a
 			}
@@ -386,7 +392,9 @@ func ScanAndroid(root string) *Report {
 		}
 	}
 	for _, o := range raws {
-		if alt := bestProjectAsset(assets, o.concept, "custom-view"); alt != nil && (alt.Kind != "ui-lib" || alt.Usage > 0) {
+		// the alternative must be a generic component of the concept (QMUIRoundButton), not a
+		// specialised one (FloatingActionButton is no replacement for a Button)
+		if alt := bestProjectAsset(assets, o.concept, "custom-view"); alt != nil && (alt.Kind != "ui-lib" || alt.Usage > 0) && len(specialWords(alt.Name, alt.Concept)) == 0 {
 			r.Metrics.RawPrimitives++
 			r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(o.concept), o.rel, o.ln, o.line, "原生 " + o.simple + "：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
 			continue
@@ -428,7 +436,7 @@ func ScanAndroid(root string) *Report {
 		}
 		// a design-system file that calls a library composable wraps it (NiaButton → Button)
 		for _, k := range calls {
-			lib := assets["ui-lib|"+k.c]
+			lib := assets["ui-lib|"+l.Name+"|"+k.c]
 			if lib == nil || lib.WrappedBy != "" || !inDesignSystem(k.f.rel) {
 				continue
 			}
@@ -446,7 +454,7 @@ func ScanAndroid(root string) *Report {
 			}
 		}
 		for _, k := range calls {
-			lib := assets["ui-lib|"+k.c]
+			lib := assets["ui-lib|"+l.Name+"|"+k.c]
 			use(lib, k.f.rel, k.at, k.line)
 			if lib != nil && lib.WrappedBy != "" && !inDesignSystem(k.f.rel) {
 				r.Findings = append(r.Findings, Finding{"bypass", "warn", k.f.rel, k.at, k.line, "直接用了 " + k.c + "（" + l.Name + "），项目设计系统已封装为 " + lib.WrappedBy + "，应使用封装"})

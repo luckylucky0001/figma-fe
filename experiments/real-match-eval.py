@@ -97,12 +97,12 @@ EXPECTED = {
     ("newpipe", "order-detail"): {
         "NavBar": (["Toolbar", "MaterialToolbar", "@layout/toolbar_layout"], []), "NoticeBar": (["—"], []), "Card": (["CardView", "MaterialCardView"], []), "Tag": (["Chip"], ["—"]),
         "CountDown": (["—"], []), "Divider": (["MaterialDivider", "—"], []), "Cell": (["—"], ["PreferenceRow", "ListItem"]), "ProductCard": (["CardView", "—"], []),
-        "Price": (["—"], []), "ActionBar": (["—"], []), "Button": (["MaterialButton"], ["Button"]),
+        "Price": (["—"], []), "ActionBar": (["—"], []), "Button": (["MaterialButton", "Button[Android SDK widgets]"], ["Button"]),
     },
     ("newpipe", "holdings"): {
         "导航栏": (["Toolbar", "MaterialToolbar", "@layout/toolbar_layout"], []), "公告通知栏": (["—"], []), "资产卡片": (["CardView", "MaterialCardView"], []), "标签页": (["TabLayout"], []),
         "持仓列表": (["RecyclerView"], []), "持仓列表项": (["—"], ["PreferenceRow", "ListItem"]), "涨跌标签": (["Chip"], ["—"]), "收盘倒计时": (["—"], []),
-        "底部操作栏": (["—"], []), "买入按钮": (["MaterialButton"], ["Button"]), "卖出按钮": (["MaterialButton"], ["Button"]), "更多按钮": (["MaterialButton"], ["Button"]),
+        "底部操作栏": (["—"], []), "买入按钮": (["MaterialButton", "Button[Android SDK widgets]"], ["Button"]), "卖出按钮": (["MaterialButton", "Button[Android SDK widgets]"], ["Button"]), "更多按钮": (["MaterialButton", "Button[Android SDK widgets]"], ["Button"]),
     },
     ("vant-demo-vue3", "order-detail"): "VANT", ("vant-demo-vue3", "holdings"): "VANT_H",
     ("vant-demo-vue2", "order-detail"): "VANT2", ("vant-demo-vue2", "holdings"): "VANT2_H",
@@ -151,8 +151,10 @@ def main():
             for it in m["items"]:
                 key = it["figma"].replace("（未组件化）", "")
                 top = it["candidates"][0]["name"] if it["candidates"] and it["verdict"] != "new" else "—"
+                src = it["candidates"][0]["source"] if top != "—" else ""
                 right, ok = exp.get(key, ([], []))
-                g = "✓" if top in right else "△" if top in ok else "✗"
+                hit = lambda xs: top in xs or f"{top}[{src}]" in xs  # "Button[Android SDK widgets]" pins the source
+                g = "✓" if hit(right) else "△" if hit(ok) else "✗"
                 counts[g] += 1
                 total[g] += 1
                 if g != "✓":

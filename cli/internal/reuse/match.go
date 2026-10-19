@@ -126,10 +126,10 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 	pool := append([]Asset{}, r.Assets...)
 	seen := map[string]bool{}
 	for _, a := range r.Assets {
-		seen[a.Kind+"|"+a.Name] = true
+		seen[a.Kind+"|"+a.Source+"|"+a.Name] = true
 	}
 	for _, a := range r.LibAll {
-		if !seen[a.Kind+"|"+a.Name] && a.Source != "Android SDK widgets" {
+		if !seen[a.Kind+"|"+a.Source+"|"+a.Name] && a.Source != "Android SDK widgets" {
 			pool = append(pool, a)
 		}
 	}

@@ -38,6 +38,7 @@ PROJECTS = {
     "antennapod": ("https://github.com/AntennaPod/AntennaPod.git", "3d105d598dfa582c6cb22ba40b56d11780366890", "android"),
     "wanandroid": ("https://github.com/goweii/WanAndroid.git", "baba04a90460be2233ddd715fa41f1faa9be741d", "android"),
     "seal": ("https://github.com/JunkFood02/Seal.git", "7677f61a20fda4210e84215fef9e9b51d25daa47", "android"),
+    "kunminx": ("https://github.com/KunMinX/Jetpack-MVVM-Best-Practice.git", "543eb8659089d74ccad403763cb16596febc89b7", "android"),
 }
 
 # figma element → (right answers, acceptable answers)
@@ -226,6 +227,19 @@ EXPECTED[("wanandroid", "holdings")] = {
     "涨跌标签": NEW, "收盘倒计时": NEW, "底部操作栏": NEW, "买入按钮": NEW, "卖出按钮": NEW, "更多按钮": NEW}
 EXPECTED_TO["wanandroid"] = TO(WA_NAV, NEW, R("TabLayout"), WA_ROW, NEW, R("EditText", "InputView"), R("SwitchCompat"),
                                R("MaterialCheckBox", "CheckBox"), NEW, R("MultiStateView"))
+# KunMinX Jetpack-MVVM-Best-Practice: XML + DataBinding, AppCompat theme with Material 1.9 on the
+# classpath (MaterialCardView / MaterialDivider / SearchBar would crash); almost no component layer
+KX_NAV = RA(["Toolbar", "—"], ["MaterialToolbar"])
+KX_BTN = R("Button[Android SDK widgets]", "AppCompatButton")
+EXPECTED[("kunminx", "order-detail")] = {
+    "NavBar": KX_NAV, "NoticeBar": NEW, "Card": R("CardView", "—"), "Tag": NEW, "CountDown": NEW, "Divider": R("1px View 细线", "—"),
+    "Cell": NEW, "ProductCard": R("CardView", "—"), "Price": NEW, "ActionBar": NEW, "Button": KX_BTN}
+EXPECTED[("kunminx", "holdings")] = {
+    "导航栏": KX_NAV, "公告通知栏": NEW, "资产卡片": R("CardView", "—"), "标签页": R("TabLayout"), "持仓列表": R("RecyclerView"), "持仓列表项": NEW,
+    "涨跌标签": NEW, "收盘倒计时": NEW, "底部操作栏": NEW, "买入按钮": KX_BTN, "卖出按钮": KX_BTN, "更多按钮": KX_BTN}
+EXPECTED_TO["kunminx"] = TO(KX_NAV, RA(["—"], ["SearchView"]), R("TabLayout"), NEW, NEW, R("EditText", "TextInputEditText", "AppCompatEditText"),
+                            RA(["SwitchCompat", "Switch[Android SDK widgets]", "—"], ["SwitchMaterial"]), RA(["CheckBox", "AppCompatCheckBox", "—"], ["MaterialCheckBox"]),
+                            KX_BTN, NEW)
 # Seal: Compose + Material3 with its own ui/component set (SettingItem, PreferenceSwitch, SealSearchBar …)
 SEAL_BTN = R("Button", "FilledButtonWithIcon", "OutlinedButtonWithIcon")
 SEAL_NAV = R("TopAppBar", "LargeTopAppBar", "CenterAlignedTopAppBar")
@@ -321,7 +335,7 @@ def main():
     if not only:  # a partial run must not overwrite the full results
         json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
         held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite",
-                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal"}
+                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal", "kunminx"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
@@ -331,7 +345,8 @@ def main():
                  "hello-uniapp": "uni-app + uni-ui", "taro-ui-demo": "Taro + taro-ui", "nutui-vite": "Vue 3 + NutUI",
                  "newpipe": "XML（AppCompat）+ 少量 Compose", "pokedex": "XML + Material（MaterialComponents 主题）", "sunflower": "Compose + Material3（无自有设计系统）", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2",
                  "vue3-vant-mobile": "Vue 3 + Vant 4", "mall-app-web": "uni-app + 自有组件", "antennapod": "XML + Material3 主题",
-                 "wanandroid": "XML（AppCompat）+ 三方 ActionBarEx", "seal": "Compose + Material3 + 自有组件"}
+                 "wanandroid": "XML（AppCompat）+ 三方 ActionBarEx", "seal": "Compose + Material3 + 自有组件",
+                 "kunminx": "XML + DataBinding（AppCompat 主题）"}
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""

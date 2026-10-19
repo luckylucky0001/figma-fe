@@ -782,3 +782,27 @@ func TestVueNameOptionAlias(t *testing.T) {
 		}
 	}
 }
+
+// KunMinX: AppCompat theme, Material 1.9 on the classpath. MaterialCardView would crash, so a Card with
+// nothing else usable needs a new component; the warning stays listed for the agent
+func TestUnusableCandidateNeverDecidesVerdict(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/build.gradle", `dependencies { api "com.google.android.material:material:1.9.0" }`)
+	write(t, root, "app/src/main/AndroidManifest.xml", `<manifest><application android:theme="@style/AppTheme"/></manifest>`)
+	write(t, root, "app/src/main/res/values/styles.xml", `<resources><style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/></resources>`)
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout><TextView/><com.google.android.material.tabs.TabLayout/></LinearLayout>`)
+	exp := &figma.Export{
+		Frame:         &figma.Node{Type: "FRAME", Children: []*figma.Node{{ID: "1:2", Type: "INSTANCE", ComponentID: "c1"}}},
+		Components:    map[string]figma.Component{"c1": {ComponentSetID: "s1"}},
+		ComponentSets: map[string]figma.ComponentSet{"s1": {Name: "Card"}},
+	}
+	it := Match(exp, ScanAndroid(root)).Items[0]
+	if it.Verdict != "new" {
+		t.Errorf("verdict %s, candidates %+v", it.Verdict, it.Candidates)
+	}
+	for _, c := range it.Candidates {
+		if c.Name == "MaterialCardView" && !strings.Contains(c.Why, "⚠") {
+			t.Errorf("MaterialCardView listed without its warning: %+v", c)
+		}
+	}
+}

@@ -32,7 +32,8 @@ var styleAttrRe = regexp.MustCompile(`\bstyle="@style/([\w.]+)"`)
 var viewBases = regexp.MustCompile(`(View|Layout|Button|TextView|ImageView|EditText|Toolbar|Bar|Group|Dialog|Popup|Fragment)$`)
 
 // layout containers are structure, not reusable components
-var containers = map[string]bool{"LinearLayout": true, "FrameLayout": true, "RelativeLayout": true, "ConstraintLayout": true, "androidx.constraintlayout.widget.ConstraintLayout": true, "merge": true, "include": true, "layout": true, "data": true, "variable": true, "ScrollView": true, "androidx.core.widget.NestedScrollView": true, "androidx.coordinatorlayout.widget.CoordinatorLayout": true, "Space": true, "View": true, "ViewStub": true, "requestFocus": true, "tag": true, "import": true, "fragment": true, "androidx.fragment.app.FragmentContainerView": true}
+var containers = map[string]bool{"LinearLayout": true, "FrameLayout": true, "RelativeLayout": true, "ConstraintLayout": true, "androidx.constraintlayout.widget.ConstraintLayout": true, "merge": true, "include": true, "layout": true, "data": true, "variable": true, "ScrollView": true, "androidx.core.widget.NestedScrollView": true, "androidx.coordinatorlayout.widget.CoordinatorLayout": true, "Space": true, "View": true, "ViewStub": true, "requestFocus": true, "tag": true, "import": true, "fragment": true, "androidx.fragment.app.FragmentContainerView": true,
+	"DrawerLayout": true, "SwipeRefreshLayout": true, "SmartRefreshLayout": true, "MotionLayout": true}
 
 // Detect returns the platforms present under root.
 func Detect(root string) []string {
@@ -629,6 +630,9 @@ func matchParen(s string, open int) int {
 func thirdPartySource(pkg string) string {
 	if strings.HasPrefix(pkg, "androidx.appcompat") {
 		return "AppCompat"
+	}
+	if strings.HasPrefix(pkg, "androidx.") {
+		return "AndroidX"
 	}
 	if ps := strings.Split(pkg, "."); len(ps) > 3 {
 		pkg = strings.Join(ps[:3], ".")

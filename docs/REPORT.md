@@ -5,7 +5,7 @@
 ## 结论
 
 1. **对存量项目，先把「有什么」查清楚，才知道新设计稿能复用什么。** `figmafe reuse` 扫一遍现有 H5 或 Android 项目，得到组件资产（含真实用法）、项目惯例、重复实现、复制粘贴结构，以及「组件库里有、但本项目用不了」的组件（版本、改名 / 移除、主题依赖、废弃 API、设计系统封装）。`figmafe match` 再把新设计稿逐个元素对上去，给出「直接复用 / 需确认 / 需新建」，附项目里的真实写法和 Figma 变体 → props 的配置。
-2. **复用推荐准确率**：20 个真实开源项目（Vue / React / uni-app / Taro + Vant / antd-mobile / NutUI / uni-ui / taro-ui / 自有组件；XML View / Compose + QMUI / Material / AppCompat / 三方 View 库 / 自有设计系统）× 3 份设计稿，共 660 项：**✓636 / △24 / ✗0**。其中 15 个是留出项目，第一次跑时出现过错误（Jetsnack 3 ✗、litemall 2 ✗、hello-uniapp 12 ✗、NewPipe 3 ✗；第二批 mall-app-web 一份设计稿直接崩溃、AntennaPod 1 ✗；第三批 WanAndroid 11 ✗、Seal 7 ✗），修的都是通用规则，之后作为回归测试。数据：[`experiments/real-match-eval.md`](../experiments/real-match-eval.md)、[`experiments/match-judgement.md`](../experiments/match-judgement.md)。
+2. **复用推荐准确率**：21 个真实开源项目（Vue / React / uni-app / Taro + Vant / antd-mobile / NutUI / uni-ui / taro-ui / 自有组件；XML View / Compose + QMUI / Material / AppCompat / 三方 View 库 / 自有设计系统）× 3 份设计稿，共 693 项：**✓665 / △28 / ✗0**。其中 16 个是留出项目，第一次跑时出现过错误（Jetsnack 3 ✗、litemall 2 ✗、hello-uniapp 12 ✗、NewPipe 3 ✗；第二批 mall-app-web 一份设计稿直接崩溃、AntennaPod 1 ✗；第三批 WanAndroid 11 ✗、Seal 7 ✗、KunMinX 3 ✗），修的都是通用规则，之后作为回归测试。数据：[`experiments/real-match-eval.md`](../experiments/real-match-eval.md)、[`experiments/match-judgement.md`](../experiments/match-judgement.md)。
 3. **Agent 实测**：5 个真实项目里按同一份设计稿实现新页面，用同一版 `figmafe reuse --focus / --changed` 打分。不用 Skill **0/11** 通过（Now in Android 里新建了 11～12 个和已有组件重复的组件；Haiku 在 newbee 里一个现成组件都没用），用 Skill **11/12** 通过（Haiku 0/4 → 4/4）。代价是多约 35% token、45% 时间。数据：[`experiments/real-project/summary.md`](../experiments/real-project/summary.md)。
 4. **新页面闭环**：demo 仓库里 `figmafe verify` 一条命令输出复用率、违规、像素差异和节点级偏差，退出码可做 CI 门禁。但这个仓库小，基线 Agent 复用率也是 100%，证明不了复用率提升；复用率的差距要看第 3 条的真实项目实验。
 

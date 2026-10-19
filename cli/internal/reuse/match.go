@@ -288,16 +288,21 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		if len(item.Candidates) > 4 {
 			item.Candidates = item.Candidates[:4]
 		}
+		// a component the project cannot use (wrong theme / version) stays listed as a warning, after the
+		// usable ones, and never decides the verdict: with nothing else the element needs a new component
+		sort.SliceStable(item.Candidates, func(i, j int) bool {
+			return !strings.Contains(item.Candidates[i].Why, "⚠") && strings.Contains(item.Candidates[j].Why, "⚠")
+		})
 		switch {
-		case len(item.Candidates) > 0 && item.Candidates[0].Score >= 0.8:
-			item.Verdict = "reuse"
-			res.Reuse++
-		case len(item.Candidates) > 0:
-			item.Verdict = "confirm"
-			res.Confirm++
-		default:
+		case len(item.Candidates) == 0 || strings.Contains(item.Candidates[0].Why, "⚠"):
 			item.Verdict = "new"
 			res.New++
+		case item.Candidates[0].Score >= 0.8:
+			item.Verdict = "reuse"
+			res.Reuse++
+		default:
+			item.Verdict = "confirm"
+			res.Confirm++
 		}
 		res.Items = append(res.Items, item)
 	}

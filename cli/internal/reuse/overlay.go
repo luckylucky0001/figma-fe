@@ -29,7 +29,7 @@ func (m *MatchResult) HTML(exp *figma.Export, img string) string {
 	var boxes, rows strings.Builder
 	for _, it := range m.Items {
 		target := "需新建组件"
-		if len(it.Candidates) > 0 {
+		if len(it.Candidates) > 0 && it.Verdict != "new" {
 			target = it.Candidates[0].Name
 		}
 		for i, id := range it.NodeIDs {

@@ -16,8 +16,8 @@ func TestConceptOf(t *testing.T) {
 		"StatusTag": "tag", "van-tag": "tag", "LegacyTagView": "tag", "OrderStatusChip": "tag",
 		"InfoRow": "cell", "QMUICommonListItemView": "cell", "ListItem": "cell",
 		"PageHeader": "navbar", "QMUITopBar": "navbar", "SimpleHeader": "navbar",
-		"RadioButton": "switch", "QMUIRoundButton": "button", "SubmitBtn": "button",
-		"SwipeBackLayout": "", "QMUICheckBox": "switch", "Swiper": "carousel",
+		"RadioButton": "radio", "QMUIRoundButton": "button", "SubmitBtn": "button",
+		"SwipeBackLayout": "", "QMUICheckBox": "checkbox", "Swiper": "carousel",
 		"CountDown": "countdown", "GoodsItem": "goods", "SectionCard": "card",
 		"按钮/主按钮": "button", "订单状态标签": "tag", "底部操作栏": "actionbar", "倒计时": "countdown", "商品卡片": "goods", "Tag / 状态": "tag",
 	}

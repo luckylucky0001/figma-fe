@@ -16,7 +16,7 @@ var libMinVersion = map[string]map[string]string{
 	"Material Components": {
 		"MaterialDivider": "1.5.0", "MaterialSwitch": "1.7.0", "ShapeableImageView": "1.2.0", "Slider": "1.2.0",
 		"CircularProgressIndicator": "1.3.0", "LinearProgressIndicator": "1.3.0", "MaterialButtonToggleGroup": "1.1.0",
-		"ExtendedFloatingActionButton": "1.1.0",
+		"ExtendedFloatingActionButton": "1.1.0", "SearchBar": "1.8.0", "SearchView": "1.8.0",
 	},
 	// antd-mobile 5 is a rewrite: these exist only from 5.0
 	"antd-mobile": {
@@ -46,12 +46,16 @@ var libRemoved = map[string]map[string][2]string{
 	"Vant": {"GoodsAction": {"3.0.0", "ActionBar"}, "GoodsActionButton": {"3.0.0", "ActionBarButton"}, "GoodsActionIcon": {"3.0.0", "ActionBarIcon"}},
 }
 
+// material3Only: Material Components widgets that need a Theme.Material3 ancestor.
+var material3Only = map[string]bool{"SearchBar": true, "SearchView": true, "MaterialSwitch": true}
+
 // materialThemed: Material Components widgets that enforce a Theme.MaterialComponents / Material3
 // ancestor ("The style on this component requires your app theme to be Theme.MaterialComponents").
 var materialThemed = map[string]bool{
 	"MaterialButton": true, "Chip": true, "ChipGroup": true, "MaterialCardView": true, "TextInputLayout": true,
 	"BottomNavigationView": true, "Slider": true, "MaterialButtonToggleGroup": true, "ExtendedFloatingActionButton": true,
 	"CircularProgressIndicator": true, "LinearProgressIndicator": true, "MaterialSwitch": true,
+	"SearchBar": true, "SearchView": true,
 	"MaterialDivider": true, // colours come from ?attr/colorOnSurface / colorOutline (Material theme attributes)
 }
 
@@ -133,7 +137,9 @@ func appThemeFamily(manifests, values []string) (family, theme string) {
 	}
 	for cur, i := theme, 0; cur != "" && i < 30; i++ {
 		switch {
-		case strings.HasPrefix(cur, "Theme.MaterialComponents"), strings.HasPrefix(cur, "Theme.Material3"):
+		case strings.HasPrefix(cur, "Theme.Material3"):
+			return "material3", theme
+		case strings.HasPrefix(cur, "Theme.MaterialComponents"):
 			return "material", theme
 		case strings.HasPrefix(cur, "Theme.AppCompat"):
 			return "appcompat", theme
@@ -165,6 +171,8 @@ func markCompat(assets map[string]*Asset, versions map[string]string, themeFamil
 		}
 		if a.Source == "Material Components" && materialThemed[a.Name] && themeFamily == "appcompat" {
 			a.Caveat = "需要 Theme.MaterialComponents 主题，项目主题 " + theme + " 继承 AppCompat，直接用会崩溃"
+		} else if a.Source == "Material Components" && material3Only[a.Name] && themeFamily == "material" {
+			a.Caveat = "是 Material 3 组件，需要 Theme.Material3 主题，项目主题 " + theme + " 是 MaterialComponents"
 		}
 	}
 }

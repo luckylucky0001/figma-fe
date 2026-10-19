@@ -1,0 +1,994 @@
+{
+  "schema": "figmafe-export/1",
+  "source": {
+    "fileKey": "fixture",
+    "fileName": "Demo DS / OrderDetail (fixture from trade-order.html)",
+    "exportedAt": "2026-10-19T20:15:57Z",
+    "exporter": "figmafe fixture"
+  },
+  "frame": {
+    "id": "1:1",
+    "name": "TradeOrder 买入下单",
+    "type": "FRAME",
+    "children": [
+      {
+        "id": "1:2",
+        "name": "NavBar",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "1:3",
+            "name": "Title",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 170.5,
+              "y": 9.5,
+              "width": 34,
+              "height": 25
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.12156862745098039,
+                  "g": 0.13725490196078433,
+                  "b": 0.1607843137254902,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "买入",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 600,
+              "fontSize": 17,
+              "lineHeightPx": 20.4
+            }
+          }
+        ],
+        "absoluteBoundingBox": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 44
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          }
+        ],
+        "layoutMode": "HORIZONTAL"
+      },
+      {
+        "id": "1:4",
+        "name": "SearchBar",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "1:5",
+            "name": "Placeholder",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 26,
+              "y": 60,
+              "width": 123.765625,
+              "height": 20
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.5607843137254902,
+                  "g": 0.5843137254901961,
+                  "b": 0.6196078431372549,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "输入股票代码 / 名称",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 400,
+              "fontSize": 14,
+              "lineHeightPx": 16.8
+            }
+          }
+        ],
+        "absoluteBoundingBox": {
+          "x": 12,
+          "y": 52,
+          "width": 351,
+          "height": 36
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          }
+        ],
+        "cornerRadius": 18,
+        "paddingLeft": 14,
+        "paddingRight": 14,
+        "itemSpacing": 8,
+        "layoutMode": "HORIZONTAL"
+      },
+      {
+        "id": "1:6",
+        "name": "Tabs",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "1:7",
+            "name": "Tab",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 12,
+              "y": 96,
+              "width": 117,
+              "height": 40
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.9607843137254902,
+                  "g": 0.24705882352941178,
+                  "b": 0.24705882352941178,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "限价委托",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 600,
+              "fontSize": 15,
+              "lineHeightPx": 40
+            }
+          },
+          {
+            "id": "1:8",
+            "name": "Tab",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 129,
+              "y": 96,
+              "width": 117,
+              "height": 40
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.39215686274509803,
+                  "g": 0.41568627450980394,
+                  "b": 0.45098039215686275,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "市价委托",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 400,
+              "fontSize": 15,
+              "lineHeightPx": 40
+            }
+          },
+          {
+            "id": "1:9",
+            "name": "Tab",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 246,
+              "y": 96,
+              "width": 117,
+              "height": 40
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.39215686274509803,
+                  "g": 0.41568627450980394,
+                  "b": 0.45098039215686275,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "条件单",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 400,
+              "fontSize": 15,
+              "lineHeightPx": 40
+            }
+          }
+        ],
+        "absoluteBoundingBox": {
+          "x": 12,
+          "y": 96,
+          "width": 351,
+          "height": 40
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          }
+        ],
+        "cornerRadius": 12,
+        "layoutMode": "HORIZONTAL"
+      },
+      {
+        "id": "1:10",
+        "name": "Form",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "1:11",
+            "name": "Cell",
+            "type": "FRAME",
+            "children": [
+              {
+                "id": "1:12",
+                "name": "Title",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 28,
+                  "y": 151.5,
+                  "width": 28,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "股票",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              },
+              {
+                "id": "1:13",
+                "name": "Value",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 241.234375,
+                  "y": 151.5,
+                  "width": 105.765625,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.39215686274509803,
+                      "g": 0.41568627450980394,
+                      "b": 0.45098039215686275,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "贵州茅台 600519",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              }
+            ],
+            "absoluteBoundingBox": {
+              "x": 28,
+              "y": 140,
+              "width": 319,
+              "height": 44
+            },
+            "layoutMode": "HORIZONTAL"
+          },
+          {
+            "id": "1:14",
+            "name": "Cell",
+            "type": "FRAME",
+            "children": [
+              {
+                "id": "1:15",
+                "name": "Title",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 28,
+                  "y": 195.5,
+                  "width": 56,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "可用资金",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              },
+              {
+                "id": "1:16",
+                "name": "Value",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 273.90625,
+                  "y": 195.5,
+                  "width": 73.09375,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.39215686274509803,
+                      "g": 0.41568627450980394,
+                      "b": 0.45098039215686275,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "¥ 52,300.00",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              }
+            ],
+            "absoluteBoundingBox": {
+              "x": 28,
+              "y": 184,
+              "width": 319,
+              "height": 44
+            },
+            "layoutMode": "HORIZONTAL"
+          },
+          {
+            "id": "1:17",
+            "name": "Stepper",
+            "type": "FRAME",
+            "children": [
+              {
+                "id": "1:18",
+                "name": "Label",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 28,
+                  "y": 244,
+                  "width": 56,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "委托价格",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              },
+              {
+                "id": "1:19",
+                "name": "Minus",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 164,
+                  "y": 241,
+                  "width": 36,
+                  "height": 26
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.39215686274509803,
+                      "g": 0.41568627450980394,
+                      "b": 0.45098039215686275,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "−",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 18,
+                  "lineHeightPx": 21.599999999999998
+                }
+              },
+              {
+                "id": "1:20",
+                "name": "Value",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 200,
+                  "y": 237,
+                  "width": 110,
+                  "height": 34
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "1,688.00",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 600,
+                  "fontSize": 16,
+                  "lineHeightPx": 34
+                }
+              },
+              {
+                "id": "1:21",
+                "name": "Plus",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 310,
+                  "y": 241,
+                  "width": 36,
+                  "height": 26
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.39215686274509803,
+                      "g": 0.41568627450980394,
+                      "b": 0.45098039215686275,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "+",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 18,
+                  "lineHeightPx": 21.599999999999998
+                }
+              }
+            ],
+            "absoluteBoundingBox": {
+              "x": 28,
+              "y": 228,
+              "width": 319,
+              "height": 52
+            },
+            "layoutMode": "HORIZONTAL"
+          },
+          {
+            "id": "1:22",
+            "name": "Stepper",
+            "type": "FRAME",
+            "children": [
+              {
+                "id": "1:23",
+                "name": "Label",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 28,
+                  "y": 296,
+                  "width": 56,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "委托数量",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              },
+              {
+                "id": "1:24",
+                "name": "Minus",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 164,
+                  "y": 293,
+                  "width": 36,
+                  "height": 26
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.39215686274509803,
+                      "g": 0.41568627450980394,
+                      "b": 0.45098039215686275,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "−",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 18,
+                  "lineHeightPx": 21.599999999999998
+                }
+              },
+              {
+                "id": "1:25",
+                "name": "Value",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 200,
+                  "y": 289,
+                  "width": 110,
+                  "height": 34
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "100",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 600,
+                  "fontSize": 16,
+                  "lineHeightPx": 34
+                }
+              },
+              {
+                "id": "1:26",
+                "name": "Plus",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 310,
+                  "y": 293,
+                  "width": 36,
+                  "height": 26
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.39215686274509803,
+                      "g": 0.41568627450980394,
+                      "b": 0.45098039215686275,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "+",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 18,
+                  "lineHeightPx": 21.599999999999998
+                }
+              }
+            ],
+            "absoluteBoundingBox": {
+              "x": 28,
+              "y": 280,
+              "width": 319,
+              "height": 52
+            },
+            "layoutMode": "HORIZONTAL"
+          },
+          {
+            "id": "1:27",
+            "name": "Input",
+            "type": "FRAME",
+            "children": [
+              {
+                "id": "1:28",
+                "name": "Label",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 28,
+                  "y": 348,
+                  "width": 28,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "备注",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              },
+              {
+                "id": "1:29",
+                "name": "Placeholder",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 165,
+                  "y": 340,
+                  "width": 182,
+                  "height": 36
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.5607843137254902,
+                      "g": 0.5843137254901961,
+                      "b": 0.6196078431372549,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "选填",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 34
+                }
+              }
+            ],
+            "absoluteBoundingBox": {
+              "x": 28,
+              "y": 332,
+              "width": 319,
+              "height": 52
+            },
+            "layoutMode": "HORIZONTAL"
+          },
+          {
+            "id": "1:30",
+            "name": "Switch",
+            "type": "FRAME",
+            "children": [
+              {
+                "id": "1:31",
+                "name": "Label",
+                "type": "TEXT",
+                "absoluteBoundingBox": {
+                  "x": 28,
+                  "y": 398,
+                  "width": 70,
+                  "height": 20
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.12156862745098039,
+                      "g": 0.13725490196078433,
+                      "b": 0.1607843137254902,
+                      "a": 1
+                    }
+                  }
+                ],
+                "characters": "成交后提醒",
+                "style": {
+                  "fontFamily": "Noto Sans SC",
+                  "fontWeight": 400,
+                  "fontSize": 14,
+                  "lineHeightPx": 16.8
+                }
+              }
+            ],
+            "absoluteBoundingBox": {
+              "x": 28,
+              "y": 384,
+              "width": 319,
+              "height": 48
+            },
+            "layoutMode": "HORIZONTAL"
+          }
+        ],
+        "absoluteBoundingBox": {
+          "x": 12,
+          "y": 136,
+          "width": 351,
+          "height": 312
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          }
+        ],
+        "paddingLeft": 16,
+        "paddingRight": 16,
+        "paddingTop": 4,
+        "paddingBottom": 16
+      },
+      {
+        "id": "1:32",
+        "name": "Checkbox",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "1:33",
+            "name": "Label",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 40,
+              "y": 460,
+              "width": 168.015625,
+              "height": 17
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.39215686274509803,
+                  "g": 0.41568627450980394,
+                  "b": 0.45098039215686275,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "我已阅读并同意《风险揭示书》",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 400,
+              "fontSize": 12,
+              "lineHeightPx": 14.399999999999999
+            }
+          }
+        ],
+        "absoluteBoundingBox": {
+          "x": 16,
+          "y": 460,
+          "width": 343,
+          "height": 17
+        },
+        "itemSpacing": 8,
+        "layoutMode": "HORIZONTAL"
+      },
+      {
+        "id": "1:34",
+        "name": "Button",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "1:35",
+            "name": "Text",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 171.484375,
+              "y": 499,
+              "width": 32.015625,
+              "height": 24
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "买入",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 500,
+              "fontSize": 16,
+              "lineHeightPx": 44
+            }
+          }
+        ],
+        "absoluteBoundingBox": {
+          "x": 16,
+          "y": 489,
+          "width": 343,
+          "height": 44
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": {
+              "r": 0.9607843137254902,
+              "g": 0.24705882352941178,
+              "b": 0.24705882352941178,
+              "a": 1
+            }
+          }
+        ],
+        "cornerRadius": 22
+      },
+      {
+        "id": "1:36",
+        "name": "Section Title",
+        "type": "TEXT",
+        "absoluteBoundingBox": {
+          "x": 12,
+          "y": 549,
+          "width": 351,
+          "height": 21
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": {
+              "r": 0.12156862745098039,
+              "g": 0.13725490196078433,
+              "b": 0.1607843137254902,
+              "a": 1
+            }
+          }
+        ],
+        "characters": "当日委托",
+        "style": {
+          "fontFamily": "Noto Sans SC",
+          "fontWeight": 600,
+          "fontSize": 15,
+          "lineHeightPx": 18
+        }
+      },
+      {
+        "id": "1:37",
+        "name": "Empty",
+        "type": "FRAME",
+        "children": [
+          {
+            "id": "1:38",
+            "name": "Text",
+            "type": "TEXT",
+            "absoluteBoundingBox": {
+              "x": 161.484375,
+              "y": 666.5,
+              "width": 52.015625,
+              "height": 19
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.5607843137254902,
+                  "g": 0.5843137254901961,
+                  "b": 0.6196078431372549,
+                  "a": 1
+                }
+              }
+            ],
+            "characters": "暂无委托",
+            "style": {
+              "fontFamily": "Noto Sans SC",
+              "fontWeight": 400,
+              "fontSize": 13,
+              "lineHeightPx": 15.6
+            }
+          }
+        ],
+        "absoluteBoundingBox": {
+          "x": 12,
+          "y": 578,
+          "width": 351,
+          "height": 140
+        },
+        "fills": [
+          {
+            "type": "SOLID",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          }
+        ],
+        "cornerRadius": 12,
+        "itemSpacing": 8,
+        "layoutMode": "VERTICAL"
+      }
+    ],
+    "absoluteBoundingBox": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 812
+    },
+    "fills": [
+      {
+        "type": "SOLID",
+        "color": {
+          "r": 0.9607843137254902,
+          "g": 0.9647058823529412,
+          "b": 0.9686274509803922,
+          "a": 1
+        }
+      }
+    ]
+  },
+  "components": {},
+  "componentSets": {},
+  "images": {
+    "frame": "frame@2x.png",
+    "scale": 2
+  }
+}

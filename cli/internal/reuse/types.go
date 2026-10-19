@@ -114,7 +114,8 @@ var concepts = []struct {
 	{"popup", []string{"popup", "sheet", "actionsheet", "bottomsheet", "drawer", "popover", "floatingpanel"}},
 	{"tabs", []string{"tabs", "tab", "segment", "segmented", "tabrow", "tabsegment"}},
 	{"tabbar", []string{"tabbar", "navigationbar", "bottomnavigation", "bottomnavigationview", "bottomnav", "navigationrail", "navigationsuite", "navigationitem", "navigationbaritem"}},
-	{"input", []string{"input", "field", "edittext", "textfield", "search", "searchbar", "textarea"}},
+	{"input", []string{"input", "field", "edittext", "textfield", "textarea", "inputitem", "easyinput"}},
+	{"search", []string{"search", "searchbar", "searchview", "searchfield"}},
 	{"carousel", []string{"swipe", "swiper", "carousel", "banner", "viewpager"}},
 	{"icon", []string{"icon"}},
 	{"image", []string{"image", "img", "avatar", "imageview"}},
@@ -123,8 +124,10 @@ var concepts = []struct {
 	{"list", []string{"list", "recyclerview", "listview", "lazycolumn"}},
 	{"divider", []string{"divider", "separator", "line"}},
 	{"notice", []string{"noticebar", "notice", "alertbar", "tipsbar"}},
-	{"switch", []string{"switch", "toggle", "checkbox", "radio", "radiobutton", "togglebutton", "checkboxgroup", "radiogroup"}},
-	{"stepper", []string{"stepper", "counter"}},
+	{"switch", []string{"switch", "toggle", "toggleswitch", "switchcompat", "materialswitch"}},
+	{"checkbox", []string{"checkbox", "checkboxgroup", "check", "materialcheckbox", "checklist", "datacheckbox"}},
+	{"radio", []string{"radio", "radiobutton", "radiogroup", "materialradiobutton"}},
+	{"stepper", []string{"stepper", "counter", "quantityselector", "numberbox", "inputnumber", "numberpicker", "numberstepper"}},
 	{"countdown", []string{"countdown", "timer"}},
 	{"goods", []string{"goods", "product", "sku", "goodscard", "productcard"}},
 	{"actionbar", []string{"actionbar", "goodsaction", "goodsnav", "bottombar", "bottomactionbar", "footerbar"}},
@@ -193,9 +196,9 @@ var zhConcepts = []struct{ kw, concept string }{
 	{"单元格", "cell"}, {"列表项", "cell"}, {"信息行", "cell"}, {"分割线", "divider"}, {"分隔线", "divider"},
 	{"商品卡", "goods"}, {"商品", "goods"}, {"价格", "price"}, {"金额", "price"}, {"按钮", "button"},
 	{"标签", "tag"}, {"徽标", "badge"}, {"角标", "badge"}, {"卡片", "card"}, {"弹窗", "dialog"}, {"对话框", "dialog"},
-	{"轻提示", "toast"}, {"吐司", "toast"}, {"弹出层", "popup"}, {"面板", "popup"}, {"输入框", "input"}, {"搜索", "input"},
-	{"图片", "image"}, {"头像", "image"}, {"空状态", "empty"}, {"加载", "loading"}, {"开关", "switch"}, {"复选框", "switch"},
-	{"单选", "switch"}, {"步进器", "stepper"}, {"轮播", "carousel"}, {"图标", "icon"}, {"列表", "list"},
+	{"轻提示", "toast"}, {"吐司", "toast"}, {"弹出层", "popup"}, {"面板", "popup"}, {"输入框", "input"}, {"搜索", "search"},
+	{"图片", "image"}, {"头像", "image"}, {"空状态", "empty"}, {"加载", "loading"}, {"开关", "switch"}, {"复选框", "checkbox"}, {"勾选", "checkbox"},
+	{"单选", "radio"}, {"步进器", "stepper"}, {"轮播", "carousel"}, {"图标", "icon"}, {"列表", "list"},
 }
 
 func hasCJK(s string) bool {
@@ -223,6 +226,11 @@ func ConceptOf(name string) string {
 		// mixed names like "Tag / 状态" fall through to the latin words
 	}
 	words := splitWords(name)
+	for _, w := range words {
+		if w == "preference" || w == "preferences" {
+			return "" // androidx.preference rows belong to the settings framework, not to page UI
+		}
+	}
 	for len(words) > 1 && (vendorPrefix[words[0]] || projectPrefix(words)) {
 		words = words[1:]
 	}

@@ -159,6 +159,40 @@ EXPECTED = {
 }
 
 
+# third page (design/figma-export/trade-order): English layer names, not componentized; concepts the
+# other pages lack (search, stepper, input, switch, checkbox, empty). Keys without "（未组件化）".
+def TO(nav, search, tabs, cell, stepper, inp, switch, check, button, empty):
+    return {"NavBar": nav, "SearchBar": search, "Tabs": tabs, "Cell": cell, "Stepper": stepper, "Input": inp,
+            "Switch": switch, "Checkbox": check, "Button": button, "Empty": empty}
+R = lambda *xs: (list(xs), [])          # right answers
+RA = lambda r, a: (list(r), list(a))    # right / acceptable
+NEW = R("—")
+VANT_TO = TO(R("NavBar"), R("Search"), R("Tabs"), R("Cell"), R("Stepper"), R("Field"), R("Switch"), R("Checkbox"), R("Button"), R("Empty"))
+EXPECTED_TO = {
+    "newbee": dict(VANT_TO, NavBar=RA(["SimpleHeader"], ["NavBar"])),
+    "litemall": VANT_TO, "vant-demo-vue3": VANT_TO, "vant-demo-vue2": VANT_TO,
+    "qmui": TO(R("QMUITopBarLayout", "QMUITopBar"), NEW, R("QMUITabSegment"), R("QMUICommonListItemView"), NEW, RA(["EditText"], ["EmojiEditText"]),
+               RA(["—"], ["Switch"]), RA(["—", "CheckBox"], ["MaterialCheckBox"]), R("QMUIRoundButton"), R("QMUIEmptyView")),
+    "nia": TO(R("NiaTopAppBar"), R("SearchBar", "TextField"), R("NiaTabRow"), R("ListItem"), NEW, R("TextField", "OutlinedTextField"), R("Switch"), R("Checkbox"),
+              R("NiaButton"), RA(["—"], ["InterestsDetailPlaceholder"])),
+    "jetsnack": TO(R("TopAppBar", "CenterAlignedTopAppBar"), R("SearchBar", "TextField"), R("TabRow"), R("ListItem"), R("QuantitySelector"), R("TextField", "OutlinedTextField"),
+                   R("Switch"), R("Checkbox"), R("JetsnackButton"), NEW),
+    "antdm-template": TO(R("NavBar"), R("SearchBar"), R("Tabs"), R("ListItem"), R("Stepper"), R("Input"), R("Switch"), R("Checkbox"), R("Button"), R("Empty", "ErrorBlock")),
+    "hello-uniapp": TO(R("NavBar"), R("SearchBar"), R("SegmentedControl"), R("ListItem"), R("NumberBox"), R("Input", "Easyinput"), R("Switch"), R("Checkbox", "DataCheckbox"),
+                       R("Button[uni-app 内置组件]"), RA(["—"], ["Empty"])),
+    "taro-ui-demo": TO(R("AtNavBar"), R("AtSearchBar"), R("AtTabs"), R("AtListItem"), R("AtInputNumber"), R("AtInput"), R("AtSwitch"), R("AtCheckbox"), R("AtButton"), NEW),
+    "nutui-vite": TO(R("Navbar"), R("SearchBar"), R("Tabs"), R("Cell"), R("InputNumber"), R("Input"), R("Switch"), R("Checkbox"), R("Button"), R("Empty")),
+    "pokedex": TO(R("MaterialToolbar", "Toolbar"), RA(["—"], ["SearchBar"]), R("TabLayout"), NEW, NEW, R("TextInputEditText", "TextInputLayout", "EditText"),
+                  R("SwitchMaterial", "SwitchCompat"), R("MaterialCheckBox", "CheckBox"), R("MaterialButton"), NEW),
+    "newpipe": TO(R("Toolbar", "MaterialToolbar", "@layout/toolbar_layout"), RA(["—"], ["SearchBar"]), R("TabLayout"), RA(["—"], ["ListItem", "PreferenceRow"]), NEW,
+                  R("EditText", "TextInputEditText"), RA(["Switch[Android SDK widgets]", "SwitchCompat"], ["Switch"]), R("CheckBox", "MaterialCheckBox"),
+                  R("MaterialButton", "Button[Android SDK widgets]"), R("@layout/list_empty_view")),
+}
+EXPECTED_TO["antdm-mobile"] = EXPECTED_TO["antdm-template"]
+for _k, _v in EXPECTED_TO.items():
+    EXPECTED[(_k, "trade-order")] = _v
+
+
 def checkout(name, url, commit):
     """url may end with #subdir: only that directory is checked out (sparse) and returned."""
     url, _, sub = url.partition("#")
@@ -184,7 +218,7 @@ def main():
         if only and name not in only:
             continue
         d = checkout(name, url, commit)
-        for page in ("order-detail", "holdings"):
+        for page in ("order-detail", "holdings", "trade-order"):
             exp = EXPECTED.get((name, page))
             if isinstance(exp, str):
                 exp = globals()[exp]
@@ -216,7 +250,7 @@ def main():
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
-                 "| 项目 | 技术栈 | 订单详情（组件化设计稿） | 我的持仓（未组件化、中文图层） |", "|---|---|---|---|"]
+                 "| 项目 | 技术栈 | 订单详情（组件化设计稿） | 我的持仓（未组件化、中文图层） | 买入下单（未组件化、英文图层、新概念） |", "|---|---|---|---|---|"]
         stack = {"newbee": "Vue 3 + Vant", "qmui": "XML + QMUI", "nia": "Compose + 自有设计系统", "antdm-template": "React + antd-mobile",
                  "antdm-mobile": "React + antd-mobile", "jetsnack": "Compose + 自有设计系统", "litemall": "Vue 2 + Vant 2",
                  "hello-uniapp": "uni-app + uni-ui", "taro-ui-demo": "Taro + taro-ui", "nutui-vite": "Vue 3 + NutUI",
@@ -224,7 +258,7 @@ def main():
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""
-            lines.append(f"| {name}{tag} | {stack.get(name, '')} | {cell(report.get(name + '/order-detail'))} | {cell(report.get(name + '/holdings'))} |")
+            lines.append(f"| {name}{tag} | {stack.get(name, '')} | {cell(report.get(name + '/order-detail'))} | {cell(report.get(name + '/holdings'))} | {cell(report.get(name + '/trade-order'))} |")
         lines += ["", f"**合计 ✓{total['✓']} / △{total['△']} / ✗{total['✗']}**", ""]
         open(os.path.join(HERE, "real-match-eval.md"), "w").write("\n".join(lines))
     sys.exit(1 if total["✗"] else 0)

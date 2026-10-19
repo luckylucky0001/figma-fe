@@ -114,3 +114,17 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 修正的都是通用规则（组件库版本、识别 Glance、学习项目前缀、按参数判断底部导航、`ui/components` 算设计系统、必填参数里有业务数据模型的算业务组件），不是针对 Jetsnack 的特判。之后 `python3 experiments/real-match-eval.py` 会同时跑调参集和留出集，作为回归测试。
 
+## 4. 第三份设计稿：买入下单（英文图层名、没组件化、新概念）
+
+前两份设计稿覆盖的 UI 概念有限，于是又做了一份券商「买入下单」页（`design/figma-export/trade-order`）：图层叫 SearchBar / Tabs / Stepper / Input / Switch / Checkbox / Empty，但没有组件化。拿当时的工具直接在 14 个项目上跑（140 项），这是第一次的结果：
+
+**123 ✓ / 5 △ / 12 ✗**，主要问题：
+
+- 开关、复选框、单选原来是同一个概念，于是 QMUI / NewPipe 的「Switch」「Checkbox」都推荐成了 RadioButton，Now in Android 推荐成了切换按钮（6 处 ✗）；
+- 搜索算在「输入框」里，Vant 项目推荐了 Field 而不是 Search；
+- NutUI 的步进器叫 InputNumber、Jetsnack 的叫 QuantitySelector，没被认出来；
+- Material 的 SearchBar / MaterialSwitch 是 Material 3 组件，在 MaterialComponents 主题的项目里不能直接用；
+- NewPipe 的 SwitchPreference（设置框架里的行）被当成了开关组件。
+
+修正后（同样是通用规则：拆开概念、补词表、Material 3 主题检查、排除 Preference）：**138 ✓ / 2 △ / 0 ✗**（加上另外两份设计稿，三份合计见 `real-match-eval.md`）。
+

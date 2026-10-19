@@ -1,0 +1,62 @@
+<!doctype html>
+<!--
+  设计源：券商「买入下单」页，用来生成第三份 Figma fixture（design/figma-export/trade-order/）。
+  模拟另一种常见的真实设计稿：图层用英文组件名命名（SearchBar / Stepper / Switch …），但没有组件化
+  （全是 FRAME / TEXT，没有 INSTANCE）。覆盖前两份设计稿没有的概念：搜索、标签页、步进器、输入框、
+  开关、复选框、空状态，用来扩大 figmafe match 评测的覆盖面。
+-->
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; color: #1F2329; }
+  #frame { position: relative; width: 375px; height: 812px; background: #F5F6F7; overflow: hidden; }
+  .nav { height: 44px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; }
+  .search { margin: 8px 12px; height: 36px; border-radius: 18px; background: #fff; padding: 0 14px; display: flex; align-items: center; gap: 8px; color: #8F959E; font-size: 14px; }
+  .tabs { margin: 0 12px; height: 40px; display: flex; background: #fff; border-radius: 12px 12px 0 0; }
+  .tabs div { flex: 1; text-align: center; line-height: 40px; font-size: 15px; color: #646A73; }
+  .tabs .on { color: #F53F3F; font-weight: 600; border-bottom: 2px solid #F53F3F; }
+  .panel { margin: 0 12px; background: #fff; border-radius: 0 0 12px 12px; padding: 4px 16px 16px; }
+  .cell { display: flex; justify-content: space-between; align-items: center; height: 44px; font-size: 14px; border-bottom: 1px solid #E5E6EB; }
+  .cell .v { color: #646A73; }
+  .stepper { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .stepper .l { font-size: 14px; }
+  .stepper .box { display: flex; align-items: center; height: 36px; border: 1px solid #E5E6EB; border-radius: 6px; }
+  .stepper .box span { width: 36px; text-align: center; font-size: 18px; color: #646A73; }
+  .stepper .box b { width: 110px; text-align: center; font-size: 16px; font-weight: 600; border-left: 1px solid #E5E6EB; border-right: 1px solid #E5E6EB; line-height: 34px; }
+  .input { display: flex; align-items: center; justify-content: space-between; height: 52px; font-size: 14px; }
+  .input .f { width: 182px; height: 36px; border: 1px solid #E5E6EB; border-radius: 6px; padding: 0 10px; line-height: 34px; color: #8F959E; }
+  .switch { display: flex; align-items: center; justify-content: space-between; height: 48px; font-size: 14px; }
+  .switch .t { width: 44px; height: 24px; border-radius: 12px; background: #F53F3F; position: relative; }
+  .switch .t i { position: absolute; right: 2px; top: 2px; width: 20px; height: 20px; border-radius: 10px; background: #fff; }
+  .check { display: flex; align-items: center; gap: 8px; margin: 12px 16px; font-size: 12px; color: #646A73; }
+  .check .b { width: 16px; height: 16px; border-radius: 4px; background: #F53F3F; }
+  .btn { margin: 4px 16px 0; height: 44px; border-radius: 22px; background: #F53F3F; color: #fff; text-align: center; line-height: 44px; font-size: 16px; font-weight: 500; }
+  .sec { margin: 16px 12px 0; font-size: 15px; font-weight: 600; }
+  .empty { margin: 8px 12px; height: 140px; background: #fff; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #8F959E; font-size: 13px; }
+  .empty .img { width: 64px; height: 48px; border-radius: 8px; background: #F2F3F5; }
+</style>
+</head>
+<body>
+<div id="frame" data-fig="FRAME" data-fig-name="TradeOrder 买入下单">
+  <div class="nav" data-fig="FRAME" data-fig-name="NavBar"><span data-fig="TEXT" data-fig-name="Title">买入</span></div>
+  <div class="search" data-fig="FRAME" data-fig-name="SearchBar"><span data-fig="TEXT" data-fig-name="Placeholder">输入股票代码 / 名称</span></div>
+  <div class="tabs" data-fig="FRAME" data-fig-name="Tabs">
+    <div class="on" data-fig="TEXT" data-fig-name="Tab">限价委托</div><div data-fig="TEXT" data-fig-name="Tab">市价委托</div><div data-fig="TEXT" data-fig-name="Tab">条件单</div>
+  </div>
+  <div class="panel" data-fig="FRAME" data-fig-name="Form">
+    <div class="cell" data-fig="FRAME" data-fig-name="Cell"><span data-fig="TEXT" data-fig-name="Title">股票</span><span class="v" data-fig="TEXT" data-fig-name="Value">贵州茅台 600519</span></div>
+    <div class="cell" data-fig="FRAME" data-fig-name="Cell"><span data-fig="TEXT" data-fig-name="Title">可用资金</span><span class="v" data-fig="TEXT" data-fig-name="Value">¥ 52,300.00</span></div>
+    <div class="stepper" data-fig="FRAME" data-fig-name="Stepper"><span class="l" data-fig="TEXT" data-fig-name="Label">委托价格</span><div class="box"><span data-fig="TEXT" data-fig-name="Minus">−</span><b data-fig="TEXT" data-fig-name="Value">1,688.00</b><span data-fig="TEXT" data-fig-name="Plus">+</span></div></div>
+    <div class="stepper" data-fig="FRAME" data-fig-name="Stepper"><span class="l" data-fig="TEXT" data-fig-name="Label">委托数量</span><div class="box"><span data-fig="TEXT" data-fig-name="Minus">−</span><b data-fig="TEXT" data-fig-name="Value">100</b><span data-fig="TEXT" data-fig-name="Plus">+</span></div></div>
+    <div class="input" data-fig="FRAME" data-fig-name="Input"><span data-fig="TEXT" data-fig-name="Label">备注</span><span class="f" data-fig="TEXT" data-fig-name="Placeholder">选填</span></div>
+    <div class="switch" data-fig="FRAME" data-fig-name="Switch"><span data-fig="TEXT" data-fig-name="Label">成交后提醒</span><span class="t"><i></i></span></div>
+  </div>
+  <div class="check" data-fig="FRAME" data-fig-name="Checkbox"><span class="b"></span><span data-fig="TEXT" data-fig-name="Label">我已阅读并同意《风险揭示书》</span></div>
+  <div class="btn" data-fig="FRAME" data-fig-name="Button"><span data-fig="TEXT" data-fig-name="Text">买入</span></div>
+  <div class="sec" data-fig="TEXT" data-fig-name="Section Title">当日委托</div>
+  <div class="empty" data-fig="FRAME" data-fig-name="Empty"><div class="img"></div><span data-fig="TEXT" data-fig-name="Text">暂无委托</span></div>
+</div>
+</body>
+</html>

@@ -90,7 +90,7 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 ### 小结
 
-- **最终结果**：18 个项目（5 个调参 + 13 个留出）× 3 份设计稿共 594 项，**✓575 / △19 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
+- **最终结果**：20 个项目（5 个调参 + 15 个留出）× 3 份设计稿共 660 项，**✓636 / △24 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
 - 订单详情（组件化的设计稿）：五个真实项目（覆盖 Vue+Vant、React+antd-mobile、XML+QMUI、Compose+Material3+自有设计系统）共 55 项，完全正确 52 项，可用但不是最优 3 项。
 - 我的持仓（没组件化、中文图层名）：四个真实项目共 48 项，完全正确 45 项，可用但不是最优 3 项。
 - 两份设计稿在这五个项目上都没有出现推荐错误组件的情况；但留出项目 Jetsnack 第一次跑出现了 3 个错误（见第 3 节），说明规则对没见过的项目结构仍会出错，修正后已加入回归。拿不准的情况，工具给出的都是「需确认」。
@@ -132,6 +132,15 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 - litemall 的空状态：现在推荐项目自己的 `is-empty`（3 个页面在用）。Vant 的 Empty 仍算正确，但新页面引入 van-empty 会被页面检查报成「不一致」。
 
 另外，mall-app-web 的商品卡在 uni-ui 不再被降权后，从「需新建」变成推荐 uni-ui 的 Card（需确认），记为 △。
+
+### 第三批留出项目
+
+| 项目 | 第一次跑 | 发现的问题 → 通用修正 |
+|---|---|---|
+| WanAndroid（goweii，XML，AppCompat 主题，国内常见写法） | 订单详情 8 ✓ / 1 △ / **2 ✗**；我的持仓 7 ✓ / 1 △ / **4 ✗**；买入下单 4 ✓ / 1 △ / **5 ✗** | ① 顶栏用的是三方库 `per.goweii.actionbarex` 的 ActionBarCommon（34 处），开关是 androidx 的 SwitchCompat，空状态是三方 MultiStateView（26 处）：组件库目录里没有的全限定名 View 原来一律被忽略 → 布局里出现的三方 View 按包名归为组件库资产（`AppCompat*` 仍算平台控件，已收录组件库的内部类不算）；② Android 的 ActionBar 指顶栏，H5（Vant）的 ActionBar 指底部操作栏 → Android 上 `ActionBar*` / `TitleBar*` 归为导航栏；③ 输入框推荐了专门输密码的 PasswordInputView，按钮推荐了文章页里的 `@layout/activity_article_float_btn` 和 FloatingActionButton → 名字带专门用途词（password / confirm / video / download …）的项目组件降权，`activity_*` / `fragment_*` 布局片段不算组件 |
+| Seal（JunkFood02，Compose + Material3，自有 ui/component） | 订单详情 7 ✓ / 2 △ / **2 ✗**；我的持仓 7 ✓ / 1 △ / **4 ✗**；买入下单 8 ✓ / 1 △ / **1 ✗** | ① 卡片推荐了 VideoCard：项目里 Video* 组件多，被当成了「项目前缀」，于是 VideoCard 和 Card 算同名 → 专门用途词不能当项目前缀；② 按钮推荐了 ConfirmButton（对话框的确认按钮）/ ActionButton（必填 `Task.DownloadState`）→ 嵌套的业务类型也算业务参数；③ M3 Button 被判成「已被 LinkButton 封装」，但项目直接用 Button 16 次、LinkButton 只有 4 次 → 封装组件的使用次数不到库组件一半时，不算设计系统封装 |
+
+另外修正了 MaterialRadioButton 因名字包含「Button」被推荐给按钮的问题：候选名字比设计稿名字更具体、又属于别的概念时不算匹配（反过来 ProductCard → Card 仍然算）。修正后两个项目都没有 ✗，之前 18 个项目的结果不变（有一项 △ 变成 ✓）。
 
 ## 4. 第三份设计稿：买入下单（英文图层名、没组件化、新概念）
 

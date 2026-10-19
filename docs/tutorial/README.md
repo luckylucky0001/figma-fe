@@ -329,7 +329,7 @@ bin/figmafe compare --url http://localhost:5173/#/order/detail --figma <Figma �
 
 ## Step 19 效果：准确率和对照实验
 
-**复用清单的准确率**：18 个真实开源项目（其中 13 个在调规则时没用过，第一次跑出的错误都如实记录在 `experiments/match-judgement.md`）× 3 份设计稿，每一项人工判断推荐得对不对：
+**复用清单的准确率**：20 个真实开源项目（其中 15 个在调规则时没用过，第一次跑出的错误都如实记录在 `experiments/match-judgement.md`）× 3 份设计稿，每一项人工判断推荐得对不对：
 
 ![准确率](img/28-eval.png)
 

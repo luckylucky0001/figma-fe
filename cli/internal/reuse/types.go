@@ -123,7 +123,7 @@ var concepts = []struct {
 	{"carousel", []string{"swipe", "swiper", "carousel", "banner", "viewpager"}},
 	{"icon", []string{"icon"}},
 	{"image", []string{"image", "img", "avatar", "imageview"}},
-	{"empty", []string{"empty", "emptyview", "nodata", "placeholder", "error", "errorpanel", "errorview", "errorblock", "errorstate"}},
+	{"empty", []string{"empty", "emptyview", "nodata", "placeholder", "error", "errorpanel", "errorview", "errorblock", "errorstate", "multistateview", "stateview", "statelayout", "statusview", "multistatelayout"}},
 	{"loading", []string{"loading", "spinner", "progress", "skeleton"}},
 	{"list", []string{"list", "recyclerview", "listview", "lazycolumn"}},
 	{"divider", []string{"divider", "separator", "line"}},
@@ -529,7 +529,8 @@ func techOf(a Asset) string {
 	switch {
 	case a.Kind == "composable" || isComposeLib(a.Source):
 		return "（Compose）"
-	case a.Kind == "custom-view" || strings.HasPrefix(a.Name, "@layout/") || a.Source == "Android SDK widgets" || a.Source == "Material Components" || a.Source == "QMUI":
+	case a.Kind == "custom-view" || a.Kind == "view-helper" || strings.HasPrefix(a.Name, "@layout/") || a.Source == "Android SDK widgets" || a.Source == "Material Components" || a.Source == "QMUI" ||
+		a.Source == "AppCompat" || a.Kind == "ui-lib" && strings.Count(a.Source, ".") >= 1 && !strings.Contains(a.Source, " "):
 		return "（View）"
 	}
 	return ""

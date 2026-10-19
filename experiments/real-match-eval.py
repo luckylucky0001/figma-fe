@@ -36,6 +36,8 @@ PROJECTS = {
     "vue3-vant-mobile": ("https://github.com/easy-temps/vue3-vant-mobile.git", "8a46a5a41473ba3a638e2249b4c4e48b8ef7ddea", "h5"),
     "mall-app-web": ("https://github.com/macrozheng/mall-app-web.git", "b1eb3cde1d74fbf62e72195bafd9322c8149f4c8", "h5"),
     "antennapod": ("https://github.com/AntennaPod/AntennaPod.git", "3d105d598dfa582c6cb22ba40b56d11780366890", "android"),
+    "wanandroid": ("https://github.com/goweii/WanAndroid.git", "baba04a90460be2233ddd715fa41f1faa9be741d", "android"),
+    "seal": ("https://github.com/JunkFood02/Seal.git", "7677f61a20fda4210e84215fef9e9b51d25daa47", "android"),
 }
 
 # figma element → (right answers, acceptable answers)
@@ -212,6 +214,32 @@ EXPECTED[("mall-app-web", "holdings")] = {
     "底部操作栏": R("GoodsNav"), "买入按钮": UNI_BTN, "卖出按钮": UNI_BTN, "更多按钮": UNI_BTN}
 EXPECTED_TO["mall-app-web"] = TO(R("NavBar", "—"), R("SearchBar"), R("SegmentedControl"), RA(["MixListCell"], ["ListItem"]), R("NumberBox", "UniNumberBox"),
                                  R("Input"), R("Switch"), R("Checkbox"), UNI_BTN, R("Empty"))
+# WanAndroid (goweii): XML, AppCompat theme; top bar from the third-party per.goweii.actionbarex, states via
+# MultiStateView, switches are SwitchCompat; no button component (buttons are styled TextViews)
+WA_NAV = R("ActionBarCommon", "ActionBarEx")
+WA_ROW = RA(["—"], ["@layout/rv_item_article"])
+EXPECTED[("wanandroid", "order-detail")] = {
+    "NavBar": WA_NAV, "NoticeBar": NEW, "Card": R("CardView"), "Tag": NEW, "CountDown": NEW, "Divider": R("1px View 细线", "—"),
+    "Cell": WA_ROW, "ProductCard": R("CardView", "—"), "Price": NEW, "ActionBar": NEW, "Button": NEW}
+EXPECTED[("wanandroid", "holdings")] = {
+    "导航栏": WA_NAV, "公告通知栏": NEW, "资产卡片": R("CardView"), "标签页": R("TabLayout"), "持仓列表": R("RecyclerView"), "持仓列表项": WA_ROW,
+    "涨跌标签": NEW, "收盘倒计时": NEW, "底部操作栏": NEW, "买入按钮": NEW, "卖出按钮": NEW, "更多按钮": NEW}
+EXPECTED_TO["wanandroid"] = TO(WA_NAV, NEW, R("TabLayout"), WA_ROW, NEW, R("EditText", "InputView"), R("SwitchCompat"),
+                               R("MaterialCheckBox", "CheckBox"), NEW, R("MultiStateView"))
+# Seal: Compose + Material3 with its own ui/component set (SettingItem, PreferenceSwitch, SealSearchBar …)
+SEAL_BTN = R("Button", "FilledButtonWithIcon", "OutlinedButtonWithIcon")
+SEAL_NAV = R("TopAppBar", "LargeTopAppBar", "CenterAlignedTopAppBar")
+SEAL_ROW = R("SettingItem", "PreferenceItem", "ListItem")
+SEAL_TAG = RA(["—"], ["ButtonChip", "AssistChip", "SuggestionChip"])
+EXPECTED[("seal", "order-detail")] = {
+    "NavBar": SEAL_NAV, "NoticeBar": NEW, "Card": R("Card", "ElevatedCard", "OutlinedCard"), "Tag": SEAL_TAG, "CountDown": NEW,
+    "Divider": R("HorizontalDivider", "Divider"), "Cell": SEAL_ROW, "ProductCard": RA(["Card", "—"], ["VideoCard"]), "Price": NEW, "ActionBar": NEW, "Button": SEAL_BTN}
+EXPECTED[("seal", "holdings")] = {
+    "导航栏": SEAL_NAV, "公告通知栏": NEW, "资产卡片": R("Card", "ElevatedCard", "OutlinedCard"), "标签页": R("TabRow", "PrimaryTabRow", "SecondaryTabRow"),
+    "持仓列表": R("LazyColumn"), "持仓列表项": SEAL_ROW, "涨跌标签": SEAL_TAG, "收盘倒计时": NEW, "底部操作栏": NEW,
+    "买入按钮": SEAL_BTN, "卖出按钮": SEAL_BTN, "更多按钮": SEAL_BTN}
+EXPECTED_TO["seal"] = TO(SEAL_NAV, R("SealSearchBar", "SearchBar"), R("TabRow", "PrimaryTabRow", "SecondaryTabRow"), SEAL_ROW, NEW,
+                         R("OutlinedTextField", "TextField"), R("Switch", "PreferenceSwitch"), R("Checkbox"), SEAL_BTN, RA(["—"], ["ErrorMessage"]))
 # AntennaPod: XML + Material 1.14 with a Material3 theme; empty states go through its EmptyViewHandler (7 screens)
 AP_BTN = R("MaterialButton")
 EXPECTED[("antennapod", "order-detail")] = {
@@ -293,7 +321,7 @@ def main():
     if not only:  # a partial run must not overwrite the full results
         json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
         held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite",
-                "vue3-vant-mobile", "mall-app-web", "antennapod"}
+                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
@@ -302,7 +330,8 @@ def main():
                  "antdm-mobile": "React + antd-mobile", "jetsnack": "Compose + 自有设计系统", "litemall": "Vue 2 + Vant 2",
                  "hello-uniapp": "uni-app + uni-ui", "taro-ui-demo": "Taro + taro-ui", "nutui-vite": "Vue 3 + NutUI",
                  "newpipe": "XML（AppCompat）+ 少量 Compose", "pokedex": "XML + Material（MaterialComponents 主题）", "sunflower": "Compose + Material3（无自有设计系统）", "vant-demo-vue3": "Vue 3 + Vant", "vant-demo-vue2": "Vue 2 + Vant 2",
-                 "vue3-vant-mobile": "Vue 3 + Vant 4", "mall-app-web": "uni-app + 自有组件", "antennapod": "XML + Material3 主题"}
+                 "vue3-vant-mobile": "Vue 3 + Vant 4", "mall-app-web": "uni-app + 自有组件", "antennapod": "XML + Material3 主题",
+                 "wanandroid": "XML（AppCompat）+ 三方 ActionBarEx", "seal": "Compose + Material3 + 自有组件"}
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""

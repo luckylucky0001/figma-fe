@@ -319,7 +319,9 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s, why = 0.85, append(why, "同名")
 	case figmaConcept != "" && figmaConcept == a.Concept:
 		s, why = 0.72, append(why, "同为 "+figmaConcept)
-	case strings.Contains(an, fn) && len(fn) >= 4 || strings.Contains(fn, an) && len(an) >= 4:
+	case strings.Contains(an, fn) && len(fn) >= 4 && (figmaConcept == "" || a.Concept == "" || a.Concept == figmaConcept) || strings.Contains(fn, an) && len(an) >= 4:
+		// MaterialRadioButton contains "button" but is a radio: a more specific name of another concept
+		// is not a match (the other way round, ProductCard → Card, is)
 		s, why = 0.6, append(why, "名称包含")
 	default:
 		return 0, ""
@@ -339,6 +341,11 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 			s -= 0.12
 			why = append(why, "专用组件（"+joined+"）")
 		}
+	}
+	// <include layout="@layout/activity_article_float_btn"> is a slice of one screen, not a component
+	if strings.HasPrefix(a.Name, "@layout/activity_") || strings.HasPrefix(a.Name, "@layout/fragment_") {
+		s -= 0.15
+		why = append(why, "页面布局片段")
 	}
 	if libChild[a.Source+"|"+a.Name] && fn != an {
 		s -= 0.1
@@ -376,7 +383,17 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s -= 0.15
 		why = append(why, "项目几乎不用 "+a.Source)
 	}
-	// the name links to the concept only through a weak word (swipeactions_row, InterestsItem): less sure
+	// made for one job the design does not ask for (PasswordInputView, ConfirmButton, VideoCard)
+	if a.Kind != "ui-lib" {
+		for _, w := range specialWords(a.Name, a.Concept) {
+			if purposeWords[w] && !strings.Contains(strings.ToLower(figmaName), w) {
+				s -= 0.1
+				why = append(why, "专门用途（"+w+"）")
+				break
+			}
+		}
+	}
+		// the name links to the concept only through a weak word (swipeactions_row, InterestsItem): less sure
 	if a.Kind != "ui-lib" && a.Concept != "" && weakOnly(a.Name, a.Concept) && fn != an {
 		s -= 0.08
 		why = append(why, "名称只以 row / item 之类的泛称对上")
@@ -602,6 +619,10 @@ func r2android(a Asset) bool {
 
 // styleWords are orientation / visual-style words, not a specialisation (HorizontalDivider,
 // OutlinedButton, FilledTonalButton are still the generic component).
+// purposeWords: a component named for one job (login, video, confirm) is not the generic one.
+var purposeWords = map[string]bool{"password": true, "confirm": true, "dismiss": true, "cancel": true, "delete": true, "login": true, "logout": true,
+	"share": true, "download": true, "upload": true, "video": true, "audio": true, "music": true, "play": true, "pause": true, "retry": true, "float": true, "link": true, "back": true}
+
 var styleWords = []string{"horizontal", "vertical", "outlined", "filled", "elevated", "tonal", "default", "basic", "simple", "standard", "normal",
 	"layout", "view", "widget", "component", "container", "wrapper", "round", "common", "custom", "base", "text", "priority"}
 
@@ -735,7 +756,7 @@ func setFamilyPrefixes(pool []Asset) {
 		}
 	}
 	for w, n := range firstWords {
-		if n >= 4 && ConceptOf(w) == "" {
+		if n >= 4 && ConceptOf(w) == "" && !purposeWords[w] { // Video* in Seal is a domain, not a family
 			famPrefixes[w] = true
 		}
 	}

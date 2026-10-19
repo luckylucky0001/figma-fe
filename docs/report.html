@@ -17,7 +17,7 @@ th { background: #f5f6f7; font-weight: 600; }
 .flow b { display: block; color: #ff4d1a; font-size: 8.8pt; }
 .two { display: flex; gap: 4mm; align-items: flex-start; } .two > * { flex: 1; min-width: 0; }
 .pb { break-before: page; }
-.ev td, .ev th { white-space: nowrap; }
+.ev td, .ev th { white-space: nowrap; padding: 0.35mm 1.5mm; }
 img.wide { width: 100%; border: 1px solid #e5e6eb; border-radius: 5px; }
 code { font-family: 'DejaVu Sans Mono', monospace; font-size: 8pt; background: #f3f4f6; padding: 0 1mm; border-radius: 2px; }
 ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
@@ -30,15 +30,15 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <div class="sub">痛点 4「Figma 到实现存在偏差，组件未被充分复用」· 仓库 luckylucky0001/figma-fe · 2026-10-20 · 交付物：CLI <code>figmafe</code>（Go）+ Skill <code>figma-to-code</code> + 免费 Figma 导出插件 + Demo + 分步教程</div>
 
 <div class="kpi">
-<div><span class="big">18</span> 个真实开源项目（H5 / Android 主流技术栈）× 3 份设计稿</div>
-<div><span class="big">575/594</span> 项复用推荐正确，<b>0</b> 项错误，其余为「可用但不是最优」</div>
+<div><span class="big">20</span> 个真实开源项目（H5 / Android 主流技术栈）× 3 份设计稿</div>
+<div><span class="big">636/660</span> 项复用推荐正确，<b>0</b> 项错误，其余为「可用但不是最优」</div>
 <div><span class="big">0/11 → 11/12</span> 真实项目里实现新页面：不用 Skill → 用 Skill 通过复用检查</div>
 <div><span class="big">+35%</span> token、+45% 耗时：用 Skill 多出的成本</div>
 </div>
 
 <div class="tldr"><b>结论</b><ul>
 <li><b>对存量项目，先把「有什么」查清楚，才知道新设计稿能复用什么。</b><code>figmafe reuse</code> 扫一遍现有 H5（Vue / React / uni-app / Taro + Vant / antd-mobile / NutUI / uni-ui / taro-ui）或 Android（XML View / Compose，QMUI / Material / AppCompat / 自有设计系统）项目，得到组件资产、项目惯例、重复实现和「组件库有但本项目用不了」的组件。<code>figmafe match</code> 再把新设计稿逐个元素对上去，给出「直接复用 / 需确认 / 需新建」，并附上项目里的真实写法和变体 → props 的配置。</li>
-<li><b>准确率</b>：18 个项目 × 3 份设计稿共 594 项，✓575 / △19 / ✗0。其中 13 个是「留出」项目：调规则时没用过，第一次跑出现过错误（见第 2 节），修的都是通用规则，之后作为回归测试。</li>
+<li><b>准确率</b>：20 个项目 × 3 份设计稿共 660 项，✓636 / △24 / ✗0。其中 15 个是「留出」项目：调规则时没用过，第一次跑出现过错误（见第 2 节），修的都是通用规则，之后作为回归测试。</li>
 <li><b>Agent 实测</b>：在 5 个真实项目里按同一份设计稿实现新页面，不用 Skill 的 11 次全部没通过复用检查（Now in Android 里新建了 11～12 个和已有组件重复的组件；Haiku 在 newbee 里一个现成组件都没用），用 Skill 的 11/12 次通过。Haiku 从 0/4 提到 4/4：模型越弱，固定流程的收益越大。</li>
 <li><b>新页面闭环</b>：demo 仓库里，<code>figmafe verify</code> 一条命令输出复用率、违规、像素差异和节点级偏差，退出码可做 CI 门禁；故意埋的 3 处错误全部被抓出，修正后一次通过。</li>
 <li><b>只用免费能力</b>：不用 Figma Code Connect、Dev Mode MCP 和 Variables REST API（都要付费），设计数据走自己写的插件（Plugin API，免费）。</li>
@@ -63,7 +63,7 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <div><img class="wide" src="tutorial/img/23-match-newbee-overlay.png">
 <p class="note">newbee-mall（Vue 3 + Vant）上跑「订单详情」的复用清单：绿框直接复用、橙框需确认、红框需新建；右侧是项目里的真实写法和 Figma 变体对应的 props。</p></div></div>
 
-<h2 class="pb">2. 复用清单准不准：18 个真实开源项目（固定 commit，可复现）</h2>
+<h2 class="pb">2. 复用清单准不准：20 个真实开源项目（固定 commit，可复现）</h2>
 <table class="ev">
 <tr><th>项目</th><th>技术栈</th><th>留出</th><th>订单详情（组件化）</th><th>我的持仓（未组件化、中文图层）</th><th>买入下单（未组件化、新概念）</th></tr>
 <tr><td>newbee</td><td>Vue 3 + Vant</td><td></td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
@@ -78,13 +78,15 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <tr><td>nutui-vite</td><td>Vue 3 + NutUI</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
 <tr><td>sunflower</td><td>Compose + Material3 无自有设计系统</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓10</td></tr>
 <tr><td>pokedex</td><td>XML + Material MaterialComponents 主题</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓9 <span class='warn'>△1</span></td></tr>
-<tr><td>newpipe</td><td>XML AppCompat+ 少量 Compose</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓7 <span class='warn'>△3</span></td></tr>
+<tr><td>newpipe</td><td>XML AppCompat+ 少量 Compose</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓8 <span class='warn'>△2</span></td></tr>
 <tr><td>vant-demo-vue3</td><td>Vue 3 + Vant</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
 <tr><td>vant-demo-vue2</td><td>Vue 2 + Vant 2</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
 <tr><td>vue3-vant-mobile</td><td>Vue 3 + Vant 4</td><td>留出</td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
 <tr><td>mall-app-web</td><td>uni-app + 自有组件</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓12</td><td>✓10</td></tr>
 <tr><td>antennapod</td><td>XML + Material3 主题</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓9 <span class='warn'>△1</span></td></tr>
-<tr><th colspan="3">合计</th><th colspan="3">✓575 / △19 / ✗0</th></tr>
+<tr><td>wanandroid</td><td>XML AppCompat+ 三方 ActionBarEx</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓9 <span class='warn'>△1</span></td></tr>
+<tr><td>seal</td><td>Compose + Material3 + 自有组件</td><td>留出</td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓9 <span class='warn'>△1</span></td></tr>
+<tr><th colspan="3">合计</th><th colspan="3">✓636 / △24 / ✗0</th></tr>
 </table>
 <p class="note">✓ 推荐正确；△ 可用但不是最优（多为「需确认」）；✗ 推荐错误。留出 = 调规则时没用过的项目。</p>
 <h3>留出项目第一次跑的结果（如实记录，修正前）</h3>
@@ -95,6 +97,7 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <tr><td>hello-uniapp</td><td>持仓页 <b class="bad">12 ✗</b></td><td>uni-app 内置小写标签被当成项目组件、中文图层名规范化后为空被判「同名」→ 加 uni-ui 目录，修空名误判</td></tr>
 <tr><td>NewPipe</td><td><b class="bad">3 ✗</b></td><td>AppCompat 标准控件没算进项目资产，XML 页面被推荐 Compose 组件 → 跨技术栈的候选最多「需确认」</td></tr>
 <tr><td>mall-app-web / AntennaPod（第二批）</td><td>崩溃 + 1 ✗ / <b class="bad">1 ✗</b></td><td>uni-app 内置标签没有 import 路径导致崩溃；<code>&lt;view&gt;</code> 用量压低了 uni-ui 的占比；AntennaPod 的空状态封装 EmptyViewHandler 不是 View → 修崩溃、占比排除平台内置元素、识别「界面封装类」</td></tr>
+<tr><td>WanAndroid / Seal（第三批）</td><td><b class="bad">11 ✗</b> / <b class="bad">7 ✗</b></td><td>三方 View 库（ActionBarEx、MultiStateView）没被收进资产；Android 的 ActionBar 是顶栏；「Video*」被当成项目前缀；专门用途的组件（PasswordInputView、ConfirmButton）被当成通用组件 → 收录三方 View、按平台区分概念、用途词降权</td></tr>
 <tr><td>买入下单（新设计稿）</td><td>14 个项目 <b class="bad">12 ✗</b></td><td>开关 / 复选框 / 单选原来是一个概念，搜索算在输入框里 → 拆开概念、补词表、检查 Material 3 主题</td></tr>
 </table>
 <p class="note">vant-demo、Pokedex、Sunflower、vue3-vant-mobile 第一次跑就没有 ✗。复用推荐只错在「项目没见过的结构」，修正都是通用规则，没有针对单个项目的特判；<code>python3 experiments/real-match-eval.py</code> 每次改规则都会全量回归。</p>

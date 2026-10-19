@@ -377,6 +377,18 @@ func ScanAndroid(root string) *Report {
 				}
 				noteStyle(a)
 				use(a, f.rel, ln, line)
+				continue
+			}
+			// a fully-qualified view from a library the catalog does not know (WanAndroid's
+			// per.goweii.actionbarex ActionBarCommon × 24, androidx SwitchCompat): still the project's toolkit
+			if i := strings.LastIndex(tag, "."); i > 0 && !strings.HasPrefix(tag, "android.") && !strings.HasPrefix(simple, "AppCompat") && !catalogued(tag) {
+				src := thirdPartySource(tag[:i])
+				a := get("ui-lib", simple, src)
+				if a.Concept == "" || a.Concept == "actionbar" && strings.HasPrefix(simple, "ActionBar") {
+					a.Concept = androidConcept(simple)
+				}
+				noteStyle(a)
+				use(a, f.rel, ln, line)
 			}
 		}
 		for _, m := range includeRe.FindAllStringSubmatch(f.text, -1) {
@@ -517,6 +529,17 @@ func ScanAndroid(root string) *Report {
 	}
 	r.ColorTokens = colorTokens
 	r.Conventions = conventionsAndroid(layoutMarkup)
+	// a "wrapper" the project calls far less than the library component itself (Seal: Button × 16,
+	// LinkButton × 4) is a specialisation, not the house component
+	for _, a := range assets {
+		if w := a.WrappedBy; w != "" && a.Kind == "ui-lib" {
+			if wa := compos[w]; wa != nil && wa.Usage*2 < a.Usage {
+				a.WrappedBy = ""
+			} else if wa := custom[w]; wa != nil && wa.Usage*2 < a.Usage {
+				a.WrappedBy = ""
+			}
+		}
+	}
 	if family == "material" || family == "material3" {
 		for _, a := range assets {
 			if a.Source == "Android SDK widgets" && materialInflated[a.Name] {
@@ -601,6 +624,39 @@ func matchParen(s string, open int) int {
 
 // refineConcept resolves ambiguous names with the props: a "Banner" taking text / tone is a notice
 // bar, one taking images / items is a carousel.
+// thirdPartySource names an uncatalogued view library by its package (androidx.appcompat.widget →
+// AppCompat, per.goweii.actionbarex.common → per.goweii.actionbarex).
+func thirdPartySource(pkg string) string {
+	if strings.HasPrefix(pkg, "androidx.appcompat") {
+		return "AppCompat"
+	}
+	if ps := strings.Split(pkg, "."); len(ps) > 3 {
+		pkg = strings.Join(ps[:3], ".")
+	}
+	return pkg
+}
+
+// catalogued: the class belongs to a library the catalog lists (QMUI's internal LineTypeView): only its
+// listed components are public ones.
+func catalogued(tag string) bool {
+	for _, l := range uiLibs {
+		for _, imp := range l.Import {
+			if ps := strings.Split(strings.TrimSuffix(imp, "."), "."); len(ps) >= 3 && strings.HasPrefix(tag, strings.Join(ps[:3], ".")+".") {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// androidConcept: on Android an "action bar" is the top app bar (ActionBarCommon, ActionBarEx).
+func androidConcept(name string) string {
+	if strings.HasPrefix(name, "ActionBar") || strings.HasPrefix(name, "TitleBar") {
+		return "navbar"
+	}
+	return ConceptOf(name)
+}
+
 func refineConcept(a *Asset) {
 	refineBadge(a)
 	// a "bottom bar" that takes tabs / routes is bottom navigation, not an action bar
@@ -631,6 +687,9 @@ func isComposeLib(source string) bool { return strings.HasPrefix(source, "Compos
 // domainType: a parameter type that is an app data model (Snack, Topic, Order) rather than UI
 // plumbing (String, Color, Modifier, ImageVector, lambdas, generics).
 func domainType(t string) bool {
+	if i := strings.IndexByte(t, '.'); i > 0 && !strings.ContainsAny(t, "()<>-") && t[0] >= 'A' && t[0] <= 'Z' && t[i+1:] != "" && t[i+1] >= 'A' && t[i+1] <= 'Z' {
+		return true // a nested model type (Task.DownloadState): Compose's own types are not referenced that way
+	}
 	if t == "" || t[0] < 'A' || t[0] > 'Z' || strings.ContainsAny(t, "()<>-.") {
 		return false
 	}

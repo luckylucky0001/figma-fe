@@ -712,3 +712,30 @@ import uniNumberBox from '@/components/uni-number-box.vue'
 		t.Errorf("used=%v", used)
 	}
 }
+
+// WanAndroid: its top bar is the third-party ActionBarCommon and its switches SwitchCompat — views from
+// libraries the catalog does not know are still the project's toolkit; AppCompat* and a catalogued
+// library's internals (QMUI LineTypeView) are not
+func TestUncataloguedThirdPartyViews(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/res/layout/a.xml", `<LinearLayout>
+<per.goweii.actionbarex.common.ActionBarCommon/><per.goweii.actionbarex.common.ActionBarCommon/>
+<androidx.appcompat.widget.SwitchCompat/><androidx.appcompat.widget.AppCompatImageButton/>
+<com.qmuiteam.qmui.type.view.LineTypeView/><com.kennyc.view.MultiStateView/></LinearLayout>`)
+	got := map[string]string{}
+	for _, a := range ScanAndroid(root).Assets {
+		got[a.Name] = a.Source + "/" + a.Concept
+	}
+	want := map[string]string{"ActionBarCommon": "per.goweii.actionbarex/navbar", "SwitchCompat": "AppCompat/switch", "MultiStateView": "com.kennyc.view/empty"}
+	for k, v := range want {
+		if got[k] != v {
+			t.Errorf("%s = %q, want %q", k, got[k], v)
+		}
+	}
+	if _, ok := got["AppCompatImageButton"]; ok {
+		t.Errorf("AppCompat* is a platform widget: %v", got)
+	}
+	if _, ok := got["LineTypeView"]; ok {
+		t.Errorf("QMUI internals are not components: %v", got)
+	}
+}

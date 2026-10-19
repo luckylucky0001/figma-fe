@@ -126,5 +126,5 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 - Material 的 SearchBar / MaterialSwitch 是 Material 3 组件，在 MaterialComponents 主题的项目里不能直接用；
 - NewPipe 的 SwitchPreference（设置框架里的行）被当成了开关组件。
 
-修正后（同样是通用规则：拆开概念、补词表、Material 3 主题检查、排除 Preference）：**138 ✓ / 2 △ / 0 ✗**（加上另外两份设计稿，三份合计见 `real-match-eval.md`）。
+修正后（同样是通用规则：拆开概念、补词表、Material 3 主题检查、排除 Preference）：**132 ✓ / 8 △ / 0 ✗**（加上另外两份设计稿，三份合计见 `real-match-eval.md`）。
 

@@ -363,7 +363,7 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	}
 	// a selectable component (FilterChip: selected / onSelectedChange) for a design element that has
 	// no selected state is the wrong interaction
-	if selectable(a.Props) && !hasAxis(variants, "selected", "checked", "active", "state", "on") {
+	if (selectable(a.Props) || selectableName(a.Name)) && !hasAxis(variants, "selected", "checked", "active", "state", "on") {
 		s -= 0.06
 		why = append(why, "可选中组件，设计稿里是静态展示")
 	}
@@ -778,4 +778,15 @@ func weakOnly(name, concept string) bool {
 		}
 	}
 	return true
+}
+
+// selectableName: FilterChip / ChoiceChip / ToggleTag … are interactive by name.
+func selectableName(name string) bool {
+	for _, w := range splitWords(name) {
+		switch w {
+		case "filter", "choice", "toggle", "selectable", "select":
+			return true
+		}
+	}
+	return false
 }

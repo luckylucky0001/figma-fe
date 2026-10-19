@@ -38,3 +38,11 @@ func TestSplitTopAndKebab(t *testing.T) {
 		t.Error("kebab")
 	}
 }
+
+func TestDocBeforeIgnoresPropDocs(t *testing.T) {
+	src := "export interface P {\n  /** prop doc */\n  children?: ReactNode;\n}\n\n/**\n * ActionBar — fixed bar.\n */\nexport function ActionBar() {}"
+	d, _ := docBefore(src, len(src)-len("export function ActionBar() {}"))
+	if d != "ActionBar — fixed bar." {
+		t.Errorf("desc=%q", d)
+	}
+}

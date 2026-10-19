@@ -42,7 +42,7 @@ import com.demo.ds.DsBottomBar
 
 按钮。源码：`android/ds/src/main/kotlin/com/demo/ds/DsButton.kt`。
 
-Style axis of [DsButton] (Figma `Button` → `Type`). */ enum class DsButtonStyle { Primary, Default, Text } /** Size axis of [DsButton] (Figma `Button` → `Size`). */ enum class DsButtonSize( internal val height: Dp, internal val paddingH: Dp, internal val fontSize: TextUnit, internal val weight: FontWeight, internal val radius: Dp, ) { Large(44.dp, 24.dp, 16.sp, FontWeight.SemiBold, 22.dp), Medium(32.dp, 16.dp, 14.sp, FontWeight.Medium, 16.dp), Small(24.dp, 12.dp, 12.sp, FontWeight.Medium, 12.dp), } /** Button (Figma: `Button`, variants `Type=Primary|Default|Text`, `Size=Large|Medium|Small`). - Primary: bg primary, white text - Default: bg-card, 1dp border, text-primary - Text: no background / border, primary text Large 44 / pad 24 / 16·600 / r22; Medium 32 / pad 16 / 14·500 / r16; Small 24 / pad 12 / 12·500 / r12.
+Button (Figma: `Button`, variants `Type=Primary|Default|Text`, `Size=Large|Medium|Small`). - Primary: bg primary, white text - Default: bg-card, 1dp border, text-primary - Text: no background / border, primary text Large 44 / pad 24 / 16·600 / r22; Medium 32 / pad 16 / 14·500 / r16; Small 24 / pad 12 / 12·500 / r12.
 
 ```
 import com.demo.ds.DsButton
@@ -155,7 +155,7 @@ import com.demo.ds.DsTopBar
 
 通知条。源码：`android/ds/src/main/kotlin/com/demo/ds/DsBanner.kt`。
 
-Tone axis of [DsBanner] (Figma `NoticeBar` → `Tone`). */ enum class DsBannerTone(internal val fg: Color, internal val bg: Color) { Info(DsColors.Primary, DsColors.PrimaryLight), Warning(DsColors.Warning, DsColors.WarningLight), } /** Notice banner (Figma: `NoticeBar`). Height 36, horizontal padding 12, radius.md (8), font.caption, single line, vertically centered. Info = primary on primary-light, Warning = warning on warning-light.
+Notice banner (Figma: `NoticeBar`). Height 36, horizontal padding 12, radius.md (8), font.caption, single line, vertically centered. Info = primary on primary-light, Warning = warning on warning-light.
 
 ```
 import com.demo.ds.DsBanner
@@ -177,7 +177,7 @@ import com.demo.ds.DsBanner
 
 价格：¥ + 整数 + 小数。源码：`android/ds/src/main/kotlin/com/demo/ds/DsPriceText.kt`。
 
-Size axis of [DsPriceText]: font sizes of (¥, integer, decimals). */ enum class DsPriceSize(internal val symbol: TextUnit, internal val integer: TextUnit, internal val decimal: TextUnit) { Large(14.sp, 22.sp, 14.sp), Medium(12.sp, 18.sp, 12.sp), Small(12.sp, 14.sp, 12.sp), } /** Tone axis of [DsPriceText]: Primary = color.primary, Default = text-primary. */ enum class DsPriceTone(internal val color: Color) { Primary(DsColors.Primary), Default(DsColors.TextPrimary), } /** Price text (Figma: `Price`): "¥" + integer + "." + two decimals in a single baseline-aligned AnnotatedString. Integer weight 700, "¥" and decimals 600. Line height = 1.2 × integer size.
+Price text (Figma: `Price`): "¥" + integer + "." + two decimals in a single baseline-aligned AnnotatedString. Integer weight 700, "¥" and decimals 600. Line height = 1.2 × integer size.
 
 ```
 import com.demo.ds.DsPriceText
@@ -222,7 +222,7 @@ import com.demo.ds.DsGoodsCard
 
 状态标签。源码：`android/ds/src/main/kotlin/com/demo/ds/DsBadge.kt`。
 
-Tone axis of [DsBadge] (Figma `Tag` → `Tone`). */ enum class DsBadgeTone(internal val fg: Color, internal val bg: Color) { Primary(DsColors.Primary, DsColors.PrimaryLight), Success(DsColors.Success, DsColors.SuccessLight), Warning(DsColors.Warning, DsColors.WarningLight), Danger(DsColors.Danger, DsColors.DangerLight), } /** Status badge (Figma: `Tag`). Height 20, horizontal padding 6, radius.sm (4), font 12 / 20 / 500. Only the Light look is implemented: background `{tone}-light`, text `{tone}`. (Figma's `Variant=Solid` has no Android counterpart yet.)
+Status badge (Figma: `Tag`). Height 20, horizontal padding 6, radius.sm (4), font 12 / 20 / 500. Only the Light look is implemented: background `{tone}-light`, text `{tone}`. (Figma's `Variant=Solid` has no Android counterpart yet.)
 
 ```
 import com.demo.ds.DsBadge
@@ -248,7 +248,7 @@ import com.demo.ds.DsBadge
 
 ## 不对应 Figma 组件的辅助组件
 
-- `DsText` Internal text primitive used by ds components (single source for font + color handling). */ internal fun DsTextInternal( text: String, style: TextStyle, color: Color, modifier: Modifier = Modifier, maxLines: Int = Int.MAX_VALUE, ) { BasicText( text = text, modifier = modifier.snapToLineHeight(style), style = style.copy(color = color), overflow = TextOverflow.Ellipsis, softWrap = true, maxLines = maxLines, ) } /** Public text helper for screens (pages may only use `com.demo.ds.*`). Defaults to font.body / text-primary. Intentionally NOT tagged with [dsComponent]: it is a typography primitive, not a Figma component. — `android/ds/src/main/kotlin/com/demo/ds/DsText.kt`
+- `DsText` Public text helper for screens (pages may only use `com.demo.ds.*`). Defaults to font.body / text-primary. Intentionally NOT tagged with [dsComponent]: it is a typography primitive, not a Figma component. — `android/ds/src/main/kotlin/com/demo/ds/DsText.kt`
 - `LegacyButton` Legacy button (Figma: `Button`, `Type=Primary|Default|Text`, `Size=Large|Medium|Small`). - primary: bg ds_color_primary, white text - default: bg ds_color_bg_card, 1dp ds_color_border stroke, ds_color_text_primary text - text: no background, ds_color_primary text - large 44dp / pad 24 / 16sp bold / r22; medium 32dp / pad 16 / 14sp / r16; small 24dp / pad 12 / 12sp / r12 <com.demo.dsview.LegacyButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="去支付" app:btnType="primary" app:btnSize="medium" />（XML View 存量组件，新页面不要用） — `android/ds-view/src/main/java/com/demo/dsview/LegacyButton.kt`
 - `LegacyCellView` Legacy key/value row (Figma: `Cell`). Vertical padding 12dp, min height 44dp, title on the left (14sp text_primary), value on the right (14sp text_secondary), optional 16dp chevron 4dp after the value. The Figma `Label` (subtitle) variant is not supported by this legacy view. <com.demo.dsview.LegacyCellView android:layout_width="match_parent" android:layout_height="wrap_content" app:cellTitle="订单编号" app:cellValue="DD20261018093021" app:cellShowArrow="false" />（XML View 存量组件，新页面不要用） — `android/ds-view/src/main/java/com/demo/dsview/LegacyCellView.kt`
 - `LegacyTagView` Legacy status tag (Figma: `Tag`, Light variant only). Height 20dp, horizontal padding 6dp, radius 4dp, 12sp medium text. Background `{tone}_light`, text `{tone}`. <com.demo.dsview.LegacyTagView android:layout_width="wrap_content" android:layout_height="20dp" android:text="待付款" app:tagTone="primary" />（XML View 存量组件，新页面不要用） — `android/ds-view/src/main/java/com/demo/dsview/LegacyTagView.kt`

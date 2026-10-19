@@ -1,0 +1,73 @@
+/* 订单详情页面布局：颜色、字体、间距使用 token；仅非 token 尺寸保留裸值。 */
+
+.od-page {
+  min-height: 100vh;
+  background: var(--ds-color-bg-page);
+}
+
+/* 内容区：卡片之间 12，左右 12，底部预留给吸底 ActionBar */
+.od-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-md);
+  padding: var(--ds-space-md) var(--ds-space-md) 56px;
+}
+
+/* 状态行：Tag + 状态标题 + 倒计时（静态文本，右对齐） */
+.od-status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-sm);
+  margin-bottom: var(--ds-space-xs);
+}
+
+/* Tag 自带 align-self: flex-start，这里改回居中以与标题对齐 */
+.od-status-row > .od-status-chip {
+  align-self: center;
+}
+
+.od-status-title {
+  font-size: var(--ds-font-title-size);
+  line-height: var(--ds-font-title-line-height);
+  font-weight: var(--ds-font-title-weight);
+  color: var(--ds-color-text-primary);
+}
+
+.od-countdown {
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+  color: var(--ds-color-danger);
+}
+
+.od-status-desc {
+  margin-bottom: var(--ds-space-md);
+  font-size: var(--ds-font-caption-size);
+  line-height: var(--ds-font-caption-line-height);
+  font-weight: var(--ds-font-caption-weight);
+  color: var(--ds-color-text-tertiary);
+}
+
+/* 商品区：商品行与下方分割线之间 12 */
+.od-goods {
+  margin-bottom: var(--ds-space-md);
+}
+
+/* 合计行：固定 32 高，标签与金额垂直居中，整体右对齐 */
+.od-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ds-space-sm);
+  height: 32px;
+  margin-top: var(--ds-space-xs);
+}
+
+.od-total-label {
+  font-size: var(--ds-font-body-size);
+  line-height: var(--ds-font-body-line-height);
+  font-weight: var(--ds-font-body-weight);
+  color: var(--ds-color-text-primary);
+}

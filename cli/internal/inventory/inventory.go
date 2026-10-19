@@ -171,6 +171,10 @@ func docBefore(src string, idx int) (desc, example string) {
 		}
 		head = strings.TrimRight(head[:m[0]], " \t\r\n")
 	}
+	// Only the last /** */ block directly before idx belongs to the declaration (earlier ones document props).
+	if i := strings.LastIndex(head, "/**"); i >= 0 {
+		head = head[i:]
+	}
 	m := docRe.FindStringSubmatch(head)
 	if m == nil {
 		return "", ""

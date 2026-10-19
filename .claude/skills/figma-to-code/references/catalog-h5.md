@@ -25,7 +25,7 @@
 
 吸底操作栏，按钮右对齐。源码：`h5/src/ds/ActionBar/index.tsx`。
 
-Usually Buttons; right-aligned with an 8px gap. */ children?: ReactNode; } /** ActionBar — bar fixed to the bottom of the viewport, 56px high, white background, 1px top border, 16px horizontal padding; children are right-aligned with an 8px gap. Pages should reserve 56px of bottom padding so content is not covered.
+ActionBar — bar fixed to the bottom of the viewport, 56px high, white background, 1px top border, 16px horizontal padding; children are right-aligned with an 8px gap. Pages should reserve 56px of bottom padding so content is not covered.
 
 ```
 import { ActionBar } from '@ds';
@@ -41,7 +41,7 @@ import { ActionBar } from '@ds';
 
 按钮。源码：`h5/src/ds/Button/index.tsx`。
 
-Visual type. Default `'default'`. */ type?: 'primary' | 'default' | 'text'; /** Large h44 · Medium h32 · Small h24. Default `'medium'`. */ size?: 'large' | 'medium' | 'small'; /** Stretch to the full width of the container. */ block?: boolean; onClick?: MouseEventHandler<HTMLButtonElement>; children?: ReactNode; } /** Button — pill button. Primary (brand fill, white text), Default (white fill, 1px border), Text (no fill/border, brand text). Sizes Large 44 / Medium 32 / Small 24 px high.
+Button — pill button. Primary (brand fill, white text), Default (white fill, 1px border), Text (no fill/border, brand text). Sizes Large 44 / Medium 32 / Small 24 px high.
 
 ```
 import { Button } from '@ds';
@@ -69,7 +69,7 @@ import { Button } from '@ds';
 
 白底圆角卡片，可带标题。源码：`h5/src/ds/Card/index.tsx`。
 
-Optional card title (font.subtitle), 12px above the content. */ title?: string; children?: ReactNode; } /** Card — white container with 12px radius and 16px padding. Children stack vertically with no gap; an optional title sits 12px above them.
+Card — white container with 12px radius and 16px padding. Children stack vertically with no gap; an optional title sits 12px above them.
 
 ```
 import { Card } from '@ds';
@@ -93,7 +93,7 @@ import { Card } from '@ds';
 
 单元格：标题/副标题 + 右侧值 + 箭头。源码：`h5/src/ds/Cell/index.tsx`。
 
-Left title (font.body). */ title: string; /** Optional sub-title under the title (font.caption, tertiary). */ label?: string; /** Right-aligned value (font.body, secondary). */ value?: ReactNode; /** Show a 16×16 right chevron after the value. */ arrow?: boolean; } /** Cell — list row: title (+ optional label) on the left, value (+ optional arrow) on the right. 12px vertical padding, no horizontal padding (the Card provides it), min height 44.
+Cell — list row: title (+ optional label) on the left, value (+ optional arrow) on the right. 12px vertical padding, no horizontal padding (the Card provides it), min height 44.
 
 ```
 import { Cell } from '@ds';
@@ -118,7 +118,7 @@ import { Cell } from '@ds';
 
 1px 分割线。源码：`h5/src/ds/Divider/index.tsx`。
 
-Divider has no own props; only passthrough attributes (data-*, className, style). */ // eslint-disable-next-line @typescript-eslint/no-empty-interface export interface DividerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {} /** Divider — 1px horizontal line in color.border, no margin.
+Divider — 1px horizontal line in color.border, no margin.
 
 ```
 import { Divider } from '@ds';
@@ -132,7 +132,7 @@ import { Divider } from '@ds';
 
 顶部导航栏，标题居中 + 返回。源码：`h5/src/ds/NavBar/index.tsx`。
 
-Centered title text (font.title). */ title: string; /** Called when the back chevron is tapped. */ onBack?: () => void; } /** NavBar — top navigation bar, 44px high, white background, back chevron on the left (24×24, 12px from the left edge) and a centered title.
+NavBar — top navigation bar, 44px high, white background, back chevron on the left (24×24, 12px from the left edge) and a centered title.
 
 ```
 import { NavBar } from '@ds';
@@ -150,7 +150,7 @@ import { NavBar } from '@ds';
 
 通知条。源码：`h5/src/ds/NoticeBar/index.tsx`。
 
-`'info'` = primary-light bg / primary text; `'warning'` = warning-light bg / warning text. Default `'info'`. */ tone?: 'info' | 'warning'; children?: ReactNode; } /** NoticeBar — single-line notice, 36px high, 12px horizontal padding, 8px radius, font.caption. Overflowing text is truncated with an ellipsis.
+NoticeBar — single-line notice, 36px high, 12px horizontal padding, 8px radius, font.caption. Overflowing text is truncated with an ellipsis.
 
 ```
 import { NoticeBar } from '@ds';
@@ -172,7 +172,7 @@ import { NoticeBar } from '@ds';
 
 价格：¥ + 整数 + 小数。源码：`h5/src/ds/Price/index.tsx`。
 
-Amount in yuan, e.g. `128.5` renders as ¥128.50. */ value: number; /** Large: ¥14 / 22 / 14 · Medium: ¥12 / 18 / 12 · Small: ¥12 / 14 / 12. Default `'medium'`. */ size?: 'large' | 'medium' | 'small'; /** `'primary'` uses color.primary, `'default'` uses text-primary. Default `'primary'`. */ tone?: 'primary' | 'default'; } /** Price — "¥" + integer + "." + two decimals, baseline aligned. Integer is 700 weight, symbol and decimals are 600.
+Price — "¥" + integer + "." + two decimals, baseline aligned. Integer is 700 weight, symbol and decimals are 600.
 
 ```
 import { Price } from '@ds';
@@ -199,7 +199,7 @@ import { Price } from '@ds';
 
 商品卡：缩略图 + 标题 + 规格 + 价格 + 数量。源码：`h5/src/ds/ProductCard/index.tsx`。
 
-Product name, clamped to two lines. */ title: string; /** Spec / SKU description (font.caption, tertiary). */ spec?: string; /** Unit price, rendered as `Price size="medium" tone="default"`. */ price: number; /** Quantity, rendered as "x{count}". */ count?: number; /** Thumbnail URL; a placeholder background shows when omitted. */ thumb?: string; } /** ProductCard — 80×80 thumbnail + info column (title, spec, bottom row with price and quantity).
+ProductCard — 80×80 thumbnail + info column (title, spec, bottom row with price and quantity).
 
 ```
 import { ProductCard } from '@ds';
@@ -217,7 +217,7 @@ import { ProductCard } from '@ds';
 
 状态标签。源码：`h5/src/ds/Tag/index.tsx`。
 
-Tone. Default `'primary'`. */ type?: 'primary' | 'success' | 'warning' | 'danger'; /** `true` = Light variant (tinted bg, toned text); `false` = Solid (toned bg, white text). Default `true`. */ light?: boolean; children?: ReactNode; } /** Tag — small status label, 20px high, 6px horizontal padding, 4px radius, 12/20/500 text.
+Tag — small status label, 20px high, 6px horizontal padding, 4px radius, 12/20/500 text.
 
 ```
 import { Tag } from '@ds';

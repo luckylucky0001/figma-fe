@@ -26,6 +26,7 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 | Rqm-Ahk-1 | A 只给任务（Haiku） | ❌ FAIL | 6 | 0 / 0 | 0 | 1 / 0 | 11 | 1 | — |
 | Rqm-C-1 | C 用 Skill（Opus） | ✅ PASS | 9 | 0 / 0 | 0 | 0 / 0 | 10 | 0 | QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBar |
 | Rqm-C-2 | C 用 Skill（Opus） | ✅ PASS | 8 | 0 / 0 | 0 | 0 / 0 | 8 | 0 | QDNoticeBarView、QDCountDownView、QDPriceView、QDActionBarLayout、QDTagView、QDProductCardView |
+| Rqm-Chk-1 | C 用 Skill（Haiku） | ✅ PASS | 8 | 0 / 0 | 0 | 0 / 0 | 10 | 0 | 无（Tag / Price / CountDown / 商品行用 QMUICommonListItemView 的标题、描述、accessory 和 span 实现，决定写进 component-map.yaml） |
 
 ## Now in Android（Jetpack Compose + Material3 + 自有设计系统 Nia*）
 
@@ -42,6 +43,7 @@ A = 只给任务和 Figma 导出；C = 加上 Skill（`reuse` 体检 → `match`
 
 - newbee：A 组页面里手写了商品卡、分割线、底部操作栏，还自建了 10 个颜色变量；C 组直接用 Vant 的 Card / Divider / ActionBar 和项目已有的 SimpleHeader，缺的 Price 放进组件目录。
 - Haiku 不带 Skill 时一个现成组件都没用（0 个），带 Skill 后复用 10 个、检查通过：Skill 把「先查再写」变成了固定流程，模型能力弱时收益更大。
+- QMUI + Haiku：不带 Skill 时没用任何列表组件（FAIL）；带 Skill 时复用 QMUIGroupListView / QMUICommonListItemView ×7 / QMUIRoundButton，检查 PASS。它还指出 Skill 的 catalog / workflow 文件讲的是 demo 组件库，在别的项目里会误导，已拆分说明。
 - QMUI 的 Haiku 基线（Rqm-Ahk-1）没用任何列表组件，7 行「标题 + 值」都是 LinearLayout + 两个 TextView 手写的，而且没有能说明用途的 id / class。按名字的检查看不出来，于是加了按结构识别（横排、两个文字、可选箭头）的检查，现在能抓到；两次 C 组没有误报。
 - QMUI：A 组地址行用 LinearLayout 手写（项目里有 QMUICommonListItemView，已用 48 次），C 组用 QMUIGroupListView + QMUICommonListItemView。
 - QMUI 的两个 C run 都发现 match 推荐了项目用不了的组件（MaterialDivider 需要 Material 1.5，项目是 1.4；Chip / MaterialCardView 在 AppCompat 主题下会崩溃），自行绕开并写进了报告。这两类问题已经做进工具：现在体检会列出「组件库里有、但本项目不能直接用的组件」，match 不再推荐它们。

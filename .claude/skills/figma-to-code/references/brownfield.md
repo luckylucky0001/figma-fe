@@ -4,6 +4,8 @@
 - H5：Vue 2 / 3（SFC）、React（TSX / JSX）、uni-app；三方组件库支持 Vant、React Vant、NutUI、antd-mobile、TDesign Mobile、uView、Element Plus
 - Android：XML View（layout、自定义 View、`attrs.xml`）、Jetpack Compose；三方库支持 Material Components、QMUI、Compose Material3；自动识别项目自己的设计系统模块（`designsystem` / `ds` / `uikit` 目录）
 
+只读本文件和 `rules.md` 的「任何存量项目」一节。`catalog-*.md`、`workflow-*.md` 和 `rules.md` 的 demo 部分讲的是本仓库 demo 的组件库（`Ds*` 等），不适用于你的项目。
+
 核心思路：**先知道项目里已经有什么，再看新设计稿里哪些可以直接复用，只有真的没有的才新建。**
 
 ## 1. 存量体检（了解项目已有的资产）

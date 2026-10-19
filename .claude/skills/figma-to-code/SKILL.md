@@ -12,6 +12,7 @@ description: 按 Figma 设计稿实现或还原 H5 / Android 页面时使用（�
 
 - 仓库根目录**有 `figmafe.yaml`**（已经接入：映射、组件手册、截图比对都配好了）→ 按下面的完整流程做。
 - **没有**（普通的存量项目）→ 按 `references/brownfield.md` 做：`figmafe reuse` 体检 → `figmafe match` 拿到新设计稿的复用清单（每个组件：用什么、怎么配置；`.html` 是叠在设计图上的可视版，方案闸门时给人看）→ 实现 → `figmafe reuse --focus`（或 `--changed <ref>`）做页面复用检查 → 不采纳推荐 / 新建组件的决定写进 `component-map.yaml`。
+  存量流程只读 `references/brownfield.md` 和 `references/rules.md` 的「任何存量项目」一节；`catalog-*.md`、`workflow-*.md` 描述的是本仓库 demo 的组件库，不适用于其它项目。
 
 ## 硬性规则
 

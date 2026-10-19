@@ -30,6 +30,7 @@ type MatchItem struct {
 	NodeIDs    []string    `json:"nodeIds"`
 	Variants   []string    `json:"variants,omitempty"`
 	Verdict    string      `json:"verdict"` // reuse | confirm | new
+	Decision   string      `json:"decision,omitempty"` // confirmed gap decision
 	Candidates []Candidate `json:"candidates"`
 }
 
@@ -46,6 +47,10 @@ type MatchResult struct {
 // Target is the technology of the page being built: "" (any), "xml" (Android View layouts) or
 // "compose". Assets that cannot be used from that technology are pushed down.
 var Target string
+
+// Confirmed is a project's confirmed component map (design/component-map.yaml or
+// .figmafe/component-map.yaml). Confirmed entries win over inference: the team decided once.
+var Confirmed *mapping.Map
 
 // Match scores project assets for each Figma component set used on the page.
 func Match(exp *figma.Export, r *Report) *MatchResult {
@@ -113,6 +118,34 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			item.Variants = append(item.Variants, v)
 		}
 		sort.Strings(item.Variants)
+		if Confirmed != nil {
+			if e := Confirmed.Entry(name); e != nil {
+				if im := e.Impl(r.Platform); im != nil {
+					c := Candidate{Name: im.Component, Kind: "confirmed", Source: im.Import, Score: 1, Example: im.Usage, Why: "已确认映射（component-map.yaml）"}
+					for _, as := range r.Assets {
+						if as.Name == im.Component {
+							c.Kind, c.Usage = as.Kind, as.Usage
+							if c.Example == "" {
+								c.Example, c.ExampleAt = as.Example, as.ExampleAt
+							}
+						}
+					}
+					item.Candidates = []Candidate{c}
+					item.Verdict = "reuse"
+					res.Reuse++
+					res.Items = append(res.Items, item)
+					continue
+				}
+			}
+			if g := Confirmed.GapFor(name, r.Platform); g != nil {
+				item.Verdict = "new"
+				item.Decision = g.Decision
+				item.Candidates = nil
+				res.New++
+				res.Items = append(res.Items, item)
+				continue
+			}
+		}
 		fc := ConceptOf(strings.TrimSuffix(name, "（未组件化）"))
 		for _, as := range pool {
 			sc, why := score(name, fc, a.variants, as)
@@ -277,7 +310,11 @@ func (m *MatchResult) Markdown() string {
 	for _, it := range m.Items {
 		verdict := map[string]string{"reuse": "✅ 直接复用", "confirm": "❓ 需确认", "new": "🆕 需新建"}[it.Verdict]
 		if len(it.Candidates) == 0 {
-			fmt.Fprintf(&b, "| %s | %d | %s | — | 项目和组件库里都没有 | — |\n", it.Figma, it.Instances, verdict)
+			why := "项目和组件库里都没有"
+			if it.Decision != "" {
+				why = "已确认的缺口决定：" + it.Decision
+			}
+			fmt.Fprintf(&b, "| %s | %d | %s | — | %s | — |\n", it.Figma, it.Instances, verdict, why)
 			continue
 		}
 		c := it.Candidates[0]

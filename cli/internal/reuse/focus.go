@@ -167,10 +167,26 @@ func checkHandBuilt(pc *PageCheck, r *Report, pool []Asset, used, seen map[strin
 	if concept == "" || used[concept] || seen[concept] || concept == "list" || concept == "icon" || concept == "image" {
 		return
 	}
+	// same preference as match: proven in this project, then the concept's canonical component
+	pref := func(a *Asset) int {
+		p := rank(*a)
+		switch {
+		case a.Usage >= 3:
+			p += 3000 // the project's established choice
+		case a.Usage > 0:
+			p += 1000
+		}
+		for _, c := range concepts {
+			if c.Name == concept && normName(a.Name) == c.Words[0] {
+				p += 1500 // the concept's canonical component (Cell, Tag, NavBar)
+			}
+		}
+		return p
+	}
 	var best *Asset
 	for i := range pool {
 		b := &pool[i]
-		if b.Concept == concept && !in(b.Source) && b.Source != "Android SDK widgets" && (best == nil || rank(*b) > rank(*best) || rank(*b) == rank(*best) && len(b.Name) < len(best.Name)) {
+		if b.Concept == concept && !in(b.Source) && b.Source != "Android SDK widgets" && (best == nil || pref(b) > pref(best) || pref(b) == pref(best) && len(b.Name) < len(best.Name)) {
 			best = b
 		}
 	}

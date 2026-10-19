@@ -1,0 +1,349 @@
+{
+  "focus": "src/views/OrderDetailV2.vue",
+  "used": null,
+  "reinvented": null,
+  "missedReuse": [
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 4,
+      "text": "\u003cbutton class=\"nav-back\" type=\"button\" aria-label=\"返回\" @click=\"goBack\"\u003e",
+      "hint": "原生 \u003cbutton\u003e：项目里已有 Button（组件库）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 76,
+      "text": "\u003cbutton class=\"btn\" type=\"button\"\u003e联系客服\u003c/button\u003e",
+      "hint": "原生 \u003cbutton\u003e：项目里已有 Button（组件库）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 77,
+      "text": "\u003cbutton class=\"btn\" type=\"button\"\u003e修改地址\u003c/button\u003e",
+      "hint": "原生 \u003cbutton\u003e：项目里已有 Button（组件库）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 78,
+      "text": "\u003cbutton class=\"btn btn-primary\" type=\"button\"\u003e提醒发货\u003c/button\u003e",
+      "hint": "原生 \u003cbutton\u003e：项目里已有 Button（组件库）"
+    }
+  ],
+  "handBuilt": [
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 3,
+      "text": ".nav-bar",
+      "hint": "页面手写了「navbar」（.nav-bar），已有 SimpleHeader（业务组件 src/components/SimpleHeader.vue）（项目里已用 11 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 13,
+      "text": ".notice",
+      "hint": "页面手写了「notice」（.notice），已有 NoticeBar（组件库 Vant）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 15,
+      "text": ".card",
+      "hint": "页面手写了「card」（.card），已有 CellGroup（组件库 Vant）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 16,
+      "text": ".status-row",
+      "hint": "页面手写了「cell」（.status-row），已有 Cell（组件库 Vant）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 17,
+      "text": ".status-tag",
+      "hint": "页面手写了「tag」（.status-tag），已有 Tag（组件库 Vant）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 19,
+      "text": ".countdown",
+      "hint": "页面手写了「countdown」（.countdown），已有 CountDown（组件库 Vant）（组件库标准组件，项目还没用过，请确认）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 22,
+      "text": ".divider",
+      "hint": "页面手写了「divider」（.divider），已有 Divider（组件库 Vant）（项目里已用 2 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 34,
+      "text": ".goods-card",
+      "hint": "页面手写了「goods」（.goods-card），已有 Card（组件库 Vant）（项目里已用 2 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 75,
+      "text": ".action-bar",
+      "hint": "页面手写了「actionbar」（.action-bar），已有 ActionBar（组件库 Vant）（项目里已用 1 次）"
+    },
+    {
+      "rule": "hand-built",
+      "severity": "error",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 76,
+      "text": ".btn",
+      "hint": "页面手写了「button」（.btn），已有 Button（组件库 Vant）（项目里已用 14 次）"
+    }
+  ],
+  "colors": [
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 134,
+      "text": "#F5F6F7",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 135,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 149,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token var(--vt-c-white)"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 160,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 182,
+      "text": "#FFF3E8",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 183,
+      "text": "#FF8F1F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 193,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token var(--vt-c-white)"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 204,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 219,
+      "text": "#FFF3E8",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 220,
+      "text": "#FF8F1F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 232,
+      "text": "#F53F3F",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 239,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 259,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 265,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 278,
+      "text": "#F2F3F5",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 298,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 309,
+      "text": "#8F959E",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 318,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 332,
+      "text": "#FF4D1A",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 352,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 355,
+      "text": "#646A73",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 384,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token var(--vt-c-white)"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 385,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 391,
+      "text": "#E5E6EB",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 393,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token var(--vt-c-white)"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 394,
+      "text": "#1F2329",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 403,
+      "text": "#FF4D1A",
+      "hint": "写死颜色"
+    },
+    {
+      "rule": "hardcoded-color",
+      "severity": "warn",
+      "file": "src/views/OrderDetailV2.vue",
+      "line": 404,
+      "text": "#FFFFFF",
+      "hint": "写死颜色，已有同值 token var(--vt-c-white)"
+    }
+  ],
+  "localTokens": 0,
+  "pass": false
+}

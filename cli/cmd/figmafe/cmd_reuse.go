@@ -9,6 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/luckylucky0001/figma-fe/cli/internal/figma"
+	"github.com/luckylucky0001/figma-fe/cli/internal/mapping"
 	"github.com/luckylucky0001/figma-fe/cli/internal/reuse"
 )
 
@@ -101,6 +102,14 @@ func runMatch(args []string) error {
 			r = reuse.ScanAndroid(root)
 		}
 		reuse.Target = *target
+		reuse.Confirmed = nil
+		for _, cand := range []string{"design/component-map.yaml", ".figmafe/component-map.yaml", "component-map.yaml"} {
+			if cm, err := mapping.Load(filepath.Join(root, cand)); err == nil {
+				reuse.Confirmed = cm
+				fmt.Printf("· 使用已确认映射 %s\n", cand)
+				break
+			}
+		}
 		m := reuse.Match(exp, r)
 		md := m.Markdown()
 		_ = os.WriteFile(filepath.Join(*out, p+".md"), []byte(md), 0o644)

@@ -1446,3 +1446,23 @@ func TestLayoutShellIsNotABar(t *testing.T) {
 		}
 	}
 }
+
+// gkd: GkAppBarTextField has no "search" in its name, but every call binds the search string
+func TestSearchByCallSites(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/build.gradle", "")
+	imp := "package a\nimport androidx.compose.material3.*\n"
+	write(t, root, "app/src/main/kotlin/a/ui/component/GkAppBarTextField.kt", imp+"@Composable\nfun GkAppBarTextField(value: String, onValueChange: (String) -> Unit, hint: String) { TextField(value, onValueChange) }\n")
+	write(t, root, "app/src/main/kotlin/a/ui/component/GkMultiTextField.kt", imp+"@Composable\nfun GkMultiTextField(value: String, onValueChange: (String) -> Unit) { TextField(value, onValueChange) }\n")
+	var uses string
+	for i := 0; i < 3; i++ {
+		uses += "    GkAppBarTextField(\n        value = vm.searchStr,\n        onValueChange = {},\n        hint = \"\",\n    )\n    GkMultiTextField(value = note, onValueChange = {})\n"
+	}
+	write(t, root, "app/src/main/kotlin/a/ui/home/HomePage.kt", imp+"import a.ui.component.*\n@Composable\nfun HomePage() {\n"+uses+"}\n")
+	r := ScanAndroid(root)
+	for _, a := range r.Assets {
+		if a.Name == "GkAppBarTextField" && (a.Concept != "search" || a.ConceptBy == "") || a.Name == "GkMultiTextField" && a.Concept != "input" {
+			t.Errorf("%s concept %q (%s)", a.Name, a.Concept, a.ConceptBy)
+		}
+	}
+}

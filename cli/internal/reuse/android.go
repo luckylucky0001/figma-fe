@@ -20,6 +20,7 @@ var (
 	plainClassKtRe = regexp.MustCompile(`(?m)^\s*(?:internal\s+|open\s+|abstract\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:\([^)]*\))?\s*\{`)
 	helperClassRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
 	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*(?:(?:public|abstract|final)\s+)*class\s+([A-Z]\w*)\s*(?:<[^{]*?>)?\s+extends\s+([A-Z][\w.]*)`)
+	searchArgRe    = regexp.MustCompile(`(?i)\b(?:value|text|query)\s*=\s*[\w.]*(?:search|query|keyword)`)
 	composCallRe   = regexp.MustCompile(`(?:^|[^\w.])([A-Z]\w*)\s*[({]`)
 	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+(?:<[^>]*>\s*)?(?:[\w.]+\.)?([A-Z]\w*)\s*\(`) // fun <T> X(, fun RowScope.X(
 	styleableRe2   = regexp.MustCompile(`(?s)<declare-styleable\s+name="(\w+)"\s*>(.*?)</declare-styleable>`)
@@ -468,6 +469,7 @@ func ScanAndroid(root string) *Report {
 	if len(custom) > 0 {
 		customRe = regexp.MustCompile(`\b(` + alt(custom) + `)\b[(.]`)
 	}
+	inputCalls, searchCalls := map[string]int{}, map[string]int{}
 	for _, f := range code {
 		lines := strings.Split(f.text, "\n")
 		if composRe != nil {
@@ -478,6 +480,12 @@ func ScanAndroid(root string) *Report {
 				name := f.text[m[2]:m[3]]
 				ln := strings.Count(f.text[:m[0]], "\n") + 1
 				use(compos[name], f.rel, ln, strings.TrimSpace(lines[ln-1]))
+				if compos[name].Concept == "input" && f.text[m[1]-1] == '(' {
+					inputCalls[name]++
+					if end := matchParen(f.text, m[1]-1); end > 0 && searchArgRe.MatchString(f.text[m[1]:end]) {
+						searchCalls[name]++
+					}
+				}
 			}
 		}
 		// programmatic custom view / library usage in code (e.g. QMUITipDialog.Builder, MaterialButton(context))
@@ -497,6 +505,14 @@ func ScanAndroid(root string) *Report {
 			} else {
 				hit(m[2], f.rel)
 			}
+		}
+	}
+	// an input whose calls mostly bind a search query (GkAppBarTextField(value = searchStr) × 7) is
+	// the project's search box, whatever its name says
+	for name, n := range inputCalls {
+		if s := searchCalls[name]; s >= 2 && s*2 >= n {
+			compos[name].Concept = "search"
+			compos[name].ConceptBy = itoa(n) + " 处调用里有 " + itoa(s) + " 处传的是搜索词，是项目的搜索框"
 		}
 	}
 	for _, o := range raws {

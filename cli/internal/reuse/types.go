@@ -36,6 +36,7 @@ type Asset struct {
 	Extends     string              `json:"extends,omitempty"`     // Android custom view: its base class (SquareImageView → AppCompatImageView)
 	Purpose     string              `json:"purpose,omitempty"`     // the one job its doc comment says it is for (CountdownView: 验证码倒计时 → 验证码)
 	BuiltOn     []string            `json:"builtOn,omitempty"`     // components its body / markup uses (GkSettingsDialog → GkDialog)
+	ConceptBy   string              `json:"conceptBy,omitempty"`   // why the concept differs from the name (GkAppBarTextField: its calls pass a search term)
 }
 
 type Finding struct {

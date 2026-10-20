@@ -345,7 +345,9 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		return 0, ""
 	}
 	// specialised components (AddressList, ContactCard, CouponCell) carry domain words the design does not
-	if s < 0.9 && a.Concept != "" && a.Kind != "convention" {
+	if a.ConceptBy != "" {
+		why = append(why, a.ConceptBy) // the concept comes from how it is used, not from its name
+	} else if s < 0.9 && a.Concept != "" && a.Kind != "convention" {
 		residual := specialWords(a.Name, a.Concept)
 		joined := strings.Join(residual, "")
 		lowerFigma := strings.ToLower(figmaName)

@@ -29,7 +29,7 @@
 | jeecg-uniapp（留出） | uni-app + wot-design-uni | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | vue-h5-template（留出） | Vue 3 + Vant（另装 NutUI / Varlet） | ✓10 △1 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | yudao-mall（留出） | uni-app 商城 + 自有设计系统 sheep/ui + uni-ui | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓10 △0 ✗0 |
-| gkd（留出） | Compose Multiplatform + Material3 + 自有组件 | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓9 △1 ✗0 |
+| gkd（留出） | Compose Multiplatform + Material3 + 自有组件 | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓10 △0 ✗0 |
 | androidproject（留出） | XML + 自有 customWidget 库 + TitleBar | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓10 △0 ✗0 |
 
-**合计 ✓826 / △32 / ✗0**
+**合计 ✓827 / △31 / ✗0**

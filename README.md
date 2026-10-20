@@ -9,7 +9,7 @@
 | **CLI `figmafe`**（Go 1.25） | [`cli/`](cli)：存量项目用 `reuse / match / compare`；新页面闭环用 `scan / map / catalog / plan / audit / capture / diff / verify` |
 | **Skill `figma-to-code`** | [`.claude/skills/figma-to-code/`](.claude/skills/figma-to-code/SKILL.md)，存量项目流程见 [`references/brownfield.md`](.claude/skills/figma-to-code/references/brownfield.md) |
 | **Figma 导出插件**（免费 Plugin API） | [`figma-plugin/`](figma-plugin) |
-| **报告**（PDF 共 3 页） | [`docs/report.pdf`](docs/report.pdf) |
+| **报告**（PDF 共 10 页） | [`docs/report.pdf`](docs/report.pdf) |
 | **分步教程**（每一步都有截图） | [`docs/tutorial/README.md`](docs/tutorial/README.md)：第一部分是新页面闭环，第二部分是存量项目 |
 | 复用推荐准确率（26 个开源项目 × 3 份设计稿 + 精修演示稿） | [`experiments/real-match-eval.md`](experiments/real-match-eval.md)、[`experiments/match-judgement.md`](experiments/match-judgement.md) |
 | Agent 对照实验（真实项目 / demo 仓库） | [`experiments/real-project/summary.md`](experiments/real-project/summary.md)、[`experiments/summary.md`](experiments/summary.md) |

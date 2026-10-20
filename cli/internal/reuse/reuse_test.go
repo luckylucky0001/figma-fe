@@ -1354,6 +1354,7 @@ func TestComplexSystemsRound(t *testing.T) {
 	}
 	write(t, root, "app/src/main/res/layout/a.xml", "<LinearLayout>"+tags+"<a.SubmitButton/></LinearLayout>")
 	write(t, root, "package.json", `{"devDependencies":{"husky":"9"}}`)
+	write(t, root, "app/build.gradle", "")
 	r := ScanAndroid(root)
 	for _, a := range r.Assets {
 		if a.Name == "Button" && a.Source == "Android SDK widgets" && a.Usage != 5 {

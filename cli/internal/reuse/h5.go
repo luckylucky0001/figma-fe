@@ -18,6 +18,7 @@ var (
 	importRe      = regexp.MustCompile(`import\s+(?:(\w+)\s*,?\s*)?(?:\{([^}]*)\})?\s*from\s*['"]([^'"]+)['"]`)
 	reactCompRe   = regexp.MustCompile(`(?m)^(?:export\s+)?(?:default\s+)?(?:function\s+([A-Z]\w*)\s*\(|const\s+([A-Z]\w*)\s*(?::\s*[\w.<>]+)?\s*=\s*(?:React\.)?(?:memo|forwardRef)?\(?\s*(?:\([^)]*\)|\w+)\s*=>)`)
 	hexColorRe    = regexp.MustCompile(`#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b`)
+	tokenRefRe    = regexp.MustCompile(`(--[\w-]+|[$@][\w-]+)(\s*:?)`)
 	varDefTailRe  = regexp.MustCompile(`(?:--|[@$])[\w-]+\s*:\s*$`)
 	cssVarDefRe   = regexp.MustCompile(`(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
 	preVarDefRe   = regexp.MustCompile(`([@$][\w-]+)\s*:\s*(#[0-9a-fA-F]{3,6})\b`)
@@ -305,16 +306,49 @@ func ScanH5(root string) *Report {
 		}
 	}
 	// Usage: tags in templates / JSX.
-	colorTokens := map[string]string{}
+	// several tokens can share a value (yudao: #FFFFFF is both $white and --ui-BG-Main-TC): suggest the
+	// one the project references most, not whichever was defined last
+	tokenCands := map[string][]string{} // value → token names (--x / $x / @x)
 	for _, f := range files {
-		src := f.text
-		for _, m := range cssVarDefRe.FindAllStringSubmatch(src, -1) {
-			colorTokens[strings.ToUpper(expandHex(m[2]))] = "var(" + m[1] + ")"
-		}
-		for _, m := range preVarDefRe.FindAllStringSubmatch(src, -1) {
-			if _, ok := colorTokens[strings.ToUpper(expandHex(m[2]))]; !ok {
-				colorTokens[strings.ToUpper(expandHex(m[2]))] = m[1]
+		for _, re := range []*regexp.Regexp{cssVarDefRe, preVarDefRe} {
+			for _, m := range re.FindAllStringSubmatch(f.text, -1) {
+				v := strings.ToUpper(expandHex(m[2]))
+				if !contains(tokenCands[v], m[1]) {
+					tokenCands[v] = append(tokenCands[v], m[1])
+				}
 			}
+		}
+	}
+	refs := map[string]int{}
+	for _, names := range tokenCands {
+		for _, n := range names {
+			refs[n] = 0
+		}
+	}
+	if len(refs) > 0 {
+		for _, f := range files {
+			for _, m := range tokenRefRe.FindAllStringSubmatch(f.text, -1) {
+				if _, ok := refs[m[1]]; ok && !strings.HasPrefix(strings.TrimSpace(m[2]), ":") {
+					refs[m[1]]++ // a use, not the definition "$white: #fff"
+				}
+			}
+		}
+	}
+	colorTokens := map[string]string{}
+	for v, names := range tokenCands {
+		sort.Slice(names, func(i, j int) bool {
+			if refs[names[i]] != refs[names[j]] {
+				return refs[names[i]] > refs[names[j]]
+			}
+			if len(names[i]) != len(names[j]) {
+				return len(names[i]) < len(names[j])
+			}
+			return names[i] < names[j]
+		})
+		if n := names[0]; strings.HasPrefix(n, "--") {
+			colorTokens[v] = "var(" + n + ")"
+		} else {
+			colorTokens[v] = n
 		}
 	}
 	fileRels := make([]string, 0, len(fileAsset))
@@ -616,6 +650,18 @@ func ScanH5(root string) *Report {
 		if lib.WrappedBy == "" {
 			continue
 		}
+		// a wrapper the project itself barely uses (yudao: <su-image> × 4, <image> × 71) is a
+		// specialisation, not the house component — same rule as Android
+		direct := 0
+		for _, o := range os {
+			if classify(o.rel) != "design-system" {
+				direct++
+			}
+		}
+		if w := wrapperAsset(assets, lib.WrappedBy); w != nil && w.Usage*2 < direct {
+			lib.WrappedBy = ""
+			continue
+		}
 		for _, o := range os {
 			if classify(o.rel) != "design-system" {
 				r.Findings = append(r.Findings, Finding{"bypass", "warn", o.rel, o.ln, o.text, "直接用了 <" + o.tag + ">（" + lib.Source + "），项目设计系统已封装为 " + lib.WrappedBy + "，应使用封装"})
@@ -768,7 +814,7 @@ func topLevelKeys(obj string) []string {
 			depth--
 		case c == ',' && depth == 1:
 			start = i + 1
-		case c == ':' && depth == 1:
+		case c == ':' && depth == 1 && start < i: // start is parked past the end while inside a value (a ? b : c)
 			k := strings.Trim(strings.TrimSpace(obj[start:i]), `'"`)
 			if k != "" && propIdentRe.MatchString(k) && !contains(out, k) {
 				out = append(out, k)
@@ -852,6 +898,17 @@ func envUILib(root string, names []string) (string, string) {
 		}
 	}
 	return "", ""
+}
+
+// wrapperAsset finds the design-system component of that name.
+func wrapperAsset(assets map[string]*Asset, name string) *Asset {
+	var best *Asset
+	for _, a := range assets {
+		if a.Name == name && a.Kind == "design-system" && (best == nil || a.Source < best.Source) {
+			best = a
+		}
+	}
+	return best
 }
 
 // altLabel names where a suggested component comes from: "组件库 Vant" when it is a library one.

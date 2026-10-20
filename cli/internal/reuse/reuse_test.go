@@ -1321,3 +1321,49 @@ func TestPrimaryUISuite(t *testing.T) {
 		}
 	}
 }
+
+// yudao-mall-uniapp: a ternary in a prop value (a top-level ':' after the key) crashed the parser
+func TestVuePropsTernaryValue(t *testing.T) {
+	src := "export default {\n  props: {\n    size: { type: String, default: isPad ? 'lg' : 'md' },\n    mode: isDark ? 'dark' : 'light',\n    title: String,\n  },\n}"
+	if got := strings.Join(vueProps(src), ","); got != "size,mode,title" {
+		t.Errorf("props = %q", got)
+	}
+}
+
+// yudao: #fff is both $white (used everywhere) and a theme var: suggest the token the project uses
+func TestMostReferencedTokenWins(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3"}}`)
+	write(t, root, "src/styles/_var.scss", "$white: #ffffff;\n:root { --ui-BG-Main-TC: #ffffff; }\n.a { color: $white; }\n.b { background: $white; }\n")
+	write(t, root, "src/views/A.vue", "<template><div class=\"x\"/></template>\n<style>\n.x { color: #FFFFFF; }\n</style>")
+	for _, h := range ScanH5(root).Colors {
+		if h.Value == "#FFFFFF" && h.Token != "$white" {
+			t.Errorf("token = %q", h.Token)
+		}
+	}
+}
+
+// complex-system test round: AppCompatButton is the platform Button; an icon button or a domain card
+// is not "the" Button / Card; a tooling package.json does not make an H5 project
+func TestComplexSystemsRound(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/src/main/java/a/SubmitButton.java", "package a;\npublic class SubmitButton extends AppCompatButton {\n}")
+	var tags string
+	for i := 0; i < 5; i++ {
+		tags += `<androidx.appcompat.widget.AppCompatButton/>`
+	}
+	write(t, root, "app/src/main/res/layout/a.xml", "<LinearLayout>"+tags+"<a.SubmitButton/></LinearLayout>")
+	write(t, root, "package.json", `{"devDependencies":{"husky":"9"}}`)
+	r := ScanAndroid(root)
+	for _, a := range r.Assets {
+		if a.Name == "Button" && a.Source == "Android SDK widgets" && a.Usage != 5 {
+			t.Errorf("AppCompatButton not counted as Button: %+v", a)
+		}
+	}
+	if ps := Detect(root); len(ps) != 1 || ps[0] != "android" {
+		t.Errorf("Detect = %v (tooling package.json is not H5)", ps)
+	}
+	if !purposeWords["icon"] || !purposeWords["live"] {
+		t.Error("purpose words")
+	}
+}

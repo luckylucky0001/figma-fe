@@ -11,10 +11,10 @@
   "libraries": [
     {
       "name": "Android SDK widgets",
-      "usage": 168,
+      "usage": 172,
       "top": [
-        "TextView×130",
-        "ImageView×12",
+        "TextView×131",
+        "ImageView×15",
         "RecyclerView×6",
         "Button×5",
         "RadioButton×5",
@@ -51,7 +51,7 @@
       "name": "TextView",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
-      "usage": 130,
+      "usage": 131,
       "usageFiles": [
         "qmui/src/main/res/layout/qmui_common_list_item.xml",
         "qmui/src/main/res/layout/qmui_group_list_section_layout.xml",
@@ -80,6 +80,7 @@
         "qmuidemo/src/main/res/layout/recycler_linear_layout_simple_item.xml",
         "qmuidemo/src/main/res/layout/recycler_view_item.xml",
         "qmuidemo/src/main/res/layout/simple_list_item.xml",
+        "qmuidemo/src/main/res/layout/simple_list_item_1.xml",
         "qmuidemo/src/main/res/layout/tipdialog_custom.xml"
       ],
       "example": "\u003cTextView",
@@ -94,8 +95,9 @@
       "kind": "ui-lib",
       "source": "Android SDK widgets",
       "concept": "image",
-      "usage": 12,
+      "usage": 15,
       "usageFiles": [
+        "qmui/src/main/res/layout/qmui_common_list_item.xml",
         "qmuidemo/src/main/res/layout/drawablehelper_createfromview.xml",
         "qmuidemo/src/main/res/layout/fragment_about.xml",
         "qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml",
@@ -105,8 +107,8 @@
         "qmuidemo/src/main/res/layout/home_item_layout.xml",
         "qmuidemo/src/main/res/layout/tipdialog_custom.xml"
       ],
-      "example": "\u003cImageView",
-      "exampleAt": "qmuidemo/src/main/res/layout/drawablehelper_createfromview.xml:25"
+      "example": "\u003candroidx.appcompat.widget.AppCompatImageView",
+      "exampleAt": "qmui/src/main/res/layout/qmui_common_list_item.xml:22"
     },
     {
       "name": "LazyColumn",
@@ -3775,7 +3777,7 @@
   ],
   "metrics": {
     "files": 554,
-    "componentUsages": 1012,
+    "componentUsages": 1016,
     "rawPrimitives": 0,
     "componentization": 1,
     "duplicateConcepts": 12,

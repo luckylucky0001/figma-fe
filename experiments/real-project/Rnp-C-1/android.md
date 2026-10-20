@@ -16,7 +16,7 @@
 
 | 指标 | 值 |
 |---|---|
-| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（659 / 659） |
+| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（703 / 703） |
 | 重复概念（同一 UI 概念有多个实现） | 4 |
 | 重复结构（可抽成组件的复制粘贴结构） | 9 组 |
 | 硬编码颜色 | 105 处（其中 35 处已有同值 token） |
@@ -34,7 +34,7 @@
 
 | 组件库 | 使用次数 | 最常用 |
 |---|---|---|
-| Android SDK widgets | 206 | ImageView×63、RecyclerView×26、TextView×23、ImageButton×22、ProgressBar×22、Button×18、CardView×10、RadioButton×5 |
+| Android SDK widgets | 250 | ImageView×78、ImageButton×43、RecyclerView×26、TextView×25、ProgressBar×22、Button×19、CardView×10、SeekBar×6 |
 | Material Components | 32 | ShapeableImageView×17、AppBarLayout×5、FloatingActionButton×3、TabLayout×3、Chip×1、ChipGroup×1、NavigationView×1、TextInputLayout×1 |
 | Compose Material3 | 16 | TextButton×5、ListItem×4、AlertDialog×2、TopAppBar×2、RadioButton×1、Switch×1、Tab×1 |
 | Compose Foundation | 5 | LazyColumn×4、HorizontalPager×1 |
@@ -64,14 +64,15 @@
 
 | 组件 | 类型 | 概念 | 使用次数 | 真实用法示例 |
 |---|---|---|---|---|
-| `ImageView` | 组件库 | image | 63 | `<ImageView` app/src/main/res/layout/comment_replies_header.xml:54 |
+| `ImageView` | 组件库 | image | 78 | `<ImageView` app/src/main/res/layout/comment_replies_header.xml:54 |
+| `ImageButton` | 组件库 | button | 43 | `<ImageButton` app/src/main/res/layout/activity_player_queue_control.xml:165 |
 | `RecyclerView` | 组件库 | list | 26 | `<androidx.recyclerview.widget.RecyclerView` app/src/main/res/layout/activity_player_queue_control.xml:30 |
-| `TextView` | 组件库 |  | 23 | `<TextView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/instance_spinner_item.xml:2 |
-| `ImageButton` | 组件库 | button | 22 | `<ImageButton` app/src/main/res/layout/activity_player_queue_control.xml:165 |
+| `TextView` | 组件库 |  | 25 | `<TextView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/instance_spinner_item.xml:2 |
 | `ProgressBar` | 组件库 | loading | 22 | `<ProgressBar` app/src/main/res/layout/activity_player_queue_control.xml:226 |
-| `Button` | 组件库 | button | 18 | `<Button` app/src/main/res/layout/activity_error.xml:118 |
+| `Button` | 组件库 | button | 19 | `<Button` app/src/main/res/layout/activity_error.xml:118 |
 | `ShapeableImageView` | 组件库 | image | 17 | `<com.google.android.material.imageview.ShapeableImageView` app/src/main/res/layout/comment_replies_header.xml:8 |
 | `CardView` | 组件库 | card | 10 | `<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/feed_group_add_new_grid_item.xml:2 |
+| `SeekBar` | 组件库 |  | 6 | `<androidx.appcompat.widget.AppCompatSeekBar` app/src/main/res/layout/activity_player_queue_control.xml:119 |
 | `AppBarLayout` | 组件库 |  | 5 | `<com.google.android.material.appbar.AppBarLayout` app/src/main/res/layout/activity_player_queue_control.xml:11 |
 | `RadioButton` | 组件库 | radio | 5 | `<RadioButton` app/src/main/res/layout/download_dialog.xml:43 |
 | `TextButton` | 组件库 | button | 5 | `TextButton(onClick = { showDialog = false }) {` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:104 |
@@ -90,7 +91,6 @@
 | `HorizontalPager` | 组件库 | carousel | 1 | `HorizontalPager(modifier = Modifier.fillMaxSize(), state = pagerState) { page ->` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:104 |
 | `NavigationView` | 组件库 |  | 1 | `<com.google.android.material.navigation.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/drawer_layout.xml:2 |
 | `RadioButton` | 组件库 | radio | 1 | `RadioButton(selected = entry.value == selectedValue, onClick = null)` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97 |
-| `SeekBar` | 组件库 |  | 1 | `<SeekBar` app/src/main/res/layout/download_dialog.xml:137 |
 | `Switch` | 组件库 | switch | 1 | `Switch(` shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt:64 |
 | `SwitchCompat` | 组件库 | switch | 1 | `<androidx.appcompat.widget.SwitchCompat` app/src/main/res/layout/related_items_header.xml:21 |
 | `Tab` | 组件库 | tabs | 1 | `Tab(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:87 |

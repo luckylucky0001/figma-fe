@@ -18,7 +18,7 @@
 
 | 指标 | 值 |
 |---|---|
-| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（1017 / 1017） |
+| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（1021 / 1021） |
 | 重复概念（同一 UI 概念有多个实现） | 12 |
 | 重复结构（可抽成组件的复制粘贴结构） | 1 组 |
 | 硬编码颜色 | 12 处（其中 2 处已有同值 token） |
@@ -36,7 +36,7 @@
 
 | 组件库 | 使用次数 | 最常用 |
 |---|---|---|
-| Android SDK widgets | 173 | TextView×135、ImageView×12、RecyclerView×6、Button×5、RadioButton×5、SeekBar×3、EditText×2、ListView×2 |
+| Android SDK widgets | 177 | TextView×136、ImageView×15、RecyclerView×6、Button×5、RadioButton×5、SeekBar×3、EditText×2、ListView×2 |
 | Compose Foundation | 11 | LazyColumn×9、HorizontalPager×1、LazyRow×1 |
 | QMUI Android | 5 | QMUITabSegment×4、QMUISeekBar×1 |
 | Material Components | 0 | 已在依赖里，但项目还没用过 |
@@ -67,8 +67,8 @@
 
 | 组件 | 类型 | 概念 | 使用次数 | 真实用法示例 |
 |---|---|---|---|---|
-| `TextView` | 组件库 |  | 135 | `<TextView` qmui/src/main/res/layout/qmui_common_list_item.xml:45 |
-| `ImageView` | 组件库 | image | 12 | `<ImageView` qmuidemo/src/main/res/layout/drawablehelper_createfromview.xml:25 |
+| `TextView` | 组件库 |  | 136 | `<TextView` qmui/src/main/res/layout/qmui_common_list_item.xml:45 |
+| `ImageView` | 组件库 | image | 15 | `<androidx.appcompat.widget.AppCompatImageView` qmui/src/main/res/layout/qmui_common_list_item.xml:22 |
 | `LazyColumn` | 组件库 | list | 9 | `LazyColumn(` compose/src/main/java/com/qmuiteam/compose/modal/QMUIBottomSheet.kt:40 |
 | `RecyclerView` | 组件库 | list | 6 | `<androidx.recyclerview.widget.RecyclerView` qmuidemo/src/main/res/layout/fragment_collapsing_topbar_layout.xml:65 |
 | `Button` | 组件库 | button | 5 | `<Button` qmuidemo/src/main/res/layout/fragment_layout.xml:114 |

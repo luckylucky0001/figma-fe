@@ -39,6 +39,9 @@ var viewBases = regexp.MustCompile(`(View|Layout|Button|TextView|ImageView|EditT
 var containers = map[string]bool{"LinearLayout": true, "FrameLayout": true, "RelativeLayout": true, "ConstraintLayout": true, "androidx.constraintlayout.widget.ConstraintLayout": true, "merge": true, "include": true, "layout": true, "data": true, "variable": true, "ScrollView": true, "androidx.core.widget.NestedScrollView": true, "androidx.coordinatorlayout.widget.CoordinatorLayout": true, "Space": true, "View": true, "ViewStub": true, "requestFocus": true, "tag": true, "import": true, "fragment": true, "androidx.fragment.app.FragmentContainerView": true,
 	"DrawerLayout": true, "SwipeRefreshLayout": true, "SmartRefreshLayout": true, "MotionLayout": true, "Barrier": true, "Guideline": true, "Placeholder": true, "Group": true, "Flow": true, "Layer": true}
 
+// h5FrameworkRe: a dependency that makes a package.json an H5 UI project.
+var h5FrameworkRe = regexp.MustCompile(`"(vue|react|react-dom|preact|@dcloudio/uni-app|@tarojs/taro|nuxt|next|svelte|solid-js)"\s*:`)
+
 // Detect returns the platforms present under root.
 func Detect(root string) []string {
 	var h5, an bool
@@ -51,6 +54,11 @@ func Detect(root string) []string {
 		}
 		switch info.Name() {
 		case "package.json":
+			// a front-end project, not a tooling package.json (gkd: build scripts, a TS selector library)
+			if b, err := os.ReadFile(p); err == nil && h5FrameworkRe.Match(b) {
+				h5 = true
+			}
+		case "pages.json": // uni-app
 			h5 = true
 		case "build.gradle", "build.gradle.kts", "AndroidManifest.xml":
 			an = true
@@ -353,6 +361,10 @@ func ScanAndroid(root string) *Report {
 			ln := strings.Count(f.text[:m[0]], "\n") + 1
 			line := strings.TrimSpace(lines[ln-1])
 			simple := tag[strings.LastIndex(tag, ".")+1:]
+			// <androidx.appcompat.widget.AppCompatButton> is the platform Button (AndroidProject × 54)
+			if base := strings.TrimPrefix(simple, "AppCompat"); base != simple && libOf[base] != nil && libOf[base].Source == "Android SDK widgets" {
+				simple = base
+			}
 			if containers[tag] || containers[simple] {
 				continue
 			}

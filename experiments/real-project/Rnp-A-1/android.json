@@ -11,16 +11,16 @@
   "libraries": [
     {
       "name": "Android SDK widgets",
-      "usage": 223,
+      "usage": 267,
       "top": [
-        "ImageView×65",
-        "TextView×44",
+        "ImageView×80",
+        "TextView×46",
+        "ImageButton×43",
         "RecyclerView×26",
-        "ImageButton×22",
         "ProgressBar×22",
-        "Button×15",
+        "Button×16",
         "CardView×7",
-        "RadioButton×5"
+        "SeekBar×6"
       ]
     },
     {
@@ -72,7 +72,7 @@
       "kind": "ui-lib",
       "source": "Android SDK widgets",
       "concept": "image",
-      "usage": 65,
+      "usage": 80,
       "usageFiles": [
         "app/src/main/res/layout/comment_replies_header.xml",
         "app/src/main/res/layout/dialog_playback_parameter.xml",
@@ -82,13 +82,17 @@
         "app/src/main/res/layout/feed_group_add_new_item.xml",
         "app/src/main/res/layout/feed_group_card_grid_item.xml",
         "app/src/main/res/layout/feed_group_card_item.xml",
+        "app/src/main/res/layout/feed_group_reorder_item.xml",
         "app/src/main/res/layout/fragment_channel.xml",
         "app/src/main/res/layout/fragment_description.xml",
         "app/src/main/res/layout/fragment_feed.xml",
         "app/src/main/res/layout/fragment_order_detail.xml",
         "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/item_instance.xml",
         "app/src/main/res/layout/item_search_suggestion.xml",
         "app/src/main/res/layout/item_stream_segment.xml",
+        "app/src/main/res/layout/list_choose_tabs.xml",
+        "app/src/main/res/layout/list_choose_tabs_dialog.xml",
         "app/src/main/res/layout/list_comment_item.xml",
         "app/src/main/res/layout/list_playlist_bookmark_item.xml",
         "app/src/main/res/layout/list_playlist_card_item.xml",
@@ -108,7 +112,9 @@
         "app/src/main/res/layout/picker_subscription_item.xml",
         "app/src/main/res/layout/play_queue_item.xml",
         "app/src/main/res/layout/player.xml",
+        "app/src/main/res/layout/player_fast_seek_seconds_view.xml",
         "app/src/main/res/layout/select_kiosk_item.xml",
+        "app/src/main/res/layout/settings_notification_action.xml",
         "app/src/main/res/layout/statistic_playlist_control.xml",
         "app/src/main/res/layout/stream_quality_item.xml",
         "app/src/main/res/layout/toolbar_search_layout.xml",
@@ -122,7 +128,7 @@
       "name": "TextView",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
-      "usage": 44,
+      "usage": 46,
       "usageFiles": [
         "app/src/main/res/layout/fragment_order_detail.xml",
         "app/src/main/res/layout/instance_spinner_item.xml",
@@ -136,6 +142,7 @@
         "app/src/main/res/layout/list_channel_mini_item.xml",
         "app/src/main/res/layout/list_choose_tabs.xml",
         "app/src/main/res/layout/order_detail_cell.xml",
+        "app/src/main/res/layout/player.xml",
         "app/src/main/res/layout/player_fast_seek_seconds_view.xml",
         "app/src/main/res/layout/settings_preferencesearch_list_item_result.xml"
       ],
@@ -146,8 +153,27 @@
         "OrderDetail.Button.Primary": 1,
         "OrderDetail.CardTitle": 2,
         "OrderDetail.Text.Body": 5,
-        "OrderDetail.Text.Caption": 4
+        "OrderDetail.Text.Caption": 4,
+        "TextAppearance.AppCompat.Medium": 2
       }
+    },
+    {
+      "name": "ImageButton",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "button",
+      "usage": 43,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/fragment_video_detail.xml",
+        "app/src/main/res/layout/player.xml",
+        "app/src/main/res/layout/subscription_groups_header.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml",
+        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
+      ],
+      "example": "\u003cImageButton",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:165"
     },
     {
       "name": "RecyclerView",
@@ -185,23 +211,6 @@
       "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:30"
     },
     {
-      "name": "ImageButton",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "concept": "button",
-      "usage": 22,
-      "usageFiles": [
-        "app/src/main/res/layout/activity_player_queue_control.xml",
-        "app/src/main/res/layout/dialog_feed_group_create.xml",
-        "app/src/main/res/layout/fragment_video_detail.xml",
-        "app/src/main/res/layout/subscription_groups_header.xml",
-        "app/src/main/res/layout-land/activity_player_queue_control.xml",
-        "app/src/main/res/layout-large-land/fragment_video_detail.xml"
-      ],
-      "example": "\u003cImageButton",
-      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:165"
-    },
-    {
       "name": "ProgressBar",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
@@ -233,6 +242,27 @@
       "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:226"
     },
     {
+      "name": "Button",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "button",
+      "usage": 16,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_error.xml",
+        "app/src/main/res/layout/dialog_feed_group_create.xml",
+        "app/src/main/res/layout/dialog_feed_group_reorder.xml",
+        "app/src/main/res/layout/drawer_header.xml",
+        "app/src/main/res/layout/error_panel.xml",
+        "app/src/main/res/layout/fragment_channel.xml",
+        "app/src/main/res/layout/fragment_feed.xml",
+        "app/src/main/res/layout/fragment_import.xml",
+        "app/src/main/res/layout/list_comment_item.xml",
+        "app/src/main/res/layout/player.xml"
+      ],
+      "example": "\u003cButton",
+      "exampleAt": "app/src/main/res/layout/activity_error.xml:118"
+    },
+    {
       "name": "ShapeableImageView",
       "kind": "ui-lib",
       "source": "Material Components",
@@ -257,26 +287,6 @@
       "exampleAt": "app/src/main/res/layout/comment_replies_header.xml:8"
     },
     {
-      "name": "Button",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "concept": "button",
-      "usage": 15,
-      "usageFiles": [
-        "app/src/main/res/layout/activity_error.xml",
-        "app/src/main/res/layout/dialog_feed_group_create.xml",
-        "app/src/main/res/layout/dialog_feed_group_reorder.xml",
-        "app/src/main/res/layout/drawer_header.xml",
-        "app/src/main/res/layout/error_panel.xml",
-        "app/src/main/res/layout/fragment_feed.xml",
-        "app/src/main/res/layout/fragment_import.xml",
-        "app/src/main/res/layout/list_comment_item.xml",
-        "app/src/main/res/layout/player.xml"
-      ],
-      "example": "\u003cButton",
-      "exampleAt": "app/src/main/res/layout/activity_error.xml:118"
-    },
-    {
       "name": "CardView",
       "kind": "ui-lib",
       "source": "Android SDK widgets",
@@ -293,6 +303,23 @@
       ],
       "example": "\u003candroidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
       "exampleAt": "app/src/main/res/layout/feed_group_add_new_grid_item.xml:2"
+    },
+    {
+      "name": "SeekBar",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "usage": 6,
+      "usageFiles": [
+        "app/src/main/res/layout/activity_player_queue_control.xml",
+        "app/src/main/res/layout/dialog_playback_parameter.xml",
+        "app/src/main/res/layout/download_dialog.xml",
+        "app/src/main/res/layout-land/activity_player_queue_control.xml"
+      ],
+      "example": "\u003candroidx.appcompat.widget.AppCompatSeekBar",
+      "exampleAt": "app/src/main/res/layout/activity_player_queue_control.xml:119",
+      "styles": {
+        "Widget.AppCompat.SeekBar": 5
+      }
     },
     {
       "name": "AppBarLayout",
@@ -538,17 +565,6 @@
       ],
       "example": "RadioButton(selected = entry.value == selectedValue, onClick = null)",
       "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97"
-    },
-    {
-      "name": "SeekBar",
-      "kind": "ui-lib",
-      "source": "Android SDK widgets",
-      "usage": 1,
-      "usageFiles": [
-        "app/src/main/res/layout/download_dialog.xml"
-      ],
-      "example": "\u003cSeekBar",
-      "exampleAt": "app/src/main/res/layout/download_dialog.xml:137"
     },
     {
       "name": "Switch",
@@ -1889,7 +1905,7 @@
   ],
   "metrics": {
     "files": 653,
-    "componentUsages": 657,
+    "componentUsages": 701,
     "rawPrimitives": 0,
     "componentization": 1,
     "duplicateConcepts": 4,

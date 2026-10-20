@@ -13,14 +13,15 @@
 - 和项目惯用组件不一致（1，不影响通过）
   - · src/views/OrderDetailV2.vue：新引入了 NavBar（组件库 Vant），项目里「navbar」惯用 SimpleHeader（用 11 次），请确认是否统一
 - 页面私有调色板：页面里自己定义了 10 个颜色变量（应使用项目 / 组件库已有的 token）
-- 写死颜色（7）
+- 写死颜色（8）
+  - · src/views/OrderDetailV2.vue:160 #FFFFFF：新定义的颜色 --van-nav-bar-background 与已有 token var(--vt-c-white) 同值
   - · src/views/OrderDetailV2.vue:19 #FFF3E8：写死颜色
   - · src/views/OrderDetailV2.vue:19 #FF8F1F：写死颜色
-  - · src/views/OrderDetailV2.vue:215 #FFFFFF：写死颜色
+  - · src/views/OrderDetailV2.vue:215 #FFFFFF：写死颜色，已有同值 token var(--vt-c-white)
   - · src/views/OrderDetailV2.vue:282 #F2F3F5：写死颜色
-  - · src/views/OrderDetailV2.vue:381 #FFFFFF：写死颜色
-  - · src/views/OrderDetailV2.vue:391 #FFFFFF：写死颜色
-  - · src/views/OrderDetailV2.vue:394 #FFFFFF：写死颜色
+  - · src/views/OrderDetailV2.vue:381 #FFFFFF：写死颜色，已有同值 token var(--vt-c-white)
+  - · src/views/OrderDetailV2.vue:391 #FFFFFF：写死颜色，已有同值 token var(--vt-c-white)
+  - · src/views/OrderDetailV2.vue:394 #FFFFFF：写死颜色，已有同值 token var(--vt-c-white)
 
 ✓ [h5] 34 个资产 · 组件化率 86% · 重复概念 2 · 重复结构 2 组 · 硬编码颜色 124 · 不能直接用的库组件 3 · 项目惯例 1 → experiments/real-project/Rnb-A-2/h5.md
 ✗ 页面复用检查未通过

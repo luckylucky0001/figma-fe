@@ -32,8 +32,9 @@ type Asset struct {
 	Enums       map[string][]string `json:"enums,omitempty"`       // enum-like props → allowed values
 	Required    []string            `json:"required,omitempty"`    // parameters without a default (composables)
 	Styles      map[string]int      `json:"styles,omitempty"`      // XML style="@style/…" applied with it, by count
-	Attrs       map[string]int      `json:"attrs,omitempty"`
-	Extends     string              `json:"extends,omitempty"` // Android custom view: its base class (SquareImageView → AppCompatImageView)       // H5 static props the project passes, by count (round, color="#1baeae")
+	Attrs       map[string]int      `json:"attrs,omitempty"`       // H5 static props the project passes, by count (round, color="#1baeae")
+	Extends     string              `json:"extends,omitempty"`     // Android custom view: its base class (SquareImageView → AppCompatImageView)
+	Purpose     string              `json:"purpose,omitempty"`     // the one job its doc comment says it is for (CountdownView: 验证码倒计时 → 验证码)
 }
 
 type Finding struct {
@@ -111,7 +112,7 @@ var concepts = []struct {
 	{"button", []string{"button", "btn"}},
 	{"tag", []string{"tag", "chip", "label", "pill"}},
 	{"badge", []string{"badge", "dot", "badgedrawable"}}, // a count / dot on an icon, not a tag
-	{"cell", []string{"cell", "listitem", "row", "item", "inforow", "commonlistitemview"}},
+	{"cell", []string{"cell", "listitem", "row", "item", "inforow", "commonlistitemview", "settingbar", "settingitem", "settingrow", "settingcell", "settingsitem"}},
 	{"card", []string{"card", "panel", "section", "cellgroup", "grouplistview"}},
 	{"navbar", []string{"navbar", "topbar", "appbar", "titlebar", "toolbar", "header", "topappbar"}},
 	{"price", []string{"price", "amount", "money", "pricetext"}},
@@ -126,10 +127,10 @@ var concepts = []struct {
 	{"carousel", []string{"swipe", "swiper", "carousel", "banner", "viewpager"}},
 	{"icon", []string{"icon"}},
 	{"image", []string{"image", "img", "avatar", "imageview"}},
-	{"empty", []string{"empty", "emptyview", "nodata", "placeholder", "error", "errorpanel", "errorview", "errorblock", "errorstate", "multistateview", "stateview", "statelayout", "statusview", "multistatelayout"}},
+	{"empty", []string{"empty", "emptyview", "nodata", "placeholder", "error", "errorpanel", "errorview", "errorblock", "errorstate", "multistateview", "stateview", "statelayout", "statusview", "multistatelayout", "statuslayout"}},
 	{"loading", []string{"loading", "spinner", "progress", "skeleton"}},
 	{"list", []string{"list", "recyclerview", "listview", "lazycolumn"}},
-	{"divider", []string{"divider", "separator", "line"}},
+	{"divider", []string{"divider", "separator", "line", "subline"}},
 	{"notice", []string{"noticebar", "notice", "alertbar", "tipsbar"}},
 	{"switch", []string{"switch", "toggle", "toggleswitch", "switchcompat", "materialswitch", "switchbutton", "switchview"}},
 	{"chart", []string{"chart", "kline", "klinechart", "candlestick", "linechart", "barchart", "piechart", "timeshare", "timesharing", "minutechart", "trendchart", "sparkline"}},
@@ -566,7 +567,7 @@ func featureNamed(a Asset, concept string) bool {
 			return true
 		}
 	}
-	return len(ws) >= 2
+	return len(ws) >= 2 || a.Purpose != ""
 }
 
 // dropSubclasses removes members built on another member: custom views extending its widget

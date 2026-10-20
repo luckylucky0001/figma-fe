@@ -303,7 +303,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		case len(item.Candidates) == 0 || strings.Contains(item.Candidates[0].Why, "⚠"):
 			item.Verdict = "new"
 			res.New++
-		case item.Candidates[0].Score >= 0.8:
+		case item.Candidates[0].Score >= 0.8 && !strings.Contains(item.Candidates[0].Why, "专门用途"): // made for another job: a person checks
 			item.Verdict = "reuse"
 			res.Reuse++
 		default:
@@ -402,12 +402,19 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	}
 	// made for one job the design does not ask for (PasswordInputView, ConfirmButton, VideoCard)
 	if a.Kind != "ui-lib" {
+		special := ""
 		for _, w := range specialWords(a.Name, a.Concept) {
 			if purposeWords[w] && !strings.Contains(strings.ToLower(figmaName), w) {
-				s -= 0.1
-				why = append(why, "专门用途（"+w+"）")
+				special = w
 				break
 			}
+		}
+		if special == "" && a.Purpose != "" && !forPurpose(figmaName, a.Purpose) {
+			special = a.Purpose // its doc says so (CountdownView: 验证码倒计时)
+		}
+		if special != "" {
+			s -= 0.1
+			why = append(why, "专门用途（"+special+"）")
 		}
 	}
 	// the name links to the concept only through a weak word (swipeactions_row, InterestsItem): less sure
@@ -642,7 +649,46 @@ var purposeWords = map[string]bool{"password": true, "confirm": true, "dismiss":
 	// an icon button is a different component from a text button (gkd: GkIconButton × 71)
 	"icon": true,
 	// commerce domains (yudao: s-live-card, s-coupon-card, s-user-card are not "the" Card)
-	"live": true, "coupon": true, "user": true, "member": true, "vip": true, "groupon": true, "seckill": true, "order": true}
+	"live": true, "coupon": true, "user": true, "member": true, "vip": true, "groupon": true, "seckill": true, "order": true, "point": true}
+
+// docPurposes: phrases in a component's doc comment that name one job (CountdownView in AndroidProject
+// is "验证码倒计时", a resend-code button, not a timer), with the English word a design name would use.
+var docPurposes = [][2]string{{"验证码", "verify"}, {"登录", "login"}, {"密码", "password"}, {"视频", "video"}, {"音频", "audio"},
+	{"直播", "live"}, {"优惠券", "coupon"}, {"分享", "share"}, {"下载", "download"}, {"上传", "upload"}}
+
+// docBefore is the comment block that ends right before a declaration (only modifiers, annotations
+// and whitespace between them), or "".
+func docBefore(src string, at int) string {
+	end := strings.LastIndex(src[:at], "*/")
+	if end < 0 || strings.ContainsAny(src[end+2:at], ";{}") {
+		return ""
+	}
+	start := strings.LastIndex(src[:end], "/*")
+	if start < 0 {
+		return ""
+	}
+	return src[start:end]
+}
+
+// docPurpose picks the purpose phrase of a doc comment.
+func docPurpose(doc string) string {
+	for _, p := range docPurposes {
+		if strings.Contains(doc, p[0]) {
+			return p[0]
+		}
+	}
+	return ""
+}
+
+// forPurpose: the design element names the same job (验证码倒计时 / VerifyCountdown).
+func forPurpose(figmaName, purpose string) bool {
+	for _, p := range docPurposes {
+		if p[0] == purpose {
+			return strings.Contains(figmaName, p[0]) || strings.Contains(strings.ToLower(figmaName), p[1])
+		}
+	}
+	return false
+}
 
 var styleWords = []string{"horizontal", "vertical", "outlined", "filled", "elevated", "tonal", "default", "basic", "simple", "standard", "normal",
 	"layout", "view", "widget", "component", "container", "wrapper", "round", "common", "custom", "base", "text", "priority"}

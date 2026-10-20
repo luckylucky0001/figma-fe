@@ -19,7 +19,7 @@
 
 | 指标 | 值 |
 |---|---|
-| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（701 / 701） |
+| 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（702 / 702） |
 | 重复概念（同一 UI 概念有多个实现） | 4 |
 | 重复结构（可抽成组件的复制粘贴结构） | 9 组 |
 | 硬编码颜色 | 105 处（其中 35 处已有同值 token） |
@@ -39,7 +39,7 @@
 |---|---|---|
 | Android SDK widgets | 267 | ImageView×80、TextView×46、ImageButton×43、RecyclerView×26、ProgressBar×22、Button×16、CardView×7、SeekBar×6 |
 | Material Components | 31 | ShapeableImageView×16、AppBarLayout×5、FloatingActionButton×3、TabLayout×3、Chip×1、ChipGroup×1、NavigationView×1、TextInputLayout×1 |
-| Compose Material3 | 16 | TextButton×5、ListItem×4、AlertDialog×2、TopAppBar×2、RadioButton×1、Switch×1、Tab×1 |
+| Compose Material3 | 17 | TextButton×5、ListItem×4、AlertDialog×2、TopAppBar×2、RadioButton×1、SecondaryTabRow×1、Switch×1、Tab×1 |
 | Compose Foundation | 5 | LazyColumn×4、HorizontalPager×1 |
 | AppCompat | 1 | SwitchCompat×1 |
 
@@ -94,6 +94,7 @@
 | `HorizontalPager` | 组件库 | carousel | 1 | `HorizontalPager(modifier = Modifier.fillMaxSize(), state = pagerState) { page ->` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:104 |
 | `NavigationView` | 组件库 |  | 1 | `<com.google.android.material.navigation.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"` app/src/main/res/layout/drawer_layout.xml:2 |
 | `RadioButton` | 组件库 | radio | 1 | `RadioButton(selected = entry.value == selectedValue, onClick = null)` shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97 |
+| `SecondaryTabRow` | 组件库 | tabs | 1 | `SecondaryTabRow(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:72 |
 | `Switch` | 组件库 | switch | 1 | `Switch(` shared/src/commonMain/kotlin/net/newpipe/app/composable/SwitchPreference.kt:64 |
 | `SwitchCompat` | 组件库 | switch | 1 | `<androidx.appcompat.widget.SwitchCompat` app/src/main/res/layout/related_items_header.xml:21 |
 | `Tab` | 组件库 | tabs | 1 | `Tab(` shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:87 |
@@ -126,8 +127,7 @@
 | `PlaylistAppendDialog` | 自定义 View | dialog | 1 | `? PlaylistAppendDialog.newInstance(streamEntities)` app/src/main/java/org/schabi/newpipe/local/dialog/PlaylistDialog.java:151 |
 | `ScrollableTabLayout` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.ScrollableTabLayout` app/src/main/res/layout/fragment_main.xml:8 |
 | `SecondsView` | 自定义 View |  | 1 | `<org.schabi.newpipe.views.player.SecondsView` app/src/main/res/layout/player_fast_seek_overlay.xml:15 |
-| `FocusAwareSeekBar` | 自定义 View |  | 0 | app/src/main/java/org/schabi/newpipe/views/FocusAwareSeekBar.java |
-| … | | | | 共 70 个，见 reuse.json |
+| … | | | | 共 71 个，见 reuse.json |
 
 ## 3. 重复资产（同一概念多个实现 → 收敛到推荐组件）
 

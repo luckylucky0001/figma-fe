@@ -1368,3 +1368,17 @@ func TestComplexSystemsRound(t *testing.T) {
 		t.Error("purpose words")
 	}
 }
+
+func TestDocCommentPurpose(t *testing.T) {
+	src := "package a;\n/**\n *    desc   : 验证码倒计时\n */\n@SuppressLint(\"X\")\npublic final class CountdownView extends AppCompatTextView {\n}"
+	if p := docPurpose(docBefore(src, strings.Index(src, "class CountdownView"))); p != "验证码" {
+		t.Errorf("purpose = %q", p)
+	}
+	other := "/* 登录 */\nint x = 1;\nclass Foo {}"
+	if d := docBefore(other, strings.Index(other, "class")); d != "" {
+		t.Errorf("a comment above another statement is not the doc: %q", d)
+	}
+	if !forPurpose("验证码倒计时", "验证码") || !forPurpose("VerifyCountdown", "验证码") || forPurpose("收盘倒计时", "验证码") {
+		t.Error("forPurpose")
+	}
+}

@@ -226,6 +226,9 @@ func ScanAndroid(root string) *Report {
 				}
 				a := get("custom-view", m[1], f.rel)
 				a.Extends = base
+				if i := strings.Index(f.text, "class "+m[1]); i >= 0 {
+					a.Purpose = docPurpose(docBefore(f.text, i))
+				}
 				if lib := libOf[base]; lib != nil && lib.Source != "Android SDK widgets" && inDesignSystem(f.rel) && lib.WrappedBy == "" {
 					lib.WrappedBy = m[1] // class DsButton : MaterialButton
 				}
@@ -255,6 +258,9 @@ func ScanAndroid(root string) *Report {
 				continue // previews, screens and their sections are not reusable components
 			}
 			a := get("composable", name, f.rel)
+			if a.Purpose == "" {
+				a.Purpose = docPurpose(docBefore(f.text, m[0]))
+			}
 			composDefs[f.rel] = append(composDefs[f.rel], composDef{strings.Count(f.text[:m[0]], "\n") + 1, name})
 			if end := matchParen(f.text, m[1]-1); end > m[1] {
 				for _, prm := range splitTopLevel(f.text[m[1]:end]) {

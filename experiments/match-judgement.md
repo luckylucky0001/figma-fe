@@ -90,7 +90,7 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 ### 小结
 
-- **最终结果**：23 个项目（5 个调参 + 18 个留出）× 3 份设计稿共 759 项，**✓734 / △25 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
+- **最终结果**：26 个项目（5 个调参 + 21 个留出）× 3 份设计稿共 858 项，**✓825 / △33 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
 - 订单详情（组件化的设计稿）：五个真实项目（覆盖 Vue+Vant、React+antd-mobile、XML+QMUI、Compose+Material3+自有设计系统）共 55 项，完全正确 52 项，可用但不是最优 3 项。
 - 我的持仓（没组件化、中文图层名）：四个真实项目共 48 项，完全正确 45 项，可用但不是最优 3 项。
 - 两份设计稿在这五个项目上都没有出现推荐错误组件的情况；但留出项目 Jetsnack 第一次跑出现了 3 个错误（见第 3 节），说明规则对没见过的项目结构仍会出错，修正后已加入回归。拿不准的情况，工具给出的都是「需确认」。
@@ -155,6 +155,22 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 这次修正让 hello-uniapp 的分割线从 Vant 的 Divider（项目只是偶尔用了 Vant）变成推荐项目自己的 CSS 类 `.uni-divider`（定义在项目的 `common/uni.css` 里）。我把它加进了标准答案，这是看到结果之后改的。
 
 另外修正了 MaterialRadioButton 因名字包含「Button」被推荐给按钮的问题：候选名字比设计稿名字更具体、又属于别的概念时不算匹配（反过来 ProductCard → Card 仍然算）。修正后两个项目都没有 ✗，之前 18 个项目的结果不变（有一项 △ 变成 ✓）。
+
+### 第四批：三个大型系统（H5 商城 + 两个 Android 应用）
+
+挑的是规模大、写法杂的真实系统，答案在跑当前版本之前写好；「第一次跑」是这一轮修正之前的版本（commit `19762fb`）。
+
+| 项目 | 规模 / 写法 | 第一次跑 | 发现的问题 → 通用修正 |
+|---|---|---|---|
+| 芋道商城 yudao-mall-uniapp（uni-app） | 自有设计系统 `sheep/ui`（su-*）+ 业务组件 `sheep/components`（s-*）+ uni-ui，几百个页面 | **三份设计稿全部崩溃** | ① Vue props 里 `a ? b : c` 形式的默认值让 props 解析越界 panic → 冒号前必须有键名；② 设计系统的 su-image 被当成 `<image>` 的封装，但项目直接写 `<image>` 71 次、su-image 只有 4 次 → 封装组件用得不到原生一半时不算封装；③ 同一个颜色值有多个 token 时随手挑了一个（`--ui-BG-Main-TC`）→ 选项目里引用最多的 token；④ 卡片推荐了 SLiveCard（直播卡片）、分割线推荐了装修用的 SLineBlock → live / coupon / user / groupon / seckill / order / point 等商城领域词算专门用途；分割线别名加上 subline（项目真正的分割线是 su-subline） |
+| gkd（Compose Multiplatform + Material3，自有 ui/component） | 自有 GkTopAppBar / GkSettingItem / GkSwitch / GkEmptyState … | 订单详情 9 ✓ / 1 △ / **1 ✗**；我的持仓 8 ✓ / 1 △ / **3 ✗**；买入下单 8 ✓ / 1 △ / **1 ✗**（自动识别平台时还会被误判成 H5 项目，全部「需新建」） | ① 仓库根目录有个只装了 husky 之类工具的 `package.json`，被当成 H5 项目 → 依赖里有 vue / react / uni-app / taro 等前端框架才算 H5；② 按钮推荐了 GkIconButton（图标按钮，71 处），但项目里文字按钮是 TextButton（72 处）→ icon 算专门用途词；③ 补上 M3 的 PrimaryTabRow / ScrollableTabRow 等标签栏变体 |
+| AndroidProject（getActivity，国内很多项目的骨架） | XML；TitleBar 三方库 + 自有 customWidget 库（SettingBar、SwitchButton、RegexEditText、CountdownView）+ StatusLayout | 订单详情 8 ✓ / 1 △ / **2 ✗**；我的持仓 8 ✓ / 1 △ / **3 ✗**；买入下单 7 ✓ / **3 ✗** | ① 布局里 54 个 `AppCompatButton` 没算成平台 Button，于是推荐了只用过 1 次的 SubmitButton → `AppCompat*` 计入对应的平台控件；② 设置行 SettingBar、状态布局 StatusLayout 没被认成列表项 / 空状态 → 概念词补上 settingbar / settingitem / statuslayout；③ CountdownView 的注释写着「验证码倒计时」，它是发送验证码的按钮，不是支付倒计时 → 读组件自己的文档注释（Java/Kotlin 声明前的注释、Vue 文件开头的 `<!-- -->`），写明专门用途（验证码 / 登录 / 视频 / 优惠券 …）的组件降权，结论最多「需确认」 |
+
+修正后三个系统 **✓91 / △8 / ✗0**。剩下的 △ 是工具目前做不到的：
+
+- 芋道的商品页底部操作栏是 `pages/goods/components/detail/detail-tabbar.vue`（4 个商品页在用），名字叫 tabbar、按钮从插槽传进来，文件本身看不出是操作栏，工具推荐了 uni-ui 的 GoodsNav（需确认）；
+- gkd 的搜索框是放在顶栏里的 GkAppBarTextField，名字里没有 search，工具推荐了项目没用过的 M3 SearchBar；
+- AndroidProject 只有验证码倒计时，支付倒计时其实要新建，工具现在给的是「需确认 CountdownView（专门用途：验证码）」，由人来否掉。
 
 ## 4. 第三份设计稿：买入下单（英文图层名、没组件化、新概念）
 

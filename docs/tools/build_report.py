@@ -34,12 +34,12 @@ def cell(v):
     return s
 
 
-def eval_rows():
+def eval_rows(part):
+    half = (len(projects) + 1) // 2
     out = []
-    for p in projects:
-        tag = '留出' if p in heldout else ''
-        out.append(f"<tr><td>{p}</td><td>{stack.get(p, '').replace('（', ' ').replace('）', '')}</td><td>{tag}</td>" +
-                   ''.join(f"<td>{cell(ev[p + '/' + k])}</td>" for k, _ in pages) + '</tr>')
+    for p in projects[:half] if part == 0 else projects[half:]:
+        tag = " <span class='tagho'>留出</span>" if p in heldout else ''
+        out.append(f"<tr><td title='{stack.get(p, '')}'>{p}{tag}</td>" + ''.join(f"<td>{cell(ev[p + '/' + k])}</td>" for k, _ in pages) + '</tr>')
     return '\n'.join(out)
 
 
@@ -163,29 +163,30 @@ ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.5mm 0; }}
 <p class="note">newbee-mall（Vue 3 + Vant）上跑「订单详情」的复用清单：绿框直接复用、橙框需确认、红框需新建；右侧是项目里的真实写法和 Figma 变体对应的 props。</p></div></div>
 
 <h2 class="pb">2. 复用清单准不准：{len(projects)} 个真实开源项目（固定 commit，可复现）</h2>
-<table class="ev">
-<tr><th>项目</th><th>技术栈</th><th>留出</th><th>订单详情（组件化）</th><th>我的持仓（未组件化、中文图层）</th><th>买入下单（未组件化、新概念）</th></tr>
-{eval_rows()}
-<tr><th colspan="3">合计</th><th colspan="3">✓{tot['✓']} / △{tot['△']} / ✗{tot['✗']}</th></tr>
-</table>
+<div class="two"><table class="ev">
+<tr><th>项目</th><th>订单详情</th><th>我的持仓</th><th>买入下单</th></tr>
+{eval_rows(0)}
+</table><table class="ev">
+<tr><th>项目</th><th>订单详情</th><th>我的持仓</th><th>买入下单</th></tr>
+{eval_rows(1)}
+</table></div>
+<p class="note"><b>合计 ✓{tot['✓']} / △{tot['△']} / ✗{tot['✗']}</b>（{n_items} 项）。技术栈：Vue 2/3、React、uni-app、Taro × Vant / NutUI / antd-mobile / uni-ui / taro-ui / wot-design-uni / 自有组件；Android XML / Compose × QMUI / Material / AppCompat / 三方 View 库 / 自有设计系统（逐项见 <code>experiments/real-match-eval.md</code>）。订单详情是组件化设计稿，我的持仓未组件化、中文图层，买入下单未组件化、含新概念。</p>
 <p class="note">✓ 推荐正确；△ 可用但不是最优（多为「需确认」）；✗ 推荐错误。留出 = 调规则时没用过的项目。</p>
 <h3>留出项目第一次跑的结果（如实记录，修正前）</h3>
 <table>
-<tr><th style="width:17%">项目</th><th style="width:20%">第一次</th><th>出错原因 → 通用修正</th></tr>
-<tr><td>Jetsnack</td><td>订单详情 <b class="bad">3 ✗</b></td><td>把桌面小部件（Glance）组件当成 App 组件；没认出 <code>Jetsnack*</code> 是项目前缀 → 识别 Glance、学习项目前缀、<code>ui/components</code> 算设计系统</td></tr>
-<tr><td>litemall</td><td>两份各 <b class="bad">1 ✗</b></td><td>推荐了 Vant 3 才有的 ActionBar，项目是 Vant 2 → 组件库加入改名 / 移除信息，按实际安装版本过滤</td></tr>
-<tr><td>hello-uniapp</td><td>持仓页 <b class="bad">12 ✗</b></td><td>uni-app 内置小写标签被当成项目组件、中文图层名规范化后为空被判「同名」→ 加 uni-ui 目录，修空名误判</td></tr>
-<tr><td>NewPipe</td><td><b class="bad">3 ✗</b></td><td>AppCompat 标准控件没算进项目资产，XML 页面被推荐 Compose 组件 → 跨技术栈的候选最多「需确认」</td></tr>
+<tr><th style="width:24%">项目</th><th style="width:15%">第一次</th><th>出错原因 → 通用修正</th></tr>
+<tr><td>Jetsnack / litemall / hello-uniapp / NewPipe（第一批）</td><td><b class="bad">3 / 2 / 12 / 3 ✗</b></td><td>桌面小部件（Glance）组件被当成 App 组件、没认出 <code>Jetsnack*</code> 项目前缀；推荐了 Vant 3 才有、项目装的 Vant 2 没有的 ActionBar；uni-app 内置小写标签被当成项目组件；AppCompat 标准控件没算进资产 → 识别 Glance 和项目前缀、按实际安装版本过滤、加 uni-ui 目录、跨技术栈候选最多「需确认」</td></tr>
 <tr><td>mall-app-web / AntennaPod（第二批）</td><td>崩溃 + 1 ✗ / <b class="bad">1 ✗</b></td><td>uni-app 内置标签没有 import 路径导致崩溃；<code>&lt;view&gt;</code> 用量压低了 uni-ui 的占比；AntennaPod 的空状态封装 EmptyViewHandler 不是 View → 修崩溃、占比排除平台内置元素、识别「界面封装类」</td></tr>
 <tr><td>WanAndroid / Seal / KunMinX / jeecg（第三批）</td><td><b class="bad">11 / 7 / 3 / 11 ✗</b></td><td>三方 View 库和 wot-design-uni 没被收录；Android 的 ActionBar 是顶栏；「Video*」被当成项目前缀；PasswordInputView / ConfirmButton 这类专门用途组件被当成通用组件；会崩溃的 Material 组件没有别的候选时仍排第一 → 逐条改成通用规则</td></tr>
+<tr><td>vue-h5-template / 芋道商城 / gkd / AndroidProject（第四批）</td><td><b class="bad">23 ✗ / 崩溃 / 5 ✗ / 8 ✗</b></td><td>装了三套 H5 组件库，推荐混用了 Vant 和 NutUI；props 里的三元默认值让扫描崩溃；工具链 <code>package.json</code> 让 Android 仓库被当成 H5、图标按钮被当成文字按钮；54 个 AppCompatButton 漏数；「验证码倒计时」被当成倒计时组件 → 定主用组件库、读组件文档注释里的专门用途等通用规则</td></tr>
 <tr><td>买入下单（新设计稿）</td><td>14 个项目 <b class="bad">12 ✗</b></td><td>开关 / 复选框 / 单选原来是一个概念，搜索算在输入框里 → 拆开概念、补词表、检查 Material 3 主题</td></tr>
 </table>
 <p class="note">vant-demo、Pokedex、Sunflower、vue3-vant-mobile 第一次跑就没有 ✗。复用推荐只错在「项目没见过的结构」，修正都是通用规则，没有针对单个项目的特判；<code>python3 experiments/real-match-eval.py</code> 每次改规则都会全量回归。</p>
 
 <div class="two">
-<div><h3>体检：组件库有，不等于本项目能用</h3><img class="wide" src="{img}21-qmui-compat.png">
+<div><h3>体检：组件库有，不等于本项目能用</h3><img class="wide" style="max-height:36mm;object-fit:cover;object-position:top" src="{img}21-qmui-compat.png">
 <p class="note">QMUI_Android 用的是 AppCompat 主题和 Material 1.4：这些组件会崩溃或编译失败，match 不会推荐。</p></div>
-<div><h3>写完检查：有现成组件却手写</h3><img class="wide" src="{img}26-check-a.png">
+<div><h3>写完检查：有现成组件却手写</h3><img class="wide" style="max-height:36mm;object-fit:cover;object-position:top" src="{img}26-check-a.png">
 <p class="note">不用 Skill 的实现（newbee，A 组）：分割线、商品卡、底部操作栏都是手写的，每条带行号和应复用的组件。</p></div>
 </div>
 
@@ -205,7 +206,7 @@ ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.5mm 0; }}
 
 <h2>4. 新页面实现闭环（demo 仓库）</h2>
 <ul>
-<li>自建的 H5（React）和 Android（Compose，兼容 compileSdk 32 / minSdk 23；另有 XML View 存量组件）组件库加一份订单详情设计稿，跑了 {len(demo)} 次 A / C 对照。<code>verify</code> 能区分「页面写错」和「组件本身不符合设计」（Android 剩下的 2 处严重偏差出在组件库内部，见 <code>docs/component-issues.md</code>）；教程第 8 步故意写错 3 处，全部被抓出。</li>
+<li>自建的 H5（React）和 Android（Compose，兼容 compileSdk 32 / minSdk 23；另有 XML View 存量组件）组件库加一份订单详情设计稿，跑了 {len(demo)} 次 A / C 对照。<code>verify</code> 能区分「页面写错」和「组件本身不符合设计」（见 <code>docs/component-issues.md</code>）；教程第 8 步故意写错 3 处，全部被抓出。</li>
 <li>这个仓库小、组件好找，A 组复用率也是 100%，<b>证明不了复用率提升</b>；差别在规范：A 组 {sum(r['selfBuiltCountdown'] for r in dA)}/{len(dA)} 次自造了设计稿外的 CountDown，C 组 {sum(r['selfBuiltCountdown'] for r in dC)}/{len(dC)}。复用率的差距要在真实项目里看（第 3 节）。</li>
 </ul>
 <h2>5. 局限（如实说明）</h2>
@@ -219,12 +220,12 @@ ul {{ margin: 1mm 0; padding-left: 5mm; }} li {{ margin: 0.5mm 0; }}
 <h2>6. 接入你们的项目</h2>
 <table>
 <tr><th style="width:4%">#</th><th>动作</th><th style="width:34%">产出</th></tr>
-<tr><td>1</td><td><code>figmafe reuse &lt;H5 仓库&gt;</code>、<code>figmafe reuse &lt;Android 仓库&gt;</code>（只读，不改代码）</td><td>资产清单、优先处理项、首份体检基线</td></tr>
+<tr><td>1</td><td><code>figmafe reuse &lt;H5 / Android 仓库&gt;</code>（只读，不改代码）</td><td>资产清单、优先处理项、首份体检基线</td></tr>
 <tr><td>2</td><td>Figma 插件导出下一个要做的页面，<code>figmafe match</code></td><td>复用清单 + 叠图，组件 owner 确认「需确认」项</td></tr>
 <tr><td>3</td><td>开发时让 Agent 按 Skill 走；提交前 <code>reuse --changed origin/main</code></td><td>新增代码的复用问题，带行号</td></tr>
 <tr><td>4</td><td>CI 里 <code>reuse --baseline main.json --no-regress</code>（示例：<code>docs/ci/</code>）</td><td>组件化率、写死颜色等指标只许变好</td></tr>
 </table>
-<p class="note">教程：<code>docs/tutorial/README.md</code> · 数据：<code>experiments/real-match-eval.md</code>、<code>match-judgement.md</code>、<code>real-project/summary.md</code> · 重新生成：<code>python3 docs/tools/build_report.py</code></p>
+<p class="note">教程：<code>docs/tutorial/README.md</code> · 数据：<code>experiments/real-match-eval.md</code>、<code>match-judgement.md</code>、<code>real-project/summary.md</code></p>
 </body></html>"""
 open(os.path.join(root, 'docs', 'report.html'), 'w').write(page)
 print('✓ docs/report.html')

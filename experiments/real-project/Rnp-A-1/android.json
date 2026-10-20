@@ -39,13 +39,14 @@
     },
     {
       "name": "Compose Material3",
-      "usage": 16,
+      "usage": 17,
       "top": [
         "TextButton×5",
         "ListItem×4",
         "AlertDialog×2",
         "TopAppBar×2",
         "RadioButton×1",
+        "SecondaryTabRow×1",
         "Switch×1",
         "Tab×1"
       ]
@@ -565,6 +566,18 @@
       ],
       "example": "RadioButton(selected = entry.value == selectedValue, onClick = null)",
       "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/composable/ListPreference.kt:97"
+    },
+    {
+      "name": "SecondaryTabRow",
+      "kind": "ui-lib",
+      "source": "Compose Material3",
+      "concept": "tabs",
+      "usage": 1,
+      "usageFiles": [
+        "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt"
+      ],
+      "example": "SecondaryTabRow(",
+      "exampleAt": "shared/src/commonMain/kotlin/net/newpipe/app/screen/about/AboutScreen.kt:72"
     },
     {
       "name": "Switch",
@@ -1905,7 +1918,7 @@
   ],
   "metrics": {
     "files": 653,
-    "componentUsages": 701,
+    "componentUsages": 702,
     "rawPrimitives": 0,
     "componentization": 1,
     "duplicateConcepts": 4,

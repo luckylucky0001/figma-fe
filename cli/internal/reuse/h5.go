@@ -219,6 +219,11 @@ func ScanH5(root string) *Report {
 			}
 			a := get(kind, name, f.rel)
 			a.Props = vueProps(f.text)
+			if i := strings.IndexAny(f.text, "<"); i >= 0 && strings.HasPrefix(f.text[i:], "<!--") {
+				if j := strings.Index(f.text[i:], "-->"); j > 0 {
+					a.Purpose = docPurpose(f.text[i : i+j]) // <!-- 验证码输入框 --> heading the file
+				}
+			}
 			a.Enums = unionEnums(f.text)
 			refineBadge(a)
 			if fixedBottomRe.MatchString(f.text) && fixedRe.MatchString(f.text) && (a.Concept == "navbar" || a.Concept == "") {

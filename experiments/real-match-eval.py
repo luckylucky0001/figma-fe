@@ -41,6 +41,10 @@ PROJECTS = {
     "kunminx": ("https://github.com/KunMinX/Jetpack-MVVM-Best-Practice.git", "543eb8659089d74ccad403763cb16596febc89b7", "android"),
     "jeecg-uniapp": ("https://github.com/jeecgboot/jeecg-uniapp.git", "1f33e0225f6557994805db6706034cc0db0232c7", "h5"),
     "vue-h5-template": ("https://github.com/sunniejs/vue-h5-template.git", "9ac24512ea0eb36cf35f54803e9bf267af18335d", "h5"),
+    # held out, third batch: larger production systems (mall front end, a Compose app, an XML app skeleton)
+    "yudao-mall": ("https://github.com/yudaocode/yudao-mall-uniapp.git", "4924ad51250b66c27e87bf8dece036391cca7fcd", "h5"),
+    "gkd": ("https://github.com/gkd-kit/gkd.git", "b2b42f2809458af199724ca1e8d37e89336d82df", "android"),
+    "androidproject": ("https://github.com/getActivity/AndroidProject.git", "cdf35d36637b158ed17b337ed01533fbcc24b116", "android"),
 }
 
 # figma element → (right answers, acceptable answers)
@@ -294,6 +298,48 @@ EXPECTED[("sunflower", "holdings")] = {
     "导航栏": R("TopAppBar", "CenterAlignedTopAppBar"), "公告通知栏": NEW, "资产卡片": R("Card"), "标签页": R("TabRow"),
     "持仓列表": R("LazyColumn"), "持仓列表项": R("ListItem"), "涨跌标签": RA(["—"], ["InputChip", "AssistChip", "SuggestionChip"]), "收盘倒计时": NEW,
     "底部操作栏": NEW, "买入按钮": R("Button"), "卖出按钮": R("Button"), "更多按钮": R("Button")}
+# yudao-mall-uniapp: uni-app mall, its own sheep/ui (su-*) design system + sheep/components (s-*) business
+# components + uni-ui; the goods-page bottom bar is pages/goods/components/detail/detail-tabbar.vue (4 pages)
+YD_BAR = RA(["DetailTabbar"], ["GoodsNav"])
+EXPECTED[("yudao-mall", "order-detail")] = {
+    "NavBar": R("SuNavbar"), "NoticeBar": R("SuNoticeBar"), "Card": R("Card", "—"), "Tag": R("Tag"), "CountDown": R("SCountDown"),
+    "Divider": RA(["SuSubline"], ["SLineBlock"]), "Cell": R("ListItem"), "ProductCard": R("SGoodsColumn", "SGoodsItem"), "Price": NEW,
+    "ActionBar": YD_BAR, "Button": UNI_BTN}
+EXPECTED[("yudao-mall", "holdings")] = {
+    "导航栏": R("SuNavbar"), "公告通知栏": R("SuNoticeBar"), "资产卡片": RA(["Card", "—"], ["SWalletCard"]), "标签页": R("SuTabs"),
+    "持仓列表": R("List", "—"), "持仓列表项": R("ListItem"), "涨跌标签": R("Tag"), "收盘倒计时": R("SCountDown"), "底部操作栏": YD_BAR,
+    "买入按钮": UNI_BTN, "卖出按钮": UNI_BTN, "更多按钮": UNI_BTN}
+EXPECTED_TO["yudao-mall"] = TO(R("SuNavbar"), RA(["SearchBar"], ["SSearchBlock"]), R("SuTabs"), R("ListItem"), R("SuNumberBox"), R("Easyinput"),
+                               R("SuSwitch"), R("Checkbox"), UNI_BTN, R("SEmpty"))
+# gkd: Compose Multiplatform + Material3 with its own ui/component set (GkTopAppBar, GkSettingItem, GkSwitch …);
+# buttons are mostly TextButton (72); its search field lives in the top bar (GkAppBarTextField × 7)
+GK_BTN = R("TextButton", "Button", "OutlinedButton")
+GK_TAG = RA(["—"], ["InputChip", "AssistChip", "SuggestionChip", "FilterChip"])
+GK_TABS = RA(["TabRow", "PrimaryTabRow", "PrimaryScrollableTabRow"], ["GkRuleCategoryTabs"])
+EXPECTED[("gkd", "order-detail")] = {
+    "NavBar": R("GkTopAppBar"), "NoticeBar": NEW, "Card": R("Card", "ElevatedCard", "OutlinedCard"), "Tag": GK_TAG, "CountDown": NEW,
+    "Divider": R("HorizontalDivider"), "Cell": R("GkSettingItem", "ListItem"), "ProductCard": RA(["Card", "—"], []), "Price": NEW, "ActionBar": NEW,
+    "Button": GK_BTN}
+EXPECTED[("gkd", "holdings")] = {
+    "导航栏": R("GkTopAppBar"), "公告通知栏": NEW, "资产卡片": R("Card", "ElevatedCard", "OutlinedCard"), "标签页": GK_TABS,
+    "持仓列表": R("LazyColumn"), "持仓列表项": R("GkSettingItem", "ListItem"), "涨跌标签": GK_TAG, "收盘倒计时": NEW, "底部操作栏": NEW,
+    "买入按钮": GK_BTN, "卖出按钮": GK_BTN, "更多按钮": GK_BTN}
+EXPECTED_TO["gkd"] = TO(R("GkTopAppBar"), RA(["GkAppBarTextField"], ["SearchBar"]), GK_TABS, R("GkSettingItem", "ListItem"), NEW,
+                        R("GkMultiTextField", "GkOutlinedTextField", "OutlinedTextField"), R("GkSwitch"), R("GkCheckbox"), GK_BTN, R("GkEmptyState"))
+# getActivity/AndroidProject: XML; TitleBar (com.hjq.bar), its customWidget library (SettingBar, SwitchButton,
+# RegexEditText …), StatusLayout for empty / error; buttons are AppCompatButton (54); its CountdownView is the
+# 验证码 resend button, not a timer
+AP2_BTN = R("Button[Android SDK widgets]", "AppCompatButton")
+AP2_CD = RA(["—"], ["CountdownView"])
+EXPECTED[("androidproject", "order-detail")] = {
+    "NavBar": R("TitleBar"), "NoticeBar": NEW, "Card": R("CardView"), "Tag": RA(["—"], ["ShapeTextView"]), "CountDown": AP2_CD,
+    "Divider": R("1px View 细线", "—"), "Cell": R("SettingBar"), "ProductCard": R("CardView", "—"), "Price": NEW, "ActionBar": NEW, "Button": AP2_BTN}
+EXPECTED[("androidproject", "holdings")] = {
+    "导航栏": R("TitleBar"), "公告通知栏": NEW, "资产卡片": R("CardView"), "标签页": R("TabLayout", "—"), "持仓列表": R("RecyclerView"),
+    "持仓列表项": R("SettingBar", "—"), "涨跌标签": RA(["—"], ["ShapeTextView"]), "收盘倒计时": AP2_CD, "底部操作栏": NEW,
+    "买入按钮": AP2_BTN, "卖出按钮": AP2_BTN, "更多按钮": AP2_BTN}
+EXPECTED_TO["androidproject"] = TO(R("TitleBar"), NEW, R("TabLayout", "—"), R("SettingBar"), NEW, R("RegexEditText", "ClearEditText", "EditText", "AppCompatEditText"),
+                                   R("SwitchButton"), R("CheckBox", "AppCompatCheckBox", "MaterialCheckBox"), AP2_BTN, R("StatusLayout"))
 for _k, _v in EXPECTED_TO.items():
     EXPECTED[(_k, "trade-order")] = _v
 
@@ -352,7 +398,7 @@ def main():
     if not only:  # a partial run must not overwrite the full results
         json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
         held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite",
-                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal", "kunminx", "jeecg-uniapp", "vue-h5-template"}
+                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal", "kunminx", "jeecg-uniapp", "vue-h5-template", "yudao-mall", "gkd", "androidproject"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
@@ -365,7 +411,9 @@ def main():
                  "wanandroid": "XML（AppCompat）+ 三方 ActionBarEx", "seal": "Compose + Material3 + 自有组件",
                  "kunminx": "XML + DataBinding（AppCompat 主题）",
                  "jeecg-uniapp": "uni-app + wot-design-uni",
-                 "vue-h5-template": "Vue 3 + Vant（另装 NutUI / Varlet）"}
+                 "vue-h5-template": "Vue 3 + Vant（另装 NutUI / Varlet）",
+                 "yudao-mall": "uni-app 商城 + 自有设计系统 sheep/ui + uni-ui", "gkd": "Compose Multiplatform + Material3 + 自有组件",
+                 "androidproject": "XML + 自有 customWidget 库 + TitleBar"}
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""

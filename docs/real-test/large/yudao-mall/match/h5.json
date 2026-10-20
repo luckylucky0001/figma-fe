@@ -1,0 +1,487 @@
+{
+  "platform": "h5",
+  "project": "yudao-mall",
+  "page": "OrderDetail 订单详情",
+  "items": [
+    {
+      "figma": "NavBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:2"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SuNavbar",
+          "kind": "design-system",
+          "source": "sheep/ui/su-navbar/su-navbar.vue",
+          "score": 0.95,
+          "usage": 1,
+          "example": "\u003csu-navbar v-if=\"navbar === 'normal'\" :title=\"title\" statusBar :color=\"color\" :tools=\"tools\" :opacityBgUi=\"opacityBgUi\" :backgroundColor=\"na…",
+          "exampleAt": "sheep/components/s-layout/s-layout.vue:8",
+          "why": "同名，项目里已用 1 次，设计系统组件"
+        },
+        {
+          "name": "Navbar",
+          "kind": "business",
+          "source": "sheep/components/s-custom-navbar/components/navbar.vue",
+          "score": 0.9,
+          "usage": 1,
+          "example": "\u003cnavbar :alway=\"isAlways\" :back=\"false\" bg=\"\" :placeholder=\"isPlaceholder\" :bgStyles=\"bgStyles\" :opacity=\"isOpacity\" :sticky=\"sticky\" \u003e",
+          "exampleAt": "sheep/components/s-custom-navbar/s-custom-navbar.vue:3",
+          "why": "同名，项目里已用 1 次"
+        },
+        {
+          "name": "NavBar",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.85,
+          "usage": 0,
+          "example": "\u003cuni-nav-bar … /\u003e",
+          "exampleAt": "（uni-ui 标准用法，项目未用过）",
+          "why": "同名"
+        },
+        {
+          "name": "SuToolbar",
+          "kind": "design-system",
+          "source": "sheep/ui/su-toolbar/su-toolbar.vue",
+          "score": 0.82,
+          "usage": 1,
+          "example": "\u003csu-toolbar :cancelColor=\"cancelColor\" :confirmColor=\"confirmColor\" :cancelText=\"cancelText\" :confirmText=\"confirmText\" title=\"选择区域\"…",
+          "exampleAt": "sheep/ui/su-region-picker/su-region-picker.vue:5",
+          "why": "同为 navbar，项目里已用 1 次，设计系统组件"
+        }
+      ]
+    },
+    {
+      "figma": "NoticeBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:4"
+      ],
+      "variants": [
+        "Tone=Warning"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SuNoticeBar",
+          "kind": "design-system",
+          "source": "sheep/ui/su-notice-bar/su-notice-bar.vue",
+          "score": 1,
+          "usage": 1,
+          "example": "\u003csu-notice-bar style=\"flex: 1\" :showIcon=\"false\" scrollable single :text=\"data.contents[0].text\" :speed=\"50\" :color=\"data.textColor\" @tap=\"s…",
+          "exampleAt": "sheep/components/s-notice-block/s-notice-block.vue:5",
+          "why": "同名，变体轴匹配 1/1，项目里已用 1 次，设计系统组件",
+          "props": [
+            "Tone：Warning 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "NoticeBar",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.85,
+          "usage": 0,
+          "example": "\u003cuni-notice-bar … /\u003e",
+          "exampleAt": "（uni-ui 标准用法，项目未用过）",
+          "why": "同名",
+          "props": [
+            "Tone：Warning 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "SNoticeBlock",
+          "kind": "business",
+          "source": "sheep/components/s-notice-block/s-notice-block.vue",
+          "score": 0.77,
+          "usage": 1,
+          "example": "\u003cs-notice-block v-if=\"type === 'NoticeBar'\" :data=\"data\" /\u003e",
+          "exampleAt": "sheep/components/s-block-item/s-block-item.vue:6",
+          "why": "同为 notice，项目里已用 1 次",
+          "props": [
+            "Tone：Warning 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "Card",
+      "instances": 3,
+      "nodeIds": [
+        "1:6",
+        "1:18",
+        "1:45"
+      ],
+      "variants": [
+        "Title=Off",
+        "Title=On"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "Card",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.85,
+          "usage": 0,
+          "example": "\u003cuni-card … /\u003e",
+          "exampleAt": "（uni-ui 标准用法，项目未用过）",
+          "why": "同名",
+          "props": [
+            "Title：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "SLiveCard",
+          "kind": "business",
+          "source": "sheep/components/s-live-card/s-live-card.vue",
+          "score": 0.75,
+          "usage": 2,
+          "example": "\u003cs-live-card class=\"goods-md-box\" size=\"md\" :goodsFields=\"goodsFields\" :data=\"item\" :titleColor=\"goodsFields.name?.color\" :subTitleColor=\"go…",
+          "exampleAt": "sheep/components/s-live-block/s-live-block.vue:18",
+          "why": "同为 card，专门用途（live），变体轴匹配 1/1，项目里已用 2 次",
+          "props": [
+            "Title：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "SCouponCard",
+          "kind": "business",
+          "source": "sheep/components/s-coupon-card/s-coupon-card.vue",
+          "score": 0.72,
+          "usage": 1,
+          "example": "\u003cs-coupon-card v-if=\"type === 'UserCoupon'\" :data=\"data\" :styles=\"styles\" /\u003e",
+          "exampleAt": "sheep/components/s-block-item/s-block-item.vue:58",
+          "why": "同为 card，专门用途（coupon），变体轴匹配 1/1，项目里已用 1 次",
+          "props": [
+            "Title=On → title；Title=Off → 不传"
+          ]
+        },
+        {
+          "name": "SUserCard",
+          "kind": "business",
+          "source": "sheep/components/s-user-card/s-user-card.vue",
+          "score": 0.67,
+          "usage": 1,
+          "example": "\u003cs-user-card v-if=\"type === 'UserCard'\" :data=\"data\" :styles=\"styles\" /\u003e",
+          "exampleAt": "sheep/components/s-block-item/s-block-item.vue:52",
+          "why": "同为 card，专门用途（user），项目里已用 1 次",
+          "props": [
+            "Title：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "Tag",
+      "instances": 1,
+      "nodeIds": [
+        "1:8"
+      ],
+      "variants": [
+        "Tone=Warning",
+        "Variant=Light"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "Tag",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.9,
+          "usage": 1,
+          "example": "\u003cuni-tag class=\"ss-m-r-10\" size=\"small\" custom-style=\"background-color: var(--ui-BG-Main); border-color: var(--ui-BG-Main); color: #fff;\" v-…",
+          "exampleAt": "sheep/components/s-address-item/s-address-item.vue:9",
+          "why": "同名，项目里已用 1 次",
+          "props": [
+            "Tone：Warning 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Variant：Light 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "CountDown",
+      "instances": 1,
+      "nodeIds": [
+        "1:11"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SCountDown",
+          "kind": "business",
+          "source": "sheep/components/s-count-down/s-count-down.vue",
+          "score": 0.9,
+          "usage": 1,
+          "example": "\u003cs-count-down :tipText=\"' '\" :bgColor=\"bgColor\" :dayText=\"':'\" :hourText=\"':'\" :minuteText=\"':'\" :secondText=\"' '\" :datatime=\"state.settleme…",
+          "exampleAt": "pages/goods/index.vue:63",
+          "why": "同名，项目里已用 1 次"
+        },
+        {
+          "name": "Countdown",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.85,
+          "usage": 0,
+          "example": "\u003cuni-countdown … /\u003e",
+          "exampleAt": "（uni-ui 标准用法，项目未用过）",
+          "why": "同名"
+        }
+      ]
+    },
+    {
+      "figma": "Divider",
+      "instances": 2,
+      "nodeIds": [
+        "1:14",
+        "1:29"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SuSubline",
+          "kind": "design-system",
+          "source": "sheep/ui/su-subline/su-subline.vue",
+          "score": 0.82,
+          "usage": 1,
+          "example": "\u003csu-subline v-bind=\"data\"\u003e\u003c/su-subline\u003e",
+          "exampleAt": "sheep/components/s-line-block/s-line-block.vue:3",
+          "why": "同为 divider，项目里已用 1 次，设计系统组件"
+        },
+        {
+          "name": "SLineBlock",
+          "kind": "business",
+          "source": "sheep/components/s-line-block/s-line-block.vue",
+          "score": 0.62,
+          "usage": 1,
+          "example": "\u003cs-line-block v-if=\"type === 'Divider'\" :data=\"data\" /\u003e",
+          "exampleAt": "sheep/components/s-block-item/s-block-item.vue:29",
+          "why": "同为 divider，名称只以 row / item 之类的泛称对上，项目里已用 1 次"
+        },
+        {
+          "name": "SuTimeLine",
+          "kind": "design-system",
+          "source": "sheep/ui/su-time-line/su-time-line.vue",
+          "score": 0.62,
+          "usage": 0,
+          "why": "同为 divider，名称只以 row / item 之类的泛称对上，设计系统组件"
+        }
+      ]
+    },
+    {
+      "figma": "Cell",
+      "instances": 7,
+      "nodeIds": [
+        "1:15",
+        "1:30",
+        "1:33",
+        "1:36",
+        "1:47",
+        "1:50",
+        "1:53"
+      ],
+      "variants": [
+        "Arrow=Off",
+        "Arrow=On",
+        "Label=Off",
+        "Label=On"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "ListItem",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.9,
+          "usage": 6,
+          "example": "\u003cuni-list-item title=\"当前版本\" :rightText=\"appInfo.version\" showArrow clickable :border=\"false\" class=\"list-border\" @tap=\"onCheckUpdate…",
+          "exampleAt": "pages/public/setting.vue:14",
+          "why": "同为 cell，标准组件，项目里已用 6 次",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "项目惯用写法：showarrow border=\"false\" clickable"
+          ]
+        },
+        {
+          "name": "FormsItem",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.82,
+          "usage": 21,
+          "example": "\u003cuni-forms-item name=\"name\" label=\"收货人\" class=\"form-item\"\u003e",
+          "exampleAt": "pages/user/address/edit.vue:15",
+          "why": "同为 cell，专用组件（forms），项目里已用 21 次",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "CollapseItem",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.68,
+          "usage": 2,
+          "example": "\u003cuni-collapse-item title=\"优惠券说明\" v-if=\"state.coupon.description\"\u003e",
+          "exampleAt": "pages/coupon/detail.vue:61",
+          "why": "同为 cell，专用组件（collapse），项目里已用 2 次",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "SBlockItem",
+          "kind": "business",
+          "source": "sheep/components/s-block-item/s-block-item.vue",
+          "score": 0.67,
+          "usage": 3,
+          "example": "\u003cs-block-item :type=\"item.id\" :data=\"item.property\" :styles=\"item.property.style\" /\u003e",
+          "exampleAt": "pages/index/index.vue:17",
+          "why": "同为 cell，名称只以 row / item 之类的泛称对上，项目里已用 3 次",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "ProductCard",
+      "instances": 1,
+      "nodeIds": [
+        "1:20"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SGoodsColumn",
+          "kind": "business",
+          "source": "sheep/components/s-goods-column/s-goods-column.vue",
+          "score": 0.97,
+          "usage": 34,
+          "example": "\u003cs-goods-column class=\"\" size=\"lg\" :data=\"item\" :grouponTag=\"true\" @click=\"sheep.$router.go('/pages/goods/groupon', { id: item.id })\" \u003e",
+          "exampleAt": "pages/activity/groupon/list.vue:31",
+          "why": "同为 goods，项目里已用 34 次"
+        },
+        {
+          "name": "SGoodsItem",
+          "kind": "business",
+          "source": "sheep/components/s-goods-item/s-goods-item.vue",
+          "score": 0.92,
+          "usage": 15,
+          "example": "\u003cs-goods-item class=\"goods-box\" :img=\"state.data.headRecord.picUrl\" :title=\"state.data.headRecord.spuName\" :price=\"state.data.headRecord.com…",
+          "exampleAt": "pages/activity/groupon/detail.vue:22",
+          "why": "同为 goods，项目里已用 15 次"
+        },
+        {
+          "name": "SGoodsCard",
+          "kind": "business",
+          "source": "sheep/components/s-goods-card/s-goods-card.vue",
+          "score": 0.77,
+          "usage": 1,
+          "example": "\u003cs-goods-card v-if=\"type === 'ProductCard'\" :data=\"data\" :styles=\"styles\" /\u003e",
+          "exampleAt": "sheep/components/s-block-item/s-block-item.vue:34",
+          "why": "同为 goods，项目里已用 1 次"
+        },
+        {
+          "name": "SGoodsShelves",
+          "kind": "business",
+          "source": "sheep/components/s-goods-shelves/s-goods-shelves.vue",
+          "score": 0.77,
+          "usage": 1,
+          "example": "\u003cs-goods-shelves v-if=\"type === 'ProductList'\" :data=\"data\" :styles=\"styles\" /\u003e",
+          "exampleAt": "sheep/components/s-block-item/s-block-item.vue:36",
+          "why": "同为 goods，项目里已用 1 次"
+        }
+      ]
+    },
+    {
+      "figma": "Price",
+      "instances": 2,
+      "nodeIds": [
+        "1:24",
+        "1:41"
+      ],
+      "variants": [
+        "Size=Large",
+        "Size=Medium",
+        "Tone=Default",
+        "Tone=Primary"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "ActionBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:56"
+      ],
+      "verdict": "confirm",
+      "candidates": [
+        {
+          "name": "GoodsNav",
+          "kind": "ui-lib",
+          "source": "uni-ui",
+          "score": 0.76,
+          "usage": 0,
+          "example": "\u003cuni-goods-nav … /\u003e",
+          "exampleAt": "（uni-ui 标准用法，项目未用过）",
+          "why": "同为 actionbar，标准组件"
+        }
+      ]
+    },
+    {
+      "figma": "Button",
+      "instances": 3,
+      "nodeIds": [
+        "1:57",
+        "1:59",
+        "1:61"
+      ],
+      "variants": [
+        "Size=Medium",
+        "Type=Default",
+        "Type=Primary"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "Button",
+          "kind": "ui-lib",
+          "source": "uni-app 内置组件",
+          "score": 1,
+          "usage": 186,
+          "example": "\u003cbutton class=\"ss-reset-button order-btn\" v-if=\"state.data.orderId\" @tap=\"onDetail(state.data.orderId)\" \u003e",
+          "exampleAt": "pages/activity/groupon/detail.vue:137",
+          "why": "同名，项目里已用 186 次",
+          "props": [
+            "Size：Medium 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "SMenuButton",
+          "kind": "business",
+          "source": "sheep/components/s-menu-button/s-menu-button.vue",
+          "score": 0.77,
+          "usage": 1,
+          "example": "\u003cs-menu-button v-if=\"type === 'MenuSwiper'\" :data=\"data\" :styles=\"styles\" /\u003e",
+          "exampleAt": "sheep/components/s-block-item/s-block-item.vue:8",
+          "why": "同为 button，项目里已用 1 次",
+          "props": [
+            "Size：Medium 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        }
+      ]
+    }
+  ],
+  "reuse": 9,
+  "confirm": 1,
+  "new": 1
+}

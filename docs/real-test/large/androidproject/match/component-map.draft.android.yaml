@@ -1,0 +1,60 @@
+# component-map 初稿（figmafe match 自动生成）：人工确认推荐组件、补齐变体 → props 后，合并进 design/component-map.yaml
+version: 1
+components:
+    - figma: NavBar（未组件化）
+      android:
+        component: TitleBar
+        import: com.hjq.bar
+        usage: <com.hjq.bar.TitleBar
+        notes: '[reuse 0.95] 同为 navbar，标准组件，项目里已用 13 次；来源 com.hjq.bar；备选 MaterialToolbar'
+    - figma: Tabs（未组件化）
+      android:
+        component: TabLayout
+        import: com.google.android.material.*.TabLayout
+        usage: <com.google.android.material.…TabLayout … />
+        notes: '[confirm 0.61] 同为 tabs，项目几乎不用 Material Components，标准组件；来源 Material Components'
+    - figma: Cell（未组件化）
+      android:
+        component: SettingBar
+        import: library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java
+        usage: <com.hjq.custom.widget.layout.SettingBar
+        notes: '[reuse 0.92] 同为 cell，项目里已用 14 次；来源 library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java'
+    - figma: Input（未组件化）
+      android:
+        component: RegexEditText
+        import: library/customWidget/src/main/java/com/hjq/custom/widget/view/RegexEditText.java
+        usage: <com.hjq.custom.widget.view.RegexEditText
+        notes: '[reuse 0.92] 同为 input，项目里已用 14 次；来源 library/customWidget/src/main/java/com/hjq/custom/widget/view/RegexEditText.java；备选 ClearEditText / PasswordEditText / TextInputEditText'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：项目惯用 style="@style/EditTextStyle"（14 处）
+    - figma: Switch（未组件化）
+      android:
+        component: SwitchButton
+        import: library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java
+        usage: <com.hjq.custom.widget.view.SwitchButton
+        notes: '[reuse 0.88] 同为 switch，项目里已用 8 次；来源 library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java'
+    - figma: Checkbox（未组件化）
+      android:
+        component: CheckBox
+        import: Android SDK widgets
+        usage: <androidx.appcompat.widget.AppCompatCheckBox
+        notes: '[reuse 0.80] 同名，系统原生控件，项目里已用 3 次；来源 Android SDK widgets；备选 MaterialCheckBox'
+    - figma: Button（未组件化）
+      android:
+        component: Button
+        import: Android SDK widgets
+        usage: <androidx.appcompat.widget.AppCompatButton
+        notes: '[reuse 0.95] 同名，系统原生控件，项目里已用 54 次；来源 Android SDK widgets；备选 SubmitButton / PlayButton / FloatActionButton'
+    - figma: Empty（未组件化）
+      android:
+        component: StatusLayout
+        import: app/src/main/java/com/hjq/demo/widget/StatusLayout.java
+        usage: <com.hjq.demo.widget.StatusLayout
+        notes: '[reuse 0.84] 同为 empty，项目里已用 4 次；来源 app/src/main/java/com/hjq/demo/widget/StatusLayout.java'
+gaps:
+    - figma: SearchBar（未组件化）
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: Stepper（未组件化）
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）

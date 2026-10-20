@@ -1,0 +1,411 @@
+{
+  "platform": "android",
+  "project": "gkd",
+  "page": "TradeOrder 买入下单",
+  "items": [
+    {
+      "figma": "NavBar（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:2"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkTopAppBar",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTopAppBar.kt",
+          "score": 1,
+          "usage": 28,
+          "example": "GkTopAppBar(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkEditorLayout.kt:23",
+          "why": "同为 navbar，项目里已用 28 次，设计系统组件"
+        },
+        {
+          "name": "GkMultiSelectionTopAppBar",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiSelectionTopAppBar.kt",
+          "score": 0.85,
+          "usage": 9,
+          "example": "GkMultiSelectionTopAppBar(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/SubsManagePage.kt:171",
+          "why": "同为 navbar，专用组件（multiselection），项目里已用 9 次，设计系统组件"
+        },
+        {
+          "name": "GkPrivilegeTopBar",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/page/GkPrivilegeTopBar.kt",
+          "score": 0.83,
+          "usage": 2,
+          "example": "GkPrivilegeTopBar(mainVm.navigator::pop) {",
+          "exampleAt": "gkd-app/src/androidMain/kotlin/li/gkd/app/ui/PrivilegeServicePage.android.kt:38",
+          "why": "同为 navbar，项目里已用 2 次"
+        },
+        {
+          "name": "GkRuleListHeader",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleListHeader.kt",
+          "score": 0.76,
+          "usage": 2,
+          "example": "GkRuleListHeader(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/subscription/AppConfigPage.kt:412",
+          "why": "同为 navbar，专用组件（rulelist），项目里已用 2 次，设计系统组件"
+        }
+      ]
+    },
+    {
+      "figma": "SearchBar（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:4"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkAppBarTextField",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkAppBarTextField.kt",
+          "score": 0.94,
+          "usage": 6,
+          "example": "GkAppBarTextField(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/AppListPage.kt:171",
+          "why": "同为 search，6 处调用里有 6 处传的是搜索词，是项目的搜索框，项目里已用 6 次，设计系统组件"
+        },
+        {
+          "name": "SearchBar",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.77,
+          "usage": 0,
+          "example": "SearchBar(…)  // import androidx.compose.material3.SearchBar",
+          "exampleAt": "（Compose Material3 标准用法，项目未用过）",
+          "why": "同名，项目里已惯用 GkAppBarTextField"
+        }
+      ]
+    },
+    {
+      "figma": "Tabs（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:6"
+      ],
+      "verdict": "confirm",
+      "candidates": [
+        {
+          "name": "TabRow",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.72,
+          "usage": 0,
+          "example": "TabRow(…)  // import androidx.compose.material3.TabRow",
+          "exampleAt": "（Compose Material3 标准用法，项目未用过）",
+          "why": "同为 tabs"
+        },
+        {
+          "name": "GkRuleCategoryTabs",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleCategoryTabs.kt",
+          "score": 0.7,
+          "usage": 2,
+          "example": "GkRuleCategoryTabs(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/subscription/AppConfigPage.kt:392",
+          "why": "同为 tabs，专用组件（rulecategory），可选中组件，设计稿里是静态展示，项目里已用 2 次，设计系统组件"
+        },
+        {
+          "name": "Tab",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.69,
+          "usage": 2,
+          "example": "if (firstTabTitle != null) Tab(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleCategoryTabs.kt:32",
+          "why": "同为 tabs，是容器组件（Tabs / Group / Row）的子项，标准组件，项目里已用 2 次"
+        },
+        {
+          "name": "PrimaryScrollableTabRow",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.65,
+          "usage": 1,
+          "example": "PrimaryScrollableTabRow(selectedTabIndex = selectedIndex, edgePadding = 8.dp) {",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleCategoryTabs.kt:31",
+          "why": "同为 tabs，专用组件（primaryscrollable），项目里已用 1 次"
+        }
+      ]
+    },
+    {
+      "figma": "Cell（未组件化）",
+      "instances": 2,
+      "nodeIds": [
+        "1:11",
+        "1:14"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkSettingItem",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSettingItem.kt",
+          "score": 1,
+          "usage": 23,
+          "example": "GkSettingItem(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/SettingsPage.kt:97",
+          "why": "同为 cell，项目里已用 23 次，设计系统组件"
+        },
+        {
+          "name": "GkRuleListItem",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleListItem.kt",
+          "score": 0.87,
+          "usage": 5,
+          "example": "GkRuleListItem(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleGroupCard.kt:42",
+          "why": "同为 cell，可选中组件，设计稿里是静态展示，项目里已用 5 次，设计系统组件"
+        },
+        {
+          "name": "GkBatchActionMenuItem",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiSelectionActions.kt",
+          "score": 0.76,
+          "usage": 22,
+          "example": "GkBatchActionMenuItem(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleBatchMenuItems.kt:14",
+          "why": "同为 cell，专用组件（batchactionmenu），名称只以 row / item 之类的泛称对上，项目里已用 22 次，设计系统组件"
+        },
+        {
+          "name": "GkTemplateVariableRow",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTemplateVariableRow.kt",
+          "score": 0.68,
+          "usage": 7,
+          "example": "GkTemplateVariableRow(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/ActionToastPage.kt:180",
+          "why": "同为 cell，专用组件（templatevariable），名称只以 row / item 之类的泛称对上，项目里已用 7 次，设计系统组件"
+        }
+      ]
+    },
+    {
+      "figma": "Stepper（未组件化）",
+      "instances": 2,
+      "nodeIds": [
+        "1:17",
+        "1:22"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Input（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:27"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkMultiTextField",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiTextField.kt",
+          "score": 0.94,
+          "usage": 6,
+          "example": "GkMultiTextField(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiTextField.kt:83",
+          "why": "同为 input，项目里已用 6 次，设计系统组件"
+        },
+        {
+          "name": "OutlinedTextField",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.89,
+          "usage": 10,
+          "example": "OutlinedTextField(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkGithubUploadDialogs.kt:68",
+          "why": "同为 input，项目里已用 10 次"
+        },
+        {
+          "name": "GkOutlinedTextField",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkOutlinedTextField.kt",
+          "score": 0.88,
+          "usage": 2,
+          "example": "GkOutlinedTextField(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/snapshot/SnapshotSettingsPage.kt:238",
+          "why": "同为 input，项目里已用 2 次，设计系统组件"
+        },
+        {
+          "name": "TextField",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.69,
+          "usage": 2,
+          "example": "TextField(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiTextField.kt:47",
+          "why": "同为 input，标准组件，项目里已用 2 次，项目设计系统已封装为 GkMultiTextField，应使用封装"
+        }
+      ]
+    },
+    {
+      "figma": "Switch（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:30"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkSwitch",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSwitch.kt",
+          "score": 1,
+          "usage": 7,
+          "example": "GkSwitch(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSubsItemCard.kt:260",
+          "why": "同名，可选中组件，设计稿里是静态展示，项目里已用 7 次，设计系统组件"
+        },
+        {
+          "name": "GkTextSwitch",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTextSwitch.kt",
+          "score": 0.99,
+          "usage": 38,
+          "example": "GkTextSwitch(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/SettingsPage.kt:144",
+          "why": "同为 switch，可选中组件，设计稿里是静态展示，项目里已用 38 次，设计系统组件"
+        },
+        {
+          "name": "Switch",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.78,
+          "usage": 2,
+          "example": "Switch(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleEnableControl.kt:105",
+          "why": "同名，项目里已用 2 次，项目设计系统已封装为 GkSwitch，应使用封装"
+        },
+        {
+          "name": "GkTriStateSwitch",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTriStateSwitch.kt",
+          "score": 0.7,
+          "usage": 2,
+          "example": "GkTriStateSwitch(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/subscription/GkRuleGroupDialog.kt:317",
+          "why": "同为 switch，专用组件（tristate），可选中组件，设计稿里是静态展示，项目里已用 2 次，设计系统组件"
+        }
+      ]
+    },
+    {
+      "figma": "Checkbox（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:32"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkCheckbox",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkCheckbox.kt",
+          "score": 1,
+          "usage": 6,
+          "example": "GkCheckbox(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkAppCheckboxCard.kt:67",
+          "why": "同名，可选中组件，设计稿里是静态展示，项目里已用 6 次，设计系统组件"
+        },
+        {
+          "name": "GkMenuItemCheckbox",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMenu.kt",
+          "score": 0.77,
+          "usage": 7,
+          "example": "GkMenuItemCheckbox(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkAppFilterContent.kt:34",
+          "why": "同为 checkbox，专用组件（menuitem），可选中组件，设计稿里是静态展示，项目里已用 7 次，设计系统组件"
+        },
+        {
+          "name": "Checkbox",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.75,
+          "usage": 1,
+          "example": "Checkbox(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkCheckbox.kt:65",
+          "why": "同名，项目里已用 1 次，项目设计系统已封装为 GkCheckbox，应使用封装"
+        }
+      ]
+    },
+    {
+      "figma": "Button（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:34"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "TextButton",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.97,
+          "usage": 72,
+          "example": "TextButton(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/DialogRequests.kt:122",
+          "why": "同为 button，项目里已用 72 次"
+        },
+        {
+          "name": "GkIconButton",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkIcon.kt",
+          "score": 0.95,
+          "usage": 71,
+          "example": "GkIconButton(",
+          "exampleAt": "gkd-app/src/androidMain/kotlin/li/gkd/app/service/EventService.kt:151",
+          "why": "同为 button，专门用途（icon），项目里已用 71 次，设计系统组件"
+        },
+        {
+          "name": "Button",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.95,
+          "usage": 3,
+          "example": "Button(onClick = onRetry) {",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkWebViewErrorContent.kt:72",
+          "why": "同名，项目里已用 3 次"
+        },
+        {
+          "name": "OutlinedButton",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.92,
+          "usage": 16,
+          "example": "OutlinedButton(onClick = flushSettings) { Text(\"重试保存\") }",
+          "exampleAt": "gkd-app/src/jvmMain/kotlin/li/gkd/app/DesktopControls.kt:73",
+          "why": "同为 button，项目里已用 16 次"
+        }
+      ]
+    },
+    {
+      "figma": "Empty（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:37"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkEmptyState",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkEmptyState.kt",
+          "score": 0.88,
+          "usage": 15,
+          "example": "GkEmptyState(text = stringResource(Res.string.data_empty))",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkLogTimeline.kt:116",
+          "why": "名称包含，项目里已用 15 次，设计系统组件"
+        }
+      ]
+    }
+  ],
+  "reuse": 8,
+  "confirm": 1,
+  "new": 1
+}

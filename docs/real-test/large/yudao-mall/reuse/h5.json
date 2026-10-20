@@ -1,0 +1,4668 @@
+{
+  "platform": "h5",
+  "root": "yudao-mall",
+  "stack": [
+    "vue",
+    "uni-app 内置组件",
+    "uni-ui"
+  ],
+  "libraries": [
+    {
+      "name": "uni-app 内置组件",
+      "usage": 374,
+      "top": [
+        "Button×186",
+        "Image×133",
+        "ScrollView×23",
+        "Radio×15",
+        "Input×5",
+        "Swiper×5",
+        "Checkbox×3",
+        "Picker×2"
+      ]
+    },
+    {
+      "name": "uni-ui",
+      "usage": 128,
+      "top": [
+        "Easyinput×31",
+        "LoadMore×25",
+        "FormsItem×21",
+        "Icons×10",
+        "Forms×9",
+        "ListItem×6",
+        "SearchBar×4",
+        "DatetimePicker×3"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "name": "SuPopup",
+      "kind": "design-system",
+      "source": "sheep/ui/su-popup/su-popup.vue",
+      "concept": "popup",
+      "props": [
+        "backgroundImage",
+        "safeArea",
+        "maskBackgroundColor",
+        "zIndex"
+      ],
+      "usage": 23,
+      "usageFiles": [
+        "pages/app/sign.vue",
+        "pages/chat/components/select-popup.vue",
+        "pages/chat/components/toolsPopup.vue",
+        "pages/commission/components/account-type-select.vue",
+        "pages/commission/components/commission-auth.vue",
+        "pages/commission/wallet.vue",
+        "pages/goods/list.vue",
+        "pages/order/aftersale/apply.vue",
+        "sheep/components/s-activity-pop/s-activity-pop.vue",
+        "sheep/components/s-auth-modal/s-auth-modal.vue",
+        "sheep/components/s-coupon-get/s-coupon-get.vue",
+        "sheep/components/s-coupon-select/s-coupon-select.vue",
+        "sheep/components/s-discount-list/s-discount-list.vue",
+        "sheep/components/s-menu-tools/s-menu-tools.vue",
+        "sheep/components/s-popup-image/s-popup-image.vue",
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/components/s-select-sku/s-select-sku.vue",
+        "sheep/components/s-share-modal/canvas-poster/index.vue",
+        "sheep/components/s-share-modal/s-share-modal.vue",
+        "sheep/ui/su-dialog/su-dialog.vue",
+        "sheep/ui/su-region-picker/su-region-picker.vue"
+      ],
+      "example": "\u003csu-popup :show=\"state.showModel\" type=\"center\" round=\"10\" :isMaskClick=\"false\"\u003e",
+      "exampleAt": "pages/app/sign.vue:77",
+      "attrs": {
+        "backgroundcolor=\"#F0F0F0\"": 1,
+        "backgroundcolor=\"#F6F6F6\"": 1,
+        "backgroundcolor=\"#eee\"": 1,
+        "backgroundcolor=\"#f2f2f2\"": 3,
+        "backgroundcolor=\"none\"": 1,
+        "false": 3,
+        "ismaskclick=\"false\"": 2,
+        "maskbackgroundcolor": 1,
+        "round=\"0\"": 1,
+        "round=\"10\"": 11,
+        "round=\"20\"": 7,
+        "showclose": 6,
+        "showclose=\"false\"": 2,
+        "showclose=\"true\"": 3,
+        "type=\"bottom\"": 5,
+        "type=\"center\"": 5,
+        "type=\"top\"": 2,
+        "zindex=\"10\"": 1
+      },
+      "builtOn": [
+        "Transition",
+        "Icons"
+      ]
+    },
+    {
+      "name": "SuFixed",
+      "kind": "design-system",
+      "source": "sheep/ui/su-fixed/su-fixed.vue",
+      "props": [
+        "noNav",
+        "bottom",
+        "bg",
+        "bgStyles",
+        "val",
+        "width",
+        "alway",
+        "opacity",
+        "index",
+        "placeholder",
+        "sticky",
+        "noFixed",
+        "ui",
+        "clickTo",
+        "isInset"
+      ],
+      "usage": 20,
+      "usageFiles": [
+        "pages/chat/components/messageList.vue",
+        "pages/goods/comment/add.vue",
+        "pages/goods/components/detail/detail-activity-tip.vue",
+        "pages/goods/components/detail/detail-navbar.vue",
+        "pages/goods/components/detail/detail-skeleton.vue",
+        "pages/goods/components/detail/detail-tabbar.vue",
+        "pages/goods/components/list/list-navbar.vue",
+        "pages/index/cart.vue",
+        "pages/order/aftersale/apply.vue",
+        "pages/order/aftersale/detail.vue",
+        "pages/order/confirm.vue",
+        "pages/order/detail.vue",
+        "pages/public/setting.vue",
+        "pages/user/address/edit.vue",
+        "pages/user/address/list.vue",
+        "pages/user/goods-collect.vue",
+        "pages/user/goods-log.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-custom-navbar/components/navbar.vue",
+        "sheep/ui/su-inner-navbar/su-inner-navbar.vue"
+      ],
+      "example": "\u003csu-fixed bottom placeholder :val=\"44\"\u003e",
+      "exampleAt": "pages/goods/components/detail/detail-activity-tip.vue:2",
+      "attrs": {
+        "alway": 2,
+        "bg=\"\"": 1,
+        "bg=\"bg-white\"": 5,
+        "bg=\"none\"": 1,
+        "bottom": 15,
+        "index=\"10\"": 1,
+        "index=\"10090\"": 1,
+        "index=\"200\"": 1,
+        "nofixed=\"false\"": 2,
+        "nonav": 4,
+        "opacity": 1,
+        "opacity=\"false\"": 3,
+        "val=\"0\"": 6,
+        "val=\"44\"": 1
+      }
+    },
+    {
+      "name": "SuSticky",
+      "kind": "design-system",
+      "source": "sheep/ui/su-sticky/su-sticky.vue",
+      "props": [
+        "customStyle"
+      ],
+      "usage": 11,
+      "usageFiles": [
+        "pages/activity/groupon/order.vue",
+        "pages/activity/index.vue",
+        "pages/commission/order.vue",
+        "pages/commission/wallet.vue",
+        "pages/coupon/detail.vue",
+        "pages/coupon/list.vue",
+        "pages/goods/list.vue",
+        "pages/order/aftersale/list.vue",
+        "pages/order/list.vue",
+        "pages/user/wallet/money.vue",
+        "pages/user/wallet/score.vue"
+      ],
+      "example": "\u003csu-sticky v-else bgColor=\"#fff\"\u003e",
+      "exampleAt": "pages/coupon/detail.vue:79",
+      "attrs": {
+        "bgcolor=\"#fff\"": 8
+      }
+    },
+    {
+      "name": "SuTabs",
+      "kind": "design-system",
+      "source": "sheep/ui/su-tabs/su-tabs.vue",
+      "concept": "tabs",
+      "usage": 11,
+      "usageFiles": [
+        "pages/activity/groupon/order.vue",
+        "pages/commission/order.vue",
+        "pages/commission/wallet.vue",
+        "pages/coupon/detail.vue",
+        "pages/coupon/list.vue",
+        "pages/goods/comment/list.vue",
+        "pages/goods/list.vue",
+        "pages/order/aftersale/list.vue",
+        "pages/order/list.vue",
+        "pages/user/wallet/money.vue",
+        "pages/user/wallet/score.vue"
+      ],
+      "example": "\u003csu-tabs :list=\"tabMaps\" :scrollable=\"false\" @change=\"onTabsChange\" :current=\"state.currentTab\" \u003e",
+      "exampleAt": "pages/activity/groupon/order.vue:5",
+      "attrs": {
+        "scrollable=\"false\"": 10,
+        "scrollable=\"true\"": 1
+      },
+      "builtOn": [
+        "ScrollView"
+      ]
+    },
+    {
+      "name": "SuStatusBar",
+      "kind": "design-system",
+      "source": "sheep/ui/su-status-bar/su-status-bar.vue",
+      "usage": 7,
+      "usageFiles": [
+        "pages/goods/components/detail/detail-navbar.vue",
+        "pages/goods/components/list/list-navbar.vue",
+        "sheep/components/s-custom-navbar/components/navbar.vue",
+        "sheep/components/s-menu-tools/s-menu-tools.vue",
+        "sheep/ui/su-inner-navbar/su-inner-navbar.vue",
+        "sheep/ui/su-navbar/su-navbar.vue"
+      ],
+      "example": "\u003csu-status-bar v-if=\"statusBar\" /\u003e",
+      "exampleAt": "sheep/ui/su-navbar/su-navbar.vue:13"
+    },
+    {
+      "name": "SuSwiper",
+      "kind": "design-system",
+      "source": "sheep/ui/su-swiper/su-swiper.vue",
+      "concept": "carousel",
+      "props": [
+        "circular",
+        "autoplay",
+        "interval",
+        "duration",
+        "mode",
+        "imageMode",
+        "list",
+        "dotStyle",
+        "dotCur",
+        "bg",
+        "height",
+        "imgHeight",
+        "imgTopRadius",
+        "imgBottomRadius",
+        "isPreview",
+        "seizeHeight"
+      ],
+      "usage": 5,
+      "usageFiles": [
+        "pages/goods/groupon.vue",
+        "pages/goods/index.vue",
+        "pages/goods/point.vue",
+        "pages/goods/seckill.vue",
+        "sheep/components/s-image-banner/s-image-banner.vue"
+      ],
+      "example": "\u003csu-swiper class=\"ss-m-b-14\" isPreview :list=\"state.goodsSwiper\" dotStyle=\"tag\" imageMode=\"widthFix\" dotCur=\"bg-mask-40\" :seizeHeight=\"750\" …",
+      "exampleAt": "pages/goods/groupon.vue:24",
+      "attrs": {
+        "dotcur": 1,
+        "dotcur=\"bg-mask-40\"": 4,
+        "dotstyle=\"tag\"": 3,
+        "imagemode=\"scaleToFill\"": 1,
+        "imagemode=\"widthFix\"": 4,
+        "ispreview": 4,
+        "otstyle=\"tag\"": 1,
+        "seizeheight=\"750\"": 3
+      },
+      "extends": "Swiper",
+      "builtOn": [
+        "Swiper",
+        "Image",
+        "SuVideo"
+      ]
+    },
+    {
+      "name": "SuImage",
+      "kind": "design-system",
+      "source": "sheep/ui/su-image/su-image.vue",
+      "concept": "image",
+      "props": [
+        "src",
+        "errorSrc",
+        "mode",
+        "isPreview",
+        "previewList",
+        "current",
+        "height",
+        "width",
+        "radius"
+      ],
+      "usage": 4,
+      "usageFiles": [
+        "pages/chat/components/messageListItem.vue",
+        "pages/goods/components/detail/comment-item.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-image-block/s-image-block.vue"
+      ],
+      "example": "\u003csu-image class=\"message-img\" isPreview :previewList=\"[sheep.$url.cdn(getMessageContent(message).picUrl || message.content)]\" :current=\"0\" :…",
+      "exampleAt": "pages/chat/components/messageListItem.vue:57",
+      "attrs": {
+        "current=\"0\"": 2,
+        "height=\"120\"": 1,
+        "ispreview": 3,
+        "mode": 1,
+        "mode=\"widthFix\"": 1,
+        "width=\"120\"": 1
+      },
+      "extends": "Image",
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SuNumberBox",
+      "kind": "design-system",
+      "source": "sheep/ui/su-number-box/su-number-box.vue",
+      "concept": "stepper",
+      "props": [
+        "value",
+        "modelValue",
+        "min",
+        "max",
+        "step",
+        "background",
+        "color",
+        "disabled",
+        "activity"
+      ],
+      "usage": 4,
+      "usageFiles": [
+        "pages/index/cart.vue",
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/components/s-select-sku/s-select-sku.vue"
+      ],
+      "example": "\u003csu-number-box v-model=\"item.count\" :max=\"item.sku.stock\" :min=\"0\" :step=\"1\" @change=\"onNumberChange($event, item)\" /\u003e",
+      "exampleAt": "pages/index/cart.vue:59",
+      "attrs": {
+        "activity": 1,
+        "item": 1,
+        "min=\"0\"": 1,
+        "min=\"1\"": 3,
+        "step=\"1\"": 4
+      },
+      "builtOn": [
+        "Input"
+      ]
+    },
+    {
+      "name": "SuRadio",
+      "kind": "design-system",
+      "source": "sheep/ui/su-radio/su-radio.vue",
+      "concept": "radio",
+      "props": [
+        "customStyle"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "pages/user/info.vue"
+      ],
+      "example": "\u003csu-radio v-if=\"userInfo.verification?.mobile\" :modelValue=\"true\" /\u003e",
+      "exampleAt": "pages/user/info.vue:82",
+      "attrs": {
+        "modelvalue=\"true\"": 2
+      },
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SuTabItem",
+      "kind": "design-system",
+      "source": "sheep/ui/su-tab-item/su-tab-item.vue",
+      "concept": "tabs",
+      "props": [
+        "data",
+        "index"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "sheep/ui/su-tab/su-tab.vue"
+      ],
+      "example": "\u003csu-tab-item v-for=\"(item, index) in props.tab\" :data=\"item\" :index=\"index\" :key=\"index\" @up=\"upitem\" @tap.native=\"click(index, item)\" \u003e",
+      "exampleAt": "sheep/ui/su-tab/su-tab.vue:25",
+      "attrs": {
+        "item": 2
+      }
+    },
+    {
+      "name": "SuVideo",
+      "kind": "design-system",
+      "source": "sheep/ui/su-video/su-video.vue",
+      "props": [
+        "moveX",
+        "uid",
+        "height",
+        "width",
+        "initialTime",
+        "src",
+        "poster"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "sheep/components/s-video-block/s-video-block.vue",
+        "sheep/ui/su-swiper/su-swiper.vue"
+      ],
+      "example": "\u003csu-video class=\"sss\" :uid=\"guid()\" :src=\"sheep.$url.cdn(data.videoUrl)\" :poster=\"sheep.$url.cdn(data.posterUrl)\" :height=\"styles.height * 2…",
+      "exampleAt": "sheep/components/s-video-block/s-video-block.vue:3",
+      "builtOn": [
+        "DomVideo"
+      ]
+    },
+    {
+      "name": "DomVideo",
+      "kind": "design-system",
+      "source": "sheep/ui/su-video/components/dom-video.vue",
+      "props": [
+        "src",
+        "autoplay",
+        "loop",
+        "controls",
+        "objectFit",
+        "muted",
+        "poster"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/ui/su-video/su-video.vue"
+      ],
+      "example": "\u003cdom-video ref=\"domVideo\" :id=\"`sVideo${uid}`\" class=\"radius\" :style=\"[{ height: height + 'rpx' }]\" object-fit=\"contain\" :controls=\"true\" :s…",
+      "exampleAt": "sheep/ui/su-video/su-video.vue:26",
+      "attrs": {
+        "controls=\"true\"": 1,
+        "object-fit=\"contain\"": 1
+      }
+    },
+    {
+      "name": "SuCoupon",
+      "kind": "design-system",
+      "source": "sheep/ui/su-coupon/su-coupon.vue",
+      "props": [
+        "size",
+        "textColor",
+        "background",
+        "btnBg",
+        "btnTextColor",
+        "state",
+        "couponId",
+        "title",
+        "value",
+        "sellBy",
+        "surplus"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-coupon-block/s-coupon-block.vue"
+      ],
+      "example": "\u003csu-coupon :size=\"SIZE_LIST[columns - 1]\" :textColor=\"data.textColor\" background=\"\" :couponId=\"item.id\" :title=\"formatCouponTitle(item)\" :ty…",
+      "exampleAt": "sheep/components/s-coupon-block/s-coupon-block.vue:19",
+      "attrs": {
+        "background=\"\"": 1
+      },
+      "builtOn": [
+        "Button"
+      ]
+    },
+    {
+      "name": "SuInnerNavbar",
+      "kind": "design-system",
+      "source": "sheep/ui/su-inner-navbar/su-inner-navbar.vue",
+      "concept": "navbar",
+      "props": [
+        "zIndex",
+        "title",
+        "bg",
+        "alway",
+        "opacity",
+        "noFixed",
+        "ui",
+        "capsule",
+        "stopBack",
+        "placeholder",
+        "bgStyles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-layout/s-layout.vue"
+      ],
+      "example": "\u003csu-inner-navbar v-if=\"navbar === 'inner'\" :title=\"title\" /\u003e",
+      "exampleAt": "sheep/components/s-layout/s-layout.vue:28",
+      "builtOn": [
+        "SuFixed",
+        "SuStatusBar"
+      ]
+    },
+    {
+      "name": "SuNavbar",
+      "kind": "design-system",
+      "source": "sheep/ui/su-navbar/su-navbar.vue",
+      "concept": "navbar",
+      "props": [
+        "dark",
+        "modelValue",
+        "title",
+        "titleAlign",
+        "rightText",
+        "leftIcon",
+        "rightIcon",
+        "fixed",
+        "placeholder",
+        "color",
+        "backgroundColor",
+        "opacity",
+        "opacityBgUi",
+        "statusBar",
+        "shadow",
+        "border",
+        "height",
+        "leftWidth",
+        "rightWidth",
+        "tools",
+        "defaultSearch"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-layout/s-layout.vue"
+      ],
+      "example": "\u003csu-navbar v-if=\"navbar === 'normal'\" :title=\"title\" statusBar :color=\"color\" :tools=\"tools\" :opacityBgUi=\"opacityBgUi\" :backgroundColor=\"na…",
+      "exampleAt": "sheep/components/s-layout/s-layout.vue:8",
+      "attrs": {
+        "statusbar": 1
+      },
+      "builtOn": [
+        "SuStatusBar",
+        "SearchBar"
+      ]
+    },
+    {
+      "name": "SuNoticeBar",
+      "kind": "design-system",
+      "source": "sheep/ui/su-notice-bar/su-notice-bar.vue",
+      "concept": "notice",
+      "props": [
+        "text",
+        "moreText",
+        "backgroundColor",
+        "speed",
+        "color",
+        "moreColor",
+        "single",
+        "scrollable",
+        "showIcon",
+        "showGetMore",
+        "showClose"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-notice-block/s-notice-block.vue"
+      ],
+      "example": "\u003csu-notice-bar style=\"flex: 1\" :showIcon=\"false\" scrollable single :text=\"data.contents[0].text\" :speed=\"50\" :color=\"data.textColor\" @tap=\"s…",
+      "exampleAt": "sheep/components/s-notice-block/s-notice-block.vue:5",
+      "attrs": {
+        "scrollable": 1,
+        "showicon=\"false\"": 1,
+        "single": 1,
+        "speed=\"50\"": 1
+      },
+      "builtOn": [
+        "Icons"
+      ]
+    },
+    {
+      "name": "SuProgress",
+      "kind": "design-system",
+      "source": "sheep/ui/su-progress/su-progress.vue",
+      "concept": "loading",
+      "usage": 1,
+      "usageFiles": [
+        "pages/activity/seckill/list.vue"
+      ],
+      "example": "\u003csu-progress :percentage=\"activity.percent\" strokeWidth=\"10\" textInside isAnimate /\u003e",
+      "exampleAt": "pages/activity/seckill/list.vue:100",
+      "attrs": {
+        "isanimate": 1,
+        "strokewidth=\"10\"": 1,
+        "textinside": 1
+      }
+    },
+    {
+      "name": "SuRegionPicker",
+      "kind": "design-system",
+      "source": "sheep/ui/su-region-picker/su-region-picker.vue",
+      "props": [
+        "show",
+        "cancelColor",
+        "confirmColor",
+        "cancelText",
+        "confirmText"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/user/address/edit.vue"
+      ],
+      "example": "\u003csu-region-picker :show=\"state.showRegion\" @cancel=\"state.showRegion = false\" @confirm=\"onRegionConfirm\" /\u003e",
+      "exampleAt": "pages/user/address/edit.vue:87",
+      "attrs": {
+        "false": 1
+      },
+      "builtOn": [
+        "SuPopup",
+        "SuToolbar"
+      ]
+    },
+    {
+      "name": "SuSubline",
+      "kind": "design-system",
+      "source": "sheep/ui/su-subline/su-subline.vue",
+      "concept": "divider",
+      "props": [
+        "lineColor",
+        "borderType",
+        "lineWidth",
+        "height",
+        "paddingType"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-line-block/s-line-block.vue"
+      ],
+      "example": "\u003csu-subline v-bind=\"data\"\u003e\u003c/su-subline\u003e",
+      "exampleAt": "sheep/components/s-line-block/s-line-block.vue:3"
+    },
+    {
+      "name": "SuSwitch",
+      "kind": "design-system",
+      "source": "sheep/ui/su-switch/su-switch.vue",
+      "concept": "switch",
+      "props": [
+        "modelValue",
+        "ui",
+        "bg",
+        "text",
+        "size",
+        "disabled"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/user/address/edit.vue"
+      ],
+      "example": "\u003csu-switch style=\"transform: scale(0.8)\" v-model=\"state.model.defaultStatus\" /\u003e",
+      "exampleAt": "pages/user/address/edit.vue:72"
+    },
+    {
+      "name": "SuTabbar",
+      "kind": "design-system",
+      "source": "sheep/ui/su-tabbar/su-tabbar.vue",
+      "concept": "tabbar",
+      "props": [
+        "customStyle",
+        "customClass",
+        "midTabBar"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-tabbar/s-tabbar.vue"
+      ],
+      "example": "\u003csu-tabbar :value=\"path\" :fixed=\"true\" :placeholder=\"true\" :safeAreaInsetBottom=\"true\" :inactiveColor=\"tabbar.style.color\" :activeColor=\"tab…",
+      "exampleAt": "sheep/components/s-tabbar/s-tabbar.vue:3",
+      "attrs": {
+        "fixed=\"true\"": 1,
+        "safeareainsetbottom=\"true\"": 1
+      }
+    },
+    {
+      "name": "SuTabbarItem",
+      "kind": "design-system",
+      "source": "sheep/ui/su-tabbar-item/su-tabbar-item.vue",
+      "concept": "tabbar",
+      "props": [
+        "customStyle",
+        "customClass",
+        "isCenter",
+        "centerImage"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-tabbar/s-tabbar.vue"
+      ],
+      "example": "\u003csu-tabbar-item v-for=\"(item, index) in tabbar.items\" :key=\"item.text\" :text=\"item.text\" :name=\"item.url\" :badge=\"item.badge\" :dot=\"item.dot…",
+      "exampleAt": "sheep/components/s-tabbar/s-tabbar.vue:13",
+      "builtOn": [
+        "Image",
+        "Badge"
+      ]
+    },
+    {
+      "name": "SuToolbar",
+      "kind": "design-system",
+      "source": "sheep/ui/su-toolbar/su-toolbar.vue",
+      "concept": "navbar",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/ui/su-region-picker/su-region-picker.vue"
+      ],
+      "example": "\u003csu-toolbar :cancelColor=\"cancelColor\" :confirmColor=\"confirmColor\" :cancelText=\"cancelText\" :confirmText=\"confirmText\" title=\"选择区域\"…",
+      "exampleAt": "sheep/ui/su-region-picker/su-region-picker.vue:5"
+    },
+    {
+      "name": "SuDataCheckbox",
+      "kind": "design-system",
+      "source": "sheep/ui/su-data-checkbox/su-data-checkbox.vue",
+      "concept": "checkbox",
+      "props": [
+        "mode",
+        "multiple",
+        "value",
+        "localdata",
+        "min",
+        "max",
+        "wrap",
+        "icon",
+        "selectedColor",
+        "selectedTextColor",
+        "emptyText",
+        "disabled",
+        "map"
+      ],
+      "usage": 0,
+      "extends": "Checkbox",
+      "builtOn": [
+        "LoadMore",
+        "Checkbox",
+        "Radio"
+      ]
+    },
+    {
+      "name": "SuDialog",
+      "kind": "design-system",
+      "source": "sheep/ui/su-dialog/su-dialog.vue",
+      "concept": "dialog",
+      "props": [
+        "show",
+        "value",
+        "placeholder",
+        "type",
+        "mode",
+        "title",
+        "content",
+        "beforeClose",
+        "cancelText",
+        "confirmText"
+      ],
+      "usage": 0,
+      "builtOn": [
+        "SuPopup",
+        "Input"
+      ]
+    },
+    {
+      "name": "SuPopover",
+      "kind": "design-system",
+      "source": "sheep/ui/su-popover/su-popover.vue",
+      "concept": "popup",
+      "props": [
+        "ui",
+        "tips",
+        "bg",
+        "mask",
+        "show",
+        "hover",
+        "index",
+        "time",
+        "bottom",
+        "isChange"
+      ],
+      "usage": 0
+    },
+    {
+      "name": "SuTab",
+      "kind": "design-system",
+      "source": "sheep/ui/su-tab/su-tab.vue",
+      "concept": "tabs",
+      "props": [
+        "modelValue",
+        "ui",
+        "bg",
+        "tab",
+        "tpl",
+        "mark",
+        "align",
+        "curColor",
+        "defaultColor",
+        "scroll",
+        "inline",
+        "titleStyle",
+        "activeBg",
+        "activeColor",
+        "color"
+      ],
+      "usage": 0,
+      "builtOn": [
+        "ScrollView",
+        "SuTabItem"
+      ]
+    },
+    {
+      "name": "SuTabsItem",
+      "kind": "design-system",
+      "source": "sheep/ui/su-tabs-item/su-tabs-item.vue",
+      "concept": "tabs",
+      "usage": 0
+    },
+    {
+      "name": "SuTimeLine",
+      "kind": "design-system",
+      "source": "sheep/ui/su-time-line/su-time-line.vue",
+      "concept": "divider",
+      "usage": 0
+    },
+    {
+      "name": "SuTimelineItem",
+      "kind": "design-system",
+      "source": "sheep/ui/su-timeline-item/su-timeline-item.vue",
+      "concept": "cell",
+      "usage": 0
+    },
+    {
+      "name": "Button",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "button",
+      "usage": 186,
+      "usageFiles": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/list.vue",
+        "pages/activity/groupon/order.vue",
+        "pages/activity/index.vue",
+        "pages/activity/seckill/list.vue",
+        "pages/app/sign.vue",
+        "pages/chat/components/messageInput.vue",
+        "pages/commission/components/account-info.vue",
+        "pages/commission/components/account-type-select.vue",
+        "pages/commission/components/commission-auth.vue",
+        "pages/commission/goods.vue",
+        "pages/commission/wallet.vue",
+        "pages/commission/withdraw.vue",
+        "pages/coupon/detail.vue",
+        "pages/coupon/list.vue",
+        "pages/goods/comment/add.vue",
+        "pages/goods/components/detail/detail-activity-tip.vue",
+        "pages/goods/components/detail/detail-cell.vue",
+        "pages/goods/components/detail/detail-comment-card.vue",
+        "pages/goods/components/detail/detail-skeleton.vue",
+        "pages/goods/components/groupon/groupon-card-list.vue",
+        "pages/goods/groupon.vue",
+        "pages/goods/index.vue",
+        "pages/goods/list.vue",
+        "pages/goods/point.vue",
+        "pages/goods/seckill.vue",
+        "pages/index/cart.vue",
+        "pages/index/search.vue",
+        "pages/order/aftersale/apply.vue",
+        "pages/order/aftersale/detail.vue",
+        "pages/order/aftersale/list.vue",
+        "pages/order/aftersale/return-delivery.vue",
+        "pages/order/confirm.vue",
+        "pages/order/detail.vue",
+        "pages/order/list.vue",
+        "pages/pay/index.vue",
+        "pages/pay/recharge.vue",
+        "pages/pay/result.vue",
+        "pages/public/setting.vue",
+        "pages/user/address/edit.vue",
+        "pages/user/address/list.vue",
+        "pages/user/goods-collect.vue",
+        "pages/user/goods-log.vue",
+        "pages/user/info.vue",
+        "pages/user/wallet/money.vue",
+        "pages/user/wallet/score.vue",
+        "sheep/components/s-address-item/s-address-item.vue",
+        "sheep/components/s-auth-modal/components/account-login.vue",
+        "sheep/components/s-auth-modal/components/change-mobile.vue",
+        "sheep/components/s-auth-modal/components/change-password.vue",
+        "sheep/components/s-auth-modal/components/mp-authorization.vue",
+        "sheep/components/s-auth-modal/components/reset-password.vue",
+        "sheep/components/s-auth-modal/components/sms-login.vue",
+        "sheep/components/s-auth-modal/s-auth-modal.vue",
+        "sheep/components/s-coupon-block/s-coupon-block.vue",
+        "sheep/components/s-coupon-get/s-coupon-get.vue",
+        "sheep/components/s-coupon-select/s-coupon-select.vue",
+        "sheep/components/s-discount-list/s-discount-list.vue",
+        "sheep/components/s-empty/s-empty.vue",
+        "sheep/components/s-goods-card/s-goods-card.vue",
+        "sheep/components/s-groupon-block/s-groupon-block.vue",
+        "sheep/components/s-menu-tools/s-menu-tools.vue",
+        "sheep/components/s-point-block/s-point-block.vue",
+        "sheep/components/s-point-card/s-point-card.vue",
+        "sheep/components/s-search-block/s-search-block.vue",
+        "sheep/components/s-seckill-block/s-seckill-block.vue",
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/components/s-select-sku/s-select-sku.vue",
+        "sheep/components/s-share-modal/canvas-poster/index.vue",
+        "sheep/components/s-share-modal/s-share-modal.vue",
+        "sheep/components/s-uploader/s-uploader.vue",
+        "sheep/components/s-user-card/s-user-card.vue",
+        "sheep/ui/su-coupon/su-coupon.vue"
+      ],
+      "example": "\u003cbutton class=\"ss-reset-button order-btn\" v-if=\"state.data.orderId\" @tap=\"onDetail(state.data.orderId)\" \u003e",
+      "exampleAt": "pages/activity/groupon/detail.vue:137",
+      "attrs": {
+        "auto-login-b": 1,
+        "color": 1,
+        "data": 1,
+        "disabled": 5,
+        "false": 2,
+        "form-type=\"submit\"": 1,
+        "go": 1,
+        "isdisabled": 1,
+        "linear-gradient": 1,
+        "marginr": 1,
+        "open-type=\"chooseAvatar\"": 2,
+        "open-type=\"getPhoneNumber\"": 2,
+        "open-type=\"share\"": 1,
+        "or": 1,
+        "pay-btn": 1,
+        "record": 1,
+        "she": 1,
+        "sheep": 4,
+        "size=\"mini\"": 1,
+        "ss-font-28": 1,
+        "ss-res": 1,
+        "stat": 1,
+        "state": 13,
+        "timestatusenum": 2,
+        "true": 7,
+        "type": 1,
+        "type=\"primary\"": 1
+      }
+    },
+    {
+      "name": "Image",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "image",
+      "usage": 133,
+      "usageFiles": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/index.vue",
+        "pages/activity/seckill/list.vue",
+        "pages/chat/components/messageListItem.vue",
+        "pages/chat/components/toolsPopup.vue",
+        "pages/commission/commission-ranking.vue",
+        "pages/commission/components/account-type-select.vue",
+        "pages/commission/components/commission-auth.vue",
+        "pages/commission/components/commission-info.vue",
+        "pages/commission/components/commission-log.vue",
+        "pages/commission/components/commission-menu.vue",
+        "pages/commission/promoter.vue",
+        "pages/commission/team.vue",
+        "pages/coupon/detail.vue",
+        "pages/goods/components/detail/comment-item.vue",
+        "pages/goods/components/detail/detail-activity-tip.vue",
+        "pages/goods/components/detail/detail-tabbar.vue",
+        "pages/goods/components/groupon/groupon-card-list.vue",
+        "pages/goods/components/list/list-goods-card.vue",
+        "pages/goods/groupon.vue",
+        "pages/goods/index.vue",
+        "pages/goods/point.vue",
+        "pages/index/category.vue",
+        "pages/index/components/first-two.vue",
+        "pages/index/components/second-one.vue",
+        "pages/order/addressSelection.vue",
+        "pages/order/confirm.vue",
+        "pages/order/detail.vue",
+        "pages/order/express/log.vue",
+        "pages/order/pickUpVerify.vue",
+        "pages/pay/index.vue",
+        "pages/pay/result.vue",
+        "pages/public/setting.vue",
+        "pages/user/goods_details_store/index.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-address-item/s-address-item.vue",
+        "sheep/components/s-auth-modal/components/mp-authorization.vue",
+        "sheep/components/s-auth-modal/s-auth-modal.vue",
+        "sheep/components/s-coupon-card/s-coupon-card.vue",
+        "sheep/components/s-custom-navbar/components/navbar-item.vue",
+        "sheep/components/s-empty/s-empty.vue",
+        "sheep/components/s-goods-column/s-goods-column.vue",
+        "sheep/components/s-goods-item/s-goods-item.vue",
+        "sheep/components/s-hotzone-block/s-hotzone-block.vue",
+        "sheep/components/s-image-cube/s-image-cube.vue",
+        "sheep/components/s-live-card/s-live-card.vue",
+        "sheep/components/s-menu-button/s-menu-button.vue",
+        "sheep/components/s-menu-grid/s-menu-grid.vue",
+        "sheep/components/s-menu-list/s-menu-list.vue",
+        "sheep/components/s-menu-tools/s-menu-tools.vue",
+        "sheep/components/s-notice-block/s-notice-block.vue",
+        "sheep/components/s-order-card/s-order-card.vue",
+        "sheep/components/s-popup-image/s-popup-image.vue",
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/components/s-select-sku/s-select-sku.vue",
+        "sheep/components/s-share-modal/canvas-poster/index.vue",
+        "sheep/components/s-share-modal/s-share-modal.vue",
+        "sheep/components/s-tabbar/s-tabbar.vue",
+        "sheep/components/s-uploader/s-uploader.vue",
+        "sheep/components/s-uploader/upload-image.vue",
+        "sheep/components/s-user-card/s-user-card.vue",
+        "sheep/components/s-wallet-card/s-wallet-card.vue",
+        "sheep/ui/su-image/su-image.vue",
+        "sheep/ui/su-radio/su-radio.vue",
+        "sheep/ui/su-swiper/su-swiper.vue",
+        "sheep/ui/su-tabbar-item/su-tabbar-item.vue"
+      ],
+      "example": "\u003cimage :src=\"sheep.$url.cdn(state.data.headRecord.avatar) || sheep.$url.static('/static/img/shop/default_avatar.png')\" class=\"avatar-img\"\u003e\u003c/…",
+      "exampleAt": "pages/activity/groupon/detail.vue:101",
+      "attrs": {
+        "draggable=\"false\"": 1,
+        "height": 1,
+        "height=\"100%\"": 1,
+        "index": 1,
+        "islogin": 1,
+        "lazy-load": 1,
+        "mode": 1,
+        "mode=\"\"": 5,
+        "mode=\"aspectFill\"": 21,
+        "mode=\"aspectFit\"": 15,
+        "mode=\"heightFix\"": 1,
+        "mode=\"widthFix\"": 4,
+        "poster": 2,
+        "sheep": 5,
+        "size=\"20\"": 1,
+        "userinfo": 1,
+        "width": 1,
+        "width=\"100%\"": 1
+      }
+    },
+    {
+      "name": "Easyinput",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "input",
+      "usage": 31,
+      "usageFiles": [
+        "pages/commission/wallet.vue",
+        "pages/commission/withdraw.vue",
+        "pages/goods/comment/add.vue",
+        "pages/order/aftersale/apply.vue",
+        "pages/order/confirm.vue",
+        "pages/pay/recharge.vue",
+        "pages/user/address/edit.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-auth-modal/components/account-login.vue",
+        "sheep/components/s-auth-modal/components/change-mobile.vue",
+        "sheep/components/s-auth-modal/components/change-password.vue",
+        "sheep/components/s-auth-modal/components/mp-authorization.vue",
+        "sheep/components/s-auth-modal/components/reset-password.vue",
+        "sheep/components/s-auth-modal/components/sms-login.vue"
+      ],
+      "example": "\u003cuni-easyinput :inputBorder=\"false\" class=\"ss-flex-1 ss-p-l-10\" v-model=\"state.price\" type=\"number\" placeholder=\"请输入金额\" /\u003e",
+      "exampleAt": "pages/commission/wallet.vue:98",
+      "attrs": {
+        "autoheight": 2,
+        "di": 1,
+        "disablecolor": 1,
+        "disabled": 3,
+        "inputborder=\"false\"": 31,
+        "maxlength=\"120\"": 2,
+        "maxlength=\"20\"": 3,
+        "maxlength=\"4\"": 4,
+        "placeholdersty": 1,
+        "placeholderstyle": 3,
+        "suffixicon=\"right\"": 1,
+        "type=\"digit\"": 1,
+        "type=\"nickname\"": 2,
+        "type=\"number\"": 10,
+        "type=\"password\"": 3,
+        "type=\"textarea\"": 3
+      }
+    },
+    {
+      "name": "LoadMore",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "loading",
+      "usage": 25,
+      "usageFiles": [
+        "pages/activity/groupon/list.vue",
+        "pages/activity/groupon/order.vue",
+        "pages/activity/index.vue",
+        "pages/activity/point/list.vue",
+        "pages/activity/seckill/list.vue",
+        "pages/chat/components/select-popup.vue",
+        "pages/commission/commission-ranking.vue",
+        "pages/commission/components/commission-log.vue",
+        "pages/commission/goods.vue",
+        "pages/commission/order.vue",
+        "pages/commission/promoter.vue",
+        "pages/commission/wallet.vue",
+        "pages/coupon/detail.vue",
+        "pages/coupon/list.vue",
+        "pages/goods/comment/list.vue",
+        "pages/goods/list.vue",
+        "pages/index/category.vue",
+        "pages/order/aftersale/list.vue",
+        "pages/order/list.vue",
+        "pages/pay/recharge-log.vue",
+        "pages/user/goods-collect.vue",
+        "pages/user/goods-log.vue",
+        "pages/user/wallet/money.vue",
+        "pages/user/wallet/score.vue",
+        "sheep/ui/su-data-checkbox/su-data-checkbox.vue"
+      ],
+      "example": "\u003cuni-load-more v-if=\"state.pagination.total \u003e 0\" :status=\"state.loadStatus\" :content-text=\"{ contentdown: '上拉加载更多', }\" @tap=\"loa…",
+      "exampleAt": "pages/activity/groupon/list.vue:43",
+      "attrs": {
+        "color=\"#333333\"": 1,
+        "contentdown": 2,
+        "icon-type=\"auto\"": 1,
+        "iconsize=\"18\"": 1,
+        "icontype=\"snow\"": 1,
+        "status=\"loading\"": 1
+      }
+    },
+    {
+      "name": "ScrollView",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "usage": 23,
+      "usageFiles": [
+        "pages/activity/groupon/list.vue",
+        "pages/activity/point/list.vue",
+        "pages/activity/seckill/list.vue",
+        "pages/chat/components/messageList.vue",
+        "pages/chat/components/select-popup.vue",
+        "pages/commission/components/commission-log.vue",
+        "pages/goods/components/detail/comment-item.vue",
+        "pages/index/category.vue",
+        "sheep/components/s-activity-pop/s-activity-pop.vue",
+        "sheep/components/s-coupon-block/s-coupon-block.vue",
+        "sheep/components/s-coupon-get/s-coupon-get.vue",
+        "sheep/components/s-coupon-select/s-coupon-select.vue",
+        "sheep/components/s-discount-list/s-discount-list.vue",
+        "sheep/components/s-goods-scroll/s-goods-scroll.vue",
+        "sheep/components/s-goods-shelves/s-goods-shelves.vue",
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/components/s-select-sku/s-select-sku.vue",
+        "sheep/ui/su-tab/su-tab.vue",
+        "sheep/ui/su-tabs/su-tabs.vue"
+      ],
+      "example": "\u003cscroll-view class=\"scroll-box\" :style=\"{ height: pageHeight + 'rpx' }\" scroll-y=\"true\" :scroll-with-animation=\"false\" :enable-back-to-top=\"…",
+      "exampleAt": "pages/activity/groupon/list.vue:23",
+      "attrs": {
+        "enable-back-to-top=\"true\"": 5,
+        "enable-flex": 1,
+        "refresher-enabled=\"false\"": 1,
+        "scroll": 1,
+        "scroll-anchoring": 4,
+        "scroll-with-animation": 2,
+        "scroll-with-animation=\"false\"": 8,
+        "scroll-with-animation=\"true\"": 2,
+        "scroll-x": 5,
+        "scroll-x=\"true\"": 1,
+        "scroll-y": 8,
+        "scroll-y=\"true\"": 8,
+        "show-scrollbar=\"false\"": 1,
+        "white-sp": 1
+      }
+    },
+    {
+      "name": "FormsItem",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "cell",
+      "usage": 21,
+      "usageFiles": [
+        "pages/user/address/edit.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-auth-modal/components/account-login.vue",
+        "sheep/components/s-auth-modal/components/change-mobile.vue",
+        "sheep/components/s-auth-modal/components/change-password.vue",
+        "sheep/components/s-auth-modal/components/mp-authorization.vue",
+        "sheep/components/s-auth-modal/components/reset-password.vue",
+        "sheep/components/s-auth-modal/components/sms-login.vue"
+      ],
+      "example": "\u003cuni-forms-item name=\"name\" label=\"收货人\" class=\"form-item\"\u003e",
+      "exampleAt": "pages/user/address/edit.vue:15",
+      "attrs": {
+        "true": 1
+      }
+    },
+    {
+      "name": "Radio",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "radio",
+      "usage": 15,
+      "usageFiles": [
+        "pages/commission/components/account-type-select.vue",
+        "pages/index/cart.vue",
+        "pages/order/aftersale/apply.vue",
+        "pages/pay/index.vue",
+        "pages/user/goods-collect.vue",
+        "pages/user/goods-log.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-auth-modal/s-auth-modal.vue",
+        "sheep/components/s-coupon-select/s-coupon-select.vue",
+        "sheep/ui/su-data-checkbox/su-data-checkbox.vue"
+      ],
+      "example": "\u003cradio :value=\"item.value\" color=\"var(--ui-BG-Main)\" :checked=\"item.value === state.currentValue\" :disabled=\"!methods.includes(parseInt(item…",
+      "exampleAt": "pages/commission/components/account-type-select.vue:19",
+      "attrs": {
+        "color=\"#ff4d4f\"": 1,
+        "color=\"var(--ui-BG-Main)\"": 13,
+        "hidden": 1,
+        "ite": 1
+      }
+    },
+    {
+      "name": "Icons",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "icon",
+      "usage": 10,
+      "usageFiles": [
+        "pages/chat/components/optimize-input.vue",
+        "pages/commission/components/account-info.vue",
+        "pages/user/address/edit.vue",
+        "sheep/ui/su-notice-bar/su-notice-bar.vue",
+        "sheep/ui/su-popup/su-popup.vue"
+      ],
+      "example": "\u003cuni-icons v-if=\"prefixIcon\" class=\"content-clear-icon\" :type=\"prefixIcon\" color=\"#c0c4cc\" @click=\"onClickIcon('prefix')\" \u003e",
+      "exampleAt": "pages/chat/components/optimize-input.vue:20",
+      "attrs": {
+        "color=\"#A57A55\"": 1,
+        "color=\"#F6F6F6\"": 1,
+        "color=\"#c0c4cc\"": 2,
+        "size=\"16\"": 2,
+        "size=\"20\"": 1,
+        "size=\"22\"": 1,
+        "size=\"32\"": 1,
+        "type=\"clear\"": 1,
+        "type=\"closeempty\"": 2,
+        "type=\"right\"": 2,
+        "type=\"sound\"": 1
+      }
+    },
+    {
+      "name": "Forms",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "usage": 9,
+      "usageFiles": [
+        "pages/order/aftersale/apply.vue",
+        "pages/user/address/edit.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-auth-modal/components/account-login.vue",
+        "sheep/components/s-auth-modal/components/change-mobile.vue",
+        "sheep/components/s-auth-modal/components/change-password.vue",
+        "sheep/components/s-auth-modal/components/mp-authorization.vue",
+        "sheep/components/s-auth-modal/components/reset-password.vue",
+        "sheep/components/s-auth-modal/components/sms-login.vue"
+      ],
+      "example": "\u003cuni-forms ref=\"form\" v-model=\"formData\" :rules=\"rules\" label-position=\"top\"\u003e",
+      "exampleAt": "pages/order/aftersale/apply.vue:15",
+      "attrs": {
+        "border": 2,
+        "label-position=\"top\"": 1,
+        "labelalign=\"center\"": 6,
+        "labelalign=\"left\"": 1,
+        "labelposition=\"left\"": 1,
+        "labelwidth=\"140\"": 6,
+        "labelwidth=\"160\"": 1,
+        "validatetrigger=\"bind\"": 7
+      }
+    },
+    {
+      "name": "ListItem",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "cell",
+      "usage": 6,
+      "usageFiles": [
+        "pages/public/setting.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-menu-list/s-menu-list.vue"
+      ],
+      "example": "\u003cuni-list-item title=\"当前版本\" :rightText=\"appInfo.version\" showArrow clickable :border=\"false\" class=\"list-border\" @tap=\"onCheckUpdate…",
+      "exampleAt": "pages/public/setting.vue:14",
+      "attrs": {
+        "border=\"false\"": 4,
+        "clickable": 4,
+        "righttext=\"\"": 1,
+        "sheep": 1,
+        "showarrow": 6
+      }
+    },
+    {
+      "name": "Input",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "input",
+      "usage": 5,
+      "usageFiles": [
+        "pages/chat/components/optimize-input.vue",
+        "pages/commission/team.vue",
+        "pages/order/aftersale/return-delivery.vue",
+        "sheep/ui/su-dialog/su-dialog.vue",
+        "sheep/ui/su-number-box/su-number-box.vue"
+      ],
+      "example": "\u003cinput placeholder=\"点击搜索会员名称\" v-model=\"state.nickname\" confirm-type=\"search\" name=\"search\" @confirm=\"submitForm\" /\u003e",
+      "exampleAt": "pages/commission/team.vue:62",
+      "attrs": {
+        "color": 1,
+        "confirm-type=\"search\"": 1,
+        "placeholder-class=\"'placeholder'\"": 1,
+        "type=\"number\"": 1,
+        "type=\"text\"": 1
+      }
+    },
+    {
+      "name": "Swiper",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "carousel",
+      "usage": 5,
+      "usageFiles": [
+        "pages/activity/seckill/list.vue",
+        "pages/chat/components/toolsPopup.vue",
+        "pages/order/express/log.vue",
+        "sheep/components/s-menu-button/s-menu-button.vue",
+        "sheep/ui/su-swiper/su-swiper.vue"
+      ],
+      "example": "\u003cswiper indicator-dots=\"true\" autoplay=\"true\" :circular=\"true\" interval=\"3000\" duration=\"1500\" indicator-color=\"rgba(255,255,255,0.6)\" indic…",
+      "exampleAt": "pages/activity/seckill/list.vue:11",
+      "wrappedBy": "SuSwiper",
+      "attrs": {
+        "autoplay=\"true\"": 1,
+        "circular": 1,
+        "circular=\"true\"": 1,
+        "duration=\"1500\"": 1,
+        "indic": 1,
+        "indicator-active-color=\"#7063D2\"": 1,
+        "indicator-dots=\"true\"": 2,
+        "interval=\"3000\"": 1
+      }
+    },
+    {
+      "name": "SearchBar",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "search",
+      "usage": 4,
+      "usageFiles": [
+        "pages/goods/components/list/list-navbar.vue",
+        "pages/index/search.vue",
+        "sheep/components/s-search-block/s-search-block.vue",
+        "sheep/ui/su-navbar/su-navbar.vue"
+      ],
+      "example": "\u003cuni-search-bar class=\"ss-flex-1\" radius=\"33\" :placeholder=\"placeholder\" cancelButton=\"none\" :focus=\"true\" v-model=\"state.searchVal\" @confir…",
+      "exampleAt": "pages/goods/components/list/list-navbar.vue:29",
+      "attrs": {
+        "cancelbutton=\"none\"": 4,
+        "clearbutton": 1,
+        "focus=\"true\"": 2,
+        "radius=\"20\"": 1,
+        "radius=\"33\"": 2
+      }
+    },
+    {
+      "name": "Checkbox",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "checkbox",
+      "usage": 3,
+      "usageFiles": [
+        "pages/goods/comment/add.vue",
+        "pages/order/confirm.vue",
+        "sheep/ui/su-data-checkbox/su-data-checkbox.vue"
+      ],
+      "example": "\u003ccheckbox value=\"anonymousChecked\" /\u003e",
+      "exampleAt": "pages/goods/comment/add.vue:52",
+      "attrs": {
+        "hidden": 1
+      }
+    },
+    {
+      "name": "DatetimePicker",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "usage": 3,
+      "usageFiles": [
+        "pages/commission/wallet.vue",
+        "pages/user/wallet/money.vue",
+        "pages/user/wallet/score.vue"
+      ],
+      "example": "\u003cuni-datetime-picker v-model=\"state.date\" type=\"daterange\" @change=\"onChangeTime\" :end=\"state.today\" \u003e",
+      "exampleAt": "pages/commission/wallet.vue:54",
+      "attrs": {
+        "type=\"daterange\"": 3
+      }
+    },
+    {
+      "name": "List",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "list",
+      "usage": 3,
+      "usageFiles": [
+        "pages/public/setting.vue",
+        "pages/user/info.vue",
+        "sheep/components/s-menu-list/s-menu-list.vue"
+      ],
+      "example": "\u003cuni-list :border=\"false\"\u003e",
+      "exampleAt": "pages/public/setting.vue:13",
+      "attrs": {
+        "border=\"false\"": 1,
+        "border=\"true\"": 1
+      }
+    },
+    {
+      "name": "Rate",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "usage": 3,
+      "usageFiles": [
+        "pages/goods/comment/add.vue",
+        "pages/goods/components/detail/comment-item.vue"
+      ],
+      "example": "\u003cuni-rate v-model=\"state.commentList[index].descriptionScores\" /\u003e",
+      "exampleAt": "pages/goods/comment/add.vue:22",
+      "attrs": {
+        "readonly=\"true\"": 1,
+        "size=\"18\"": 1
+      }
+    },
+    {
+      "name": "Badge",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "badge",
+      "usage": 2,
+      "usageFiles": [
+        "sheep/components/s-order-card/s-order-card.vue",
+        "sheep/ui/su-tabbar-item/su-tabbar-item.vue"
+      ],
+      "example": "\u003cuni-badge class=\"uni-badge-left-margin\" :text=\"numData.orderCount[item.count]\" absolute=\"rightTop\" size=\"small\" \u003e",
+      "exampleAt": "sheep/components/s-order-card/s-order-card.vue:10",
+      "attrs": {
+        "absolute=\"rightTop\"": 2,
+        "size=\"small\"": 2
+      }
+    },
+    {
+      "name": "Collapse",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "usage": 2,
+      "usageFiles": [
+        "pages/coupon/detail.vue",
+        "pages/public/faq.vue"
+      ],
+      "example": "\u003cuni-collapse\u003e",
+      "exampleAt": "pages/coupon/detail.vue:60"
+    },
+    {
+      "name": "CollapseItem",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "cell",
+      "usage": 2,
+      "usageFiles": [
+        "pages/coupon/detail.vue",
+        "pages/public/faq.vue"
+      ],
+      "example": "\u003cuni-collapse-item title=\"优惠券说明\" v-if=\"state.coupon.description\"\u003e",
+      "exampleAt": "pages/coupon/detail.vue:61"
+    },
+    {
+      "name": "Picker",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "usage": 2,
+      "usageFiles": [
+        "pages/commission/withdraw.vue",
+        "pages/order/aftersale/return-delivery.vue"
+      ],
+      "example": "\u003cpicker @change=\"bankChange\" :value=\"state.bankListSelectedIndex\" :range=\"state.bankList\" range-key=\"label\" style=\"width: 100%\" \u003e",
+      "exampleAt": "pages/commission/withdraw.vue:109",
+      "attrs": {
+        "mode=\"'selector'\"": 1,
+        "range-key=\"label\"": 1,
+        "range-key=\"name\"": 1
+      }
+    },
+    {
+      "name": "Transition",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "usage": 2,
+      "usageFiles": [
+        "sheep/ui/su-popup/su-popup.vue"
+      ],
+      "example": "\u003cuni-transition key=\"1\" v-if=\"maskShow\" name=\"mask\" mode-class=\"fade\" :styles=\"maskClass\" :duration=\"duration\" :show=\"showTrans\" @click=\"onT…",
+      "exampleAt": "sheep/ui/su-popup/su-popup.vue:10",
+      "attrs": {
+        "mode-class=\"fade\"": 1
+      }
+    },
+    {
+      "name": "Fab",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-float-menu/s-float-menu.vue"
+      ],
+      "example": "\u003cuni-fab ref=\"fabRef\" horizontal=\"right\" vertical=\"bottom\" :direction=\"state.direction\" :pattern=\"state.pattern\" :content=\"state.content\" @t…",
+      "exampleAt": "sheep/components/s-float-menu/s-float-menu.vue:6",
+      "attrs": {
+        "horizontal=\"right\"": 1,
+        "vertical=\"bottom\"": 1
+      }
+    },
+    {
+      "name": "Grid",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-menu-grid/s-menu-grid.vue"
+      ],
+      "example": "\u003cuni-grid :showBorder=\"Boolean(data.border)\" :column=\"data.column\"\u003e",
+      "exampleAt": "sheep/components/s-menu-grid/s-menu-grid.vue:4"
+    },
+    {
+      "name": "GridItem",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "cell",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-menu-grid/s-menu-grid.vue"
+      ],
+      "example": "\u003cuni-grid-item v-for=\"(item, index) in data.list\" :key=\"index\" \u003e",
+      "exampleAt": "sheep/components/s-menu-grid/s-menu-grid.vue:5"
+    },
+    {
+      "name": "Progress",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "loading",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-uploader/upload-file.vue"
+      ],
+      "example": "\u003cprogress class=\"file-picker__progress-item\" :percent=\"item.progress === -1 ? 0 : item.progress\" stroke-width=\"4\" :backgroundColor=\"item.err…",
+      "exampleAt": "sheep/components/s-uploader/upload-file.vue:34",
+      "attrs": {
+        "stroke-width=\"4\"": 1
+      }
+    },
+    {
+      "name": "SwiperDot",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "carousel",
+      "usage": 1,
+      "usageFiles": [
+        "pages/order/express/log.vue"
+      ],
+      "example": "\u003cuni-swiper-dot :info=\"goodsImages\" :current=\"state.current\" mode=\"round\"\u003e",
+      "exampleAt": "pages/order/express/log.vue:7",
+      "attrs": {
+        "mode=\"round\"": 1
+      }
+    },
+    {
+      "name": "Tag",
+      "kind": "ui-lib",
+      "source": "uni-ui",
+      "concept": "tag",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-address-item/s-address-item.vue"
+      ],
+      "example": "\u003cuni-tag class=\"ss-m-r-10\" size=\"small\" custom-style=\"background-color: var(--ui-BG-Main); border-color: var(--ui-BG-Main); color: #fff;\" v-…",
+      "exampleAt": "sheep/components/s-address-item/s-address-item.vue:9",
+      "attrs": {
+        "size=\"small\"": 1
+      }
+    },
+    {
+      "name": "Textarea",
+      "kind": "ui-lib",
+      "source": "uni-app 内置组件",
+      "concept": "input",
+      "usage": 1,
+      "usageFiles": [
+        "pages/chat/components/optimize-input.vue"
+      ],
+      "example": "\u003ctextarea v-if=\"type === 'textarea'\" class=\"uni-easyinput__content-textarea\" :class=\"{ 'input-padding': inputBorder }\" :name=\"name\" :value=\"…",
+      "exampleAt": "pages/chat/components/optimize-input.vue:27"
+    },
+    {
+      "name": "SLayout",
+      "kind": "business",
+      "source": "sheep/components/s-layout/s-layout.vue",
+      "props": [
+        "title",
+        "navbar",
+        "opacityBgUi",
+        "navbarBackgroundColor",
+        "color",
+        "tools",
+        "keyword",
+        "navbarStyle",
+        "styleType",
+        "src",
+        "list",
+        "showType",
+        "alwaysShow"
+      ],
+      "usage": 55,
+      "usageFiles": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/list.vue",
+        "pages/activity/groupon/order.vue",
+        "pages/activity/index.vue",
+        "pages/activity/point/list.vue",
+        "pages/activity/seckill/list.vue",
+        "pages/app/sign.vue",
+        "pages/chat/index.vue",
+        "pages/commission/commission-ranking.vue",
+        "pages/commission/goods.vue",
+        "pages/commission/index.vue",
+        "pages/commission/order.vue",
+        "pages/commission/promoter.vue",
+        "pages/commission/team.vue",
+        "pages/commission/wallet.vue",
+        "pages/commission/withdraw.vue",
+        "pages/coupon/detail.vue",
+        "pages/coupon/list.vue",
+        "pages/goods/comment/add.vue",
+        "pages/goods/comment/list.vue",
+        "pages/goods/groupon.vue",
+        "pages/goods/index.vue",
+        "pages/goods/list.vue",
+        "pages/goods/point.vue",
+        "pages/goods/seckill.vue",
+        "pages/index/cart.vue",
+        "pages/index/category.vue",
+        "pages/index/index.vue",
+        "pages/index/page.vue",
+        "pages/index/search.vue",
+        "pages/index/user.vue",
+        "pages/order/aftersale/apply.vue",
+        "pages/order/aftersale/detail.vue",
+        "pages/order/aftersale/list.vue",
+        "pages/order/aftersale/log.vue",
+        "pages/order/aftersale/return-delivery.vue",
+        "pages/order/confirm.vue",
+        "pages/order/detail.vue",
+        "pages/order/express/log.vue",
+        "pages/order/list.vue",
+        "pages/pay/index.vue",
+        "pages/pay/recharge-log.vue",
+        "pages/pay/recharge.vue",
+        "pages/pay/result.vue",
+        "pages/public/faq.vue",
+        "pages/public/richtext.vue",
+        "pages/public/setting.vue",
+        "pages/user/address/edit.vue",
+        "pages/user/address/list.vue",
+        "pages/user/goods-collect.vue",
+        "pages/user/goods-log.vue",
+        "pages/user/goods_details_store/index.vue",
+        "pages/user/info.vue",
+        "pages/user/wallet/money.vue",
+        "pages/user/wallet/score.vue"
+      ],
+      "example": "\u003cs-layout title=\"拼团详情\" class=\"detail-wrap\" :navbar=\"state.data \u0026\u0026 !state.loading ? 'inner' : 'normal'\" :onShareAppMessage=\"shareInfo…",
+      "exampleAt": "pages/activity/groupon/detail.vue:3",
+      "attrs": {
+        "leftwidth=\"0\"": 2,
+        "navbar=\"custom\"": 3,
+        "navbar=\"goods\"": 4,
+        "navbar=\"inner\"": 10,
+        "navbar=\"normal\"": 2,
+        "rightwidth=\"0\"": 2,
+        "showleftbutton": 1,
+        "tabbar=\"/pages/index/cart\"": 1,
+        "tabbar=\"/pages/index/index\"": 1,
+        "tabbar=\"/pages/index/user\"": 1,
+        "tools=\"search\"": 1
+      },
+      "builtOn": [
+        "SuNavbar",
+        "SCustomNavbar",
+        "SuInnerNavbar",
+        "STabbar",
+        "SAuthModal",
+        "SShareModal",
+        "SMenuTools"
+      ]
+    },
+    {
+      "name": "SGoodsColumn",
+      "kind": "business",
+      "source": "sheep/components/s-goods-column/s-goods-column.vue",
+      "concept": "goods",
+      "props": [
+        "goodsFields",
+        "price",
+        "show",
+        "stock",
+        "name",
+        "introduction",
+        "marketPrice",
+        "salesCount",
+        "tagStyle"
+      ],
+      "usage": 34,
+      "usageFiles": [
+        "pages/activity/groupon/list.vue",
+        "pages/activity/index.vue",
+        "pages/activity/seckill/list.vue",
+        "pages/coupon/detail.vue",
+        "pages/goods/list.vue",
+        "pages/index/components/first-one.vue",
+        "sheep/components/s-goods-card/s-goods-card.vue",
+        "sheep/components/s-goods-scroll/s-goods-scroll.vue",
+        "sheep/components/s-goods-shelves/s-goods-shelves.vue",
+        "sheep/components/s-groupon-block/s-groupon-block.vue",
+        "sheep/components/s-point-block/s-point-block.vue",
+        "sheep/components/s-point-card/s-point-card.vue",
+        "sheep/components/s-seckill-block/s-seckill-block.vue"
+      ],
+      "example": "\u003cs-goods-column class=\"\" size=\"lg\" :data=\"item\" :grouponTag=\"true\" @click=\"sheep.$router.go('/pages/goods/groupon', { id: item.id })\" \u003e",
+      "exampleAt": "pages/activity/groupon/list.vue:31",
+      "attrs": {
+        "bottomradius=\"10\"": 3,
+        "groupontag=\"true\"": 1,
+        "item": 7,
+        "seckilltag=\"true\"": 1,
+        "size=\"lg\"": 10,
+        "size=\"md\"": 12,
+        "size=\"sl\"": 6,
+        "size=\"sm\"": 3,
+        "size=\"xs\"": 1,
+        "titl": 2,
+        "topradius=\"10\"": 3
+      },
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SEmpty",
+      "kind": "business",
+      "source": "sheep/components/s-empty/s-empty.vue",
+      "concept": "empty",
+      "props": [
+        "icon",
+        "text",
+        "showAction",
+        "actionText",
+        "actionUrl",
+        "paddingTop",
+        "buttonColor"
+      ],
+      "usage": 30,
+      "usageFiles": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/order.vue",
+        "pages/activity/point/list.vue",
+        "pages/app/sign.vue",
+        "pages/commission/goods.vue",
+        "pages/commission/order.vue",
+        "pages/commission/wallet.vue",
+        "pages/coupon/detail.vue",
+        "pages/coupon/list.vue",
+        "pages/goods/comment/list.vue",
+        "pages/goods/components/detail/detail-comment-card.vue",
+        "pages/goods/groupon.vue",
+        "pages/goods/index.vue",
+        "pages/goods/list.vue",
+        "pages/goods/point.vue",
+        "pages/goods/seckill.vue",
+        "pages/index/cart.vue",
+        "pages/order/aftersale/detail.vue",
+        "pages/order/aftersale/list.vue",
+        "pages/order/list.vue",
+        "pages/pay/recharge-log.vue",
+        "pages/public/error.vue",
+        "pages/public/faq.vue",
+        "pages/user/address/list.vue",
+        "pages/user/goods-collect.vue",
+        "pages/user/goods-log.vue",
+        "pages/user/wallet/money.vue",
+        "pages/user/wallet/score.vue"
+      ],
+      "example": "\u003cs-empty v-if=\"!state.data \u0026\u0026 !state.loading\" icon=\"/static/goods-empty.png\" /\u003e",
+      "exampleAt": "pages/activity/groupon/detail.vue:198",
+      "attrs": {
+        "actiontext": 1,
+        "actiontext=\"重新加载\"": 1,
+        "actiontext=\"重新连接\"": 1,
+        "paddingtop=\"0\"": 2,
+        "showaction": 3
+      },
+      "builtOn": [
+        "Image",
+        "Button"
+      ]
+    },
+    {
+      "name": "SGoodsItem",
+      "kind": "business",
+      "source": "sheep/components/s-goods-item/s-goods-item.vue",
+      "concept": "goods",
+      "props": [
+        "img",
+        "title",
+        "titleWidth",
+        "skuText",
+        "price",
+        "priceColor",
+        "num",
+        "point",
+        "radius",
+        "marginBottom"
+      ],
+      "usage": 15,
+      "usageFiles": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/order.vue",
+        "pages/chat/components/goods.vue",
+        "pages/chat/components/order.vue",
+        "pages/commission/goods.vue",
+        "pages/goods/comment/add.vue",
+        "pages/index/cart.vue",
+        "pages/order/aftersale/apply.vue",
+        "pages/order/aftersale/detail.vue",
+        "pages/order/aftersale/list.vue",
+        "pages/order/confirm.vue",
+        "pages/order/detail.vue",
+        "pages/order/list.vue",
+        "pages/user/goods-collect.vue",
+        "pages/user/goods-log.vue"
+      ],
+      "example": "\u003cs-goods-item class=\"goods-box\" :img=\"state.data.headRecord.picUrl\" :title=\"state.data.headRecord.spuName\" :price=\"state.data.headRecord.com…",
+      "exampleAt": "pages/activity/groupon/detail.vue:22",
+      "attrs": {
+        "item": 2,
+        "pricecolor": 1,
+        "pricecolor=\"#FF3000\"": 2,
+        "prope": 1,
+        "property": 2,
+        "sheep": 1,
+        "size=\"lg\"": 1,
+        "titlewidth=\"400\"": 1,
+        "titlewidth=\"480\"": 1
+      },
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SCouponList",
+      "kind": "business",
+      "source": "sheep/components/s-coupon-list/s-coupon-list.vue",
+      "concept": "list",
+      "props": [
+        "data",
+        "disabled"
+      ],
+      "usage": 5,
+      "usageFiles": [
+        "pages/coupon/list.vue",
+        "sheep/components/s-coupon-get/s-coupon-get.vue",
+        "sheep/components/s-coupon-select/s-coupon-select.vue"
+      ],
+      "example": "\u003cs-coupon-list :data=\"item\" @tap=\"sheep.$router.go('/pages/coupon/detail', { id: item.id })\" \u003e",
+      "exampleAt": "pages/coupon/list.vue:20",
+      "attrs": {
+        "couponid": 1,
+        "disabled=\"false\"": 1,
+        "disabled=\"true\"": 1,
+        "item": 2,
+        "type=\"user\"": 3
+      }
+    },
+    {
+      "name": "SUploader",
+      "kind": "business",
+      "source": "sheep/components/s-uploader/s-uploader.vue",
+      "props": [
+        "modelValue",
+        "url",
+        "disabled",
+        "disablePreview",
+        "delIcon",
+        "title",
+        "listStyles",
+        "imageStyles",
+        "readonly",
+        "sizeType",
+        "driver",
+        "subtitle"
+      ],
+      "usage": 4,
+      "usageFiles": [
+        "pages/chat/components/toolsPopup.vue",
+        "pages/commission/withdraw.vue",
+        "pages/goods/comment/add.vue",
+        "pages/order/aftersale/apply.vue"
+      ],
+      "example": "\u003cs-uploader file-mediatype=\"image\" :imageStyles=\"{ width: 50, height: 50, border: false }\" @select=\"imageSelect({ type: 'image', data: $even…",
+      "exampleAt": "pages/chat/components/toolsPopup.vue:35",
+      "attrs": {
+        "data": 1,
+        "file-mediatype=\"image\"": 1,
+        "filemediatype=\"image\"": 3,
+        "heigh": 1,
+        "height": 2,
+        "limit=\"1\"": 1,
+        "limit=\"9\"": 2,
+        "mode=\"grid\"": 3,
+        "type": 1,
+        "width": 3
+      },
+      "builtOn": [
+        "UploadImage",
+        "Image",
+        "UploadFile",
+        "Button"
+      ]
+    },
+    {
+      "name": "SBlock",
+      "kind": "business",
+      "source": "sheep/components/s-block/s-block.vue",
+      "props": [
+        "styles"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "pages/index/index.vue",
+        "pages/index/page.vue",
+        "pages/index/user.vue"
+      ],
+      "example": "\u003cs-block v-for=\"(item, index) in template.components\" :key=\"index\" :styles=\"item.property.style\" \u003e",
+      "exampleAt": "pages/index/index.vue:12"
+    },
+    {
+      "name": "SBlockItem",
+      "kind": "business",
+      "source": "sheep/components/s-block-item/s-block-item.vue",
+      "concept": "cell",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "pages/index/index.vue",
+        "pages/index/page.vue",
+        "pages/index/user.vue"
+      ],
+      "example": "\u003cs-block-item :type=\"item.id\" :data=\"item.property\" :styles=\"item.property.style\" /\u003e",
+      "exampleAt": "pages/index/index.vue:17",
+      "builtOn": [
+        "SSearchBlock",
+        "SNoticeBlock",
+        "SMenuButton",
+        "SMenuList",
+        "SMenuGrid",
+        "SPopupImage",
+        "SFloatMenu",
+        "SImageBlock",
+        "SImageBanner",
+        "STitleBlock",
+        "SImageCube",
+        "SVideoBlock",
+        "SLineBlock",
+        "SHotzoneBlock",
+        "SGoodsCard",
+        "SGoodsShelves",
+        "SGrouponBlock",
+        "SSeckillBlock",
+        "SPointBlock",
+        "SLiveBlock",
+        "SCouponBlock",
+        "SRichtextBlock",
+        "SUserCard",
+        "SOrderCard",
+        "SWalletCard",
+        "SCouponCard"
+      ]
+    },
+    {
+      "name": "SCustomNavbar",
+      "kind": "business",
+      "source": "sheep/components/s-custom-navbar/s-custom-navbar.vue",
+      "concept": "navbar",
+      "props": [
+        "data"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "sheep/components/s-layout/s-layout.vue"
+      ],
+      "example": "\u003cs-custom-navbar v-else-if=\"navbar === 'custom' \u0026\u0026 navbarMode === 'normal'\" :data=\"navbarStyle\" :showLeftButton=\"showLeftButton\" /\u003e",
+      "exampleAt": "sheep/components/s-layout/s-layout.vue:21",
+      "builtOn": [
+        "Navbar",
+        "NavbarItem"
+      ]
+    },
+    {
+      "name": "SLiveCard",
+      "kind": "business",
+      "source": "sheep/components/s-live-card/s-live-card.vue",
+      "concept": "card",
+      "props": [
+        "goodsFields",
+        "tagStyle",
+        "data",
+        "size",
+        "background",
+        "topRadius",
+        "bottomRadius",
+        "titleColor",
+        "subTitleColor"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "sheep/components/s-live-block/s-live-block.vue"
+      ],
+      "example": "\u003cs-live-card class=\"goods-md-box\" size=\"md\" :goodsFields=\"goodsFields\" :data=\"item\" :titleColor=\"goodsFields.name?.color\" :subTitleColor=\"go…",
+      "exampleAt": "sheep/components/s-live-block/s-live-block.vue:18",
+      "attrs": {
+        "size=\"md\"": 1,
+        "size=\"sl\"": 1
+      },
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SSearchBlock",
+      "kind": "business",
+      "source": "sheep/components/s-search-block/s-search-block.vue",
+      "concept": "search",
+      "props": [
+        "data"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue",
+        "sheep/components/s-custom-navbar/components/navbar-item.vue"
+      ],
+      "example": "\u003cs-search-block v-if=\"type === 'SearchBar'\" :data=\"data\" :styles=\"styles\" :navbar=\"false\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:4",
+      "attrs": {
+        "navbar=\"false\"": 1
+      },
+      "extends": "SearchBar",
+      "builtOn": [
+        "SearchBar",
+        "Button"
+      ]
+    },
+    {
+      "name": "SSelectGrouponSku",
+      "kind": "business",
+      "source": "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue",
+      "concept": "goods",
+      "props": [
+        "show",
+        "goodsInfo",
+        "grouponAction",
+        "grouponNum"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "pages/activity/groupon/detail.vue",
+        "pages/goods/groupon.vue"
+      ],
+      "example": "\u003cs-select-groupon-sku :show=\"state.showSelectSku\" :goodsInfo=\"state.goodsInfo\" :grouponAction=\"state.grouponAction\" :grouponNum=\"state.group…",
+      "exampleAt": "pages/activity/groupon/detail.vue:186",
+      "builtOn": [
+        "SuPopup",
+        "Image",
+        "ScrollView",
+        "Button",
+        "SuNumberBox"
+      ]
+    },
+    {
+      "name": "SSelectSeckillSku",
+      "kind": "business",
+      "source": "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+      "concept": "goods",
+      "props": [
+        "modelValue",
+        "show",
+        "singleLimitCount"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "pages/goods/point.vue",
+        "pages/goods/seckill.vue"
+      ],
+      "example": "\u003cs-select-seckill-sku v-model=\"state.goodsInfo\" :show=\"state.showSelectSku\" :single-limit-count=\"activity.singleLimitCount\" @buy=\"onBuy\" @ch…",
+      "exampleAt": "pages/goods/point.vue:64",
+      "builtOn": [
+        "SuPopup",
+        "Image",
+        "ScrollView",
+        "Button",
+        "SuNumberBox"
+      ]
+    },
+    {
+      "name": "AccountLogin",
+      "kind": "business",
+      "source": "sheep/components/s-auth-modal/components/account-login.vue",
+      "props": [
+        "agreeStatus"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-auth-modal/s-auth-modal.vue"
+      ],
+      "example": "\u003caccount-login v-if=\"authType === 'accountLogin'\" :agreeStatus=\"state.protocol\" @onConfirm=\"onConfirm\" /\u003e",
+      "exampleAt": "sheep/components/s-auth-modal/s-auth-modal.vue:6",
+      "builtOn": [
+        "Forms",
+        "FormsItem",
+        "Easyinput",
+        "Button"
+      ]
+    },
+    {
+      "name": "CanvasPoster",
+      "kind": "business",
+      "source": "sheep/components/s-share-modal/canvas-poster/index.vue",
+      "props": [
+        "show",
+        "shareInfo"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-share-modal/s-share-modal.vue"
+      ],
+      "example": "\u003ccanvas-poster ref=\"SharePosterRef\" :show=\"state.showPosterModal\" :shareInfo=\"shareInfo\" @close=\"state.showPosterModal = false\" /\u003e",
+      "exampleAt": "sheep/components/s-share-modal/s-share-modal.vue:55",
+      "attrs": {
+        "false": 1
+      },
+      "builtOn": [
+        "SuPopup",
+        "Image",
+        "Button"
+      ]
+    },
+    {
+      "name": "ChangeMobile",
+      "kind": "business",
+      "source": "sheep/components/s-auth-modal/components/change-mobile.vue",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-auth-modal/s-auth-modal.vue"
+      ],
+      "example": "\u003cchange-mobile v-if=\"authType === 'changeMobile'\" /\u003e",
+      "exampleAt": "sheep/components/s-auth-modal/s-auth-modal.vue:23",
+      "builtOn": [
+        "Forms",
+        "FormsItem",
+        "Easyinput",
+        "Button"
+      ]
+    },
+    {
+      "name": "ChangePassword",
+      "kind": "business",
+      "source": "sheep/components/s-auth-modal/components/change-password.vue",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-auth-modal/s-auth-modal.vue"
+      ],
+      "example": "\u003cchangePassword v-if=\"authType === 'changePassword'\" /\u003e",
+      "exampleAt": "sheep/components/s-auth-modal/s-auth-modal.vue:26",
+      "builtOn": [
+        "Forms",
+        "FormsItem",
+        "Easyinput",
+        "Button"
+      ]
+    },
+    {
+      "name": "MpAuthorization",
+      "kind": "business",
+      "source": "sheep/components/s-auth-modal/components/mp-authorization.vue",
+      "props": [
+        "agreeStatus"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-auth-modal/s-auth-modal.vue"
+      ],
+      "example": "\u003cmp-authorization v-if=\"authType === 'mpAuthorization'\" /\u003e",
+      "exampleAt": "sheep/components/s-auth-modal/s-auth-modal.vue:29",
+      "builtOn": [
+        "Forms",
+        "FormsItem",
+        "Button",
+        "Image",
+        "Easyinput"
+      ]
+    },
+    {
+      "name": "Navbar",
+      "kind": "business",
+      "source": "sheep/components/s-custom-navbar/components/navbar.vue",
+      "concept": "navbar",
+      "props": [
+        "sticky",
+        "zIndex",
+        "back",
+        "backtext",
+        "bg",
+        "status",
+        "alway",
+        "opacity",
+        "opacityBg",
+        "noFixed",
+        "ui",
+        "capsule",
+        "stopBack",
+        "placeholder",
+        "bgStyles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-custom-navbar/s-custom-navbar.vue"
+      ],
+      "example": "\u003cnavbar :alway=\"isAlways\" :back=\"false\" bg=\"\" :placeholder=\"isPlaceholder\" :bgStyles=\"bgStyles\" :opacity=\"isOpacity\" :sticky=\"sticky\" \u003e",
+      "exampleAt": "sheep/components/s-custom-navbar/s-custom-navbar.vue:3",
+      "attrs": {
+        "back=\"false\"": 1,
+        "bg=\"\"": 1
+      },
+      "builtOn": [
+        "SuFixed",
+        "SuStatusBar"
+      ]
+    },
+    {
+      "name": "NavbarItem",
+      "kind": "business",
+      "source": "sheep/components/s-custom-navbar/components/navbar-item.vue",
+      "concept": "navbar",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-custom-navbar/s-custom-navbar.vue"
+      ],
+      "example": "\u003cnavbar-item :data=\"item\" :width=\"parseImgStyle(item).width\" /\u003e",
+      "exampleAt": "sheep/components/s-custom-navbar/s-custom-navbar.vue:33",
+      "builtOn": [
+        "Image",
+        "SSearchBlock"
+      ]
+    },
+    {
+      "name": "ResetPassword",
+      "kind": "business",
+      "source": "sheep/components/s-auth-modal/components/reset-password.vue",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-auth-modal/s-auth-modal.vue"
+      ],
+      "example": "\u003creset-password v-if=\"authType === 'resetPassword'\" /\u003e",
+      "exampleAt": "sheep/components/s-auth-modal/s-auth-modal.vue:20",
+      "builtOn": [
+        "Forms",
+        "FormsItem",
+        "Easyinput",
+        "Button"
+      ]
+    },
+    {
+      "name": "SActivityPop",
+      "kind": "business",
+      "source": "sheep/components/s-activity-pop/s-activity-pop.vue",
+      "props": [
+        "modelValue",
+        "show"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/goods/index.vue"
+      ],
+      "example": "\u003cs-activity-pop v-model=\"state\" :show=\"state.showActivityModel\" @close=\"state.showActivityModel = false\" @get=\"onTakeCoupon\" /\u003e",
+      "exampleAt": "pages/goods/index.vue:199",
+      "attrs": {
+        "false": 1
+      },
+      "builtOn": [
+        "SuPopup",
+        "ScrollView"
+      ]
+    },
+    {
+      "name": "SAddressItem",
+      "kind": "business",
+      "source": "sheep/components/s-address-item/s-address-item.vue",
+      "concept": "cell",
+      "props": [
+        "item",
+        "hasBorderBottom",
+        "defult"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/user/address/list.vue"
+      ],
+      "example": "\u003cs-address-item hasBorderBottom v-for=\"item in state.list\" :key=\"item.id\" :item=\"item\" @tap=\"onSelect(item)\" /\u003e",
+      "exampleAt": "pages/user/address/list.vue:5",
+      "attrs": {
+        "hasborderbottom": 1
+      },
+      "builtOn": [
+        "Tag",
+        "Button",
+        "Image"
+      ]
+    },
+    {
+      "name": "SAuthModal",
+      "kind": "business",
+      "source": "sheep/components/s-auth-modal/s-auth-modal.vue",
+      "concept": "dialog",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-layout/s-layout.vue"
+      ],
+      "example": "\u003cs-auth-modal /\u003e",
+      "exampleAt": "sheep/components/s-layout/s-layout.vue:51",
+      "builtOn": [
+        "SuPopup",
+        "AccountLogin",
+        "SmsLogin",
+        "ResetPassword",
+        "ChangeMobile",
+        "ChangePassword",
+        "MpAuthorization",
+        "Button",
+        "Image",
+        "Radio"
+      ]
+    },
+    {
+      "name": "SCountDown",
+      "kind": "business",
+      "source": "sheep/components/s-count-down/s-count-down.vue",
+      "concept": "countdown",
+      "props": [
+        "justifyLeft",
+        "dayText",
+        "hourText",
+        "minuteText",
+        "secondText",
+        "datatime",
+        "isDay",
+        "isCol",
+        "bgColor"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/goods/index.vue"
+      ],
+      "example": "\u003cs-count-down :tipText=\"' '\" :bgColor=\"bgColor\" :dayText=\"':'\" :hourText=\"':'\" :minuteText=\"':'\" :secondText=\"' '\" :datatime=\"state.settleme…",
+      "exampleAt": "pages/goods/index.vue:63",
+      "attrs": {
+        "daytext=\":\"": 1,
+        "hourtext=\":\"": 1,
+        "minutetext=\":\"": 1,
+        "secondtext=\" \"": 1,
+        "tiptext=\" \"": 1
+      }
+    },
+    {
+      "name": "SCouponBlock",
+      "kind": "business",
+      "source": "sheep/components/s-coupon-block/s-coupon-block.vue",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-coupon-block v-if=\"type === 'CouponCard'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:47",
+      "builtOn": [
+        "ScrollView",
+        "SuCoupon",
+        "Button"
+      ]
+    },
+    {
+      "name": "SCouponCard",
+      "kind": "business",
+      "source": "sheep/components/s-coupon-card/s-coupon-card.vue",
+      "concept": "card",
+      "props": [
+        "list",
+        "title",
+        "value",
+        "icon",
+        "path",
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-coupon-card v-if=\"type === 'UserCoupon'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:58",
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SCouponSelect",
+      "kind": "business",
+      "source": "sheep/components/s-coupon-select/s-coupon-select.vue",
+      "props": [
+        "modelValue",
+        "show"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/order/confirm.vue"
+      ],
+      "example": "\u003cs-coupon-select v-model=\"state.couponInfo\" :show=\"state.showCoupon\" @confirm=\"onSelectCoupon\" @close=\"state.showCoupon = false\" /\u003e",
+      "exampleAt": "pages/order/confirm.vue:190",
+      "attrs": {
+        "false": 1
+      },
+      "builtOn": [
+        "SuPopup",
+        "ScrollView",
+        "SCouponList",
+        "Radio",
+        "Button"
+      ]
+    },
+    {
+      "name": "SDiscountList",
+      "kind": "business",
+      "source": "sheep/components/s-discount-list/s-discount-list.vue",
+      "concept": "list",
+      "props": [
+        "promoInfo",
+        "goodsList",
+        "modelValue",
+        "show"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/order/confirm.vue"
+      ],
+      "example": "\u003cs-discount-list v-model=\"state.orderInfo\" :show=\"state.showDiscount\" @close=\"state.showDiscount = false\" /\u003e",
+      "exampleAt": "pages/order/confirm.vue:198",
+      "attrs": {
+        "false": 1
+      },
+      "builtOn": [
+        "SuPopup",
+        "ScrollView",
+        "Button"
+      ]
+    },
+    {
+      "name": "SFloatMenu",
+      "kind": "business",
+      "source": "sheep/components/s-float-menu/s-float-menu.vue",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-float-menu v-if=\"type === 'FloatingActionButton'\" :data=\"data\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:16",
+      "builtOn": [
+        "Fab"
+      ]
+    },
+    {
+      "name": "SGoodsCard",
+      "kind": "business",
+      "source": "sheep/components/s-goods-card/s-goods-card.vue",
+      "concept": "goods",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-goods-card v-if=\"type === 'ProductCard'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:34",
+      "builtOn": [
+        "SGoodsColumn",
+        "Button"
+      ]
+    },
+    {
+      "name": "SGoodsShelves",
+      "kind": "business",
+      "source": "sheep/components/s-goods-shelves/s-goods-shelves.vue",
+      "concept": "goods",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-goods-shelves v-if=\"type === 'ProductList'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:36",
+      "builtOn": [
+        "SGoodsColumn",
+        "ScrollView"
+      ]
+    },
+    {
+      "name": "SGrouponBlock",
+      "kind": "business",
+      "source": "sheep/components/s-groupon-block/s-groupon-block.vue",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-groupon-block v-if=\"type === 'PromotionCombination'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:39",
+      "builtOn": [
+        "SGoodsColumn",
+        "Button"
+      ]
+    },
+    {
+      "name": "SHotzoneBlock",
+      "kind": "business",
+      "source": "sheep/components/s-hotzone-block/s-hotzone-block.vue",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-hotzone-block v-if=\"type === 'HotZone'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:31",
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SImageBanner",
+      "kind": "business",
+      "source": "sheep/components/s-image-banner/s-image-banner.vue",
+      "concept": "carousel",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-image-banner v-if=\"type === 'Carousel'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:21",
+      "builtOn": [
+        "SuSwiper"
+      ]
+    },
+    {
+      "name": "SImageBlock",
+      "kind": "business",
+      "source": "sheep/components/s-image-block/s-image-block.vue",
+      "concept": "image",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-image-block v-if=\"type === 'ImageBar'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:19",
+      "builtOn": [
+        "SuImage"
+      ]
+    },
+    {
+      "name": "SImageCube",
+      "kind": "business",
+      "source": "sheep/components/s-image-cube/s-image-cube.vue",
+      "concept": "image",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-image-cube v-if=\"type === 'MagicCube'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:25",
+      "extends": "Image",
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SLineBlock",
+      "kind": "business",
+      "source": "sheep/components/s-line-block/s-line-block.vue",
+      "concept": "divider",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-line-block v-if=\"type === 'Divider'\" :data=\"data\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:29",
+      "builtOn": [
+        "SuSubline"
+      ]
+    },
+    {
+      "name": "SLiveBlock",
+      "kind": "business",
+      "source": "sheep/components/s-live-block/s-live-block.vue",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-live-block v-if=\"type === 'MpLive'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:45",
+      "builtOn": [
+        "SLiveCard"
+      ]
+    },
+    {
+      "name": "SMenuButton",
+      "kind": "business",
+      "source": "sheep/components/s-menu-button/s-menu-button.vue",
+      "concept": "button",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-menu-button v-if=\"type === 'MenuSwiper'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:8",
+      "builtOn": [
+        "Swiper",
+        "Image"
+      ]
+    },
+    {
+      "name": "SMenuGrid",
+      "kind": "business",
+      "source": "sheep/components/s-menu-grid/s-menu-grid.vue",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-menu-grid v-if=\"type === 'MenuGrid'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:12",
+      "builtOn": [
+        "Grid",
+        "GridItem",
+        "Image"
+      ]
+    },
+    {
+      "name": "SMenuList",
+      "kind": "business",
+      "source": "sheep/components/s-menu-list/s-menu-list.vue",
+      "concept": "list",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-menu-list v-if=\"type === 'MenuList'\" :data=\"data\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:10",
+      "extends": "List",
+      "builtOn": [
+        "List",
+        "ListItem",
+        "Image"
+      ]
+    },
+    {
+      "name": "SMenuTools",
+      "kind": "business",
+      "source": "sheep/components/s-menu-tools/s-menu-tools.vue",
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-layout/s-layout.vue"
+      ],
+      "example": "\u003cs-menu-tools /\u003e",
+      "exampleAt": "sheep/components/s-layout/s-layout.vue:55",
+      "builtOn": [
+        "SuPopup",
+        "SuStatusBar",
+        "Button",
+        "Image"
+      ]
+    },
+    {
+      "name": "SNoticeBlock",
+      "kind": "business",
+      "source": "sheep/components/s-notice-block/s-notice-block.vue",
+      "concept": "notice",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-notice-block v-if=\"type === 'NoticeBar'\" :data=\"data\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:6",
+      "builtOn": [
+        "Image",
+        "SuNoticeBar"
+      ]
+    },
+    {
+      "name": "SOrderCard",
+      "kind": "business",
+      "source": "sheep/components/s-order-card/s-order-card.vue",
+      "concept": "card",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-order-card v-if=\"type === 'UserOrder'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:54",
+      "builtOn": [
+        "Badge",
+        "Image"
+      ]
+    },
+    {
+      "name": "SPointBlock",
+      "kind": "business",
+      "source": "sheep/components/s-point-block/s-point-block.vue",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-point-block v-if=\"type === 'PromotionPoint'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:43",
+      "builtOn": [
+        "SGoodsColumn",
+        "Button"
+      ]
+    },
+    {
+      "name": "SPointCard",
+      "kind": "business",
+      "source": "sheep/components/s-point-card/s-point-card.vue",
+      "concept": "card",
+      "props": [
+        "property"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/activity/point/list.vue"
+      ],
+      "example": "\u003cs-point-card ref=\"sPointCardRef\" class=\"ss-p-x-20 ss-m-t-20\" /\u003e",
+      "exampleAt": "pages/activity/point/list.vue:11",
+      "builtOn": [
+        "SGoodsColumn",
+        "Button"
+      ]
+    },
+    {
+      "name": "SPopupImage",
+      "kind": "business",
+      "source": "sheep/components/s-popup-image/s-popup-image.vue",
+      "concept": "image",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-popup-image v-if=\"type === 'Popover'\" :data=\"data\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:14",
+      "extends": "Image",
+      "builtOn": [
+        "SuPopup",
+        "Image"
+      ]
+    },
+    {
+      "name": "SRichtextBlock",
+      "kind": "business",
+      "source": "sheep/components/s-richtext-block/s-richtext-block.vue",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-richtext-block v-if=\"type === 'PromotionArticle'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:49"
+    },
+    {
+      "name": "SSeckillBlock",
+      "kind": "business",
+      "source": "sheep/components/s-seckill-block/s-seckill-block.vue",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-seckill-block v-if=\"type === 'PromotionSeckill'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:41",
+      "builtOn": [
+        "SGoodsColumn",
+        "Button"
+      ]
+    },
+    {
+      "name": "SSelectSku",
+      "kind": "business",
+      "source": "sheep/components/s-select-sku/s-select-sku.vue",
+      "concept": "goods",
+      "props": [
+        "goodsInfo",
+        "show"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "pages/goods/index.vue"
+      ],
+      "example": "\u003cs-select-sku :goodsInfo=\"state.goodsInfo\" :show=\"state.showSelectSku\" @addCart=\"onAddCart\" @buy=\"onBuy\" @change=\"onSkuChange\" @close=\"state…",
+      "exampleAt": "pages/goods/index.vue:153",
+      "builtOn": [
+        "SuPopup",
+        "Image",
+        "ScrollView",
+        "Button",
+        "SuNumberBox"
+      ]
+    },
+    {
+      "name": "SShareModal",
+      "kind": "business",
+      "source": "sheep/components/s-share-modal/s-share-modal.vue",
+      "concept": "dialog",
+      "props": [
+        "shareInfo"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-layout/s-layout.vue"
+      ],
+      "example": "\u003cs-share-modal :shareInfo=\"shareInfo\" /\u003e",
+      "exampleAt": "sheep/components/s-layout/s-layout.vue:53",
+      "builtOn": [
+        "SuPopup",
+        "Image",
+        "Button",
+        "CanvasPoster"
+      ]
+    },
+    {
+      "name": "STabbar",
+      "kind": "business",
+      "source": "sheep/components/s-tabbar/s-tabbar.vue",
+      "concept": "tabbar",
+      "props": [
+        "path"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-layout/s-layout.vue"
+      ],
+      "example": "\u003cs-tabbar v-if=\"tabbar !== ''\" :path=\"tabbar\" /\u003e",
+      "exampleAt": "sheep/components/s-layout/s-layout.vue:45",
+      "builtOn": [
+        "SuTabbar",
+        "SuTabbarItem",
+        "Image"
+      ]
+    },
+    {
+      "name": "STitleBlock",
+      "kind": "business",
+      "source": "sheep/components/s-title-block/s-title-block.vue",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-title-block v-if=\"type === 'TitleBar'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:23"
+    },
+    {
+      "name": "SUserCard",
+      "kind": "business",
+      "source": "sheep/components/s-user-card/s-user-card.vue",
+      "concept": "card",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-user-card v-if=\"type === 'UserCard'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:52",
+      "builtOn": [
+        "Image",
+        "Button"
+      ]
+    },
+    {
+      "name": "SVideoBlock",
+      "kind": "business",
+      "source": "sheep/components/s-video-block/s-video-block.vue",
+      "props": [
+        "data",
+        "styles"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-video-block v-if=\"type === 'VideoPlayer'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:27",
+      "builtOn": [
+        "SuVideo"
+      ]
+    },
+    {
+      "name": "SWalletCard",
+      "kind": "business",
+      "source": "sheep/components/s-wallet-card/s-wallet-card.vue",
+      "concept": "card",
+      "props": [
+        "data"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-block-item/s-block-item.vue"
+      ],
+      "example": "\u003cs-wallet-card v-if=\"type === 'UserWallet'\" :data=\"data\" :styles=\"styles\" /\u003e",
+      "exampleAt": "sheep/components/s-block-item/s-block-item.vue:56",
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SmsLogin",
+      "kind": "business",
+      "source": "sheep/components/s-auth-modal/components/sms-login.vue",
+      "props": [
+        "agreeStatus"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-auth-modal/s-auth-modal.vue"
+      ],
+      "example": "\u003csms-login v-if=\"authType === 'smsLogin'\" :agreeStatus=\"state.protocol\" @onConfirm=\"onConfirm\" /\u003e",
+      "exampleAt": "sheep/components/s-auth-modal/s-auth-modal.vue:13",
+      "builtOn": [
+        "Forms",
+        "FormsItem",
+        "Easyinput",
+        "Button"
+      ]
+    },
+    {
+      "name": "UploadFile",
+      "kind": "business",
+      "source": "sheep/components/s-uploader/upload-file.vue",
+      "props": [
+        "filesList",
+        "delIcon",
+        "limit",
+        "showType",
+        "listStyles",
+        "readonly"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-uploader/s-uploader.vue"
+      ],
+      "example": "\u003cupload-file v-if=\"fileMediatype !== 'image' || showType !== 'grid'\" :readonly=\"readonly\" :list-styles=\"listStyles\" :files-list=\"filesList\" …",
+      "exampleAt": "sheep/components/s-uploader/s-uploader.vue:29",
+      "builtOn": [
+        "Progress"
+      ]
+    },
+    {
+      "name": "UploadImage",
+      "kind": "business",
+      "source": "sheep/components/s-uploader/upload-image.vue",
+      "concept": "image",
+      "props": [
+        "filesList",
+        "disabled",
+        "disablePreview",
+        "limit",
+        "imageStyles",
+        "delIcon",
+        "readonly"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "sheep/components/s-uploader/s-uploader.vue"
+      ],
+      "example": "\u003cupload-image v-if=\"fileMediatype === 'image' \u0026\u0026 showType === 'grid'\" :readonly=\"readonly\" :image-styles=\"imageStyles\" :files-list=\"url\" :li…",
+      "exampleAt": "sheep/components/s-uploader/s-uploader.vue:11",
+      "extends": "Image",
+      "builtOn": [
+        "Image"
+      ]
+    },
+    {
+      "name": "SCouponGet",
+      "kind": "business",
+      "source": "sheep/components/s-coupon-get/s-coupon-get.vue",
+      "props": [
+        "modelValue",
+        "show"
+      ],
+      "usage": 0,
+      "builtOn": [
+        "SuPopup",
+        "ScrollView",
+        "SCouponList",
+        "Button"
+      ]
+    },
+    {
+      "name": "SGoodsScroll",
+      "kind": "business",
+      "source": "sheep/components/s-goods-scroll/s-goods-scroll.vue",
+      "concept": "goods",
+      "props": [
+        "list"
+      ],
+      "usage": 0,
+      "builtOn": [
+        "ScrollView",
+        "SGoodsColumn"
+      ]
+    },
+    {
+      "name": "SStatusbar",
+      "kind": "business",
+      "source": "sheep/components/s-statusbar/s-statusbar.vue",
+      "usage": 0
+    }
+  ],
+  "clusters": [
+    {
+      "concept": "navbar",
+      "members": [
+        "SuNavbar（设计系统，用 1 次）",
+        "SuToolbar（设计系统，用 1 次）",
+        "SuInnerNavbar（设计系统，用 1 次）",
+        "Navbar（业务组件，用 1 次）",
+        "NavBar（uni-ui，项目未使用）"
+      ],
+      "recommend": "SuNavbar",
+      "totalUsage": 4
+    },
+    {
+      "concept": "goods",
+      "members": [
+        "SGoodsColumn（业务组件，用 34 次）",
+        "SGoodsItem（业务组件，用 15 次）",
+        "SSelectSku（业务组件，用 1 次）"
+      ],
+      "recommend": "SGoodsColumn",
+      "totalUsage": 50
+    },
+    {
+      "concept": "loading",
+      "members": [
+        "LoadMore（组件库，用 25 次）",
+        "SuProgress（设计系统，用 1 次）",
+        "Progress（组件库，用 1 次）"
+      ],
+      "recommend": "LoadMore",
+      "totalUsage": 27
+    },
+    {
+      "concept": "popup",
+      "members": [
+        "SuPopup（设计系统，用 23 次）",
+        "SuPopover（设计系统，用 0 次）",
+        "Popup（uni-ui，项目未使用）"
+      ],
+      "recommend": "SuPopup",
+      "totalUsage": 23
+    },
+    {
+      "concept": "button",
+      "members": [
+        "Button（组件库，用 186 次）",
+        "SMenuButton（业务组件，用 1 次）"
+      ],
+      "recommend": "Button",
+      "totalUsage": 187
+    },
+    {
+      "concept": "radio",
+      "members": [
+        "SuRadio（设计系统，用 2 次）",
+        "Radio（组件库，用 15 次）"
+      ],
+      "recommend": "SuRadio",
+      "totalUsage": 17
+    },
+    {
+      "concept": "tabs",
+      "members": [
+        "SuTabs（设计系统，用 11 次）",
+        "SuTabsItem（设计系统，用 0 次）"
+      ],
+      "recommend": "SuTabs",
+      "totalUsage": 11
+    },
+    {
+      "concept": "carousel",
+      "members": [
+        "SuSwiper（设计系统，用 5 次）",
+        "SwiperDot（组件库，用 1 次）"
+      ],
+      "recommend": "SuSwiper",
+      "totalUsage": 6
+    },
+    {
+      "concept": "countdown",
+      "members": [
+        "Countdown（uni-ui，项目未使用）",
+        "SCountDown（业务组件，用 1 次）"
+      ],
+      "recommend": "Countdown",
+      "totalUsage": 1
+    },
+    {
+      "concept": "notice",
+      "members": [
+        "SuNoticeBar（设计系统，用 1 次）",
+        "NoticeBar（uni-ui，项目未使用）"
+      ],
+      "recommend": "SuNoticeBar",
+      "totalUsage": 1
+    },
+    {
+      "concept": "switch",
+      "members": [
+        "SuSwitch（设计系统，用 1 次）",
+        "Switch（uni-app 内置组件，项目未使用）"
+      ],
+      "recommend": "SuSwitch",
+      "totalUsage": 1
+    }
+  ],
+  "findings": [
+    {
+      "rule": "missed-reuse",
+      "severity": "info",
+      "file": "sheep/components/s-live-card/s-live-card.vue",
+      "line": 9,
+      "text": "\u003cimg class=\"md-img-box\" :src=\"sheep.$url.cdn(data.feeds_img)\" referrerpolicy=\"no-referrer\"\u003e",
+      "hint": "原生 \u003cimg\u003e：项目里已有 SuImage（设计系统）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "info",
+      "file": "sheep/components/s-live-card/s-live-card.vue",
+      "line": 25,
+      "text": "\u003cimg class=\"sl-img-box\" :src=\"sheep.$url.cdn(data.feeds_img)\" referrerpolicy=\"no-referrer\"\u003e",
+      "hint": "原生 \u003cimg\u003e：项目里已有 SuImage（设计系统）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "pages/chat/components/optimize-input.vue",
+      "line": 27,
+      "text": "\u003ctextarea v-if=\"type === 'textarea'\" class=\"uni-easyinput__content-textarea\" :class=\"{ 'input-padding': inputBorder }\" :name=\"name\" :value=\"…",
+      "hint": "原生 \u003ctextarea\u003e（uni-app 内置）：项目里已有 Easyinput（组件库，用 31 次）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "pages/chat/components/optimize-input.vue",
+      "line": 46,
+      "text": "\u003cinput",
+      "hint": "原生 \u003cinput\u003e（uni-app 内置）：项目里已有 Easyinput（组件库，用 31 次）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "pages/commission/team.vue",
+      "line": 62,
+      "text": "\u003cinput placeholder=\"点击搜索会员名称\" v-model=\"state.nickname\" confirm-type=\"search\" name=\"search\" @confirm=\"submitForm\" /\u003e",
+      "hint": "原生 \u003cinput\u003e（uni-app 内置）：项目里已有 Easyinput（组件库，用 31 次）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "pages/order/aftersale/return-delivery.vue",
+      "line": 21,
+      "text": "\u003cinput placeholder='请填写物流单号' class='num' name=\"logisticsNo\" placeholder-class='placeholder' /\u003e",
+      "hint": "原生 \u003cinput\u003e（uni-app 内置）：项目里已有 Easyinput（组件库，用 31 次）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "sheep/ui/su-dialog/su-dialog.vue",
+      "line": 16,
+      "text": "\u003cinput class=\"uni-dialog-input\" v-model=\"val\" type=\"text\" :placeholder=\"placeholderText\" :focus=\"focus\" /\u003e",
+      "hint": "原生 \u003cinput\u003e（uni-app 内置）：项目里已有 Easyinput（组件库，用 31 次）"
+    },
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "sheep/ui/su-number-box/su-number-box.vue",
+      "line": 18,
+      "text": "\u003cinput :disabled=\"disabled\" @focus=\"_onFocus\" @blur=\"_onBlur\" class=\"uni-numbox__value\" type=\"number\" v-model=\"inputValue\" :style=\"{ color }…",
+      "hint": "原生 \u003cinput\u003e（uni-app 内置）：项目里已有 Easyinput（组件库，用 31 次）"
+    },
+    {
+      "rule": "bypass",
+      "severity": "warn",
+      "file": "pages/activity/seckill/list.vue",
+      "line": 11,
+      "text": "\u003cswiper indicator-dots=\"true\" autoplay=\"true\" :circular=\"true\" interval=\"3000\" duration=\"1500\" indicator-color=\"rgba(255,255,255,0.6)\" indic…",
+      "hint": "直接用了 \u003cswiper\u003e（uni-app 内置组件），项目设计系统已封装为 SuSwiper，应使用封装"
+    },
+    {
+      "rule": "bypass",
+      "severity": "warn",
+      "file": "pages/chat/components/toolsPopup.vue",
+      "line": 10,
+      "text": "\u003cswiper class=\"emoji-swiper\" :indicator-dots=\"true\" circular indicator-active-color=\"#7063D2\" indicator-color=\"rgba(235, 231, 255, 1)\" :auto…",
+      "hint": "直接用了 \u003cswiper\u003e（uni-app 内置组件），项目设计系统已封装为 SuSwiper，应使用封装"
+    },
+    {
+      "rule": "bypass",
+      "severity": "warn",
+      "file": "pages/order/express/log.vue",
+      "line": 8,
+      "text": "\u003cswiper class=\"swiper-box\"\u003e",
+      "hint": "直接用了 \u003cswiper\u003e（uni-app 内置组件），项目设计系统已封装为 SuSwiper，应使用封装"
+    },
+    {
+      "rule": "bypass",
+      "severity": "warn",
+      "file": "sheep/components/s-menu-button/s-menu-button.vue",
+      "line": 7,
+      "text": "\u003cswiper :circular=\"props.circular\" :current=\"state.cur\" :autoplay=\"props.autoplay\" :interval=\"props.interval\" :duration=\"props.duration\" :st…",
+      "hint": "直接用了 \u003cswiper\u003e（uni-app 内置组件），项目设计系统已封装为 SuSwiper，应使用封装"
+    }
+  ],
+  "clones": [
+    {
+      "signature": "6f09c765",
+      "elements": 18,
+      "locations": [
+        "sheep/components/s-groupon-block/s-groupon-block.vue:4",
+        "sheep/components/s-point-block/s-point-block.vue:4",
+        "sheep/components/s-point-card/s-point-card.vue:4",
+        "sheep/components/s-seckill-block/s-seckill-block.vue:4"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003cs-goods-column\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003cs-goods-column\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n"
+    },
+    {
+      "signature": "c9d88209",
+      "elements": 9,
+      "locations": [
+        "pages/activity/index.vue:19",
+        "pages/goods/list.vue:69",
+        "sheep/components/s-goods-card/s-goods-card.vue:39",
+        "sheep/components/s-groupon-block/s-groupon-block.vue:72",
+        "sheep/components/s-point-block/s-point-block.vue:72",
+        "sheep/components/s-point-card/s-point-card.vue:72",
+        "sheep/components/s-seckill-block/s-seckill-block.vue:72"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003cs-goods-column\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003cs-goods-column\u003e\n"
+    },
+    {
+      "signature": "bf5df481",
+      "elements": 22,
+      "locations": [
+        "sheep/components/s-goods-column/s-goods-column.vue:272",
+        "sheep/components/s-goods-column/s-goods-column.vue:371"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n      \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n      \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n"
+    },
+    {
+      "signature": "ce42fa68",
+      "elements": 8,
+      "locations": [
+        "pages/activity/groupon/detail.vue:77",
+        "pages/activity/seckill/list.vue:62",
+        "pages/goods/groupon.vue:63",
+        "pages/goods/seckill.vue:46"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n"
+    },
+    {
+      "signature": "460bbe52",
+      "elements": 10,
+      "locations": [
+        "pages/commission/components/account-info.vue:26",
+        "pages/goods/components/detail/detail-skeleton.vue:13",
+        "sheep/ui/su-coupon/su-coupon.vue:39"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n"
+    },
+    {
+      "signature": "99384712",
+      "elements": 10,
+      "locations": [
+        "sheep/components/s-goods-column/s-goods-column.vue:196",
+        "sheep/components/s-goods-column/s-goods-column.vue:308",
+        "sheep/components/s-goods-column/s-goods-column.vue:411"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003ctext\u003e\n    \u003ctext\u003e\n    \u003ctext\u003e\n    \u003ctext\u003e\n  \u003cview\u003e\n    \u003ctext\u003e\n    \u003cview\u003e\n"
+    },
+    {
+      "signature": "7061cb9f",
+      "elements": 9,
+      "locations": [
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue:43",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue:52",
+        "sheep/components/s-select-sku/s-select-sku.vue:45"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cscroll-view\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n      \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n      \u003csu-number-box\u003e\n"
+    },
+    {
+      "signature": "95f0cb25",
+      "elements": 13,
+      "locations": [
+        "sheep/components/s-auth-modal/components/account-login.vue:3",
+        "sheep/components/s-auth-modal/components/sms-login.vue:3"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n      \u003cview\u003e\n    \u003cview\u003e\n  \u003cuni-forms\u003e\n    \u003cuni-forms-item\u003e\n      \u003cuni-easyinput\u003e\n    \u003cuni-forms-item\u003e\n      \u003cuni-easyinput\u003e\n"
+    },
+    {
+      "signature": "d453cf9a",
+      "elements": 13,
+      "locations": [
+        "sheep/components/s-goods-column/s-goods-column.vue:5",
+        "sheep/components/s-goods-column/s-goods-column.vue:72"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n      \u003cview\u003e\n    \u003cview\u003e\n      \u003cview\u003e\n      \u003ctext\u003e\n      \u003ctext\u003e\n      \u003ctext\u003e\n"
+    },
+    {
+      "signature": "0585e664",
+      "elements": 12,
+      "locations": [
+        "sheep/components/s-auth-modal/components/change-mobile.vue:3",
+        "sheep/components/s-auth-modal/components/change-password.vue:3"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n  \u003cuni-forms\u003e\n    \u003cuni-forms-item\u003e\n      \u003cuni-easyinput\u003e\n    \u003cuni-forms-item\u003e\n      \u003cuni-easyinput\u003e\n  \u003cbutton\u003e\n"
+    },
+    {
+      "signature": "c1af34d1",
+      "elements": 8,
+      "locations": [
+        "sheep/components/s-custom-navbar/s-custom-navbar.vue:14",
+        "sheep/ui/su-navbar/su-navbar.vue:27"
+      ],
+      "sample": "\u003cview\u003e\n  \u003cview\u003e\n    \u003cview\u003e\n      \u003ctext\u003e\n      \u003ctext\u003e\n    \u003cview\u003e\n    \u003cview\u003e\n      \u003ctext\u003e\n"
+    }
+  ],
+  "colors": [
+    {
+      "value": "#FFFFFF",
+      "count": 266,
+      "token": "$white",
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/list.vue",
+        "pages/activity/groupon/order.vue"
+      ]
+    },
+    {
+      "value": "#333333",
+      "count": 134,
+      "token": "$dark-3",
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/seckill/list.vue",
+        "pages/app/sign.vue"
+      ]
+    },
+    {
+      "value": "#999999",
+      "count": 85,
+      "token": "$dark-9",
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/list.vue",
+        "pages/activity/groupon/order.vue"
+      ]
+    },
+    {
+      "value": "#FF6000",
+      "count": 34,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/index.vue",
+        "pages/app/sign.vue"
+      ]
+    },
+    {
+      "value": "#EEEEEE",
+      "count": 33,
+      "token": "$gray-e",
+      "sample": [
+        "pages/chat/components/optimize-input.vue",
+        "pages/chat/components/select-popup.vue",
+        "pages/commission/team.vue"
+      ]
+    },
+    {
+      "value": "#666666",
+      "count": 22,
+      "token": "$dark-6",
+      "sample": [
+        "pages/activity/seckill/list.vue",
+        "pages/app/sign.vue",
+        "pages/commission/commission-ranking.vue"
+      ]
+    },
+    {
+      "value": "#000000",
+      "count": 21,
+      "token": "$color",
+      "sample": [
+        "pages/goods/components/detail/detail-navbar.vue",
+        "pages/goods/groupon.vue",
+        "pages/goods/seckill.vue"
+      ]
+    },
+    {
+      "value": "#FF3000",
+      "count": 18,
+      "sample": [
+        "pages/activity/groupon/order.vue",
+        "pages/chat/components/goods.vue",
+        "pages/chat/components/messageListItem.vue"
+      ]
+    },
+    {
+      "value": "#FE832A",
+      "count": 17,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/list.vue",
+        "pages/activity/groupon/order.vue"
+      ]
+    },
+    {
+      "value": "#BBBBBB",
+      "count": 16,
+      "token": "$gray-b",
+      "sample": [
+        "pages/chat/components/optimize-input.vue",
+        "pages/commission/team.vue",
+        "pages/order/aftersale/return-delivery.vue"
+      ]
+    },
+    {
+      "value": "#DFDFDF",
+      "count": 14,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/order.vue",
+        "pages/app/sign.vue"
+      ]
+    },
+    {
+      "value": "#E93323",
+      "count": 10,
+      "sample": [
+        "pages/commission/commission-ranking.vue",
+        "pages/order/addressSelection.vue",
+        "pages/order/pickUpVerify.vue"
+      ]
+    },
+    {
+      "value": "#F5F5F5",
+      "count": 10,
+      "sample": [
+        "pages/commission/team.vue",
+        "pages/goods/components/list/list-goods-card.vue",
+        "pages/order/addressSelection.vue"
+      ]
+    },
+    {
+      "value": "#F6F6F6",
+      "count": 10,
+      "token": "var(--ui-BG-1)",
+      "sample": [
+        "pages/activity/groupon/order.vue",
+        "pages/goods/components/detail/detail-progress.vue",
+        "pages/goods/list.vue"
+      ]
+    },
+    {
+      "value": "#282828",
+      "count": 9,
+      "sample": [
+        "pages/commission/team.vue",
+        "pages/order/addressSelection.vue",
+        "pages/order/aftersale/return-delivery.vue"
+      ]
+    },
+    {
+      "value": "#C4C4C4",
+      "count": 9,
+      "sample": [
+        "pages/app/sign.vue",
+        "pages/commission/components/commission-log.vue",
+        "pages/goods/comment/list.vue"
+      ]
+    },
+    {
+      "value": "#FF6600",
+      "count": 7,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/list.vue",
+        "pages/activity/groupon/order.vue"
+      ]
+    },
+    {
+      "value": "#F0F0F0",
+      "count": 6,
+      "sample": [
+        "pages/order/pickUpVerify.vue",
+        "sheep/components/s-menu-tools/s-menu-tools.vue",
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#F4F4F4",
+      "count": 6,
+      "sample": [
+        "pages/goods/components/detail/detail-skeleton.vue",
+        "pages/user/goods-log.vue",
+        "pages/user/info.vue"
+      ]
+    },
+    {
+      "value": "#F8F8F8",
+      "count": 6,
+      "token": "$uni-bg-color-grey",
+      "sample": [
+        "pages/chat/components/messageList.vue",
+        "pages/goods/components/detail/comment-item.vue",
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue"
+      ]
+    },
+    {
+      "value": "#FF5854",
+      "count": 6,
+      "sample": [
+        "sheep/components/s-goods-column/s-goods-column.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/ui/su-number-box/su-number-box.vue"
+      ]
+    },
+    {
+      "value": "#434343",
+      "count": 5,
+      "sample": [
+        "pages/pay/result.vue",
+        "sheep/components/s-coupon-select/s-coupon-select.vue",
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue"
+      ]
+    },
+    {
+      "value": "#CCCCCC",
+      "count": 5,
+      "token": "$gray-c",
+      "sample": [
+        "pages/coupon/list.vue",
+        "pages/order/express/log.vue",
+        "sheep/ui/su-navbar/su-navbar.vue"
+      ]
+    },
+    {
+      "value": "#F2F2F2",
+      "count": 5,
+      "sample": [
+        "pages/coupon/list.vue",
+        "pages/user/goods-log.vue",
+        "sheep/components/s-coupon-get/s-coupon-get.vue"
+      ]
+    },
+    {
+      "value": "#F2F6FC",
+      "count": 5,
+      "sample": [
+        "sheep/ui/su-data-checkbox/su-data-checkbox.vue"
+      ]
+    },
+    {
+      "value": "#FF2621",
+      "count": 5,
+      "sample": [
+        "sheep/components/s-goods-column/s-goods-column.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/components/s-select-sku/s-select-sku.vue"
+      ]
+    },
+    {
+      "value": "#007AFF",
+      "count": 4,
+      "token": "$uni-color-primary",
+      "sample": [
+        "pages/components/HighlightNumberText.vue",
+        "sheep/ui/su-data-checkbox/su-data-checkbox.vue",
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#C0C4CC",
+      "count": 4,
+      "sample": [
+        "pages/chat/components/optimize-input.vue"
+      ]
+    },
+    {
+      "value": "#DDDDDD",
+      "count": 4,
+      "token": "$gray-d",
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/order/aftersale/return-delivery.vue",
+        "sheep/ui/su-time-line/su-time-line.vue"
+      ]
+    },
+    {
+      "value": "#E5E5E5",
+      "count": 4,
+      "token": "$uni-border-color",
+      "sample": [
+        "pages/coupon/detail.vue",
+        "pages/goods/comment/list.vue",
+        "pages/order/confirm.vue"
+      ]
+    },
+    {
+      "value": "#E5E5E7",
+      "count": 4,
+      "sample": [
+        "pages/goods/components/detail/detail-navbar.vue",
+        "sheep/components/s-custom-navbar/s-custom-navbar.vue",
+        "sheep/ui/su-inner-navbar/su-inner-navbar.vue"
+      ]
+    },
+    {
+      "value": "#ECECEC",
+      "count": 4,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/goods/components/groupon/groupon-card-list.vue"
+      ]
+    },
+    {
+      "value": "#F3F3F1",
+      "count": 4,
+      "sample": [
+        "pages/goods/components/detail/detail-skeleton.vue"
+      ]
+    },
+    {
+      "value": "#FAAD14",
+      "count": 4,
+      "sample": [
+        "pages/activity/groupon/order.vue",
+        "pages/chat/components/order.vue",
+        "pages/order/list.vue"
+      ]
+    },
+    {
+      "value": "#FF5651",
+      "count": 4,
+      "sample": [
+        "pages/goods/groupon.vue",
+        "pages/goods/point.vue",
+        "pages/goods/seckill.vue"
+      ]
+    },
+    {
+      "value": "#52C41A",
+      "count": 3,
+      "sample": [
+        "pages/activity/groupon/order.vue",
+        "pages/chat/components/order.vue",
+        "pages/order/list.vue"
+      ]
+    },
+    {
+      "value": "#595959",
+      "count": 3,
+      "sample": [
+        "pages/pay/result.vue",
+        "sheep/components/s-auth-modal/components/mp-authorization.vue"
+      ]
+    },
+    {
+      "value": "#C6C6C6",
+      "count": 3,
+      "token": "var(--ui-TC-4)",
+      "sample": [
+        "sheep/components/s-select-groupon-sku/s-select-groupon-sku.vue",
+        "sheep/components/s-select-seckill-sku/s-select-seckill-sku.vue",
+        "sheep/components/s-select-sku/s-select-sku.vue"
+      ]
+    },
+    {
+      "value": "#EBEBEB",
+      "count": 3,
+      "sample": [
+        "pages/goods/components/detail/detail-navbar.vue",
+        "sheep/components/s-uploader/upload-file.vue"
+      ]
+    },
+    {
+      "value": "#ED3C30",
+      "count": 3,
+      "sample": [
+        "pages/activity/seckill/list.vue"
+      ]
+    },
+    {
+      "value": "#FDFAE9",
+      "count": 3,
+      "sample": [
+        "pages/commission/components/account-info.vue",
+        "pages/commission/components/commission-log.vue",
+        "pages/commission/components/commission-menu.vue"
+      ]
+    },
+    {
+      "value": "#FE8900",
+      "count": 3,
+      "sample": [
+        "sheep/components/s-goods-column/s-goods-column.vue"
+      ]
+    },
+    {
+      "value": "#FF0000",
+      "count": 3,
+      "sample": [
+        "sheep/components/s-coupon-list/s-coupon-list.vue",
+        "sheep/components/s-goods-column/s-goods-column.vue"
+      ]
+    },
+    {
+      "value": "#FF4D4F",
+      "count": 3,
+      "sample": [
+        "pages/pay/recharge-log.vue",
+        "sheep/components/s-auth-modal/s-auth-modal.vue",
+        "sheep/components/s-order-card/s-order-card.vue"
+      ]
+    },
+    {
+      "value": "#FF5E00",
+      "count": 3,
+      "sample": [
+        "sheep/components/s-goods-column/s-goods-column.vue"
+      ]
+    },
+    {
+      "value": "#FF6911",
+      "count": 3,
+      "sample": [
+        "sheep/components/s-activity-pop/s-activity-pop.vue"
+      ]
+    },
+    {
+      "value": "#2AAE67",
+      "count": 2,
+      "sample": [
+        "pages/goods/point.vue",
+        "pages/goods/seckill.vue"
+      ]
+    },
+    {
+      "value": "#555555",
+      "count": 2,
+      "token": "$dark-5",
+      "sample": [
+        "sheep/scss/style/_form.scss",
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#692E04",
+      "count": 2,
+      "sample": [
+        "pages/commission/components/account-info.vue",
+        "pages/commission/components/commission-info.vue"
+      ]
+    },
+    {
+      "value": "#A17545",
+      "count": 2,
+      "sample": [
+        "pages/commission/components/account-info.vue"
+      ]
+    },
+    {
+      "value": "#C0C0C0",
+      "count": 2,
+      "token": "$uni-text-color-disable",
+      "sample": [
+        "pages/pay/recharge-log.vue",
+        "sheep/ui/su-number-box/su-number-box.vue"
+      ]
+    },
+    {
+      "value": "#D5D5D5",
+      "count": 2,
+      "sample": [
+        "pages/chat/components/optimize-input.vue"
+      ]
+    },
+    {
+      "value": "#DCDCDC",
+      "count": 2,
+      "sample": [
+        "pages/order/detail.vue",
+        "pages/order/list.vue"
+      ]
+    },
+    {
+      "value": "#DD524D",
+      "count": 2,
+      "token": "$uni-color-error",
+      "sample": [
+        "pages/chat/components/optimize-input.vue",
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#E1212B",
+      "count": 2,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/index/components/first-two.vue"
+      ]
+    },
+    {
+      "value": "#E83323",
+      "count": 2,
+      "sample": [
+        "pages/user/goods_details_store/index.vue"
+      ]
+    },
+    {
+      "value": "#F3DFB1",
+      "count": 2,
+      "sample": [
+        "pages/activity/groupon/detail.vue"
+      ]
+    },
+    {
+      "value": "#F3F3F3",
+      "count": 2,
+      "sample": [
+        "pages/commission/commission-ranking.vue"
+      ]
+    },
+    {
+      "value": "#F4B409",
+      "count": 2,
+      "sample": [
+        "pages/app/sign.vue"
+      ]
+    },
+    {
+      "value": "#F7979C",
+      "count": 2,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/order.vue"
+      ]
+    },
+    {
+      "value": "#FEFEFE",
+      "count": 2,
+      "sample": [
+        "pages/commission/wallet.vue",
+        "sheep/components/s-order-card/s-order-card.vue"
+      ]
+    },
+    {
+      "value": "#FF690D",
+      "count": 2,
+      "sample": [
+        "sheep/components/s-user-card/s-user-card.vue"
+      ]
+    },
+    {
+      "value": "#FFE0E2",
+      "count": 2,
+      "sample": [
+        "pages/activity/groupon/detail.vue",
+        "pages/activity/groupon/order.vue"
+      ]
+    },
+    {
+      "value": "#FFF4F7",
+      "count": 2,
+      "sample": [
+        "pages/activity/groupon/list.vue",
+        "pages/activity/seckill/list.vue"
+      ]
+    },
+    {
+      "value": "#00B8F9",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#0166EB",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#04B750",
+      "count": 1,
+      "sample": [
+        "pages/order/aftersale/apply.vue"
+      ]
+    },
+    {
+      "value": "#06EDFE",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#09BB07",
+      "count": 1,
+      "sample": [
+        "pages/user/address/list.vue"
+      ]
+    },
+    {
+      "value": "#111111",
+      "count": 1,
+      "token": "$dark-1",
+      "sample": [
+        "sheep/ui/su-toolbar/su-toolbar.vue"
+      ]
+    },
+    {
+      "value": "#19BE6B",
+      "count": 1,
+      "sample": [
+        "pages/commission/wallet.vue"
+      ]
+    },
+    {
+      "value": "#343434",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-wallet-card/s-wallet-card.vue"
+      ]
+    },
+    {
+      "value": "#354855",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#383A46",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/detail.vue"
+      ]
+    },
+    {
+      "value": "#39D266",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#3AB54A",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#3C9CFF",
+      "count": 1,
+      "sample": [
+        "sheep/ui/su-tabs/su-tabs.vue"
+      ]
+    },
+    {
+      "value": "#42B111",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/detail.vue"
+      ]
+    },
+    {
+      "value": "#48B2FE",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#4CD964",
+      "count": 1,
+      "token": "$uni-color-success",
+      "sample": [
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#515151",
+      "count": 1,
+      "sample": [
+        "pages/commission/team.vue"
+      ]
+    },
+    {
+      "value": "#5908FB",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#606266",
+      "count": 1,
+      "sample": [
+        "sheep/ui/su-tabs/su-tabs.vue"
+      ]
+    },
+    {
+      "value": "#60BD45",
+      "count": 1,
+      "sample": [
+        "pages/order/aftersale/log-item.vue"
+      ]
+    },
+    {
+      "value": "#67C23A",
+      "count": 1,
+      "sample": [
+        "pages/pay/recharge-log.vue"
+      ]
+    },
+    {
+      "value": "#6C6C6C",
+      "count": 1,
+      "sample": [
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#7063D2",
+      "count": 1,
+      "sample": [
+        "pages/chat/components/toolsPopup.vue"
+      ]
+    },
+    {
+      "value": "#707070",
+      "count": 1,
+      "sample": [
+        "pages/order/addressSelection.vue"
+      ]
+    },
+    {
+      "value": "#7115CC",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#8799A3",
+      "count": 1,
+      "token": "$grey",
+      "sample": [
+        "sheep/scss/style/_form.scss"
+      ]
+    },
+    {
+      "value": "#888888",
+      "count": 1,
+      "token": "$dark-8",
+      "sample": [
+        "sheep/scss/style/_card.scss"
+      ]
+    },
+    {
+      "value": "#8CC63F",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#909399",
+      "count": 1,
+      "sample": [
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#90E630",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#9829EA",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#9AADB9",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#A57A55",
+      "count": 1,
+      "sample": [
+        "pages/commission/components/account-info.vue"
+      ]
+    },
+    {
+      "value": "#AAAAAA",
+      "count": 1,
+      "token": "$gray-a",
+      "sample": [
+        "pages/commission/team.vue"
+      ]
+    },
+    {
+      "value": "#AFB6C0",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-auth-modal/index.scss"
+      ]
+    },
+    {
+      "value": "#BFBFBF",
+      "count": 1,
+      "sample": [
+        "pages/order/aftersale/return-delivery.vue"
+      ]
+    },
+    {
+      "value": "#C01F95",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#C2C7CF",
+      "count": 1,
+      "sample": [
+        "pages/commission/wallet.vue"
+      ]
+    },
+    {
+      "value": "#C8C9CC",
+      "count": 1,
+      "sample": [
+        "sheep/ui/su-tabs/su-tabs.vue"
+      ]
+    },
+    {
+      "value": "#CA6F2E",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#CB1413",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#CBA67E",
+      "count": 1,
+      "sample": [
+        "pages/commission/components/account-info.vue"
+      ]
+    },
+    {
+      "value": "#D00500",
+      "count": 1,
+      "sample": [
+        "pages/goods/components/detail/detail-progress.vue"
+      ]
+    },
+    {
+      "value": "#D2D2D2",
+      "count": 1,
+      "sample": [
+        "pages/index/components/second-one.vue"
+      ]
+    },
+    {
+      "value": "#D3D3D3",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-coupon-list/s-coupon-list.vue"
+      ]
+    },
+    {
+      "value": "#D71E08",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/detail.vue"
+      ]
+    },
+    {
+      "value": "#D8D8D8",
+      "count": 1,
+      "sample": [
+        "pages/order/express/log.vue"
+      ]
+    },
+    {
+      "value": "#E0E0E0",
+      "count": 1,
+      "token": "var(--ui-BG-4)",
+      "sample": [
+        "sheep/components/s-user-card/s-user-card.vue"
+      ]
+    },
+    {
+      "value": "#E43D33",
+      "count": 1,
+      "token": "$uni-error",
+      "sample": [
+        "pages/chat/components/optimize-input.vue"
+      ]
+    },
+    {
+      "value": "#E4E7ED",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-auth-modal/index.scss"
+      ]
+    },
+    {
+      "value": "#E6B873",
+      "count": 1,
+      "sample": [
+        "pages/user/wallet/score.vue"
+      ]
+    },
+    {
+      "value": "#EAEEF1",
+      "count": 1,
+      "sample": [
+        "sheep/ui/su-region-picker/su-region-picker.vue"
+      ]
+    },
+    {
+      "value": "#ECBE60",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/detail.vue"
+      ]
+    },
+    {
+      "value": "#ED0586",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#EDC36C",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/detail.vue"
+      ]
+    },
+    {
+      "value": "#F0AD4E",
+      "count": 1,
+      "token": "$uni-color-warning",
+      "sample": [
+        "sheep/ui/su-dialog/su-dialog.vue"
+      ]
+    },
+    {
+      "value": "#F0C34C",
+      "count": 1,
+      "sample": [
+        "pages/order/pickUpVerify.vue"
+      ]
+    },
+    {
+      "value": "#F0C785",
+      "count": 1,
+      "sample": [
+        "pages/order/express/log.vue"
+      ]
+    },
+    {
+      "value": "#F1F1F1",
+      "count": 1,
+      "token": "var(--ui-BG-2)",
+      "sample": [
+        "sheep/components/s-uploader/upload-image.vue"
+      ]
+    },
+    {
+      "value": "#F2DEBE",
+      "count": 1,
+      "sample": [
+        "pages/commission/components/account-info.vue"
+      ]
+    },
+    {
+      "value": "#F2F5F7",
+      "count": 1,
+      "sample": [
+        "pages/order/pickUpVerify.vue"
+      ]
+    },
+    {
+      "value": "#F33A41",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#F44739",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/detail.vue"
+      ]
+    },
+    {
+      "value": "#F5F6F8",
+      "count": 1,
+      "sample": [
+        "pages/index/search.vue"
+      ]
+    },
+    {
+      "value": "#F5FE00",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#F60600",
+      "count": 1,
+      "sample": [
+        "pages/goods/components/detail/detail-progress.vue"
+      ]
+    },
+    {
+      "value": "#F7C1BD",
+      "count": 1,
+      "sample": [
+        "pages/order/addressSelection.vue"
+      ]
+    },
+    {
+      "value": "#F7F6F6",
+      "count": 1,
+      "sample": [
+        "pages/chat/components/optimize-input.vue"
+      ]
+    },
+    {
+      "value": "#FA3534",
+      "count": 1,
+      "sample": [
+        "pages/commission/wallet.vue"
+      ]
+    },
+    {
+      "value": "#FAFAFA",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-menu-tools/s-menu-tools.vue"
+      ]
+    },
+    {
+      "value": "#FC4141",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-count-down/s-count-down.vue"
+      ]
+    },
+    {
+      "value": "#FC6E6F",
+      "count": 1,
+      "sample": [
+        "pages/goods/seckill.vue"
+      ]
+    },
+    {
+      "value": "#FCE0AD",
+      "count": 1,
+      "sample": [
+        "pages/commission/components/commission-info.vue"
+      ]
+    },
+    {
+      "value": "#FCFF00",
+      "count": 1,
+      "sample": [
+        "pages/app/sign.vue"
+      ]
+    },
+    {
+      "value": "#FEA894",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#FF0003",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-coupon-select/s-coupon-select.vue"
+      ]
+    },
+    {
+      "value": "#FF1047",
+      "count": 1,
+      "sample": [
+        "sheep/scss/style/_background.scss"
+      ]
+    },
+    {
+      "value": "#FF2923",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/list.vue"
+      ]
+    },
+    {
+      "value": "#FF5722",
+      "count": 1,
+      "sample": [
+        "pages/components/HighlightNumberText.vue"
+      ]
+    },
+    {
+      "value": "#FF5A5F",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-uploader/upload-file.vue"
+      ]
+    },
+    {
+      "value": "#FF6100",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-user-card/s-user-card.vue"
+      ]
+    },
+    {
+      "value": "#FF9900",
+      "count": 1,
+      "sample": [
+        "pages/commission/wallet.vue"
+      ]
+    },
+    {
+      "value": "#FFB9B9",
+      "count": 1,
+      "sample": [
+        "sheep/ui/su-progress/su-progress.vue"
+      ]
+    },
+    {
+      "value": "#FFE4D1",
+      "count": 1,
+      "sample": [
+        "pages/activity/groupon/list.vue"
+      ]
+    },
+    {
+      "value": "#FFE6EC",
+      "count": 1,
+      "sample": [
+        "pages/activity/seckill/list.vue"
+      ]
+    },
+    {
+      "value": "#FFEEEE",
+      "count": 1,
+      "sample": [
+        "pages/order/list.vue"
+      ]
+    },
+    {
+      "value": "#FFEFD6",
+      "count": 1,
+      "sample": [
+        "pages/commission/components/account-info.vue"
+      ]
+    },
+    {
+      "value": "#FFEFE5",
+      "count": 1,
+      "sample": [
+        "pages/goods/groupon.vue"
+      ]
+    },
+    {
+      "value": "#FFF0E7",
+      "count": 1,
+      "sample": [
+        "pages/activity/index.vue"
+      ]
+    },
+    {
+      "value": "#FFF2F2",
+      "count": 1,
+      "sample": [
+        "sheep/components/s-activity-pop/s-activity-pop.vue"
+      ]
+    },
+    {
+      "value": "#FFF9EC",
+      "count": 1,
+      "sample": [
+        "pages/commission/components/account-info.vue"
+      ]
+    },
+    {
+      "value": "#FFFAEE",
+      "count": 1,
+      "sample": [
+        "pages/commission/withdraw.vue"
+      ]
+    }
+  ],
+  "metrics": {
+    "files": 307,
+    "componentUsages": 805,
+    "rawPrimitives": 8,
+    "componentization": 0.990159901599016,
+    "duplicateConcepts": 11,
+    "cloneGroups": 11,
+    "hardcodedColors": 961,
+    "tokenizableColors": 628,
+    "hardcodedSizes": 0
+  }
+}

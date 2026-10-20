@@ -1,0 +1,77 @@
+# component-map 初稿（figmafe match 自动生成）：人工确认推荐组件、补齐变体 → props 后，合并进 design/component-map.yaml
+version: 1
+components:
+    - figma: NavBar
+      h5:
+        component: SuNavbar
+        import: sheep/ui/su-navbar/su-navbar.vue
+        usage: <su-navbar v-if="navbar === 'normal'" :title="title" statusBar :color="color" :tools="tools" :opacityBgUi="opacityBgUi" :backgroundColor="na…
+        notes: '[reuse 0.95] 同名，项目里已用 1 次，设计系统组件；来源 sheep/ui/su-navbar/su-navbar.vue；备选 Navbar / NavBar / SuToolbar'
+    - figma: NoticeBar
+      h5:
+        component: SuNoticeBar
+        import: sheep/ui/su-notice-bar/su-notice-bar.vue
+        usage: '<su-notice-bar style="flex: 1" :showIcon="false" scrollable single :text="data.contents[0].text" :speed="50" :color="data.textColor" @tap="s…'
+        notes: '[reuse 1.00] 同名，变体轴匹配 1/1，项目里已用 1 次，设计系统组件；来源 sheep/ui/su-notice-bar/su-notice-bar.vue；备选 NoticeBar / SNoticeBlock'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Tone：Warning 没有对应的枚举属性，需确认（可能要用 color / class 等实现）
+    - figma: Card
+      h5:
+        component: Card
+        import: import { Card } from '@dcloudio/uni-ui';
+        usage: <uni-card … />
+        notes: '[reuse 0.85] 同名；来源 uni-ui；备选 SLiveCard / SCouponCard / SUserCard'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Title：组件没有对应属性，需确认（用插槽 / 自行组合）
+    - figma: Tag
+      h5:
+        component: Tag
+        import: import { Tag } from '@dcloudio/uni-ui';
+        usage: '<uni-tag class="ss-m-r-10" size="small" custom-style="background-color: var(--ui-BG-Main); border-color: var(--ui-BG-Main); color: #fff;" v-…'
+        notes: '[reuse 0.90] 同名，项目里已用 1 次；来源 uni-ui'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Tone：Warning 没有对应的枚举属性，需确认（可能要用 color / class 等实现）；Variant：Light 没有对应的枚举属性，需确认（可能要用 color / class 等实现）
+    - figma: CountDown
+      h5:
+        component: SCountDown
+        import: sheep/components/s-count-down/s-count-down.vue
+        usage: <s-count-down :tipText="' '" :bgColor="bgColor" :dayText="':'" :hourText="':'" :minuteText="':'" :secondText="' '" :datatime="state.settleme…
+        notes: '[reuse 0.90] 同名，项目里已用 1 次；来源 sheep/components/s-count-down/s-count-down.vue；备选 Countdown'
+    - figma: Divider
+      h5:
+        component: SuSubline
+        import: sheep/ui/su-subline/su-subline.vue
+        usage: <su-subline v-bind="data"></su-subline>
+        notes: '[reuse 0.82] 同为 divider，项目里已用 1 次，设计系统组件；来源 sheep/ui/su-subline/su-subline.vue；备选 SLineBlock / SuTimeLine'
+    - figma: Cell
+      h5:
+        component: ListItem
+        import: import { ListItem } from '@dcloudio/uni-ui';
+        usage: <uni-list-item title="当前版本" :rightText="appInfo.version" showArrow clickable :border="false" class="list-border" @tap="onCheckUpdate…
+        notes: '[reuse 0.90] 同为 cell，标准组件，项目里已用 6 次；来源 uni-ui；备选 FormsItem / CollapseItem / SBlockItem'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）；Label：组件没有对应属性，需确认（用插槽 / 自行组合）；项目惯用写法：showarrow border="false" clickable
+    - figma: ProductCard
+      h5:
+        component: SGoodsColumn
+        import: sheep/components/s-goods-column/s-goods-column.vue
+        usage: '<s-goods-column class="" size="lg" :data="item" :grouponTag="true" @click="sheep.$router.go(''/pages/goods/groupon'', { id: item.id })" >'
+        notes: '[reuse 0.97] 同为 goods，项目里已用 34 次；来源 sheep/components/s-goods-column/s-goods-column.vue；备选 SGoodsItem / SGoodsCard / SGoodsShelves'
+    - figma: ActionBar
+      h5:
+        component: GoodsNav
+        import: import { GoodsNav } from '@dcloudio/uni-ui';
+        usage: <uni-goods-nav … />
+        notes: '[confirm 0.76] 同为 actionbar，标准组件；来源 uni-ui'
+    - figma: Button
+      h5:
+        component: Button
+        import: uni-app 内置组件
+        usage: <button class="ss-reset-button order-btn" v-if="state.data.orderId" @tap="onDetail(state.data.orderId)" >
+        notes: '[reuse 1.00] 同名，项目里已用 186 次；来源 uni-app 内置组件；备选 SMenuButton'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Size：Medium 没有对应的枚举属性，需确认（可能要用 color / class 等实现）；Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）
+gaps:
+    - figma: Price
+      platform: h5
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）

@@ -1,0 +1,272 @@
+{
+  "platform": "android",
+  "project": "androidproject",
+  "page": "TradeOrder 买入下单",
+  "items": [
+    {
+      "figma": "NavBar（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:2"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "TitleBar",
+          "kind": "ui-lib",
+          "source": "com.hjq.bar",
+          "score": 0.95,
+          "usage": 13,
+          "example": "\u003ccom.hjq.bar.TitleBar",
+          "exampleAt": "app/src/main/res/layout/about_activity.xml:11",
+          "why": "同为 navbar，标准组件，项目里已用 13 次"
+        },
+        {
+          "name": "MaterialToolbar",
+          "kind": "ui-lib",
+          "source": "Material Components",
+          "score": 0.61,
+          "usage": 0,
+          "example": "\u003ccom.google.android.material.…MaterialToolbar … /\u003e",
+          "exampleAt": "（Material Components 标准用法，项目未用过）",
+          "why": "同为 navbar，项目几乎不用 Material Components，标准组件"
+        }
+      ]
+    },
+    {
+      "figma": "SearchBar（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:4"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Tabs（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:6"
+      ],
+      "verdict": "confirm",
+      "candidates": [
+        {
+          "name": "TabLayout",
+          "kind": "ui-lib",
+          "source": "Material Components",
+          "score": 0.61,
+          "usage": 0,
+          "example": "\u003ccom.google.android.material.…TabLayout … /\u003e",
+          "exampleAt": "（Material Components 标准用法，项目未用过）",
+          "why": "同为 tabs，项目几乎不用 Material Components，标准组件"
+        }
+      ]
+    },
+    {
+      "figma": "Cell（未组件化）",
+      "instances": 2,
+      "nodeIds": [
+        "1:11",
+        "1:14"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SettingBar",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java",
+          "score": 0.92,
+          "usage": 14,
+          "example": "\u003ccom.hjq.custom.widget.layout.SettingBar",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:134",
+          "why": "同为 cell，项目里已用 14 次"
+        }
+      ]
+    },
+    {
+      "figma": "Stepper（未组件化）",
+      "instances": 2,
+      "nodeIds": [
+        "1:17",
+        "1:22"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Input（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:27"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "RegexEditText",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/RegexEditText.java",
+          "score": 0.92,
+          "usage": 14,
+          "example": "\u003ccom.hjq.custom.widget.view.RegexEditText",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:40",
+          "why": "同为 input，项目里已用 14 次",
+          "props": [
+            "项目惯用 style=\"@style/EditTextStyle\"（14 处）"
+          ]
+        },
+        {
+          "name": "ClearEditText",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/ClearEditText.java",
+          "score": 0.8,
+          "usage": 2,
+          "example": "\u003ccom.hjq.custom.widget.view.ClearEditText",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:25",
+          "why": "同为 input，项目里已用 2 次"
+        },
+        {
+          "name": "PasswordEditText",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/PasswordEditText.java",
+          "score": 0.76,
+          "usage": 6,
+          "example": "\u003ccom.hjq.custom.widget.view.PasswordEditText",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:32",
+          "why": "同为 input，专门用途（password），项目里已用 6 次",
+          "props": [
+            "项目惯用 style=\"@style/EditTextStyle\"（6 处）"
+          ]
+        },
+        {
+          "name": "TextInputEditText",
+          "kind": "ui-lib",
+          "source": "Material Components",
+          "score": 0.53,
+          "usage": 0,
+          "example": "\u003ccom.google.android.material.…TextInputEditText … /\u003e",
+          "exampleAt": "（Material Components 标准用法，项目未用过）",
+          "why": "同为 input，项目里已惯用 RegexEditText，项目几乎不用 Material Components，标准组件"
+        }
+      ]
+    },
+    {
+      "figma": "Switch（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:30"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SwitchButton",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java",
+          "score": 0.88,
+          "usage": 8,
+          "example": "\u003ccom.hjq.custom.widget.view.SwitchButton",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:241",
+          "why": "同为 switch，项目里已用 8 次"
+        }
+      ]
+    },
+    {
+      "figma": "Checkbox（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:32"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "CheckBox",
+          "kind": "ui-lib",
+          "source": "Android SDK widgets",
+          "score": 0.8,
+          "usage": 3,
+          "example": "\u003candroidx.appcompat.widget.AppCompatCheckBox",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:181",
+          "why": "同名，系统原生控件，项目里已用 3 次"
+        },
+        {
+          "name": "MaterialCheckBox",
+          "kind": "ui-lib",
+          "source": "Material Components",
+          "score": 0.7,
+          "usage": 0,
+          "example": "\u003ccom.google.android.material.…MaterialCheckBox … /\u003e",
+          "exampleAt": "（Material Components 标准用法，项目未用过）",
+          "why": "同名，项目几乎不用 Material Components"
+        }
+      ]
+    },
+    {
+      "figma": "Button（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:34"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "Button",
+          "kind": "ui-lib",
+          "source": "Android SDK widgets",
+          "score": 0.95,
+          "usage": 54,
+          "example": "\u003candroidx.appcompat.widget.AppCompatButton",
+          "exampleAt": "app/src/main/res/layout/custom_dialog.xml:34",
+          "why": "同名，系统原生控件，项目里已用 54 次"
+        },
+        {
+          "name": "SubmitButton",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SubmitButton.java",
+          "score": 0.8,
+          "usage": 2,
+          "example": "\u003ccom.hjq.custom.widget.view.SubmitButton",
+          "exampleAt": "app/src/main/res/layout/login_activity.xml:86",
+          "why": "同为 button，项目里已用 2 次"
+        },
+        {
+          "name": "PlayButton",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/PlayButton.java",
+          "score": 0.62,
+          "usage": 0,
+          "why": "同为 button，专门用途（play）"
+        },
+        {
+          "name": "FloatActionButton",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/FloatActionButton.java",
+          "score": 0.5,
+          "usage": 0,
+          "why": "同为 button，专用组件（floataction），专门用途（float）"
+        }
+      ]
+    },
+    {
+      "figma": "Empty（未组件化）",
+      "instances": 1,
+      "nodeIds": [
+        "1:37"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "StatusLayout",
+          "kind": "custom-view",
+          "source": "app/src/main/java/com/hjq/demo/widget/StatusLayout.java",
+          "score": 0.84,
+          "usage": 4,
+          "example": "\u003ccom.hjq.demo.widget.StatusLayout",
+          "exampleAt": "app/src/main/res/layout/status_activity.xml:15",
+          "why": "同为 empty，项目里已用 4 次"
+        }
+      ]
+    }
+  ],
+  "reuse": 7,
+  "confirm": 1,
+  "new": 2
+}

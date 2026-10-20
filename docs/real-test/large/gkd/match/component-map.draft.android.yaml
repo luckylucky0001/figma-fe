@@ -1,0 +1,61 @@
+# component-map 初稿（figmafe match 自动生成）：人工确认推荐组件、补齐变体 → props 后，合并进 design/component-map.yaml
+version: 1
+components:
+    - figma: NavBar（未组件化）
+      android:
+        component: GkTopAppBar
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTopAppBar.kt
+        usage: GkTopAppBar(
+        notes: '[reuse 1.00] 同为 navbar，项目里已用 28 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTopAppBar.kt；备选 GkMultiSelectionTopAppBar / GkPrivilegeTopBar / GkRuleListHeader'
+    - figma: SearchBar（未组件化）
+      android:
+        component: GkAppBarTextField
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkAppBarTextField.kt
+        usage: GkAppBarTextField(
+        notes: '[reuse 0.94] 同为 search，6 处调用里有 6 处传的是搜索词，是项目的搜索框，项目里已用 6 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkAppBarTextField.kt；备选 SearchBar'
+    - figma: Tabs（未组件化）
+      android:
+        component: TabRow
+        import: androidx.compose.material3.*.TabRow
+        usage: TabRow(…)  // import androidx.compose.material3.TabRow
+        notes: '[confirm 0.72] 同为 tabs；来源 Compose Material3；备选 GkRuleCategoryTabs / Tab / PrimaryScrollableTabRow'
+    - figma: Cell（未组件化）
+      android:
+        component: GkSettingItem
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSettingItem.kt
+        usage: GkSettingItem(
+        notes: '[reuse 1.00] 同为 cell，项目里已用 23 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSettingItem.kt；备选 GkRuleListItem / GkBatchActionMenuItem / GkTemplateVariableRow'
+    - figma: Input（未组件化）
+      android:
+        component: GkMultiTextField
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiTextField.kt
+        usage: GkMultiTextField(
+        notes: '[reuse 0.94] 同为 input，项目里已用 6 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiTextField.kt；备选 OutlinedTextField / GkOutlinedTextField / TextField'
+    - figma: Switch（未组件化）
+      android:
+        component: GkSwitch
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSwitch.kt
+        usage: GkSwitch(
+        notes: '[reuse 1.00] 同名，可选中组件，设计稿里是静态展示，项目里已用 7 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSwitch.kt；备选 GkTextSwitch / Switch / GkTriStateSwitch'
+    - figma: Checkbox（未组件化）
+      android:
+        component: GkCheckbox
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkCheckbox.kt
+        usage: GkCheckbox(
+        notes: '[reuse 1.00] 同名，可选中组件，设计稿里是静态展示，项目里已用 6 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkCheckbox.kt；备选 GkMenuItemCheckbox / Checkbox'
+    - figma: Button（未组件化）
+      android:
+        component: TextButton
+        import: androidx.compose.material3.*.TextButton
+        usage: TextButton(
+        notes: '[reuse 0.97] 同为 button，项目里已用 72 次；来源 Compose Material3；备选 GkIconButton / Button / OutlinedButton'
+    - figma: Empty（未组件化）
+      android:
+        component: GkEmptyState
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkEmptyState.kt
+        usage: GkEmptyState(text = stringResource(Res.string.data_empty))
+        notes: '[reuse 0.88] 名称包含，项目里已用 15 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkEmptyState.kt'
+gaps:
+    - figma: Stepper（未组件化）
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）

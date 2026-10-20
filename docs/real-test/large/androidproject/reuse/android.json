@@ -1,0 +1,1013 @@
+{
+  "platform": "android",
+  "root": "androidproject",
+  "stack": [
+    "XML View",
+    "Material Components"
+  ],
+  "libraries": [
+    {
+      "name": "Android SDK widgets",
+      "usage": 103,
+      "top": [
+        "Button×54",
+        "TextView×23",
+        "ImageView×13",
+        "CheckBox×3",
+        "RadioButton×3",
+        "RecyclerView×3",
+        "CardView×2",
+        "ProgressBar×1"
+      ]
+    },
+    {
+      "name": "com.hjq.bar",
+      "usage": 13,
+      "top": [
+        "TitleBar×13"
+      ]
+    },
+    {
+      "name": "com.hjq.shape",
+      "usage": 5,
+      "top": [
+        "ShapeTextView×4",
+        "ShapeLinearLayout×1"
+      ]
+    },
+    {
+      "name": "Material Components",
+      "usage": 1,
+      "top": [
+        "AppBarLayout×1"
+      ]
+    },
+    {
+      "name": "com.airbnb.lottie",
+      "usage": 1,
+      "top": [
+        "LottieAnimationView×1"
+      ]
+    },
+    {
+      "name": "com.hjq.nested",
+      "usage": 1,
+      "top": [
+        "NestedScrollViewPager×1"
+      ]
+    },
+    {
+      "name": "me.relex.circleindicator",
+      "usage": 1,
+      "top": [
+        "CircleIndicator3×1"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "name": "Button",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "button",
+      "usage": 54,
+      "usageFiles": [
+        "app/src/main/res/layout/custom_dialog.xml",
+        "app/src/main/res/layout/dialog_activity.xml",
+        "app/src/main/res/layout/guide_activity.xml",
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/home_message_fragment.xml",
+        "app/src/main/res/layout/home_mine_fragment.xml",
+        "app/src/main/res/layout/password_forget_activity.xml",
+        "app/src/main/res/layout/password_reset_activity.xml",
+        "app/src/main/res/layout/phone_reset_activity.xml"
+      ],
+      "example": "\u003candroidx.appcompat.widget.AppCompatButton",
+      "exampleAt": "app/src/main/res/layout/custom_dialog.xml:34"
+    },
+    {
+      "name": "TextView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "usage": 23,
+      "usageFiles": [
+        "app/src/main/res/layout/about_activity.xml",
+        "app/src/main/res/layout/custom_dialog.xml",
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/home_main_fragment.xml",
+        "app/src/main/res/layout/login_activity.xml",
+        "app/src/main/res/layout/pay_password_normal_item.xml",
+        "app/src/main/res/layout/phone_reset_activity.xml",
+        "app/src/main/res/layout/register_activity.xml",
+        "app/src/main/res/layout/safe_dialog.xml",
+        "app/src/main/res/layout/splash_activity.xml",
+        "app/src/main/res/layout/status_item.xml",
+        "app/src/main/res/layout/update_dialog.xml"
+      ],
+      "example": "\u003candroidx.appcompat.widget.AppCompatTextView",
+      "exampleAt": "app/src/main/res/layout/about_activity.xml:34",
+      "styles": {
+        "EditTextStyle": 1
+      }
+    },
+    {
+      "name": "ImageView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "image",
+      "usage": 13,
+      "usageFiles": [
+        "app/src/main/res/layout/custom_dialog.xml",
+        "app/src/main/res/layout/guide_item.xml",
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/home_main_fragment.xml",
+        "app/src/main/res/layout/home_message_fragment.xml",
+        "app/src/main/res/layout/home_navigation_item.xml",
+        "app/src/main/res/layout/login_activity.xml",
+        "app/src/main/res/layout/pay_password_delete_item.xml",
+        "app/src/main/res/layout/pay_password_dialog.xml",
+        "app/src/main/res/layout/personal_data_activity.xml",
+        "app/src/main/res/layout/update_dialog.xml"
+      ],
+      "example": "\u003candroidx.appcompat.widget.AppCompatImageView",
+      "exampleAt": "app/src/main/res/layout/custom_dialog.xml:20"
+    },
+    {
+      "name": "TitleBar",
+      "kind": "ui-lib",
+      "source": "com.hjq.bar",
+      "concept": "navbar",
+      "usage": 13,
+      "usageFiles": [
+        "app/src/main/res/layout/about_activity.xml",
+        "app/src/main/res/layout/copy_activity.xml",
+        "app/src/main/res/layout/copy_fragment.xml",
+        "app/src/main/res/layout/dialog_activity.xml",
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/home_message_fragment.xml",
+        "app/src/main/res/layout/home_mine_fragment.xml",
+        "app/src/main/res/layout/password_forget_activity.xml",
+        "app/src/main/res/layout/password_reset_activity.xml",
+        "app/src/main/res/layout/personal_data_activity.xml",
+        "app/src/main/res/layout/phone_reset_activity.xml",
+        "app/src/main/res/layout/setting_activity.xml",
+        "app/src/main/res/layout/status_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.bar.TitleBar",
+      "exampleAt": "app/src/main/res/layout/about_activity.xml:11"
+    },
+    {
+      "name": "ShapeTextView",
+      "kind": "ui-lib",
+      "source": "com.hjq.shape",
+      "usage": 4,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/home_navigation_item.xml",
+        "app/src/main/res/layout/setting_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.shape.view.ShapeTextView",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:312"
+    },
+    {
+      "name": "CheckBox",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "checkbox",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml"
+      ],
+      "example": "\u003candroidx.appcompat.widget.AppCompatCheckBox",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:181"
+    },
+    {
+      "name": "RadioButton",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "radio",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml"
+      ],
+      "example": "\u003candroidx.appcompat.widget.AppCompatRadioButton",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:211"
+    },
+    {
+      "name": "RecyclerView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "list",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/home_activity.xml",
+        "app/src/main/res/layout/home_main_fragment.xml",
+        "app/src/main/res/layout/pay_password_dialog.xml"
+      ],
+      "example": "\u003candroidx.recyclerview.widget.RecyclerView",
+      "exampleAt": "app/src/main/res/layout/home_activity.xml:16"
+    },
+    {
+      "name": "CardView",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "card",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/custom_dialog.xml",
+        "app/src/main/res/layout/update_dialog.xml"
+      ],
+      "example": "\u003candroidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/custom_dialog.xml:2"
+    },
+    {
+      "name": "AppBarLayout",
+      "kind": "ui-lib",
+      "source": "Material Components",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/home_main_fragment.xml"
+      ],
+      "example": "\u003ccom.google.android.material.appbar.AppBarLayout",
+      "exampleAt": "app/src/main/res/layout/home_main_fragment.xml:9"
+    },
+    {
+      "name": "CircleIndicator3",
+      "kind": "ui-lib",
+      "source": "me.relex.circleindicator",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/guide_activity.xml"
+      ],
+      "example": "\u003cme.relex.circleindicator.CircleIndicator3",
+      "exampleAt": "app/src/main/res/layout/guide_activity.xml:22"
+    },
+    {
+      "name": "LottieAnimationView",
+      "kind": "ui-lib",
+      "source": "com.airbnb.lottie",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/splash_activity.xml"
+      ],
+      "example": "\u003ccom.airbnb.lottie.LottieAnimationView",
+      "exampleAt": "app/src/main/res/layout/splash_activity.xml:11"
+    },
+    {
+      "name": "NestedScrollViewPager",
+      "kind": "ui-lib",
+      "source": "com.hjq.nested",
+      "concept": "carousel",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/home_main_fragment.xml"
+      ],
+      "example": "\u003ccom.hjq.nested.scroll.layout.NestedScrollViewPager",
+      "exampleAt": "app/src/main/res/layout/home_main_fragment.xml:92"
+    },
+    {
+      "name": "ProgressBar",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "concept": "loading",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/update_dialog.xml"
+      ],
+      "example": "\u003cProgressBar",
+      "exampleAt": "app/src/main/res/layout/update_dialog.xml:87"
+    },
+    {
+      "name": "ShapeLinearLayout",
+      "kind": "ui-lib",
+      "source": "com.hjq.shape",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/pay_password_dialog.xml"
+      ],
+      "example": "\u003ccom.hjq.shape.layout.ShapeLinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+      "exampleAt": "app/src/main/res/layout/pay_password_dialog.xml:2"
+    },
+    {
+      "name": "ViewPager2",
+      "kind": "ui-lib",
+      "source": "Android SDK widgets",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/guide_activity.xml"
+      ],
+      "example": "\u003candroidx.viewpager2.widget.ViewPager2",
+      "exampleAt": "app/src/main/res/layout/guide_activity.xml:10"
+    },
+    {
+      "name": "BaseDialog",
+      "kind": "custom-view",
+      "source": "library/base/src/main/java/com/hjq/base/BaseDialog.java",
+      "concept": "dialog",
+      "usage": 29,
+      "usageFiles": [
+        "app/src/main/java/com/hjq/demo/manager/DialogManager.java",
+        "app/src/main/java/com/hjq/demo/ui/activity/DialogActivity.java",
+        "app/src/main/java/com/hjq/demo/ui/activity/SettingActivity.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/CopyDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/PayPasswordDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/UpdateDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/AddressDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/AlbumDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/InputDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/MenuDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/ShareDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/StyleDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/TipsDialog.java",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/WaitDialog.java"
+      ],
+      "example": "public final class DialogManager implements LifecycleEventObserver, BaseDialog.OnDismissListener {",
+      "exampleAt": "app/src/main/java/com/hjq/demo/manager/DialogManager.java:21",
+      "extends": "AppCompatDialog"
+    },
+    {
+      "name": "RegexEditText",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/RegexEditText.java",
+      "concept": "input",
+      "props": [
+        "inputRegex",
+        "regexType"
+      ],
+      "usage": 14,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/password_forget_activity.xml",
+        "app/src/main/res/layout/phone_reset_activity.xml",
+        "app/src/main/res/layout/register_activity.xml",
+        "app/src/main/res/layout/safe_dialog.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.RegexEditText",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:40",
+      "enums": {
+        "inputRegex": [
+          "mobile",
+          "chinese",
+          "english",
+          "number",
+          "count",
+          "name",
+          "nonnull",
+          "password"
+        ]
+      },
+      "styles": {
+        "EditTextStyle": 14
+      },
+      "extends": "AppCompatEditText"
+    },
+    {
+      "name": "SettingBar",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java",
+      "concept": "cell",
+      "props": [
+        "bar_startText",
+        "bar_startTextColor",
+        "bar_startTextSize",
+        "bar_startTextHint",
+        "bar_startDrawable",
+        "bar_startDrawablePadding",
+        "bar_startDrawableSize",
+        "bar_startDrawableTint",
+        "bar_endText",
+        "bar_endTextColor",
+        "bar_endTextSize",
+        "bar_endTextHint",
+        "bar_endDrawable",
+        "bar_endDrawablePadding",
+        "bar_endDrawableSize",
+        "bar_endDrawableTint",
+        "bar_lineVisible",
+        "bar_lineDrawable",
+        "bar_lineSize",
+        "bar_lineMargin"
+      ],
+      "usage": 14,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/personal_data_activity.xml",
+        "app/src/main/res/layout/setting_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.layout.SettingBar",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:134",
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "SwitchButton",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java",
+      "concept": "switch",
+      "usage": 8,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/setting_activity.xml",
+        "app/src/main/java/com/hjq/demo/ui/activity/SettingActivity.java",
+        "app/src/main/java/com/hjq/demo/ui/fragment/home/HomeFindFragment.java"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.SwitchButton",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:241",
+      "extends": "View"
+    },
+    {
+      "name": "CountdownView",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/CountdownView.java",
+      "concept": "countdown",
+      "usage": 6,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/password_forget_activity.xml",
+        "app/src/main/res/layout/phone_reset_activity.xml",
+        "app/src/main/res/layout/register_activity.xml",
+        "app/src/main/res/layout/safe_dialog.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.CountdownView",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:270",
+      "styles": {
+        "CountdownViewStyle": 6
+      },
+      "extends": "AppCompatTextView",
+      "purpose": "验证码"
+    },
+    {
+      "name": "PasswordEditText",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/PasswordEditText.java",
+      "concept": "input",
+      "usage": 6,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/login_activity.xml",
+        "app/src/main/res/layout/password_reset_activity.xml",
+        "app/src/main/res/layout/register_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.PasswordEditText",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:32",
+      "styles": {
+        "EditTextStyle": 6
+      },
+      "extends": "RegexEditText",
+      "purpose": "密码"
+    },
+    {
+      "name": "SimpleRatingBar",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SimpleRatingBar.java",
+      "props": [
+        "grade",
+        "gradeCount",
+        "gradeWidth",
+        "gradeHeight",
+        "gradeSpace",
+        "gradeStep",
+        "normalDrawable",
+        "halfDrawable",
+        "fillDrawable"
+      ],
+      "usage": 4,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/java/com/hjq/demo/ui/fragment/home/HomeFindFragment.java"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.SimpleRatingBar",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:282",
+      "enums": {
+        "grade": [
+          "half",
+          "one"
+        ]
+      },
+      "extends": "View"
+    },
+    {
+      "name": "StatusLayout",
+      "kind": "custom-view",
+      "source": "app/src/main/java/com/hjq/demo/widget/StatusLayout.java",
+      "concept": "empty",
+      "usage": 4,
+      "usageFiles": [
+        "app/src/main/res/layout/status_activity.xml",
+        "app/src/main/java/com/hjq/demo/action/StatusAction.java"
+      ],
+      "example": "\u003ccom.hjq.demo.widget.StatusLayout",
+      "exampleAt": "app/src/main/res/layout/status_activity.xml:15",
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "PasswordView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/com/hjq/demo/widget/PasswordView.java",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/pay_password_dialog.xml",
+        "app/src/main/java/com/hjq/demo/ui/dialog/PayPasswordDialog.java"
+      ],
+      "example": "\u003ccom.hjq.demo.widget.PasswordView",
+      "exampleAt": "app/src/main/res/layout/pay_password_dialog.xml:66",
+      "extends": "View",
+      "purpose": "密码"
+    },
+    {
+      "name": "PlayerView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/com/hjq/demo/widget/PlayerView.java",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/java/com/hjq/demo/ui/activity/common/VideoPlayActivity.java",
+        "app/src/main/java/com/hjq/demo/ui/adapter/common/VideoSelectAdapter.java"
+      ],
+      "example": "implements PlayerView.OnPlayListener {",
+      "exampleAt": "app/src/main/java/com/hjq/demo/ui/activity/common/VideoPlayActivity.java:25",
+      "extends": "SimpleLayout",
+      "purpose": "视频"
+    },
+    {
+      "name": "ScaleImageView",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/ScaleImageView.java",
+      "concept": "image",
+      "props": [
+        "scaleRatio"
+      ],
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/about_activity.xml",
+        "app/src/main/res/layout/login_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.ScaleImageView",
+      "exampleAt": "app/src/main/res/layout/about_activity.xml:16",
+      "extends": "AppCompatImageView"
+    },
+    {
+      "name": "SmartTextView",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SmartTextView.java",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/pay_password_dialog.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.SmartTextView",
+      "exampleAt": "app/src/main/res/layout/pay_password_dialog.xml:20",
+      "extends": "AppCompatTextView"
+    },
+    {
+      "name": "XCollapsingToolbarLayout",
+      "kind": "custom-view",
+      "source": "app/src/main/java/com/hjq/demo/widget/XCollapsingToolbarLayout.java",
+      "usage": 3,
+      "usageFiles": [
+        "app/src/main/res/layout/home_main_fragment.xml",
+        "app/src/main/java/com/hjq/demo/ui/fragment/home/HomeMainFragment.java"
+      ],
+      "example": "\u003ccom.hjq.demo.widget.XCollapsingToolbarLayout",
+      "exampleAt": "app/src/main/res/layout/home_main_fragment.xml:16",
+      "extends": "CollapsingToolbarLayout"
+    },
+    {
+      "name": "ClearEditText",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/ClearEditText.java",
+      "concept": "input",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml",
+        "app/src/main/res/layout/login_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.ClearEditText",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:25",
+      "styles": {
+        "EditTextStyle": 2
+      },
+      "extends": "RegexEditText"
+    },
+    {
+      "name": "PressAlphaTextView",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/PressAlphaTextView.java",
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/java/com/hjq/demo/other/TitleBarStyle.java"
+      ],
+      "example": "return new PressAlphaTextView(context);",
+      "exampleAt": "app/src/main/java/com/hjq/demo/other/TitleBarStyle.java:31",
+      "extends": "AppCompatTextView"
+    },
+    {
+      "name": "SubmitButton",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SubmitButton.java",
+      "concept": "button",
+      "props": [
+        "progressColor",
+        "succeedColor",
+        "errorColor",
+        "progressStyle"
+      ],
+      "usage": 2,
+      "usageFiles": [
+        "app/src/main/res/layout/login_activity.xml",
+        "app/src/main/res/layout/register_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.SubmitButton",
+      "exampleAt": "app/src/main/res/layout/login_activity.xml:86",
+      "enums": {
+        "progressColor": [
+          "loading",
+          "progress"
+        ]
+      },
+      "styles": {
+        "ButtonStyle": 2
+      },
+      "extends": "AppCompatButton"
+    },
+    {
+      "name": "BottomSheetDialog",
+      "kind": "custom-view",
+      "source": "library/base/src/main/java/com/hjq/base/BottomSheetDialog.java",
+      "concept": "sheet",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/AlbumDialog.java"
+      ],
+      "example": "BottomSheetDialog dialog = new BottomSheetDialog(context, themeId);",
+      "exampleAt": "app/src/main/java/com/hjq/demo/ui/dialog/common/AlbumDialog.java:97",
+      "extends": "BaseDialog"
+    },
+    {
+      "name": "DrawableTextView",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/DrawableTextView.java",
+      "props": [
+        "drawableWidth",
+        "drawableHeight"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/home_find_fragment.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.DrawableTextView",
+      "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:300",
+      "extends": "AppCompatTextView"
+    },
+    {
+      "name": "SlantedTextView",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SlantedTextView.java",
+      "props": [
+        "triangle"
+      ],
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/splash_activity.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.view.SlantedTextView",
+      "exampleAt": "app/src/main/res/layout/splash_activity.xml:21",
+      "extends": "View"
+    },
+    {
+      "name": "WrapRecyclerView",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/layout/WrapRecyclerView.java",
+      "concept": "list",
+      "usage": 1,
+      "usageFiles": [
+        "app/src/main/res/layout/status_fragment.xml"
+      ],
+      "example": "\u003ccom.hjq.custom.widget.layout.WrapRecyclerView",
+      "exampleAt": "app/src/main/res/layout/status_fragment.xml:15",
+      "extends": "RecyclerView"
+    },
+    {
+      "name": "BrowserView",
+      "kind": "custom-view",
+      "source": "app/src/main/java/com/hjq/demo/widget/webview/BrowserView.java",
+      "usage": 0,
+      "extends": "NestedScrollWebView"
+    },
+    {
+      "name": "CustomViewStub",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/layout/CustomViewStub.java",
+      "usage": 0,
+      "extends": "FrameLayout"
+    },
+    {
+      "name": "FloatActionButton",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/FloatActionButton.java",
+      "concept": "button",
+      "usage": 0,
+      "extends": "AppCompatImageView"
+    },
+    {
+      "name": "PlayButton",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/PlayButton.java",
+      "concept": "button",
+      "props": [
+        "pb_lineColor",
+        "pb_lineSize",
+        "pb_animDuration"
+      ],
+      "usage": 0,
+      "extends": "View"
+    },
+    {
+      "name": "SimpleLayout",
+      "kind": "custom-view",
+      "source": "library/customWidget/src/main/java/com/hjq/custom/widget/layout/SimpleLayout.java",
+      "usage": 0,
+      "extends": "ViewGroup"
+    }
+  ],
+  "clusters": null,
+  "findings": [
+    {
+      "rule": "missed-reuse",
+      "severity": "warn",
+      "file": "app/src/main/res/layout/home_main_fragment.xml",
+      "line": 31,
+      "text": "\u003candroidx.appcompat.widget.Toolbar",
+      "hint": "原生 Toolbar：项目里已有 TitleBar（组件库）"
+    }
+  ],
+  "clones": [
+    {
+      "signature": "f7244177",
+      "elements": 23,
+      "locations": [
+        "app/src/main/res/layout/dialog_activity.xml:2",
+        "app/src/main/res/layout/home_mine_fragment.xml:2"
+      ],
+      "sample": "\u003cLinearLayout\u003e\n  \u003ccom.hjq.bar.TitleBar\u003e\n  \u003candroidx.core.widget.NestedScrollView\u003e\n    \u003cLinearLayout\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n      \u003candroidx.appcompat.widget.AppCompatButton\u003e\n"
+    },
+    {
+      "signature": "39a84b37",
+      "elements": 5,
+      "locations": [
+        "app/src/main/res/layout/register_activity.xml:38",
+        "app/src/main/res/layout/safe_dialog.xml:31"
+      ],
+      "sample": "\u003cLinearLayout\u003e\n  \u003cFrameLayout\u003e\n    \u003ccom.hjq.custom.widget.view.RegexEditText\u003e\n    \u003cView\u003e\n  \u003ccom.hjq.custom.widget.view.CountdownView\u003e\n"
+    }
+  ],
+  "colors": [
+    {
+      "value": "#333333",
+      "count": 4,
+      "sample": [
+        "app/src/main/res/layout/pay_password_dialog.xml",
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java"
+      ]
+    },
+    {
+      "value": "#222222",
+      "count": 3,
+      "sample": [
+        "app/src/main/res/layout/about_activity.xml",
+        "app/src/main/java/com/hjq/demo/ui/dialog/common/AddressDialog.java"
+      ]
+    },
+    {
+      "value": "#ECECEC",
+      "count": 3,
+      "sample": [
+        "app/src/main/res/layout/pay_password_dialog.xml",
+        "app/src/main/java/com/hjq/demo/widget/PasswordView.java",
+        "library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java"
+      ]
+    },
+    {
+      "value": "#000000",
+      "count": 2,
+      "token": "@color/black",
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    },
+    {
+      "value": "#11BBFF",
+      "count": 2,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    },
+    {
+      "value": "#A4A4A4",
+      "count": 2,
+      "sample": [
+        "app/src/main/res/layout/home_navigation_item.xml",
+        "app/src/main/res/layout/phone_reset_activity.xml"
+      ]
+    },
+    {
+      "value": "#FFFFFF",
+      "count": 2,
+      "token": "@color/white",
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java"
+      ]
+    },
+    {
+      "value": "#0099CC",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    },
+    {
+      "value": "#142DCC",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/SmartBallPulseFooter.java"
+      ]
+    },
+    {
+      "value": "#19CC95",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SubmitButton.java"
+      ]
+    },
+    {
+      "value": "#287BDE",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/ui/activity/common/CrashActivity.java"
+      ]
+    },
+    {
+      "value": "#30B399",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/SmartBallPulseFooter.java"
+      ]
+    },
+    {
+      "value": "#3AC652",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java"
+      ]
+    },
+    {
+      "value": "#4BD763",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java"
+      ]
+    },
+    {
+      "value": "#666666",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/widget/PasswordView.java"
+      ]
+    },
+    {
+      "value": "#669900",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    },
+    {
+      "value": "#898989",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/SmartBallPulseFooter.java"
+      ]
+    },
+    {
+      "value": "#999999",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/ui/activity/common/CrashActivity.java"
+      ]
+    },
+    {
+      "value": "#99FFFFFF",
+      "count": 1,
+      "token": "@color/white60",
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/SmartBallPulseFooter.java"
+      ]
+    },
+    {
+      "value": "#AA66CC",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    },
+    {
+      "value": "#B65656",
+      "count": 1,
+      "sample": [
+        "app/src/main/res/layout/splash_activity.xml"
+      ]
+    },
+    {
+      "value": "#BBBBBB",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java"
+      ]
+    },
+    {
+      "value": "#BDBDBD",
+      "count": 1,
+      "sample": [
+        "app/src/main/res/layout/about_activity.xml"
+      ]
+    },
+    {
+      "value": "#BFBFBF",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java"
+      ]
+    },
+    {
+      "value": "#DDDDDD",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SubmitButton.java"
+      ]
+    },
+    {
+      "value": "#E3E3E3",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SwitchButton.java"
+      ]
+    },
+    {
+      "value": "#EEEEEE",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/SmartBallPulseFooter.java"
+      ]
+    },
+    {
+      "value": "#F85E5E",
+      "count": 1,
+      "sample": [
+        "app/src/main/res/layout/setting_activity.xml"
+      ]
+    },
+    {
+      "value": "#FAFAFA",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    },
+    {
+      "value": "#FC8E34",
+      "count": 1,
+      "sample": [
+        "library/customWidget/src/main/java/com/hjq/custom/widget/view/SubmitButton.java"
+      ]
+    },
+    {
+      "value": "#FF4444",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    },
+    {
+      "value": "#FF4600",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/SmartBallPulseFooter.java"
+      ]
+    },
+    {
+      "value": "#FF8800",
+      "count": 1,
+      "sample": [
+        "app/src/main/java/com/hjq/demo/other/MaterialHeader.java"
+      ]
+    }
+  ],
+  "metrics": {
+    "files": 198,
+    "componentUsages": 235,
+    "rawPrimitives": 1,
+    "componentization": 0.9957627118644068,
+    "duplicateConcepts": 0,
+    "cloneGroups": 2,
+    "hardcodedColors": 44,
+    "tokenizableColors": 5,
+    "hardcodedSizes": 3
+  }
+}

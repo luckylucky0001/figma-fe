@@ -81,6 +81,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		ids      []string
 		variants map[string]bool
 		layers   map[string]bool
+		heights  map[string]float64 // "Size=Medium" → the instance height in the design
 	}
 	sets := map[string]*agg{}
 	var order []string
@@ -103,6 +104,12 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			a.ids = append(a.ids, n.ID)
 			for k, v := range n.Variant() {
 				a.variants[k+"="+v] = true
+				if n.AbsoluteBoundingBox != nil && sizeAxis(k) {
+					if a.heights == nil {
+						a.heights = map[string]float64{}
+					}
+					a.heights[k+"="+v] = n.AbsoluteBoundingBox.Height
+				}
 			}
 			if pathVariant != "" {
 				a.variants["Variant="+pathVariant] = true
@@ -230,7 +237,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 			if ex == "" && as.Kind == "ui-lib" {
 				ex, at = libSnippet(as), "（"+as.Source+" 标准用法，项目未用过）"
 			}
-			hints := PropHints(item.Variants, as)
+			hints := sizeByHeight(PropHints(item.Variants, as), a.heights, as)
 			if st, n := topStyle(as.Styles); n >= 3 {
 				hints = append(hints, fmt.Sprintf(`项目惯用 style="@style/%s"（%d 处）`, st, n))
 			}

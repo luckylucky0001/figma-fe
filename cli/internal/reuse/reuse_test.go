@@ -1418,3 +1418,31 @@ func TestComposeClustersAndWrappers(t *testing.T) {
 		}
 	}
 }
+
+// vue-h5-template feedback: a 32px "Medium" button is Vant size="small", not normal (44px)
+func TestSizeByHeight(t *testing.T) {
+	a := Asset{Name: "Button", Source: "Vant"}
+	hints := sizeByHeight([]string{`Size=Medium → size="normal"`, `Type=Primary → type="primary"`}, map[string]float64{"Size=Medium": 32}, a)
+	if len(hints) != 2 || !strings.Contains(hints[0], `size="small"`) || !strings.Contains(hints[0], "normal（44px）") || !strings.HasPrefix(hints[1], "Type=") {
+		t.Errorf("hints = %q", hints)
+	}
+	if h := sizeByHeight([]string{"x"}, map[string]float64{"Size=Medium": 32}, Asset{Name: "Button", Source: "Other"}); len(h) != 1 || h[0] != "x" {
+		t.Errorf("unknown library sizes must leave hints alone: %q", h)
+	}
+	if h := PropHints([]string{"Title=On", "Title=Off"}, Asset{Name: "CellGroup", Source: "Vant", Props: []string{"title"}}); len(h) != 1 || !strings.Contains(h[0], "卡片外面") {
+		t.Errorf("CellGroup title note: %q", h)
+	}
+}
+
+func TestLayoutShellIsNotABar(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","vant":"4"}}`)
+	write(t, root, "src/layout/index.vue", "<template><div><router-view /><van-tabbar fixed><van-button>x</van-button></van-tabbar></div></template>\n<style>.bar{position: fixed; bottom: 0}</style>")
+	write(t, root, "src/views/home.vue", "<template><Layout /></template>")
+	r := ScanH5(root)
+	for _, a := range r.Assets {
+		if a.Name == "Layout" && a.Concept != "" {
+			t.Errorf("Layout concept = %q", a.Concept)
+		}
+	}
+}

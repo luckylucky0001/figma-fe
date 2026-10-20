@@ -26,6 +26,7 @@ var (
 	propIdentRe   = regexp.MustCompile(`^[\w-]+$`)
 	propsKeyRe    = regexp.MustCompile(`\bprops\s*:\s*`)
 	fixedRe       = regexp.MustCompile(`position:\s*fixed`)
+	routerViewRe  = regexp.MustCompile(`<(router-view|RouterView|nuxt-page|NuxtPage)\b`)
 	fixedBottomRe = regexp.MustCompile(`(?s)position:\s*fixed[^}]*?(?:^|[;{\s])bottom:\s*0|(?:^|[;{\s])bottom:\s*0[^}]*?position:\s*fixed`) // not border-bottom: 0
 	propNameRe    = regexp.MustCompile(`(?:^|[{,;\n])\s*['"]?(\w+)['"]?\??\s*:`)
 )
@@ -226,7 +227,10 @@ func ScanH5(root string) *Report {
 			}
 			a.Enums = unionEnums(f.text)
 			refineBadge(a)
-			if fixedBottomRe.MatchString(f.text) && fixedRe.MatchString(f.text) && (a.Concept == "navbar" || a.Concept == "") {
+			// a page shell (<router-view> plus a fixed tab bar) is a layout, not a bar
+			if routerViewRe.MatchString(f.markup) {
+				a.Concept = ""
+			} else if fixedBottomRe.MatchString(f.text) && fixedRe.MatchString(f.text) && (a.Concept == "navbar" || a.Concept == "") {
 				a.Concept = "tabbar" // a bar pinned to the bottom is a tab bar / action bar, whatever its name says
 				if regexp.MustCompile(`(?i)button|btn|submit`).MatchString(f.markup) {
 					a.Concept = "actionbar"

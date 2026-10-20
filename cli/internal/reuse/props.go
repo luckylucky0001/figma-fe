@@ -1,6 +1,8 @@
 package reuse
 
 import (
+	"fmt"
+	"math"
 	"regexp"
 	"sort"
 	"strings"
@@ -39,6 +41,11 @@ var libEnums = map[string]map[string][]string{
 }
 
 // libFlags: boolean / presence props of common library components.
+// libPropNotes: a prop that does not render where its name suggests (found while implementing pages).
+var libPropNotes = map[string]map[string]string{
+	"Vant/CellGroup": {"title": "title 显示在分组上方、inset 卡片外面；标题要在卡片里时，用第一行 Cell 当标题"},
+}
+
 var libFlags = map[string][]string{
 	"Vant/Cell":            {"title", "value", "label", "is-link", "center", "border", "icon"},
 	"Vant/Button":          {"plain", "round", "block", "disabled", "loading"},
@@ -129,6 +136,78 @@ func normProp(s string) string {
 	return strings.ToLower(strings.NewReplacer("-", "", "_", "").Replace(s))
 }
 
+// libSizes: rendered heights (px) of a library component's size values, from its default theme.
+var libSizes = map[string]map[string]float64{
+	"Vant/Button":  {"large": 50, "normal": 44, "small": 32, "mini": 24},
+	"NutUI/Button": {"large": 48, "normal": 38, "small": 28},
+}
+
+func sizeAxis(axis string) bool {
+	n := normProp(axis)
+	return n == "size" || n == "height"
+}
+
+// sizeByHeight replaces the by-name mapping of a Size axis with the library size whose height is
+// closest to what the design draws: Vant's normal is 44px, so a "Medium" button drawn 32px high is
+// size="small" (vue-h5-template: the page came out 12px taller per button).
+func sizeByHeight(hints []string, heights map[string]float64, a Asset) []string {
+	sizes := libSizes[a.Source+"/"+a.Name]
+	if len(sizes) == 0 || len(heights) == 0 {
+		return hints
+	}
+	byAxis := map[string][]string{}
+	var axes []string
+	for kv := range heights {
+		axis := strings.SplitN(kv, "=", 2)[0]
+		if byAxis[axis] == nil {
+			axes = append(axes, axis)
+		}
+		byAxis[axis] = append(byAxis[axis], kv)
+	}
+	sort.Strings(axes)
+	var names []string
+	for n := range sizes {
+		names = append(names, n)
+	}
+	sort.Strings(names)
+	for _, axis := range axes {
+		kvs := byAxis[axis]
+		sort.Strings(kvs)
+		var parts []string
+		for _, kv := range kvs {
+			h := heights[kv]
+			best := ""
+			for _, n := range names {
+				if best == "" || math.Abs(sizes[n]-h) < math.Abs(sizes[best]-h) {
+					best = n
+				}
+			}
+			part := fmt.Sprintf("%s（设计稿高 %.0fpx）→ size=\"%s\"（%s %s = %.0fpx）", kv, h, best, a.Source, best, sizes[best])
+			if byName := resolve(strings.SplitN(kv, "=", 2)[1], names); byName != "" && byName != best {
+				part += fmt.Sprintf("，按名字会对到 %s（%.0fpx）", byName, sizes[byName])
+			}
+			parts = append(parts, part)
+		}
+		line, at := strings.Join(parts, "；"), -1
+		var out []string
+		for _, h := range hints {
+			if strings.HasPrefix(h, axis+"=") || strings.HasPrefix(h, axis+"：") {
+				if at < 0 {
+					at = len(out)
+					out = append(out, line) // in place of the by-name line
+				}
+				continue
+			}
+			out = append(out, h)
+		}
+		if at < 0 {
+			out = append([]string{line}, out...)
+		}
+		hints = out
+	}
+	return hints
+}
+
 // PropHints maps the Figma variants of an item onto the chosen component's props.
 func PropHints(variants []string, a Asset) []string {
 	enums := map[string][]string{}
@@ -159,7 +238,11 @@ func PropHints(variants []string, a Asset) []string {
 		vals := axes[axis]
 		if onOff(vals) {
 			if p := flagProp(axis, flags); p != "" {
-				out = append(out, axis+"=On → "+flagAssign(a, p)+"；"+axis+"=Off → 不传")
+				line := axis + "=On → " + flagAssign(a, p) + "；" + axis + "=Off → 不传"
+				if note := libPropNotes[a.Source+"/"+a.Name][p]; note != "" {
+					line += "（注意：" + note + "）"
+				}
+				out = append(out, line)
 			} else {
 				out = append(out, axis+"：组件没有对应属性，需确认（用插槽 / 自行组合）")
 			}

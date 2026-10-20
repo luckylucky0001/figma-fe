@@ -20,6 +20,7 @@ var (
 	plainClassKtRe = regexp.MustCompile(`(?m)^\s*(?:internal\s+|open\s+|abstract\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:\([^)]*\))?\s*\{`)
 	helperClassRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
 	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*(?:(?:public|abstract|final)\s+)*class\s+([A-Z]\w*)\s*(?:<[^{]*?>)?\s+extends\s+([A-Z][\w.]*)`)
+	composCallRe   = regexp.MustCompile(`(?:^|[^\w.])([A-Z]\w*)\s*[({]`)
 	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+(?:<[^>]*>\s*)?(?:[\w.]+\.)?([A-Z]\w*)\s*\(`) // fun <T> X(, fun RowScope.X(
 	styleableRe2   = regexp.MustCompile(`(?s)<declare-styleable\s+name="(\w+)"\s*>(.*?)</declare-styleable>`)
 	attrNameRe     = regexp.MustCompile(`<attr\s+name="(\w+)"`)
@@ -217,6 +218,7 @@ func ScanAndroid(root string) *Report {
 		name string
 	}
 	composDefs := map[string][]composDef{} // file → composables in definition order (overloads included)
+	composBody := map[string]string{}      // composable → its body (the first overload)
 	for _, f := range code {
 		for _, re := range []*regexp.Regexp{viewClassKtRe, viewClassJvRe} {
 			for _, m := range re.FindAllStringSubmatch(f.text, -1) {
@@ -258,6 +260,9 @@ func ScanAndroid(root string) *Report {
 				continue // previews, screens and their sections are not reusable components
 			}
 			a := get("composable", name, f.rel)
+			if end := matchParen(f.text, m[1]-1); end > 0 && composBody[name] == "" {
+				composBody[name] = funcBody(f.text, end+1)
+			}
 			if a.Purpose == "" {
 				a.Purpose = docPurpose(docBefore(f.text, m[0]))
 			}
@@ -285,6 +290,15 @@ func ScanAndroid(root string) *Report {
 			}
 			refineConcept(a)
 			compos[name] = a
+		}
+	}
+	// project composables a composable calls in its body (GkSettingsDialog → GkDialog): built on it
+	for name, body := range composBody {
+		a := compos[name]
+		for _, m := range composCallRe.FindAllStringSubmatch(body, -1) {
+			if compos[m[1]] != nil && m[1] != name && !contains(a.BuiltOn, m[1]) {
+				a.BuiltOn = append(a.BuiltOn, m[1])
+			}
 		}
 	}
 	// DownloadActionButton extends ItemActionButton, a plain project class with no supertype: a name
@@ -563,6 +577,12 @@ func ScanAndroid(root string) *Report {
 			if best != nil && best.Concept != lib.Concept && !strings.HasSuffix(best.Name, k.c) {
 				best = nil
 			}
+			// GkMenuItemRadioButton is a menu row holding a RadioButton and GkRuleCategoryTabs the tabs of one
+			// feature, not the project's RadioButton / tabs: a wrapper adds at most its prefix and one word
+			if best != nil && (strings.HasSuffix(best.Name, k.c) && len(splitWords(strings.TrimSuffix(best.Name, k.c))) > 2 ||
+				!strings.HasSuffix(best.Name, k.c) && featureNamed(*best, lib.Concept)) {
+				best = nil
+			}
 			if best != nil && best.Name != k.c {
 				lib.WrappedBy = best.Name
 			}
@@ -667,6 +687,34 @@ func stripComments(s string) string {
 }
 
 // matchParen returns the index of the ')' closing the '(' at open.
+// funcBody is the body of a Kotlin function whose parameter list ends right before from: the
+// { … } block after an optional return type, or an expression body up to the next blank line.
+func funcBody(s string, from int) string {
+	for i := from; i < len(s); i++ {
+		switch s[i] {
+		case '{':
+			depth := 0
+			for j := i; j < len(s); j++ {
+				switch s[j] {
+				case '{':
+					depth++
+				case '}':
+					if depth--; depth == 0 {
+						return s[i : j+1]
+					}
+				}
+			}
+			return s[i:]
+		case '=':
+			if e := strings.Index(s[i:], "\n\n"); e > 0 {
+				return s[i : i+e]
+			}
+			return s[i:]
+		}
+	}
+	return ""
+}
+
 func matchParen(s string, open int) int {
 	depth := 0
 	for i := open; i < len(s); i++ {

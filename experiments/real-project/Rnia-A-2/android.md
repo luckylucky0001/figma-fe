@@ -39,10 +39,10 @@
 
 ## 0. 优先处理（按影响面排序）
 
-1. 「button（Compose）」有 6 种实现（共用 41 次）→ 统一到 `NiaButton`
+1. 「button（Compose）」有 5 种实现（共用 32 次）→ 统一到 `NiaButton`
 2. 「tag（Compose）」有 3 种实现（共用 12 次）→ 统一到 `CommerceTag`
-3. 「loading（Compose）」有 3 种实现（共用 10 次）→ 统一到 `NiaLoadingWheel`
-4. 「cell（Compose）」有 2 种实现（共用 8 次）→ 统一到 `CommerceCell`
+3. 「cell（Compose）」有 2 种实现（共用 8 次）→ 统一到 `CommerceCell`
+4. 「loading（Compose）」有 2 种实现（共用 8 次）→ 统一到 `NiaLoadingWheel`
 5. 2 处HorizontalDivider（Compose Material3），项目设计系统已封装为 CommerceDivider，应使用封装
 
 ## 1. 三方组件库使用
@@ -128,10 +128,10 @@
 
 | 概念 | 实现 | 推荐统一为 |
 |---|---|---|
-| button（Compose） | NiaButton（Composable，用 8 次）<br>CommerceButton（Composable，用 3 次）<br>NiaTextButton（Composable，用 10 次）<br>NiaOutlinedButton（Composable，用 6 次）<br>NiaIconToggleButton（Composable，用 9 次）<br>NiaViewToggleButton（Composable，用 5 次） | `NiaButton` |
+| button（Compose） | NiaButton（Composable，用 8 次）<br>CommerceButton（Composable，用 3 次）<br>NiaTextButton（Composable，用 10 次）<br>NiaOutlinedButton（Composable，用 6 次）<br>NiaViewToggleButton（Composable，用 5 次） | `NiaButton` |
 | tag（Compose） | CommerceTag（Composable，用 1 次）<br>NiaFilterChip（Composable，用 6 次）<br>NiaTopicTag（Composable，用 5 次） | `CommerceTag` |
-| loading（Compose） | NiaLoadingWheel（Composable，用 6 次）<br>NiaOverlayLoadingWheel（Composable，用 2 次）<br>CircularProgressIndicator（组件库，用 2 次） | `NiaLoadingWheel` |
 | cell（Compose） | CommerceCell（Composable，用 7 次）<br>ListItem（组件库，用 1 次） | `CommerceCell` |
+| loading（Compose） | NiaLoadingWheel（Composable，用 6 次）<br>CircularProgressIndicator（组件库，用 2 次） | `NiaLoadingWheel` |
 | card（Compose） | CommerceCard（Composable，用 3 次）<br>Card（组件库，用 2 次） | `CommerceCard` |
 | divider（Compose） | CommerceDivider（Composable，用 3 次）<br>Divider（Compose Material3，项目未使用） | `CommerceDivider` |
 | navbar（Compose） | CommerceNavBar（Composable，用 1 次）<br>NiaTopAppBar（Composable，用 2 次） | `CommerceNavBar` |

@@ -40,7 +40,7 @@
 ## 0. 优先处理（按影响面排序）
 
 1. 「cell（Compose）」有 2 种实现（共用 12 次）→ 统一到 `NiaCell`
-2. 「loading（Compose）」有 3 种实现（共用 10 次）→ 统一到 `NiaLoadingWheel`
+2. 「loading（Compose）」有 2 种实现（共用 8 次）→ 统一到 `NiaLoadingWheel`
 3. 「card（Compose）」有 2 种实现（共用 6 次）→ 统一到 `NiaCard`
 4. 2 处HorizontalDivider（Compose Material3），项目设计系统已封装为 NiaDivider，应使用封装
 5. 5 处写死的颜色已有同值 token，可以直接替换（见第 6 节）
@@ -128,8 +128,8 @@
 
 | 概念 | 实现 | 推荐统一为 |
 |---|---|---|
-| loading（Compose） | NiaLoadingWheel（Composable，用 6 次）<br>NiaOverlayLoadingWheel（Composable，用 2 次）<br>CircularProgressIndicator（组件库，用 2 次） | `NiaLoadingWheel` |
 | cell（Compose） | NiaCell（Composable，用 11 次）<br>ListItem（组件库，用 1 次） | `NiaCell` |
+| loading（Compose） | NiaLoadingWheel（Composable，用 6 次）<br>CircularProgressIndicator（组件库，用 2 次） | `NiaLoadingWheel` |
 | card（Compose） | NiaCard（Composable，用 4 次）<br>Card（组件库，用 2 次） | `NiaCard` |
 | divider（Compose） | NiaDivider（Composable，用 4 次）<br>Divider（Compose Material3，项目未使用） | `NiaDivider` |
 

@@ -166,15 +166,15 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		}
 	}
 	familyBase = familyBases(pool)
-	libChild = map[string]bool{}
-	names := map[string]bool{}
+	libChild = map[string]string{}
+	names := map[string]string{}
 	for _, a := range pool {
-		names[a.Source+"|"+a.Name] = true
+		names[a.Source+"|"+a.Name] = a.Concept
 	}
 	for _, a := range pool {
 		for _, suf := range []string{"s", "Group", "Row"} {
-			if a.Concept != "" && a.Concept != "button" && names[a.Source+"|"+a.Name+suf] {
-				libChild[a.Source+"|"+a.Name] = true // Tab in Tabs, Radio in RadioGroup, NiaTab in NiaTabRow
+			if c, ok := names[a.Source+"|"+a.Name+suf]; ok && a.Concept != "" && a.Concept != "button" {
+				libChild[a.Source+"|"+a.Name] = c // Tab in Tabs, Radio in RadioGroup, NiaTab in NiaTabRow
 			}
 		}
 	}
@@ -358,8 +358,11 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 		s -= 0.15
 		why = append(why, "页面布局片段")
 	}
-	if libChild[a.Source+"|"+a.Name] && fn != an {
+	if c, ok := libChild[a.Source+"|"+a.Name]; ok && fn != an {
 		s -= 0.1
+		if c == a.Concept {
+			s -= 0.05 // the same concept (Tab / TabRow): its uses are inside the container, never above it
+		}
 		why = append(why, "是容器组件（"+a.Name+"s / Group / Row）的子项")
 	}
 	// a feature component: several required business parameters (InterestsItem needs following,
@@ -649,7 +652,8 @@ var purposeWords = map[string]bool{"password": true, "confirm": true, "dismiss":
 	// an icon button is a different component from a text button (gkd: GkIconButton × 71)
 	"icon": true,
 	// commerce domains (yudao: s-live-card, s-coupon-card, s-user-card are not "the" Card)
-	"live": true, "coupon": true, "user": true, "member": true, "vip": true, "groupon": true, "seckill": true, "order": true, "point": true}
+	"live": true, "coupon": true, "user": true, "member": true, "vip": true, "groupon": true, "seckill": true, "order": true, "point": true,
+	"auth": true, "wallet": true, "discount": true}
 
 // docPurposes: phrases in a component's doc comment that name one job (CountdownView in AndroidProject
 // is "验证码倒计时", a resend-code button, not a timer), with the English word a design name would use.
@@ -699,7 +703,7 @@ func familyPrefix(w string) bool { return famPrefixes[w] }
 
 var famPrefixes = map[string]bool{}
 
-var libChild = map[string]bool{}
+var libChild = map[string]string{} // library child component → its container's concept
 
 var libShare = map[string]float64{}
 

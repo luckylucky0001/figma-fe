@@ -17,7 +17,7 @@
 | 指标 | 值 |
 |---|---|
 | 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（704 / 704） |
-| 重复概念（同一 UI 概念有多个实现） | 4 |
+| 重复概念（同一 UI 概念有多个实现） | 2 |
 | 重复结构（可抽成组件的复制粘贴结构） | 9 组 |
 | 硬编码颜色 | 105 处（其中 35 处已有同值 token） |
 | 硬编码尺寸 | 971 处 |
@@ -25,10 +25,10 @@
 ## 0. 优先处理（按影响面排序）
 
 1. 35 处写死的颜色已有同值 token，可以直接替换（见第 6 节）
-2. 「empty（View）」有 2 种实现（共用 20 次）→ 统一到 `@layout/error_panel`
-3. 「navbar（View）」有 3 种实现（共用 12 次）→ 统一到 `@layout/toolbar_layout`
-4. 「navbar（Compose）」有 2 种实现（共用 12 次）→ 统一到 `TopAppBar`
-5. 5 个元素的结构被复制了 5 次（app/src/main/res/layout-large-land/fragment_video_detail.xml:416 等）→ 抽成组件
+2. 「navbar（Compose）」有 2 种实现（共用 12 次）→ 统一到 `TopAppBar`
+3. 「navbar（View）」有 2 种实现（共用 11 次）→ 统一到 `@layout/toolbar_layout`
+4. 5 个元素的结构被复制了 5 次（app/src/main/res/layout-large-land/fragment_video_detail.xml:416 等）→ 抽成组件
+5. 7 个元素的结构被复制了 4 次（app/src/main/res/layout-land/list_stream_card_item.xml:2 等）→ 抽成组件
 
 ## 1. 三方组件库使用
 
@@ -130,10 +130,8 @@
 
 | 概念 | 实现 | 推荐统一为 |
 |---|---|---|
-| navbar（View） | @layout/toolbar_layout（业务组件，用 6 次）<br>Toolbar（组件库，用 5 次）<br>@layout/settings_category_header_title（业务组件，用 1 次） | `@layout/toolbar_layout` |
-| empty（View） | @layout/error_panel（业务组件，用 14 次）<br>@layout/list_empty_view（业务组件，用 6 次） | `@layout/error_panel` |
 | navbar（Compose） | TopAppBar（Composable，用 10 次）<br>TopAppBar（组件库，用 2 次） | `TopAppBar` |
-| dialog（View） | PlaylistCreationDialog（自定义 View，用 2 次）<br>PlaylistAppendDialog（自定义 View，用 1 次） | `PlaylistCreationDialog` |
+| navbar（View） | @layout/toolbar_layout（业务组件，用 6 次）<br>Toolbar（组件库，用 5 次） | `@layout/toolbar_layout` |
 
 ## 5. 重复结构（复制粘贴的 UI 片段，可抽成组件）
 

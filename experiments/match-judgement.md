@@ -90,7 +90,7 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 ### 小结
 
-- **最终结果**：26 个项目（5 个调参 + 21 个留出）× 3 份设计稿共 858 项，**✓825 / △33 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
+- **最终结果**：26 个项目（5 个调参 + 21 个留出）× 3 份设计稿共 858 项，**✓826 / △32 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
 - 订单详情（组件化的设计稿）：五个真实项目（覆盖 Vue+Vant、React+antd-mobile、XML+QMUI、Compose+Material3+自有设计系统）共 55 项，完全正确 52 项，可用但不是最优 3 项。
 - 我的持仓（没组件化、中文图层名）：四个真实项目共 48 项，完全正确 45 项，可用但不是最优 3 项。
 - 两份设计稿在这五个项目上都没有出现推荐错误组件的情况；但留出项目 Jetsnack 第一次跑出现了 3 个错误（见第 3 节），说明规则对没见过的项目结构仍会出错，修正后已加入回归。拿不准的情况，工具给出的都是「需确认」。
@@ -166,11 +166,21 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 | gkd（Compose Multiplatform + Material3，自有 ui/component） | 自有 GkTopAppBar / GkSettingItem / GkSwitch / GkEmptyState … | 订单详情 9 ✓ / 1 △ / **1 ✗**；我的持仓 8 ✓ / 1 △ / **3 ✗**；买入下单 8 ✓ / 1 △ / **1 ✗**（自动识别平台时还会被误判成 H5 项目，全部「需新建」） | ① 仓库根目录有个只装了 husky 之类工具的 `package.json`，被当成 H5 项目 → 依赖里有 vue / react / uni-app / taro 等前端框架才算 H5；② 按钮推荐了 GkIconButton（图标按钮，71 处），但项目里文字按钮是 TextButton（72 处）→ icon 算专门用途词；③ 补上 M3 的 PrimaryTabRow / ScrollableTabRow 等标签栏变体 |
 | AndroidProject（getActivity，国内很多项目的骨架） | XML；TitleBar 三方库 + 自有 customWidget 库（SettingBar、SwitchButton、RegexEditText、CountdownView）+ StatusLayout | 订单详情 8 ✓ / 1 △ / **2 ✗**；我的持仓 8 ✓ / 1 △ / **3 ✗**；买入下单 7 ✓ / **3 ✗** | ① 布局里 54 个 `AppCompatButton` 没算成平台 Button，于是推荐了只用过 1 次的 SubmitButton → `AppCompat*` 计入对应的平台控件；② 设置行 SettingBar、状态布局 StatusLayout 没被认成列表项 / 空状态 → 概念词补上 settingbar / settingitem / statuslayout；③ CountdownView 的注释写着「验证码倒计时」，它是发送验证码的按钮，不是支付倒计时 → 读组件自己的文档注释（Java/Kotlin 声明前的注释、Vue 文件开头的 `<!-- -->`），写明专门用途（验证码 / 登录 / 视频 / 优惠券 …）的组件降权，结论最多「需确认」 |
 
-修正后三个系统 **✓91 / △8 / ✗0**。剩下的 △ 是工具目前做不到的：
+修正后三个系统 **✓92 / △7 / ✗0**。剩下的 △ 是工具目前做不到的：
 
 - 芋道的商品页底部操作栏是 `pages/goods/components/detail/detail-tabbar.vue`（4 个商品页在用），名字叫 tabbar、按钮从插槽传进来，文件本身看不出是操作栏，工具推荐了 uni-ui 的 GoodsNav（需确认）；
 - gkd 的搜索框是放在顶栏里的 GkAppBarTextField，名字里没有 search，工具推荐了项目没用过的 M3 SearchBar；
 - AndroidProject 只有验证码倒计时，支付倒计时其实要新建，工具现在给的是「需确认 CountdownView（专门用途：验证码）」，由人来否掉。
+
+体检（`figmafe reuse`）在这三个系统上也暴露了「重复概念」的误报，同样改成通用规则：
+
+- gkd 的「button 有 11 种实现 → 统一到 Button」把图标按钮、FAB 和 M3 的 TextButton 混为一谈，「divider」把 GkTwoLineText（两行文字）当成分割线，「dialog 有 15 种实现」里大部分是建立在 GkDialog / GkAlertDialog 之上的业务弹窗 → 专门用途、只靠弱词关联的组件不算重复实现（原来只对 H5 生效，现在 Android 也生效）；记录每个组件内部用到的项目组件（Compose 按函数体、H5 按模板），建立在同概念另一个组件之上的算特化，不算第二种实现；
+- gkd 的 RadioButton 被判成「已被 GkMenuItemRadioButton 封装」（其实是带单选的菜单行），PrimaryScrollableTabRow 被判成被 GkRuleCategoryTabs 封装 → 封装组件的名字最多在库组件名前加前缀和一个词，且不能是业务命名；
+- M3 的 BottomAppBar 因为含 appbar 被算成导航栏 → 单独成概念（既不是顶栏也不是底部操作栏）；
+- 修这些时发现一个顺序 bug：体检按「项目前缀」判断业务命名时，前缀表还是上一次的（NiaTopicTag 被当成业务组件）→ 先算前缀再过滤；
+- 芋道的装修组件 s-notice-block / s-image-block 只是包了一层 su-notice-bar / image，SuTabItem 是 SuTabs 的子项 → 同上按「建立在其上」和「子项」处理；auth / wallet / discount 算专门用途（顺带让「资产卡片」不再推荐 SWalletCard）。
+
+修正后 gkd 的重复概念 9 → 4，AndroidProject 1 → 0（FloatActionButton / PlayButton 不再算按钮的重复实现），芋道 10 → 11（前缀修正后多认出几组真实的多实现，如 navbar 有 SuNavbar / SuInnerNavbar / SCustomNavbar 等 6 种）；真实项目实验的打分（summary.json）不变。
 
 ## 4. 第三份设计稿：买入下单（英文图层名、没组件化、新概念）
 

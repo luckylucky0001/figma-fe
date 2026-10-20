@@ -17,18 +17,18 @@
 | 指标 | 值 |
 |---|---|
 | 组件化率（组件使用 / 组件使用 + 可替换的原生元素） | 100%（998 / 998） |
-| 重复概念（同一 UI 概念有多个实现） | 12 |
+| 重复概念（同一 UI 概念有多个实现） | 10 |
 | 重复结构（可抽成组件的复制粘贴结构） | 1 组 |
 | 硬编码颜色 | 12 处（其中 2 处已有同值 token） |
 | 硬编码尺寸 | 312 处 |
 
 ## 0. 优先处理（按影响面排序）
 
-1. 「cell（View）」有 2 种实现（共用 57 次）→ 统一到 `QMUICommonListItemView`
-2. 「dialog（Compose）」有 2 种实现（共用 23 次）→ 统一到 `QMUIModal`
-3. 「popup（View）」有 2 种实现（共用 18 次）→ 统一到 `QMUIPopup`
-4. 「button（Compose）」有 5 种实现（共用 13 次）→ 统一到 `CommonImageButton`
-5. 「loading（View）」有 4 种实现（共用 13 次）→ 统一到 `QMUILoadingView`
+1. 「dialog（Compose）」有 2 种实现（共用 23 次）→ 统一到 `QMUIModal`
+2. 「popup（View）」有 2 种实现（共用 18 次）→ 统一到 `QMUIPopup`
+3. 「loading（View）」有 4 种实现（共用 13 次）→ 统一到 `QMUILoadingView`
+4. 5 个元素的结构被复制了 6 次（qmuidemo/src/main/res/layout/fragment_priority_linear_layout.xml:45 等）→ 抽成组件
+5. 「button（Compose）」有 3 种实现（共用 10 次）→ 统一到 `CommonImageButton`
 
 ## 1. 三方组件库使用
 
@@ -127,16 +127,14 @@
 
 | 概念 | 实现 | 推荐统一为 |
 |---|---|---|
-| button（Compose） | CommonImageButton（Composable，用 6 次）<br>CommonButton（Composable，用 2 次）<br>CommonTextButton（Composable，用 2 次）<br>OriginOpenButton（Composable，用 2 次）<br>PickCurrentCheckButton（Composable，用 1 次） | `CommonImageButton` |
 | loading（View） | QMUILoadingView（自定义 View，用 5 次）<br>QMUIProgressBar（自定义 View，用 6 次）<br>QDLoadingItemView（自定义 View，用 1 次）<br>ProgressBar（组件库，用 1 次） | `QMUILoadingView` |
-| navbar（View） | QMUITopBar（自定义 View，用 6 次）<br>QDSectionHeaderView（自定义 View，用 1 次）<br>QMUIGroupListSectionHeaderFooterView（自定义 View，用 2 次） | `QMUITopBar` |
-| dialog（View） | QMUIDialogView（自定义 View，用 3 次）<br>QMUIBaseDialog（自定义 View，用 0 次）<br>QMUIDialogMenuItemView（自定义 View，用 5 次） | `QMUIDialogView` |
-| cell（View） | QMUICommonListItemView（自定义 View，用 56 次）<br>QMUIBottomSheetListItemView（自定义 View，用 1 次） | `QMUICommonListItemView` |
+| button（Compose） | CommonImageButton（Composable，用 6 次）<br>CommonButton（Composable，用 2 次）<br>CommonTextButton（Composable，用 2 次） | `CommonImageButton` |
 | dialog（Compose） | QMUIModal（Composable，用 15 次）<br>QMUIDialogAction（Composable，用 8 次） | `QMUIModal` |
 | popup（View） | QMUIPopup（自定义 View，用 14 次）<br>QMUIFloatLayout（自定义 View，用 4 次） | `QMUIPopup` |
-| button（View） | Button（组件库，用 5 次）<br>QMUIAlphaImageButton（自定义 View，用 2 次） | `Button` |
+| navbar（View） | QMUITopBar（自定义 View，用 6 次）<br>QDSectionHeaderView（自定义 View，用 1 次） | `QMUITopBar` |
 | tabs（View） | QMUIBasicTabSegment（自定义 View，用 4 次）<br>QMUITabView（自定义 View，用 2 次） | `QMUIBasicTabSegment` |
 | carousel（View） | SwipeBackgroundView（自定义 View，用 2 次）<br>ViewPager（组件库，用 1 次） | `SwipeBackgroundView` |
+| dialog（View） | QMUIDialogView（自定义 View，用 3 次）<br>QMUIBaseDialog（自定义 View，用 0 次） | `QMUIDialogView` |
 | checkbox（Compose） | QMUICheckBox（Composable，用 1 次）<br>QMUIPhotoPickCheckBox（Composable，用 1 次） | `QMUICheckBox` |
 | icon（Compose） | QMUIMarkIcon（Composable，用 1 次）<br>QMUIChevronIcon（Composable，用 0 次） | `QMUIMarkIcon` |
 

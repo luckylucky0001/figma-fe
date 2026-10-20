@@ -35,6 +35,7 @@ type Asset struct {
 	Attrs       map[string]int      `json:"attrs,omitempty"`       // H5 static props the project passes, by count (round, color="#1baeae")
 	Extends     string              `json:"extends,omitempty"`     // Android custom view: its base class (SquareImageView → AppCompatImageView)
 	Purpose     string              `json:"purpose,omitempty"`     // the one job its doc comment says it is for (CountdownView: 验证码倒计时 → 验证码)
+	BuiltOn     []string            `json:"builtOn,omitempty"`     // components its body / markup uses (GkSettingsDialog → GkDialog)
 }
 
 type Finding struct {
@@ -140,6 +141,8 @@ var concepts = []struct {
 	{"countdown", []string{"countdown", "timer"}},
 	{"goods", []string{"goods", "product", "sku", "goodscard", "productcard"}},
 	{"actionbar", []string{"actionbar", "goodsaction", "goodsnav", "bottombar", "bottomactionbar", "footerbar"}},
+	// M3 BottomAppBar: icon actions + FAB at the bottom; neither the top bar nor a checkout button row
+	{"bottomappbar", []string{"bottomappbar"}},
 }
 
 // noise words that never decide a concept on their own
@@ -311,12 +314,13 @@ func ConceptOf(name string) string {
 
 // clusters groups assets of the same concept; a concept implemented by ≥2 assets is a duplicate.
 func clusters(assets []Asset, libAll []Asset) []Cluster {
+	setFamilyPrefixes(assets) // before the filter: featureNamed strips the family prefix (Nia in NiaTopicTag)
 	by := map[string][]Asset{}
 	for _, a := range assets {
 		// H5 feature components (SelectUserModal) and names tied to the concept only by a weak word
 		// (JFlyLineMap, an echarts line chart) are not alternative implementations to converge
 		if a.Concept == "" || a.Kind == "page-local" && a.Usage == 0 || featureOnly(a) || a.WrappedBy != "" ||
-			a.Kind != "ui-lib" && techOf(a) == "" && (featureNamed(a, a.Concept) || weakOnly(a.Name, a.Concept)) {
+			a.Kind != "ui-lib" && (featureNamed(a, a.Concept) || weakOnly(a.Name, a.Concept)) {
 			continue // a feature's own component (SnackItem(snack: Snack), a page helper) is not a duplicate to converge
 		}
 		by[a.Concept+techOf(a)] = append(by[a.Concept+techOf(a)], a)
@@ -337,7 +341,6 @@ func clusters(assets []Asset, libAll []Asset) []Cluster {
 		}
 	}
 	var out []Cluster
-	setFamilyPrefixes(assets)
 	for c, as := range by {
 		as = collapseFamilies(dropSubclasses(as))
 		if len(as) < 2 || oneFamily(as) {
@@ -398,7 +401,8 @@ func collapseFamilies(as []Asset) []Asset {
 	for _, a := range as {
 		part := false
 		for _, b := range as {
-			if b.Name != a.Name && len(b.Name) >= 4 && strings.HasPrefix(a.Name, b.Name) && len(a.Name) > len(b.Name) && a.Name[len(b.Name)] >= 'A' && a.Name[len(b.Name)] <= 'Z' {
+			bn := strings.TrimSuffix(b.Name, "s") // SuTabItem belongs to SuTabs
+			if b.Name != a.Name && len(bn) >= 4 && strings.HasPrefix(a.Name, bn) && len(a.Name) > len(bn) && a.Name[len(bn)] >= 'A' && a.Name[len(bn)] <= 'Z' {
 				part = true
 				break
 			}
@@ -584,6 +588,9 @@ func dropSubclasses(as []Asset) []Asset {
 					sub = true
 				}
 			}
+		}
+		for _, b := range as {
+			sub = sub || a.Kind != "ui-lib" && contains(a.BuiltOn, b.Name) // GkSettingsDialog calls GkDialog, s-notice-block renders su-notice-bar
 		}
 		if !sub {
 			out = append(out, a)

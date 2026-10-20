@@ -434,6 +434,9 @@
         "topicImageUrl",
         "onClick",
         "onFollowButtonClick"
+      ],
+      "builtOn": [
+        "NiaIconToggleButton"
       ]
     },
     {
@@ -685,6 +688,9 @@
       "required": [
         "scrollableState",
         "stateName"
+      ],
+      "builtOn": [
+        "TrackJank"
       ]
     },
     {
@@ -706,6 +712,9 @@
       "required": [
         "isBookmarked",
         "onClick"
+      ],
+      "builtOn": [
+        "NiaIconToggleButton"
       ]
     },
     {
@@ -810,6 +819,15 @@
         "onToggleBookmark",
         "onClick",
         "onTopicClick"
+      ],
+      "builtOn": [
+        "NewsResourceHeaderImage",
+        "NewsResourceTitle",
+        "BookmarkButton",
+        "NotificationDot",
+        "NewsResourceMetaData",
+        "NewsResourceShortDescription",
+        "NewsResourceTopics"
       ]
     },
     {
@@ -948,6 +966,9 @@
       "exampleAt": "core/designsystem/src/main/kotlin/com/google/samples/apps/nowinandroid/core/designsystem/component/LoadingWheel.kt:167",
       "required": [
         "contentDesc"
+      ],
+      "builtOn": [
+        "NiaLoadingWheel"
       ]
     },
     {
@@ -1072,6 +1093,9 @@
       "exampleAt": "app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/orderdetail/OrderDetailScreen.kt:108",
       "required": [
         "content"
+      ],
+      "builtOn": [
+        "CommerceDivider"
       ]
     },
     {
@@ -1168,6 +1192,10 @@
         "spec",
         "unitPriceInCents",
         "quantity"
+      ],
+      "builtOn": [
+        "DynamicAsyncImage",
+        "CommercePrice"
       ]
     },
     {
@@ -1309,6 +1337,9 @@
       "required": [
         "topics",
         "onTopicClick"
+      ],
+      "builtOn": [
+        "NiaTopicTag"
       ]
     },
     {
@@ -1320,7 +1351,20 @@
         "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/NiaCatalogActivity.kt"
       ],
       "example": "setContent { NiaCatalog() }",
-      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/NiaCatalogActivity.kt:31"
+      "exampleAt": "app-nia-catalog/src/main/kotlin/com/google/samples/apps/niacatalog/NiaCatalogActivity.kt:31",
+      "builtOn": [
+        "NiaButton",
+        "NiaOutlinedButton",
+        "NiaTextButton",
+        "NiaFilterChip",
+        "NiaIconToggleButton",
+        "NiaViewToggleButton",
+        "NiaTopicTag",
+        "NiaTabRow",
+        "NiaTab",
+        "NiaNavigationBar",
+        "NiaNavigationBarItem"
+      ]
     },
     {
       "name": "NiaNavigationRail",
@@ -1427,6 +1471,9 @@
       "exampleAt": "feature/foryou/impl/src/main/kotlin/com/google/samples/apps/nowinandroid/feature/foryou/impl/ForYouScreen.kt:400",
       "required": [
         "imageUrl"
+      ],
+      "builtOn": [
+        "DynamicAsyncImage"
       ]
     },
     {
@@ -1481,6 +1528,9 @@
         "state",
         "orientation",
         "orientation:Orientation"
+      ],
+      "builtOn": [
+        "Scrollbar"
       ]
     },
     {
@@ -1499,6 +1549,9 @@
         "orientation",
         "orientation:Orientation",
         "onThumbMoved"
+      ],
+      "builtOn": [
+        "Scrollbar"
       ]
     }
   ],
@@ -1510,11 +1563,10 @@
         "CommerceButton（Composable，用 3 次）",
         "NiaTextButton（Composable，用 10 次）",
         "NiaOutlinedButton（Composable，用 6 次）",
-        "NiaIconToggleButton（Composable，用 9 次）",
         "NiaViewToggleButton（Composable，用 5 次）"
       ],
       "recommend": "NiaButton",
-      "totalUsage": 41
+      "totalUsage": 32
     },
     {
       "concept": "tag（Compose）",
@@ -1527,22 +1579,21 @@
       "totalUsage": 12
     },
     {
-      "concept": "loading（Compose）",
-      "members": [
-        "NiaLoadingWheel（Composable，用 6 次）",
-        "NiaOverlayLoadingWheel（Composable，用 2 次）",
-        "CircularProgressIndicator（组件库，用 2 次）"
-      ],
-      "recommend": "NiaLoadingWheel",
-      "totalUsage": 10
-    },
-    {
       "concept": "cell（Compose）",
       "members": [
         "CommerceCell（Composable，用 7 次）",
         "ListItem（组件库，用 1 次）"
       ],
       "recommend": "CommerceCell",
+      "totalUsage": 8
+    },
+    {
+      "concept": "loading（Compose）",
+      "members": [
+        "NiaLoadingWheel（Composable，用 6 次）",
+        "CircularProgressIndicator（组件库，用 2 次）"
+      ],
+      "recommend": "NiaLoadingWheel",
       "totalUsage": 8
     },
     {

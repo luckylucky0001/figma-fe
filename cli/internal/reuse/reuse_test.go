@@ -1382,3 +1382,39 @@ func TestDocCommentPurpose(t *testing.T) {
 		t.Error("forPurpose")
 	}
 }
+
+// gkd: feature dialogs built on the base dialog, an icon button, a two-line text and a menu row holding
+// a RadioButton are not duplicate implementations / wrappers
+func TestComposeClustersAndWrappers(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "app/build.gradle", "")
+	imp := "package a\nimport androidx.compose.material3.*\n"
+	write(t, root, "app/src/main/kotlin/a/ui/component/GkDialog.kt", imp+
+		"@Composable\nfun GkDialog(onDismiss: () -> Unit, content: @Composable () -> Unit) {\n    AlertDialog(onDismissRequest = onDismiss, confirmButton = {}, text = { content() })\n}\n\n"+
+		"@Preview\n@Composable\nprivate fun P() { GkSettingsDialog() }\n")
+	write(t, root, "app/src/main/kotlin/a/ui/component/GkSettingsDialog.kt", imp+"@Composable\nfun GkSettingsDialog() {\n    GkDialog(onDismiss = {}) { Text(\"x\") }\n}\n")
+	write(t, root, "app/src/main/kotlin/a/ui/component/GkIconButton.kt", imp+"@Composable\nfun GkIconButton(onClick: () -> Unit) { IconButton(onClick = onClick) {} }\n")
+	write(t, root, "app/src/main/kotlin/a/ui/component/GkTwoLineText.kt", imp+"@Composable\nfun GkTwoLineText(a: String, b: String) { Text(a) }\n")
+	write(t, root, "app/src/main/kotlin/a/ui/component/GkMenuItemRadioButton.kt", imp+"@Composable\nfun GkMenuItemRadioButton(selected: Boolean) { RadioButton(selected = selected, onClick = null) }\n")
+	var uses string
+	for i := 0; i < 3; i++ {
+		uses += "    GkSettingsDialog()\n    GkIconButton(onClick = {})\n    GkTwoLineText(\"a\", \"b\")\n    GkMenuItemRadioButton(true)\n    TextButton(onClick = {}) {}\n    HorizontalDivider()\n"
+	}
+	write(t, root, "app/src/main/kotlin/a/ui/home/HomePage.kt", imp+"import a.ui.component.*\n@Composable\nfun HomePage() {\n"+uses+"}\n")
+	r := ScanAndroid(root)
+	for _, c := range r.Clusters {
+		if strings.HasPrefix(c.Concept, "button") || strings.HasPrefix(c.Concept, "divider") || strings.HasPrefix(c.Concept, "dialog") {
+			t.Errorf("not a duplicate: %+v", c)
+		}
+	}
+	for _, a := range r.LibAll {
+		if a.Name == "RadioButton" && a.WrappedBy != "" {
+			t.Errorf("RadioButton wrapped by %s", a.WrappedBy)
+		}
+	}
+	for _, a := range r.Assets {
+		if a.Name == "GkSettingsDialog" && !contains(a.BuiltOn, "GkDialog") || a.Name == "GkDialog" && len(a.BuiltOn) > 0 {
+			t.Errorf("%s builtOn %v (the preview after GkDialog is not its body)", a.Name, a.BuiltOn)
+		}
+	}
+}

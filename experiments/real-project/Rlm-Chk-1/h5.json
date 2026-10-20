@@ -735,7 +735,10 @@
       "attrs": {
         "right-icon=\"clear-full\"": 1,
         "type=\"password\"": 1
-      }
+      },
+      "builtOn": [
+        "Icon"
+      ]
     },
     {
       "name": "FieldGroup",
@@ -800,7 +803,10 @@
       ],
       "example": "\u003cv-header\u003e\u003c/v-header\u003e",
       "exampleAt": "src/App.vue:3",
-      "extends": "NavBar"
+      "extends": "NavBar",
+      "builtOn": [
+        "NavBar"
+      ]
     },
     {
       "name": "Tabbar",
@@ -808,7 +814,11 @@
       "source": "src/components/Tabbar/index.vue",
       "concept": "tabbar",
       "usage": 0,
-      "extends": "Tabbar"
+      "extends": "Tabbar",
+      "builtOn": [
+        "Tabbar",
+        "TabbarItem"
+      ]
     }
   ],
   "clusters": [

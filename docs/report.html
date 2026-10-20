@@ -31,14 +31,14 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 
 <div class="kpi">
 <div><span class="big">26</span> 个真实开源项目（H5 / Android 主流技术栈）× 3 份设计稿</div>
-<div><span class="big">825/858</span> 项复用推荐正确，<b>0</b> 项错误，其余为「可用但不是最优」</div>
+<div><span class="big">826/858</span> 项复用推荐正确，<b>0</b> 项错误，其余为「可用但不是最优」</div>
 <div><span class="big">0/11 → 11/12</span> 真实项目里实现新页面：不用 Skill → 用 Skill 通过复用检查</div>
 <div><span class="big">+35%</span> token、+45% 耗时：用 Skill 多出的成本</div>
 </div>
 
 <div class="tldr"><b>结论</b><ul>
 <li><b>对存量项目，先把「有什么」查清楚，才知道新设计稿能复用什么。</b><code>figmafe reuse</code> 扫一遍现有 H5（Vue / React / uni-app / Taro + Vant / antd-mobile / NutUI / uni-ui / taro-ui）或 Android（XML View / Compose，QMUI / Material / AppCompat / 自有设计系统）项目，得到组件资产、项目惯例、重复实现和「组件库有但本项目用不了」的组件。<code>figmafe match</code> 再把新设计稿逐个元素对上去，给出「直接复用 / 需确认 / 需新建」，并附上项目里的真实写法和变体 → props 的配置。</li>
-<li><b>准确率</b>：26 个项目 × 3 份设计稿共 858 项，✓825 / △33 / ✗0。其中 21 个是「留出」项目：调规则时没用过，第一次跑出现过错误（见第 2 节），修的都是通用规则，之后作为回归测试。</li>
+<li><b>准确率</b>：26 个项目 × 3 份设计稿共 858 项，✓826 / △32 / ✗0。其中 21 个是「留出」项目：调规则时没用过，第一次跑出现过错误（见第 2 节），修的都是通用规则，之后作为回归测试。</li>
 <li><b>Agent 实测</b>：在 5 个真实项目里按同一份设计稿实现新页面，不用 Skill 的 11 次全部没通过复用检查（Now in Android 里新建了 11～12 个和已有组件重复的组件；Haiku 在 newbee 里一个现成组件都没用），用 Skill 的 11/12 次通过。Haiku 从 0/4 提到 4/4：模型越弱，固定流程的收益越大。</li>
 <li><b>新页面闭环</b>：demo 仓库里，<code>figmafe verify</code> 一条命令输出复用率、违规、像素差异和节点级偏差，退出码可做 CI 门禁；故意埋的 3 处错误全部被抓出，修正后一次通过。</li>
 <li><b>只用免费能力</b>：不用 Figma Code Connect、Dev Mode MCP 和 Variables REST API（都要付费），设计数据走自己写的插件（Plugin API，免费）。</li>
@@ -91,11 +91,11 @@ ul { margin: 1mm 0; padding-left: 5mm; } li { margin: 0.5mm 0; }
 <tr><td title='XML + DataBinding（AppCompat 主题）'>kunminx <span class='tagho'>留出</span></td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓7 <span class='warn'>△3</span></td></tr>
 <tr><td title='uni-app + wot-design-uni'>jeecg-uniapp <span class='tagho'>留出</span></td><td>✓11</td><td>✓12</td><td>✓10</td></tr>
 <tr><td title='Vue 3 + Vant（另装 NutUI / Varlet）'>vue-h5-template <span class='tagho'>留出</span></td><td>✓10 <span class='warn'>△1</span></td><td>✓12</td><td>✓10</td></tr>
-<tr><td title='uni-app 商城 + 自有设计系统 sheep/ui + uni-ui'>yudao-mall <span class='tagho'>留出</span></td><td>✓10 <span class='warn'>△1</span></td><td>✓10 <span class='warn'>△2</span></td><td>✓10</td></tr>
+<tr><td title='uni-app 商城 + 自有设计系统 sheep/ui + uni-ui'>yudao-mall <span class='tagho'>留出</span></td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓10</td></tr>
 <tr><td title='Compose Multiplatform + Material3 + 自有组件'>gkd <span class='tagho'>留出</span></td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓9 <span class='warn'>△1</span></td></tr>
 <tr><td title='XML + 自有 customWidget 库 + TitleBar'>androidproject <span class='tagho'>留出</span></td><td>✓10 <span class='warn'>△1</span></td><td>✓11 <span class='warn'>△1</span></td><td>✓10</td></tr>
 </table></div>
-<p class="note"><b>合计 ✓825 / △33 / ✗0</b>（858 项）。技术栈：Vue 2/3、React、uni-app、Taro × Vant / NutUI / antd-mobile / uni-ui / taro-ui / wot-design-uni / 自有组件；Android XML / Compose × QMUI / Material / AppCompat / 三方 View 库 / 自有设计系统（逐项见 <code>experiments/real-match-eval.md</code>）。订单详情是组件化设计稿，我的持仓未组件化、中文图层，买入下单未组件化、含新概念。</p>
+<p class="note"><b>合计 ✓826 / △32 / ✗0</b>（858 项）。技术栈：Vue 2/3、React、uni-app、Taro × Vant / NutUI / antd-mobile / uni-ui / taro-ui / wot-design-uni / 自有组件；Android XML / Compose × QMUI / Material / AppCompat / 三方 View 库 / 自有设计系统（逐项见 <code>experiments/real-match-eval.md</code>）。订单详情是组件化设计稿，我的持仓未组件化、中文图层，买入下单未组件化、含新概念。</p>
 <p class="note">✓ 推荐正确；△ 可用但不是最优（多为「需确认」）；✗ 推荐错误。留出 = 调规则时没用过的项目。</p>
 <h3>留出项目第一次跑的结果（如实记录，修正前）</h3>
 <table>

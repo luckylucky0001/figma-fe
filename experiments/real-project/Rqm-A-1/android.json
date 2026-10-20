@@ -388,6 +388,9 @@
         "activity",
         "activity:ComponentActivity",
         "images"
+      ],
+      "builtOn": [
+        "QMUIPhotoThumbnail"
       ]
     },
     {
@@ -480,6 +483,9 @@
       "required": [
         "res",
         "onClick"
+      ],
+      "builtOn": [
+        "PressWithAlphaBox"
       ]
     },
     {
@@ -620,6 +626,12 @@
         "onBeginPullExit",
         "onTapExit",
         "content"
+      ],
+      "builtOn": [
+        "PhotoBackgroundWithTransition",
+        "PhotoBackground",
+        "PhotoContentWithAlphaTransition",
+        "PhotoContentWithRectTransition"
       ]
     },
     {
@@ -658,6 +670,9 @@
       "exampleAt": "photo/src/main/java/com/qmuiteam/photo/activity/QMUIPhotoPickerActivity.kt:358",
       "required": [
         "scrollState"
+      ],
+      "builtOn": [
+        "QMUITopBar"
       ]
     },
     {
@@ -803,6 +818,9 @@
         "enable",
         "text",
         "onClick"
+      ],
+      "builtOn": [
+        "PressWithAlphaBox"
       ]
     },
     {
@@ -851,6 +869,9 @@
       "required": [
         "isOriginOpenFlow",
         "onToggleOrigin"
+      ],
+      "builtOn": [
+        "QMUIPhotoPickRadio"
       ]
     },
     {
@@ -897,6 +918,9 @@
         "modal",
         "modal:QMUIModal",
         "actions"
+      ],
+      "builtOn": [
+        "QMUIDialogAction"
       ]
     },
     {
@@ -922,6 +946,9 @@
         "photoProvider",
         "photoProvider:QMUIPhotoProvider",
         "operateContent"
+      ],
+      "builtOn": [
+        "QMUIGesturePhoto"
       ]
     },
     {
@@ -1100,6 +1127,9 @@
       "required": [
         "isPicked",
         "onPicked"
+      ],
+      "builtOn": [
+        "QMUICheckBox"
       ]
     },
     {
@@ -1111,7 +1141,10 @@
         "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt"
       ],
       "example": "PickerResult()",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt:89"
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDPhotoFragment.kt:89",
+      "builtOn": [
+        "QMUIPhotoThumbnailWithViewer"
+      ]
     },
     {
       "name": "QDEditor",
@@ -1122,7 +1155,11 @@
         "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt"
       ],
       "example": "QDEditor()",
-      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:100"
+      "exampleAt": "qmuidemo/src/main/java/com/qmuiteam/qmuidemo/fragment/lab/QDEditorFragment.kt:100",
+      "builtOn": [
+        "QMUIEditor",
+        "TextButton"
+      ]
     },
     {
       "name": "QMUIBottomSheetList",
@@ -1235,6 +1272,10 @@
         "list",
         "markIndex",
         "onItemClick"
+      ],
+      "builtOn": [
+        "QMUIDialogList",
+        "QMUIItem"
       ]
     },
     {
@@ -1260,6 +1301,10 @@
         "title",
         "content",
         "actions"
+      ],
+      "builtOn": [
+        "QMUIDialogTitle",
+        "QMUIDialogActions"
       ]
     },
     {
@@ -1297,6 +1342,10 @@
         "list",
         "checked",
         "onItemClick"
+      ],
+      "builtOn": [
+        "QMUIDialogList",
+        "QMUIItem"
       ]
     },
     {
@@ -1391,6 +1440,9 @@
         "currentId",
         "onBucketClick",
         "onDismiss"
+      ],
+      "builtOn": [
+        "QMUIPhotoBucketItem"
       ]
     },
     {
@@ -1414,6 +1466,9 @@
         "data:QMUIMediaPhotoBucketVO",
         "isCurrent",
         "onBucketClick"
+      ],
+      "builtOn": [
+        "QMUIMarkIcon"
       ]
     },
     {
@@ -1497,6 +1552,9 @@
         "data",
         "data:QMUIMediaPhotoVO",
         "onBack"
+      ],
+      "builtOn": [
+        "QMUIGesturePhoto"
       ]
     },
     {
@@ -1566,6 +1624,10 @@
         "isOriginOpenFlow",
         "onToggleOrigin",
         "onPreview"
+      ],
+      "builtOn": [
+        "CommonTextButton",
+        "OriginOpenButton"
       ]
     },
     {
@@ -1585,6 +1647,9 @@
       "exampleAt": "photo/src/main/java/com/qmuiteam/photo/compose/Thumbnail.kt:93",
       "required": [
         "images"
+      ],
+      "builtOn": [
+        "RowImages"
       ]
     },
     {
@@ -3493,18 +3558,6 @@
   ],
   "clusters": [
     {
-      "concept": "button（Compose）",
-      "members": [
-        "CommonImageButton（Composable，用 6 次）",
-        "CommonButton（Composable，用 2 次）",
-        "CommonTextButton（Composable，用 2 次）",
-        "OriginOpenButton（Composable，用 2 次）",
-        "PickCurrentCheckButton（Composable，用 1 次）"
-      ],
-      "recommend": "CommonImageButton",
-      "totalUsage": 13
-    },
-    {
       "concept": "loading（View）",
       "members": [
         "QMUILoadingView（自定义 View，用 5 次）",
@@ -3516,33 +3569,14 @@
       "totalUsage": 13
     },
     {
-      "concept": "navbar（View）",
+      "concept": "button（Compose）",
       "members": [
-        "QMUITopBar（自定义 View，用 6 次）",
-        "QDSectionHeaderView（自定义 View，用 1 次）",
-        "QMUIGroupListSectionHeaderFooterView（自定义 View，用 2 次）"
+        "CommonImageButton（Composable，用 6 次）",
+        "CommonButton（Composable，用 2 次）",
+        "CommonTextButton（Composable，用 2 次）"
       ],
-      "recommend": "QMUITopBar",
-      "totalUsage": 9
-    },
-    {
-      "concept": "dialog（View）",
-      "members": [
-        "QMUIDialogView（自定义 View，用 3 次）",
-        "QMUIBaseDialog（自定义 View，用 0 次）",
-        "QMUIDialogMenuItemView（自定义 View，用 5 次）"
-      ],
-      "recommend": "QMUIDialogView",
-      "totalUsage": 8
-    },
-    {
-      "concept": "cell（View）",
-      "members": [
-        "QMUICommonListItemView（自定义 View，用 48 次）",
-        "QMUIBottomSheetListItemView（自定义 View，用 1 次）"
-      ],
-      "recommend": "QMUICommonListItemView",
-      "totalUsage": 49
+      "recommend": "CommonImageButton",
+      "totalUsage": 10
     },
     {
       "concept": "dialog（Compose）",
@@ -3563,12 +3597,12 @@
       "totalUsage": 18
     },
     {
-      "concept": "button（View）",
+      "concept": "navbar（View）",
       "members": [
-        "Button（组件库，用 5 次）",
-        "QMUIAlphaImageButton（自定义 View，用 2 次）"
+        "QMUITopBar（自定义 View，用 6 次）",
+        "QDSectionHeaderView（自定义 View，用 1 次）"
       ],
-      "recommend": "Button",
+      "recommend": "QMUITopBar",
       "totalUsage": 7
     },
     {
@@ -3587,6 +3621,15 @@
         "ViewPager（组件库，用 1 次）"
       ],
       "recommend": "SwipeBackgroundView",
+      "totalUsage": 3
+    },
+    {
+      "concept": "dialog（View）",
+      "members": [
+        "QMUIDialogView（自定义 View，用 3 次）",
+        "QMUIBaseDialog（自定义 View，用 0 次）"
+      ],
+      "recommend": "QMUIDialogView",
       "totalUsage": 3
     },
     {
@@ -3780,7 +3823,7 @@
     "componentUsages": 1016,
     "rawPrimitives": 0,
     "componentization": 1,
-    "duplicateConcepts": 12,
+    "duplicateConcepts": 10,
     "cloneGroups": 1,
     "hardcodedColors": 58,
     "tokenizableColors": 9,

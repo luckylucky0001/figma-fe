@@ -546,6 +546,9 @@ func ScanH5(root string) *Report {
 					if !contains(a.UsageFiles, f.rel) {
 						a.UsageFiles = append(a.UsageFiles, f.rel)
 					}
+					if def := fileAsset[f.rel]; def != nil && def != a && !contains(def.BuiltOn, a.Name) {
+						def.BuiltOn = append(def.BuiltOn, a.Name) // s-notice-block renders <su-notice-bar>
+					}
 					if a.Example == "" || len(t) > len(a.Example) && len(a.Example) < 30 {
 						a.Example, a.ExampleAt = t, f.rel+":"+itoa(ln)
 					}

@@ -12,7 +12,7 @@
 | antdm-mobile | React + antd-mobile | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | jetsnack（留出） | Compose + 自有设计系统 | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓10 △0 ✗0 |
 | litemall（留出） | Vue 2 + Vant 2 | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
-| hello-uniapp（留出） | uni-app + uni-ui | ✓10 △1 ✗0 | ✓12 △0 ✗0 | ✓9 △1 ✗0 |
+| hello-uniapp（留出） | uni-app + uni-ui | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓9 △1 ✗0 |
 | taro-ui-demo（留出） | Taro + taro-ui | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | nutui-vite（留出） | Vue 3 + NutUI | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | sunflower（留出） | Compose + Material3（无自有设计系统） | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓10 △0 ✗0 |
@@ -26,6 +26,7 @@
 | wanandroid（留出） | XML（AppCompat）+ 三方 ActionBarEx | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 | seal（留出） | Compose + Material3 + 自有组件 | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓9 △1 ✗0 |
 | kunminx（留出） | XML + DataBinding（AppCompat 主题） | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓7 △3 ✗0 |
-| jeecg-uniapp（留出） | uni-app + wot-design-uni | ✓10 △1 ✗0 | ✓11 △1 ✗0 | ✓10 △0 ✗0 |
+| jeecg-uniapp（留出） | uni-app + wot-design-uni | ✓11 △0 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
+| vue-h5-template（留出） | Vue 3 + Vant（另装 NutUI / Varlet） | ✓10 △1 ✗0 | ✓12 △0 ✗0 | ✓10 △0 ✗0 |
 
-**合计 ✓699 / △27 / ✗0**
+**合计 ✓734 / △25 / ✗0**

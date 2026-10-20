@@ -40,6 +40,7 @@ PROJECTS = {
     "seal": ("https://github.com/JunkFood02/Seal.git", "7677f61a20fda4210e84215fef9e9b51d25daa47", "android"),
     "kunminx": ("https://github.com/KunMinX/Jetpack-MVVM-Best-Practice.git", "543eb8659089d74ccad403763cb16596febc89b7", "android"),
     "jeecg-uniapp": ("https://github.com/jeecgboot/jeecg-uniapp.git", "1f33e0225f6557994805db6706034cc0db0232c7", "h5"),
+    "vue-h5-template": ("https://github.com/sunniejs/vue-h5-template.git", "9ac24512ea0eb36cf35f54803e9bf267af18335d", "h5"),
 }
 
 # figma element → (right answers, acceptable answers)
@@ -112,7 +113,8 @@ EXPECTED = {
     },
     ("hello-uniapp", "order-detail"): {
         "NavBar": (["NavBar"], []), "NoticeBar": (["NoticeBar"], []), "Card": (["Card"], []), "Tag": (["Tag"], []),
-        "CountDown": (["Countdown"], []), "Divider": (["—"], ["Divider"]), "Cell": (["ListItem"], []), "ProductCard": (["Card", "—"], []),
+        # .uni-divider is the divider style in the project's own common/uni.css (accepted after the run that found it)
+        "CountDown": (["Countdown"], []), "Divider": (["—", "CSS 类 .uni-divider"], ["Divider"]), "Cell": (["ListItem"], []), "ProductCard": (["Card", "—"], []),
         "Price": (["—"], []), "ActionBar": (["GoodsNav"], []), "Button": (["Button[uni-app 内置组件]"], []),
     },
     ("hello-uniapp", "holdings"): {
@@ -251,6 +253,10 @@ EXPECTED[("jeecg-uniapp", "holdings")] = {
     "买入按钮": R("Button"), "卖出按钮": R("Button"), "更多按钮": R("Button")}
 EXPECTED_TO["jeecg-uniapp"] = TO(R("Navbar"), R("Search"), R("Tabs", "Segmented"), R("Cell"), R("InputNumber"), R("Input"), R("Switch"), R("Checkbox"),
                                  R("Button"), R("StatusTip", "Empty"))
+# sunniejs/vue-h5-template: Vant / NutUI / Varlet installed, .env VITE_UI_FRAMEWORK=vant; its own shop ProductCard
+EXPECTED[("vue-h5-template", "order-detail")] = dict(VANT, ProductCard=R("ProductCard", "Card"), Price=RA(["—"], ["Price"]))
+EXPECTED[("vue-h5-template", "holdings")] = "VANT_H"
+EXPECTED_TO["vue-h5-template"] = VANT_TO
 # Seal: Compose + Material3 with its own ui/component set (SettingItem, PreferenceSwitch, SealSearchBar …)
 SEAL_BTN = R("Button", "FilledButtonWithIcon", "OutlinedButtonWithIcon")
 SEAL_NAV = R("TopAppBar", "LargeTopAppBar", "CenterAlignedTopAppBar")
@@ -346,7 +352,7 @@ def main():
     if not only:  # a partial run must not overwrite the full results
         json.dump(report, open(os.path.join(HERE, "real-match-eval.json"), "w"), ensure_ascii=False, indent=1)
         held = {"sunflower", "pokedex", "jetsnack", "vant-demo-vue3", "vant-demo-vue2", "newpipe", "litemall", "hello-uniapp", "taro-ui-demo", "nutui-vite",
-                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal", "kunminx", "jeecg-uniapp"}
+                "vue3-vant-mobile", "mall-app-web", "antennapod", "wanandroid", "seal", "kunminx", "jeecg-uniapp", "vue-h5-template"}
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
@@ -358,7 +364,8 @@ def main():
                  "vue3-vant-mobile": "Vue 3 + Vant 4", "mall-app-web": "uni-app + 自有组件", "antennapod": "XML + Material3 主题",
                  "wanandroid": "XML（AppCompat）+ 三方 ActionBarEx", "seal": "Compose + Material3 + 自有组件",
                  "kunminx": "XML + DataBinding（AppCompat 主题）",
-                 "jeecg-uniapp": "uni-app + wot-design-uni"}
+                 "jeecg-uniapp": "uni-app + wot-design-uni",
+                 "vue-h5-template": "Vue 3 + Vant（另装 NutUI / Varlet）"}
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""

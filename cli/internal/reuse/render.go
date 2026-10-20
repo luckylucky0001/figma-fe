@@ -58,6 +58,10 @@ func (r *Report) Markdown() string {
 			}
 			fmt.Fprintf(&b, "| %s | %d | %s |\n", l.Name, l.Usage, strings.Join(l.Top, "、"))
 		}
+		if r.PrimaryLib != "" {
+			fmt.Fprintf(&b, "\n**主用组件库：%s**（依据：%s）。装了多个组件库时，新页面只用它，不要和其他组件库混用。\n", r.PrimaryLib, r.PrimaryWhy)
+		}
+
 		var bad []string
 		for i := range r.LibAll {
 			if a := &r.LibAll[i]; !usable(a) {

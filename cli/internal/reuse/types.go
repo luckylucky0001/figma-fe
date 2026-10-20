@@ -83,6 +83,8 @@ type Report struct {
 	Root        string            `json:"root"`
 	Stack       []string          `json:"stack"`
 	Libraries   []LibUse          `json:"libraries"`
+	PrimaryLib  string            `json:"primaryLib,omitempty"` // with ≥2 H5 UI suites installed: the one new pages use
+	PrimaryWhy  string            `json:"primaryWhy,omitempty"`
 	Assets      []Asset           `json:"assets"`
 	Clusters    []Cluster         `json:"clusters"`
 	Findings    []Finding         `json:"findings"`

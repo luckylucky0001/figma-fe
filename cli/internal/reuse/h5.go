@@ -277,6 +277,10 @@ func ScanH5(root string) *Report {
 		if pkg == "" || strings.HasPrefix(pkg, ".") || strings.HasPrefix(pkg, "@/") || strings.HasPrefix(pkg, "~") || strings.HasPrefix(pkg, "/") || knownPkg[pkg] || ident == "" || ident[0] < 'A' || ident[0] > 'Z' {
 			return nil
 		}
+		// only a package the project depends on: '#ui-demo' or '@components/x' are build aliases into src
+		if len(deps) > 0 && !deps[npmPackage(pkg)] {
+			return nil
+		}
 		a := get("ui-lib", ident, pkg)
 		base := strings.TrimPrefix(strings.TrimPrefix(pkg[strings.LastIndex(pkg, "/")+1:], "vue-"), "react-")
 		for _, k := range []string{ident, base, "vue" + base} {
@@ -318,6 +322,17 @@ func ScanH5(root string) *Report {
 		fileRels = append(fileRels, rel)
 	}
 	sort.Strings(fileRels)
+	// before usages are counted: the env-named suite wins ties when naming the component to use
+	var suiteNames []string
+	for _, h := range libs {
+		if h5Suite(h.lib.Name) {
+			suiteNames = append(suiteNames, h.lib.Name)
+		}
+	}
+	primaryLib = ""
+	if len(suiteNames) >= 2 {
+		primaryLib, _ = envUILib(root, suiteNames)
+	}
 	rawCount := 0
 	colorHits := map[string]*Hotspot{}
 	// uni-app's built-in <input> / <button> are the platform's primitives: judged after the scan, when a
@@ -505,7 +520,7 @@ func ScanH5(root string) *Report {
 					rawCount++
 					ln, t := at(off + m[0])
 					if alt := bestAsset(assets, concept); alt != nil {
-						r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(concept), f.rel, ln, t, "原生 <" + tag + ">：项目里已有 " + alt.Name + "（" + kindLabel(alt.Kind) + "）"})
+						r.Findings = append(r.Findings, Finding{"missed-reuse", softSeverity(concept), f.rel, ln, t, "原生 <" + tag + ">：项目里已有 " + alt.Name + "（" + altLabel(alt) + "）"})
 					}
 				}
 			}
@@ -610,6 +625,7 @@ func ScanH5(root string) *Report {
 	r.ColorTokens = colorTokens
 	r.Conventions = conventionsH5(files)
 	finish(r, assets, colorHits)
+	r.PrimaryLib, r.PrimaryWhy = primaryH5Lib(root, r.Libraries)
 
 	markup := map[string]string{}
 	for _, f := range files {
@@ -668,10 +684,24 @@ func vueProps(src string) []string {
 }
 
 // classify decides the asset kind from the path of the defining file.
+var (
+	dsDirRe   = regexp.MustCompile(`/(ds|design-?system|ui|base|basic|common-ui)/`)
+	compDirRe = regexp.MustCompile(`/(components?|widgets?|common|shared)/`)
+	pageDirRe = regexp.MustCompile(`/(views?|pages?|screens?|routes?)/`)
+)
+
 func classify(rel string) string {
 	p := "/" + strings.ToLower(filepath.ToSlash(rel))
+	// the outermost directory decides: src/views/ui/vant.vue is a page (a UI demo), not a design system
+	if pg := pageDirRe.FindStringIndex(p); pg != nil {
+		if ds := dsDirRe.FindStringIndex(p); ds == nil || pg[0] < ds[0] {
+			if c := compDirRe.FindStringIndex(p); c == nil || pg[0] < c[0] {
+				return "page"
+			}
+		}
+	}
 	switch {
-	case regexp.MustCompile(`/(ds|design-?system|ui|base|basic|common-ui)/`).MatchString(p):
+	case dsDirRe.MatchString(p):
 		return "design-system"
 	case regexp.MustCompile(`/(components?|widgets?|common|shared)/`).MatchString(p):
 		return "business"
@@ -687,7 +717,8 @@ func bestAsset(assets map[string]*Asset, concept string) *Asset {
 	var best *Asset
 	for _, a := range assets {
 		if a.Concept == concept && a.Kind != "page-local" && usable(a) && (best == nil || rank(*a) > rank(*best) || rank(*a) == rank(*best) &&
-			(len(a.Name) < len(best.Name) || len(a.Name) == len(best.Name) && a.Name+"|"+a.Source < best.Name+"|"+best.Source)) {
+			(a.Source == primaryLib && best.Source != primaryLib || (a.Source == primaryLib) == (best.Source == primaryLib) &&
+				(len(a.Name) < len(best.Name) || len(a.Name) == len(best.Name) && a.Name+"|"+a.Source < best.Name+"|"+best.Source))) {
 			best = a
 		}
 	}
@@ -764,6 +795,80 @@ func openTag(s string) string {
 		}
 	}
 	return strings.SplitN(s, "\n", 2)[0]
+}
+
+// h5Suite: a full H5 component suite from the catalog (Vant, NutUI …), not a built-in tag set or a
+// single-component package. Two suites on one page is the mix to avoid.
+func h5Suite(name string) bool {
+	for _, l := range uiLibs {
+		if l.Name == name {
+			return l.Platform == "h5" && len(l.Import) > 0 && len(l.Components) >= 10
+		}
+	}
+	return false
+}
+
+var envUIRe = regexp.MustCompile(`(?m)^\s*([A-Z0-9_]*UI[A-Z0-9_]*)\s*=\s*['"]?([\w@/-]+)`)
+
+// primaryH5Lib picks the suite new pages should use when several are installed: one named by a UI
+// env setting (sunniejs/vue-h5-template: VITE_UI_FRAMEWORK=vant), else the most used.
+func primaryH5Lib(root string, libs []LibUse) (string, string) {
+	var suites []LibUse
+	var names []string
+	for _, l := range libs {
+		if h5Suite(l.Name) {
+			suites = append(suites, l)
+			names = append(names, l.Name)
+		}
+	}
+	if len(suites) < 2 {
+		return "", ""
+	}
+	if name, why := envUILib(root, names); name != "" {
+		return name, why
+	}
+	best := suites[0] // libs are sorted by usage, then name
+	return best.Name, "使用次数最多（" + itoa(best.Usage) + " 次）"
+}
+
+// envUILib: the suite a UI env setting names (VITE_UI_FRAMEWORK=vant), among the given library names.
+func envUILib(root string, names []string) (string, string) {
+	short := func(s string) string {
+		return strings.ToLower(strings.NewReplacer(" ", "", "-", "", "@", "", "/", "").Replace(s))
+	}
+	envs, _ := filepath.Glob(filepath.Join(root, ".env*"))
+	sort.Strings(envs)
+	for _, e := range envs {
+		b, err := os.ReadFile(e)
+		if err != nil {
+			continue
+		}
+		for _, m := range envUIRe.FindAllStringSubmatch(string(b), -1) {
+			for _, n := range names {
+				if short(n) == short(m[2]) || strings.HasPrefix(short(n), short(m[2])) && len(m[2]) >= 3 {
+					return n, filepath.Base(e) + " 里 " + m[1] + "=" + m[2]
+				}
+			}
+		}
+	}
+	return "", ""
+}
+
+// altLabel names where a suggested component comes from: "组件库 Vant" when it is a library one.
+func altLabel(a *Asset) string {
+	if a.Kind == "ui-lib" && !builtinLib(a.Source) {
+		return kindLabel(a.Kind) + " " + a.Source
+	}
+	return kindLabel(a.Kind)
+}
+
+// npmPackage: the package an import specifier belongs to (@scope/name/sub → @scope/name, a/b → a).
+func npmPackage(spec string) string {
+	ps := strings.Split(spec, "/")
+	if strings.HasPrefix(spec, "@") && len(ps) >= 2 {
+		return ps[0] + "/" + ps[1]
+	}
+	return ps[0]
 }
 
 // markupLine: how many lines of the file come before its markup (the <template> body).

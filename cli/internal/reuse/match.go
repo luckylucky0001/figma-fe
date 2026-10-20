@@ -144,6 +144,7 @@ func Match(exp *figma.Export, r *Report) *MatchResult {
 		}
 	}
 	setFamilyPrefixes(pool)
+	primaryLib = r.PrimaryLib
 	established = map[string]string{}
 	best := map[string]int{}
 	for _, a := range r.Assets {
@@ -381,6 +382,12 @@ func score(figmaName, figmaConcept string, variants map[string]bool, a Asset) (f
 	if _, primitive := rawAndroid[a.Name]; primitive && a.Source == "Android SDK widgets" {
 		s -= 0.15 // Button / EditText / Toolbar are what projects wrap: the project's own component wins
 		why = append(why, "系统原生控件")
+	}
+	// several H5 suites installed: components of the one the project does not use for pages would mix
+	// two libraries on one page (sunniejs/vue-h5-template ships Vant / NutUI / Varlet, configured to Vant)
+	if primaryLib != "" && a.Kind == "ui-lib" && a.Source != primaryLib && h5Suite(a.Source) {
+		s -= 0.12
+		why = append(why, "项目主用 "+primaryLib+"，用它会和 "+a.Source+" 混用")
 	}
 	// the project already has its own way for this concept (mix-list-cell × 6): an unused library
 	// component would be the inconsistency the page check flags
@@ -645,6 +652,9 @@ var famPrefixes = map[string]bool{}
 var libChild = map[string]bool{}
 
 var libShare = map[string]float64{}
+
+// primaryLib: the H5 suite new pages use when several are installed (set per Match)
+var primaryLib string
 
 // established: concept → the project's own component used ≥3 times for it (set per Match)
 var established = map[string]string{}

@@ -1277,3 +1277,47 @@ func TestStylesheetInPageCheck(t *testing.T) {
 		t.Errorf("localTokens=%d colors=%+v", pc.LocalTokens, pc.Colors)
 	}
 }
+
+// sunniejs/vue-h5-template: Vant / NutUI demo pages under views/ui are pages, '#ui-demo' is a build alias,
+// and with both suites installed the .env setting decides which one new pages use — never a mix
+func TestPrimaryUISuite(t *testing.T) {
+	if classify("src/views/ui/vant.vue") != "page" || classify("src/components/ui/Button.vue") != "design-system" || classify("src/ui/Button.vue") != "design-system" {
+		t.Error("classify: the outermost directory decides")
+	}
+	root := t.TempDir()
+	write(t, root, "package.json", `{"dependencies":{"vue":"3","vant":"^4.10.0","@nutui/nutui":"^4.3.13"}}`)
+	write(t, root, ".env", "# VITE_UI_FRAMEWORK - vant / nutui\nVITE_UI_FRAMEWORK=vant\n")
+	write(t, root, "src/views/ui/vant.vue", `<template><div><VanButton/><VanCell/></div></template>`)
+	write(t, root, "src/views/ui/nutui.vue", `<template><div><NutButton/><NutCell/></div></template>`)
+	write(t, root, "src/views/ui/index.vue", "<template><SelectedUiDemo/></template>\n<script setup>\nimport SelectedUiDemo from '#ui-demo'\n</script>")
+	write(t, root, "src/views/order.vue", `<template><div><button class="buy">买入</button></div></template>`)
+	r := ScanH5(root)
+	if r.PrimaryLib != "Vant" || !strings.Contains(r.PrimaryWhy, "VITE_UI_FRAMEWORK=vant") {
+		t.Errorf("primary = %q (%s)", r.PrimaryLib, r.PrimaryWhy)
+	}
+	for _, l := range r.Libraries {
+		if strings.HasPrefix(l.Name, "#") {
+			t.Errorf("build alias listed as a library: %+v", l)
+		}
+	}
+	for _, a := range r.Assets {
+		if a.Kind == "design-system" {
+			t.Errorf("demo page became a design-system asset: %+v", a)
+		}
+	}
+	for _, f := range r.Findings {
+		if f.Rule == "missed-reuse" && !strings.Contains(f.Hint, "Vant") {
+			t.Errorf("raw <button> should point to Vant: %s", f.Hint)
+		}
+	}
+	exp := &figma.Export{
+		Frame:         &figma.Node{Type: "FRAME", Children: []*figma.Node{{ID: "1:2", Type: "INSTANCE", ComponentID: "c1"}, {ID: "1:3", Type: "INSTANCE", ComponentID: "c2"}}},
+		Components:    map[string]figma.Component{"c1": {ComponentSetID: "s1"}, "c2": {ComponentSetID: "s2"}},
+		ComponentSets: map[string]figma.ComponentSet{"s1": {Name: "Button"}, "s2": {Name: "Cell"}},
+	}
+	for _, it := range Match(exp, r).Items {
+		if c := it.Candidates[0]; c.Source != "Vant" {
+			t.Errorf("%s → %s (%s): mixes libraries", it.Figma, c.Name, c.Source)
+		}
+	}
+}

@@ -27,6 +27,18 @@ func (m *MatchResult) HTML(exp *figma.Export, img string) string {
 	color := map[string]string{"reuse": "#16a34a", "confirm": "#d97706", "new": "#dc2626"}
 	label := map[string]string{"reuse": "直接复用", "confirm": "需确认", "new": "需新建"}
 	var boxes, rows strings.Builder
+	// labels sit above their box; one that would cover an earlier label (Swiper and NavBar both start at
+	// the frame's top-left) moves to the bottom edge inside its box
+	type rect struct{ x, y, w, h float64 }
+	var placed []rect
+	free := func(r rect) bool {
+		for _, p := range placed {
+			if r.x < p.x+p.w && p.x < r.x+r.w && r.y < p.y+p.h && p.y < r.y+r.h {
+				return false
+			}
+		}
+		return true
+	}
 	for _, it := range m.Items {
 		target := "需新建组件"
 		if len(it.Candidates) > 0 && it.Verdict != "new" {
@@ -40,7 +52,21 @@ func (m *MatchResult) HTML(exp *figma.Export, img string) string {
 			b := n.AbsoluteBoundingBox
 			tag := ""
 			if i == 0 {
-				tag = fmt.Sprintf(`<span style="background:%s">%s → %s</span>`, color[it.Verdict], html.EscapeString(strings.TrimSuffix(it.Figma, "（未组件化）")), html.EscapeString(target))
+				text := strings.TrimSuffix(it.Figma, "（未组件化）") + " → " + target
+				x, y := b.X-fb.X-2, b.Y-fb.Y
+				w := float64(len([]rune(text)))*7 + 10
+				pos := ""
+				if x+w > fb.Width { // would run off the frame: align to the box's right edge instead
+					x = b.X - fb.X + b.Width + 2 - w
+					pos = ";left:auto;right:-2px"
+				}
+				if r := (rect{x, y - 18, w, 16}); free(r) || !free(rect{x, y + b.Height - 18, w, 16}) {
+					placed = append(placed, r)
+				} else {
+					placed = append(placed, rect{x, y + b.Height - 18, w, 16})
+					pos += ";top:auto;bottom:0"
+				}
+				tag = fmt.Sprintf(`<span style="background:%s%s">%s</span>`, color[it.Verdict], pos, html.EscapeString(text))
 			}
 			fmt.Fprintf(&boxes, `<div class="box" style="left:%.0fpx;top:%.0fpx;width:%.0fpx;height:%.0fpx;border-color:%s">%s</div>`,
 				b.X-fb.X, b.Y-fb.Y, b.Width, b.Height, color[it.Verdict], tag)

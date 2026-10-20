@@ -16,16 +16,17 @@ var (
 	// a class that inflates a layout for one UI concept (AntennaPod's EmptyViewHandler): the project's way
 	// to show that concept, though it is not a View itself
 	// a class declared with no supertype at all (Java: no extends; Kotlin: no ":" before the body)
-	plainClassJvRe = regexp.MustCompile(`(?m)^\s*(?:public\s+|abstract\s+|final\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:implements\s+[^{]*)?\{`)
-	plainClassKtRe = regexp.MustCompile(`(?m)^\s*(?:internal\s+|open\s+|abstract\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:\([^)]*\))?\s*\{`)
-	helperClassRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
-	viewClassJvRe  = regexp.MustCompile(`(?m)^\s*(?:(?:public|abstract|final)\s+)*class\s+([A-Z]\w*)\s*(?:<[^{]*?>)?\s+extends\s+([A-Z][\w.]*)`)
-	searchArgRe    = regexp.MustCompile(`(?i)\b(?:value|text|query)\s*=\s*[\w.]*(?:search|query|keyword)`)
-	composCallRe   = regexp.MustCompile(`(?:^|[^\w.])([A-Z]\w*)\s*[({]`)
-	composableRe   = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+(?:<[^>]*>\s*)?(?:[\w.]+\.)?([A-Z]\w*)\s*\(`) // fun <T> X(, fun RowScope.X(
-	styleableRe2   = regexp.MustCompile(`(?s)<declare-styleable\s+name="(\w+)"\s*>(.*?)</declare-styleable>`)
-	attrNameRe     = regexp.MustCompile(`<attr\s+name="(\w+)"`)
-	colorResRe     = regexp.MustCompile(`<color\s+name="(\w+)"[^>]*>\s*(#[0-9A-Fa-f]{3,8})\s*</color>`)
+	plainClassJvRe  = regexp.MustCompile(`(?m)^\s*(?:public\s+|abstract\s+|final\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:implements\s+[^{]*)?\{`)
+	plainClassKtRe  = regexp.MustCompile(`(?m)^\s*(?:internal\s+|open\s+|abstract\s+|data\s+|sealed\s+)*class\s+([A-Z]\w*)\s*(?:<[^>{]*>)?\s*(?:\([^)]*\))?\s*\{`)
+	helperClassRe   = regexp.MustCompile(`(?m)^\s*(?:public\s+|internal\s+|open\s+)?(?:final\s+)?class\s+([A-Z]\w*(?:Handler|Helper|Controller))\b`)
+	viewClassJvRe   = regexp.MustCompile(`(?m)^\s*(?:(?:public|abstract|final)\s+)*class\s+([A-Z]\w*)\s*(?:<[^{]*?>)?\s+extends\s+([A-Z][\w.]*)`)
+	bannerContentRe = regexp.MustCompile(`(?i)image|item|page|banner|url|list|data|count`)
+	searchArgRe     = regexp.MustCompile(`(?i)\b(?:value|text|query)\s*=\s*[\w.]*(?:search|query|keyword)`)
+	composCallRe    = regexp.MustCompile(`(?:^|[^\w.])([A-Z]\w*)\s*[({]`)
+	composableRe    = regexp.MustCompile(`@Composable\s+(?:(?:public|internal)\s+)?fun\s+(?:<[^>]*>\s*)?(?:[\w.]+\.)?([A-Z]\w*)\s*\(`) // fun <T> X(, fun RowScope.X(
+	styleableRe2    = regexp.MustCompile(`(?s)<declare-styleable\s+name="(\w+)"\s*>(.*?)</declare-styleable>`)
+	attrNameRe      = regexp.MustCompile(`<attr\s+name="(\w+)"`)
+	colorResRe      = regexp.MustCompile(`<color\s+name="(\w+)"[^>]*>\s*(#[0-9A-Fa-f]{3,8})\s*</color>`)
 	// any colour attribute (textColorHint, backgroundTint, app:tint, cardBackgroundColor …), #rgb to #aarrggbb
 	xmlHardColorRe = regexp.MustCompile(`\b(?:android|app):\w*(?:[Cc]olor|[Bb]ackground|[Tt]int|src)\w*="(#[0-9A-Fa-f]{3,8})"`)
 	xmlHardSizeRe  = regexp.MustCompile(`android:(?:textSize|layout_width|layout_height|padding\w*|layout_margin\w*)="(\d+(?:\.\d+)?)(sp|dp|dip|px)"`)
@@ -830,6 +831,16 @@ func refineConcept(a *Asset) {
 			a.Concept = "notice"
 			return
 		}
+	}
+	// a composable banner with nothing to page through (GkMatchingBanner(enabled, onEnable) is one
+	// feature's prompt card) is no carousel, and not the generic notice bar either
+	if a.Kind == "composable" {
+		for _, p := range a.Props {
+			if bannerContentRe.MatchString(p) {
+				return
+			}
+		}
+		a.Concept = ""
 	}
 }
 

@@ -1466,3 +1466,20 @@ func TestSearchByCallSites(t *testing.T) {
 		}
 	}
 }
+
+// product-detail showcase: rating bars and avatars are concepts; a banner composable with nothing to
+// page through (gkd's GkMatchingBanner(enabled, onEnable)) is no carousel
+func TestShowcaseConcepts(t *testing.T) {
+	for name, want := range map[string]string{"SimpleRatingBar": "rate", "UniRate": "rate", "UserAvatar": "avatar", "评分": "rate", "头像": "avatar"} {
+		if c := ConceptOf(name); c != want {
+			t.Errorf("ConceptOf(%s) = %q, want %q", name, c, want)
+		}
+	}
+	a := &Asset{Name: "GkMatchingBanner", Kind: "composable", Concept: "carousel", Props: []string{"enabled", "onEnable"}}
+	refineConcept(a)
+	b := &Asset{Name: "HomeBanner", Kind: "composable", Concept: "carousel", Props: []string{"images", "onClick"}}
+	refineConcept(b)
+	if a.Concept != "" || b.Concept != "carousel" {
+		t.Errorf("banner concepts: %q / %q", a.Concept, b.Concept)
+	}
+}

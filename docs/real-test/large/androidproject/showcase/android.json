@@ -1,0 +1,310 @@
+{
+  "platform": "android",
+  "project": "androidproject",
+  "page": "ProductDetail 商品详情",
+  "items": [
+    {
+      "figma": "Swiper",
+      "instances": 1,
+      "nodeIds": [
+        "1:2"
+      ],
+      "verdict": "confirm",
+      "candidates": [
+        {
+          "name": "NestedScrollViewPager",
+          "kind": "ui-lib",
+          "source": "com.hjq.nested",
+          "score": 0.69,
+          "usage": 1,
+          "example": "\u003ccom.hjq.nested.scroll.layout.NestedScrollViewPager",
+          "exampleAt": "app/src/main/res/layout/home_main_fragment.xml:92",
+          "why": "同为 carousel，专用组件（nestedscroll），标准组件，项目里已用 1 次"
+        }
+      ]
+    },
+    {
+      "figma": "NavBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:4"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "TitleBar",
+          "kind": "ui-lib",
+          "source": "com.hjq.bar",
+          "score": 0.95,
+          "usage": 13,
+          "example": "\u003ccom.hjq.bar.TitleBar",
+          "exampleAt": "app/src/main/res/layout/about_activity.xml:11",
+          "why": "同为 navbar，标准组件，项目里已用 13 次"
+        },
+        {
+          "name": "MaterialToolbar",
+          "kind": "ui-lib",
+          "source": "Material Components",
+          "score": 0.61,
+          "usage": 0,
+          "example": "\u003ccom.google.android.material.…MaterialToolbar … /\u003e",
+          "exampleAt": "（Material Components 标准用法，项目未用过）",
+          "why": "同为 navbar，项目几乎不用 Material Components，标准组件"
+        }
+      ]
+    },
+    {
+      "figma": "Price",
+      "instances": 1,
+      "nodeIds": [
+        "1:7"
+      ],
+      "variants": [
+        "Size=Large",
+        "Tone=Primary"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "CountDown",
+      "instances": 1,
+      "nodeIds": [
+        "1:13"
+      ],
+      "verdict": "confirm",
+      "candidates": [
+        {
+          "name": "CountdownView",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/CountdownView.java",
+          "score": 0.89,
+          "usage": 6,
+          "example": "\u003ccom.hjq.custom.widget.view.CountdownView",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:270",
+          "why": "同名，专门用途（验证码），项目里已用 6 次",
+          "props": [
+            "项目惯用 style=\"@style/CountdownViewStyle\"（6 处）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "Card",
+      "instances": 3,
+      "nodeIds": [
+        "1:15",
+        "1:28",
+        "1:40"
+      ],
+      "variants": [
+        "Title=Off",
+        "Title=On"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "CardView",
+          "kind": "ui-lib",
+          "source": "Android SDK widgets",
+          "score": 0.93,
+          "usage": 2,
+          "example": "\u003candroidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"",
+          "exampleAt": "app/src/main/res/layout/custom_dialog.xml:2",
+          "why": "同名，项目里已用 2 次",
+          "props": [
+            "Title：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "Tag",
+      "instances": 4,
+      "nodeIds": [
+        "1:16",
+        "1:20",
+        "1:22",
+        "1:24"
+      ],
+      "variants": [
+        "Tone=Primary",
+        "Tone=Success",
+        "Variant=Light",
+        "Variant=Solid"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "NoticeBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:26"
+      ],
+      "variants": [
+        "Tone=Warning"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Cell",
+      "instances": 3,
+      "nodeIds": [
+        "1:29",
+        "1:33",
+        "1:37"
+      ],
+      "variants": [
+        "Arrow=On",
+        "Label=Off"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SettingBar",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java",
+          "score": 0.92,
+          "usage": 14,
+          "example": "\u003ccom.hjq.custom.widget.layout.SettingBar",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:134",
+          "why": "同为 cell，项目里已用 14 次",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "Divider",
+      "instances": 2,
+      "nodeIds": [
+        "1:32",
+        "1:36"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Avatar",
+      "instances": 1,
+      "nodeIds": [
+        "1:44"
+      ],
+      "variants": [
+        "Size=Small"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Rate",
+      "instances": 1,
+      "nodeIds": [
+        "1:47"
+      ],
+      "variants": [
+        "Size=Small"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "SimpleRatingBar",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SimpleRatingBar.java",
+          "score": 0.84,
+          "usage": 4,
+          "example": "\u003ccom.hjq.custom.widget.view.SimpleRatingBar",
+          "exampleAt": "app/src/main/res/layout/home_find_fragment.xml:282",
+          "why": "同为 rate，项目里已用 4 次",
+          "props": [
+            "Size：Small 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "ActionBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:49"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Button",
+      "instances": 2,
+      "nodeIds": [
+        "1:53",
+        "1:55"
+      ],
+      "variants": [
+        "Size=Large",
+        "Type=Default",
+        "Type=Primary"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "Button",
+          "kind": "ui-lib",
+          "source": "Android SDK widgets",
+          "score": 0.95,
+          "usage": 54,
+          "example": "\u003candroidx.appcompat.widget.AppCompatButton",
+          "exampleAt": "app/src/main/res/layout/custom_dialog.xml:34",
+          "why": "同名，系统原生控件，项目里已用 54 次",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "SubmitButton",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/SubmitButton.java",
+          "score": 0.8,
+          "usage": 2,
+          "example": "\u003ccom.hjq.custom.widget.view.SubmitButton",
+          "exampleAt": "app/src/main/res/layout/login_activity.xml:86",
+          "why": "同为 button，项目里已用 2 次",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "PlayButton",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/PlayButton.java",
+          "score": 0.67,
+          "usage": 0,
+          "why": "同为 button，专门用途（play），变体轴匹配 1/2",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "FloatActionButton",
+          "kind": "custom-view",
+          "source": "library/customWidget/src/main/java/com/hjq/custom/widget/view/FloatActionButton.java",
+          "score": 0.5,
+          "usage": 0,
+          "why": "同为 button，专用组件（floataction），专门用途（float）",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        }
+      ]
+    }
+  ],
+  "reuse": 5,
+  "confirm": 2,
+  "new": 6
+}

@@ -1,0 +1,74 @@
+# component-map 初稿（figmafe match 自动生成）：人工确认推荐组件、补齐变体 → props 后，合并进 design/component-map.yaml
+version: 1
+components:
+    - figma: Swiper
+      android:
+        component: NestedScrollViewPager
+        import: com.hjq.nested
+        usage: <com.hjq.nested.scroll.layout.NestedScrollViewPager
+        notes: '[confirm 0.69] 同为 carousel，专用组件（nestedscroll），标准组件，项目里已用 1 次；来源 com.hjq.nested'
+    - figma: NavBar
+      android:
+        component: TitleBar
+        import: com.hjq.bar
+        usage: <com.hjq.bar.TitleBar
+        notes: '[reuse 0.95] 同为 navbar，标准组件，项目里已用 13 次；来源 com.hjq.bar；备选 MaterialToolbar'
+    - figma: CountDown
+      android:
+        component: CountdownView
+        import: library/customWidget/src/main/java/com/hjq/custom/widget/view/CountdownView.java
+        usage: <com.hjq.custom.widget.view.CountdownView
+        notes: '[confirm 0.89] 同名，专门用途（验证码），项目里已用 6 次；来源 library/customWidget/src/main/java/com/hjq/custom/widget/view/CountdownView.java'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：项目惯用 style="@style/CountdownViewStyle"（6 处）
+    - figma: Card
+      android:
+        component: CardView
+        import: Android SDK widgets
+        usage: <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        notes: '[reuse 0.93] 同名，项目里已用 2 次；来源 Android SDK widgets'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Title：组件没有对应属性，需确认（用插槽 / 自行组合）
+    - figma: Cell
+      android:
+        component: SettingBar
+        import: library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java
+        usage: <com.hjq.custom.widget.layout.SettingBar
+        notes: '[reuse 0.92] 同为 cell，项目里已用 14 次；来源 library/customWidget/src/main/java/com/hjq/custom/widget/layout/SettingBar.java'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）；Label：组件没有对应属性，需确认（用插槽 / 自行组合）
+    - figma: Rate
+      android:
+        component: SimpleRatingBar
+        import: library/customWidget/src/main/java/com/hjq/custom/widget/view/SimpleRatingBar.java
+        usage: <com.hjq.custom.widget.view.SimpleRatingBar
+        notes: '[reuse 0.84] 同为 rate，项目里已用 4 次；来源 library/customWidget/src/main/java/com/hjq/custom/widget/view/SimpleRatingBar.java'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Size：Small 没有对应的枚举属性，需确认（可能要用 color / class 等实现）
+    - figma: Button
+      android:
+        component: Button
+        import: Android SDK widgets
+        usage: <androidx.appcompat.widget.AppCompatButton
+        notes: '[reuse 0.95] 同名，系统原生控件，项目里已用 54 次；来源 Android SDK widgets；备选 SubmitButton / PlayButton / FloatActionButton'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）；Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）
+gaps:
+    - figma: Price
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: Tag
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: NoticeBar
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: Divider
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: Avatar
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: ActionBar
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）

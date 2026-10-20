@@ -1,0 +1,485 @@
+{
+  "platform": "android",
+  "project": "gkd",
+  "page": "ProductDetail 商品详情",
+  "items": [
+    {
+      "figma": "Swiper",
+      "instances": 1,
+      "nodeIds": [
+        "1:2"
+      ],
+      "verdict": "confirm",
+      "candidates": [
+        {
+          "name": "HorizontalPager",
+          "kind": "ui-lib",
+          "source": "Compose Foundation",
+          "score": 0.65,
+          "usage": 1,
+          "example": "HorizontalPager(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/page/GkImagePreviewContent.kt:156",
+          "why": "同为 carousel，专用组件（pager），项目里已用 1 次"
+        },
+        {
+          "name": "VerticalPager",
+          "kind": "ui-lib",
+          "source": "Compose Foundation",
+          "score": 0.64,
+          "usage": 0,
+          "example": "VerticalPager(…)  // import androidx.compose.foundation.lazy.VerticalPager",
+          "exampleAt": "（Compose Foundation 标准用法，项目未用过）",
+          "why": "同为 carousel，专用组件（pager），标准组件"
+        }
+      ]
+    },
+    {
+      "figma": "NavBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:4"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkTopAppBar",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTopAppBar.kt",
+          "score": 1,
+          "usage": 28,
+          "example": "GkTopAppBar(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkEditorLayout.kt:23",
+          "why": "同为 navbar，项目里已用 28 次，设计系统组件"
+        },
+        {
+          "name": "GkMultiSelectionTopAppBar",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiSelectionTopAppBar.kt",
+          "score": 0.85,
+          "usage": 9,
+          "example": "GkMultiSelectionTopAppBar(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/SubsManagePage.kt:171",
+          "why": "同为 navbar，专用组件（multiselection），项目里已用 9 次，设计系统组件"
+        },
+        {
+          "name": "GkPrivilegeTopBar",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/page/GkPrivilegeTopBar.kt",
+          "score": 0.83,
+          "usage": 2,
+          "example": "GkPrivilegeTopBar(mainVm.navigator::pop) {",
+          "exampleAt": "gkd-app/src/androidMain/kotlin/li/gkd/app/ui/PrivilegeServicePage.android.kt:38",
+          "why": "同为 navbar，项目里已用 2 次"
+        },
+        {
+          "name": "GkRuleListHeader",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleListHeader.kt",
+          "score": 0.76,
+          "usage": 2,
+          "example": "GkRuleListHeader(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/subscription/AppConfigPage.kt:412",
+          "why": "同为 navbar，专用组件（rulelist），项目里已用 2 次，设计系统组件"
+        }
+      ]
+    },
+    {
+      "figma": "Price",
+      "instances": 1,
+      "nodeIds": [
+        "1:7"
+      ],
+      "variants": [
+        "Size=Large",
+        "Tone=Primary"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "CountDown",
+      "instances": 1,
+      "nodeIds": [
+        "1:13"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Card",
+      "instances": 3,
+      "nodeIds": [
+        "1:15",
+        "1:28",
+        "1:40"
+      ],
+      "variants": [
+        "Title=Off",
+        "Title=On"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "Card",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 1,
+          "usage": 25,
+          "example": "Card(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkAppRuleRestrictionCard.kt:28",
+          "why": "同名，项目里已用 25 次",
+          "props": [
+            "Title：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "GkCopyTextCard",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkCopyText.kt",
+          "score": 0.9,
+          "usage": 3,
+          "example": "GkCopyTextCard(text = visibleStatus.links.joinToString(\"\\n\"), onCopy = onCopy)",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkGithubUploadDialogs.kt:148",
+          "why": "同为 card，项目里已用 3 次，设计系统组件",
+          "props": [
+            "Title：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "GkExpandableSection",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkExpandableSection.kt",
+          "score": 0.85,
+          "usage": 1,
+          "example": "GkExpandableSection(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/crash/CrashReportPage.kt:202",
+          "why": "同为 card，项目里已用 1 次，设计系统组件",
+          "props": [
+            "Title=On → header = true / 传入内容；Title=Off → 不传"
+          ]
+        },
+        {
+          "name": "OutlinedCard",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.77,
+          "usage": 1,
+          "example": "OutlinedCard(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/settings/ExternalCallsPage.kt:74",
+          "why": "同为 card，项目里已用 1 次",
+          "props": [
+            "Title：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "Tag",
+      "instances": 4,
+      "nodeIds": [
+        "1:16",
+        "1:20",
+        "1:22",
+        "1:24"
+      ],
+      "variants": [
+        "Tone=Primary",
+        "Tone=Success",
+        "Variant=Light",
+        "Variant=Solid"
+      ],
+      "verdict": "confirm",
+      "candidates": [
+        {
+          "name": "InputChip",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.69,
+          "usage": 1,
+          "example": "InputChip(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/subscription/ActionLogPage.kt:204",
+          "why": "同为 tag，专用组件（input），标准组件，项目里已用 1 次",
+          "props": [
+            "Tone：Primary / Success 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Variant：Light / Solid 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "AssistChip",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.65,
+          "usage": 1,
+          "example": "AssistChip(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/subscription/GkRuleGroupDialog.kt:166",
+          "why": "同为 tag，专用组件（assist），项目里已用 1 次",
+          "props": [
+            "Tone：Primary / Success 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Variant：Light / Solid 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "FilterChip",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.64,
+          "usage": 3,
+          "example": "FilterChip(selected = selectedService == service, onClick = { selectedService = service },",
+          "exampleAt": "gkd-app/src/jvmMain/kotlin/li/gkd/app/DesktopControls.kt:369",
+          "why": "同为 tag，专用组件（filter），可选中组件，设计稿里是静态展示，项目里已用 3 次",
+          "props": [
+            "Tone：Primary / Success 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Variant：Light / Solid 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "SuggestionChip",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.6,
+          "usage": 0,
+          "example": "SuggestionChip(…)  // import androidx.compose.material3.SuggestionChip",
+          "exampleAt": "（Compose Material3 标准用法，项目未用过）",
+          "why": "同为 tag，专用组件（suggestion）",
+          "props": [
+            "Tone：Primary / Success 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Variant：Light / Solid 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "NoticeBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:26"
+      ],
+      "variants": [
+        "Tone=Warning"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Cell",
+      "instances": 3,
+      "nodeIds": [
+        "1:29",
+        "1:33",
+        "1:37"
+      ],
+      "variants": [
+        "Arrow=On",
+        "Label=Off"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "GkSettingItem",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSettingItem.kt",
+          "score": 1,
+          "usage": 23,
+          "example": "GkSettingItem(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/SettingsPage.kt:97",
+          "why": "同为 cell，变体轴匹配 1/2，项目里已用 23 次，设计系统组件",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label=On → subtitle = true / 传入内容；Label=Off → 不传"
+          ]
+        },
+        {
+          "name": "GkRuleListItem",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleListItem.kt",
+          "score": 0.87,
+          "usage": 5,
+          "example": "GkRuleListItem(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleGroupCard.kt:42",
+          "why": "同为 cell，可选中组件，设计稿里是静态展示，项目里已用 5 次，设计系统组件",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "GkBatchActionMenuItem",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkMultiSelectionActions.kt",
+          "score": 0.76,
+          "usage": 22,
+          "example": "GkBatchActionMenuItem(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkRuleBatchMenuItems.kt:14",
+          "why": "同为 cell，专用组件（batchactionmenu），名称只以 row / item 之类的泛称对上，项目里已用 22 次，设计系统组件",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label：组件没有对应属性，需确认（用插槽 / 自行组合）"
+          ]
+        },
+        {
+          "name": "GkTemplateVariableRow",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTemplateVariableRow.kt",
+          "score": 0.68,
+          "usage": 7,
+          "example": "GkTemplateVariableRow(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/home/ActionToastPage.kt:180",
+          "why": "同为 cell，专用组件（templatevariable），名称只以 row / item 之类的泛称对上，项目里已用 7 次，设计系统组件",
+          "props": [
+            "Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）",
+            "Label=On → description = true / 传入内容；Label=Off → 不传"
+          ]
+        }
+      ]
+    },
+    {
+      "figma": "Divider",
+      "instances": 2,
+      "nodeIds": [
+        "1:32",
+        "1:36"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "HorizontalDivider",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.87,
+          "usage": 7,
+          "example": "HorizontalDivider()",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/crash/CrashReportPage.kt:266",
+          "why": "同为 divider，项目里已用 7 次"
+        },
+        {
+          "name": "GkTwoLineText",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTwoLineText.kt",
+          "score": 0.82,
+          "usage": 10,
+          "example": "GkTwoLineText(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/subscription/ActionLogPage.kt:151",
+          "why": "同为 divider，名称只以 row / item 之类的泛称对上，项目里已用 10 次，设计系统组件"
+        },
+        {
+          "name": "Divider",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.55,
+          "usage": 0,
+          "example": "Divider(…)  // import androidx.compose.material3.Divider",
+          "exampleAt": "（Compose Material3 标准用法，项目未用过）",
+          "why": "同名；⚠ 已废弃，改用 HorizontalDivider"
+        }
+      ]
+    },
+    {
+      "figma": "Avatar",
+      "instances": 1,
+      "nodeIds": [
+        "1:44"
+      ],
+      "variants": [
+        "Size=Small"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Rate",
+      "instances": 1,
+      "nodeIds": [
+        "1:47"
+      ],
+      "variants": [
+        "Size=Small"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "ActionBar",
+      "instances": 1,
+      "nodeIds": [
+        "1:49"
+      ],
+      "verdict": "new",
+      "candidates": null
+    },
+    {
+      "figma": "Button",
+      "instances": 2,
+      "nodeIds": [
+        "1:53",
+        "1:55"
+      ],
+      "variants": [
+        "Size=Large",
+        "Type=Default",
+        "Type=Primary"
+      ],
+      "verdict": "reuse",
+      "candidates": [
+        {
+          "name": "TextButton",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.97,
+          "usage": 72,
+          "example": "TextButton(",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/DialogRequests.kt:122",
+          "why": "同为 button，项目里已用 72 次",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "GkIconButton",
+          "kind": "composable",
+          "source": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkIcon.kt",
+          "score": 0.95,
+          "usage": 71,
+          "example": "GkIconButton(",
+          "exampleAt": "gkd-app/src/androidMain/kotlin/li/gkd/app/service/EventService.kt:151",
+          "why": "同为 button，专门用途（icon），项目里已用 71 次，设计系统组件",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "Button",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.95,
+          "usage": 3,
+          "example": "Button(onClick = onRetry) {",
+          "exampleAt": "gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkWebViewErrorContent.kt:72",
+          "why": "同名，项目里已用 3 次",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        },
+        {
+          "name": "OutlinedButton",
+          "kind": "ui-lib",
+          "source": "Compose Material3",
+          "score": 0.92,
+          "usage": 16,
+          "example": "OutlinedButton(onClick = flushSettings) { Text(\"重试保存\") }",
+          "exampleAt": "gkd-app/src/jvmMain/kotlin/li/gkd/app/DesktopControls.kt:73",
+          "why": "同为 button，项目里已用 16 次",
+          "props": [
+            "Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）",
+            "Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）"
+          ]
+        }
+      ]
+    }
+  ],
+  "reuse": 5,
+  "confirm": 2,
+  "new": 6
+}

@@ -90,7 +90,7 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 
 ### 小结
 
-- **最终结果**：26 个项目（5 个调参 + 21 个留出）× 3 份设计稿共 858 项，**✓827 / △31 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
+- **最终结果**：26 个项目（5 个调参 + 21 个留出）× 3 份设计稿，加上第四份设计稿在 4 个项目上，共 910 项，**✓873 / △37 / ✗0**，逐项见 `real-match-eval.md`。下面几条是只有前两份设计稿、五个调参项目时的阶段性结论，留出项目第一次跑的错误见第 3 节。
 - 订单详情（组件化的设计稿）：五个真实项目（覆盖 Vue+Vant、React+antd-mobile、XML+QMUI、Compose+Material3+自有设计系统）共 55 项，完全正确 52 项，可用但不是最优 3 项。
 - 我的持仓（没组件化、中文图层名）：四个真实项目共 48 项，完全正确 45 项，可用但不是最优 3 项。
 - 两份设计稿在这五个项目上都没有出现推荐错误组件的情况；但留出项目 Jetsnack 第一次跑出现了 3 个错误（见第 3 节），说明规则对没见过的项目结构仍会出错，修正后已加入回归。拿不准的情况，工具给出的都是「需确认」。
@@ -181,6 +181,19 @@ Figma：订单详情（11 个组件）。判断标准：推荐的组件是否就
 - 芋道的装修组件 s-notice-block / s-image-block 只是包了一层 su-notice-bar / image，SuTabItem 是 SuTabs 的子项 → 同上按「建立在其上」和「子项」处理；auth / wallet / discount 算专门用途（顺带让「资产卡片」不再推荐 SWalletCard）。
 
 修正后 gkd 的重复概念 9 → 4，AndroidProject 1 → 0（FloatActionButton / PlayButton 不再算按钮的重复实现），芋道 10 → 11（前缀修正后多认出几组真实的多实现，如 navbar 有 SuNavbar / SuInnerNavbar / SCustomNavbar 等 6 种）；真实项目实验的打分（summary.json）不变。
+
+### 第四份设计稿：商品详情（精修演示稿，新组件）
+
+`design/showcase/source/product-detail.html` → `design/showcase/figma-export/product-detail/`。原来三份设计稿是线框风格，演示时不够直观，于是画了一份完成度更高的商品详情页（主图轮播、秒杀价格条、规格 / 配送 / 服务、评价、底部购买栏），同时引入三个新组件：Swiper（主图轮播）、Rate（评分）、Avatar（头像）。只在芋道商城、gkd、AndroidProject、vue-h5-template 四个项目上判分，答案在跑之前写好。
+
+| 项目 | 第一次跑（commit 18936ce） | 发现的问题 → 通用修正 | 修正后 |
+|---|---|---|---|
+| 芋道商城 | 12 ✓ / 1 △ | 头像推荐了 `<image>`（可接受）；Rate → uni-ui Rate（项目已用 3 次） | 12 ✓ / 1 △ |
+| gkd | 11 ✓ / 1 △ / **1 ✗** | 主图轮播推荐了 GkMatchingBanner：名字里有 banner，其实是「开启匹配」的提示卡片（参数只有 enabled / onEnable）→ 没有图片 / 列表 / 页数参数的 banner 不算轮播 | 12 ✓ / 1 △ |
+| AndroidProject | 9 ✓ / 2 △ / **2 ✗** | 头像推荐了 ScaleImageView（长按缩放的图片）；项目自己的评分控件 SimpleRatingBar（2 处）没被认出 → 新增 rate（rate / rating / ratingbar …）、avatar 概念，中文图层「头像」不再归到图片 | 11 ✓ / 2 △ |
+| vue-h5-template | 12 ✓ / 1 △ | 无 ✗；新增 avatar 概念后，头像从 Vant Image 变成 NutUI Avatar（需确认，并提示会和 NutUI 混用），算 △，比之前略差，如实记录 | 11 ✓ / 2 △ |
+
+另外修了复用清单叠图：主图和导航栏都从左上角开始，标签互相遮挡 → 标签会盖住已有标签时改放到框的下沿；靠右的标签不再超出画面。
 
 ## 4. 第三份设计稿：买入下单（英文图层名、没组件化、新概念）
 

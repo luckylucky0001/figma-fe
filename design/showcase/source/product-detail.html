@@ -1,0 +1,204 @@
+<!doctype html>
+<!--
+  演示用设计源（精修版）：商品详情页。和 design/source/ 一样，没有真实 Figma 文件可用，由这份手写 HTML
+  画出设计稿，再由 `figmafe fixture` 导出成与插件导出一致的节点树 + @2x 图（design/showcase/figma-export/）。
+  比订单详情多了三个新组件：Swiper（大图轮播）、Rate（评分）、Avatar（头像）。
+  标注约定同 design/source/order-detail.html：data-fig / data-fig-name / data-fig-set / data-fig-props。
+-->
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans SC', sans-serif; -webkit-font-smoothing: antialiased; color: #1F2329; }
+  #frame { position: relative; width: 375px; height: 1010px; background: #F4F5F7; overflow: hidden; }
+
+  .navbar { position: absolute; top: 0; left: 0; width: 375px; height: 44px; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; }
+  .nav-btn { width: 32px; height: 32px; border-radius: 16px; background: rgba(255,255,255,0.86); box-shadow: 0 2px 8px rgba(31,35,41,0.08); display: flex; align-items: center; justify-content: center; }
+  .nav-right { display: flex; gap: 8px; }
+  .nav-title { position: absolute; left: 0; right: 0; top: 10px; text-align: center; font-size: 17px; line-height: 24px; font-weight: 600; opacity: 0; }
+
+  .swiper { position: absolute; top: 0; left: 0; width: 375px; height: 340px; overflow: hidden; }
+  .swiper svg.hero { position: absolute; inset: 0; width: 375px; height: 340px; }
+  .indicator { position: absolute; right: 16px; bottom: 30px; height: 22px; padding: 0 9px; border-radius: 11px; background: rgba(31,35,41,0.42); color: #fff; font-size: 12px; line-height: 22px; }
+  .thumbs { position: absolute; left: 16px; bottom: 26px; display: flex; gap: 6px; }
+  .thumbs i { display: block; width: 6px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.6); }
+  .thumbs i.on { width: 16px; background: #fff; }
+
+  .sale { position: absolute; top: 322px; left: 0; width: 375px; height: 68px; border-radius: 18px 18px 0 0; padding: 12px 16px 0;
+          background: linear-gradient(100deg, #FF7A45 0%, #FF4D1A 48%, #F5317F 100%); color: #fff; display: flex; justify-content: space-between; }
+  .sale-left { display: flex; flex-direction: column; gap: 2px; }
+  .price-row { display: flex; align-items: baseline; gap: 8px; }
+  .price { display: inline-flex; align-items: baseline; font-weight: 700; white-space: nowrap; color: #fff; }
+  .price .s { font-size: 15px; font-weight: 600; } .price .i { font-size: 30px; line-height: 34px; } .price .d { font-size: 15px; font-weight: 600; }
+  .origin { font-size: 12px; line-height: 18px; color: rgba(255,255,255,0.78); text-decoration: line-through; }
+  .sale-sub { font-size: 12px; line-height: 18px; color: rgba(255,255,255,0.9); }
+  .sale-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; padding-top: 2px; }
+  .sale-label { font-size: 13px; line-height: 18px; font-weight: 600; letter-spacing: 1px; }
+  .countdown { display: flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; }
+  .countdown b { display: inline-block; min-width: 22px; height: 20px; border-radius: 4px; background: #fff; color: #F5317F; text-align: center; line-height: 20px; font-variant-numeric: tabular-nums; }
+
+  .body { position: absolute; top: 382px; left: 0; right: 0; display: flex; flex-direction: column; gap: 10px; padding: 0 0 72px; }
+  .info { background: #fff; border-radius: 16px 16px 16px 16px; padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .title-row { display: flex; gap: 6px; align-items: flex-start; }
+  .tag { display: inline-flex; align-items: center; height: 18px; padding: 0 5px; border-radius: 4px; font-size: 11px; line-height: 18px; font-weight: 600; flex: none; margin-top: 2px; }
+  .tag.solid { background: #FF4D1A; color: #fff; }
+  .tag.light { background: #FFF1EB; color: #FF4D1A; }
+  .tag.green { background: #E6F8F1; color: #00A86B; }
+  .ptitle { font-size: 16px; line-height: 23px; font-weight: 600; }
+  .psub { font-size: 12px; line-height: 18px; color: #8F959E; }
+  .chips { display: flex; gap: 6px; }
+
+  .coupon { margin: 0 12px; height: 38px; border-radius: 10px; padding: 0 12px; display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 38px;
+            background: linear-gradient(90deg, #FFF4EC, #FFE9EF); color: #E8461F; white-space: nowrap; }
+  .coupon .ticket { height: 20px; padding: 0 6px; border-radius: 4px; border: 1px dashed #F27C5A; font-size: 11px; line-height: 18px; font-weight: 600; }
+  .coupon .go { margin-left: auto; font-weight: 600; }
+
+  .card { margin: 0 12px; background: #fff; border-radius: 14px; padding: 4px 16px; display: flex; flex-direction: column; }
+  .card.pad { padding: 14px 16px 16px; }
+  .cell { display: flex; align-items: center; min-height: 46px; padding: 12px 0; }
+  .cell .t { width: 44px; flex: none; font-size: 13px; line-height: 20px; color: #8F959E; }
+  .cell .v { flex: 1; min-width: 0; font-size: 13px; line-height: 20px; color: #1F2329; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cell .v em { font-style: normal; color: #00A86B; }
+  .cell .arrow { width: 14px; height: 14px; margin-left: 6px; flex: none; }
+  .divider { height: 1px; background: #F0F1F3; }
+
+  .rv-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .rv-title { font-size: 15px; line-height: 22px; font-weight: 600; }
+  .rv-more { font-size: 12px; line-height: 18px; color: #8F959E; }
+  .rv-more b { color: #FF4D1A; font-weight: 600; }
+  .review { display: flex; flex-direction: column; gap: 8px; }
+  .rv-user { display: flex; align-items: center; gap: 8px; }
+  .avatar { width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 600; flex: none; }
+  .avatar.a1 { background: linear-gradient(135deg, #7B8CFF, #B07CFF); }
+  .rv-name { font-size: 13px; line-height: 20px; font-weight: 500; }
+  .rate { display: flex; gap: 2px; margin-left: auto; }
+  .rate svg { width: 13px; height: 13px; }
+  .rv-text { font-size: 13px; line-height: 20px; color: #3A3F47; }
+  .rv-pics { display: flex; gap: 8px; }
+  .rv-pics div { width: 72px; height: 72px; border-radius: 8px; }
+
+  .actionbar { position: absolute; left: 0; bottom: 0; width: 375px; height: 62px; background: rgba(255,255,255,0.98); box-shadow: 0 -4px 16px rgba(31,35,41,0.06);
+               padding: 0 12px 0 8px; display: flex; align-items: center; gap: 4px; }
+  .ab-icon { width: 44px; display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 10px; line-height: 14px; color: #646A73; }
+  .ab-icon svg { width: 22px; height: 22px; }
+  .ab-btns { margin-left: auto; display: flex; }
+  .btn { height: 40px; width: 112px; font-size: 14px; line-height: 20px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; color: #fff; }
+  .btn.cart { border-radius: 20px 0 0 20px; background: linear-gradient(90deg, #FFB02E, #FF8A1F); }
+  .btn.buy { border-radius: 0 20px 20px 0; background: linear-gradient(90deg, #FF5A2A, #F5317F); }
+</style>
+</head>
+<body>
+<div id="frame" data-fig="FRAME" data-fig-name="ProductDetail 商品详情">
+
+  <div class="swiper" data-fig="INSTANCE" data-fig-set="Swiper" data-fig-name="Swiper / 商品主图">
+    <svg class="hero" viewBox="0 0 375 340" aria-label="Aurora 头戴式降噪耳机">
+      <defs>
+        <radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#FFF6EE"/><stop offset="0.55" stop-color="#FCE4E6"/><stop offset="1" stop-color="#E9E3FB"/></radialGradient>
+        <linearGradient id="band" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2B2F3A"/><stop offset="0.5" stop-color="#4A5060"/><stop offset="1" stop-color="#2B2F3A"/></linearGradient>
+        <linearGradient id="cup" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A6070"/><stop offset="1" stop-color="#23262F"/></linearGradient>
+        <linearGradient id="cupR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08A5D"/><stop offset="1" stop-color="#E4572E"/></linearGradient>
+        <linearGradient id="pad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1B1E25"/><stop offset="1" stop-color="#3A3F4B"/></linearGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.9"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="375" height="340" fill="url(#bg)"/>
+      <circle cx="300" cy="70" r="70" fill="#FFD9C7" opacity="0.45"/>
+      <circle cx="60" cy="250" r="56" fill="#D9D2FF" opacity="0.5"/>
+      <ellipse cx="188" cy="178" rx="120" ry="110" fill="url(#glow)"/>
+      <ellipse cx="188" cy="292" rx="104" ry="12" fill="#1F2329" opacity="0.12"/>
+      <path d="M104 196 C104 110 140 70 188 70 C236 70 272 110 272 196" fill="none" stroke="url(#band)" stroke-width="16" stroke-linecap="round"/>
+      <path d="M118 186 C118 118 148 86 188 86 C228 86 258 118 258 186" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="3" stroke-linecap="round"/>
+      <rect x="92" y="172" width="22" height="46" rx="8" fill="#3A3F4B"/>
+      <rect x="262" y="172" width="22" height="46" rx="8" fill="#3A3F4B"/>
+      <rect x="70" y="186" width="64" height="98" rx="30" fill="url(#cup)"/>
+      <rect x="80" y="196" width="44" height="78" rx="22" fill="url(#pad)"/>
+      <rect x="242" y="186" width="64" height="98" rx="30" fill="url(#cupR)"/>
+      <rect x="252" y="196" width="44" height="78" rx="22" fill="#C9461F" opacity="0.55"/>
+      <circle cx="274" cy="235" r="9" fill="#FFFFFF" opacity="0.85"/>
+      <rect x="84" y="200" width="6" height="40" rx="3" fill="#FFFFFF" opacity="0.22"/>
+      <rect x="256" y="200" width="6" height="40" rx="3" fill="#FFFFFF" opacity="0.35"/>
+    </svg>
+    <div class="thumbs"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+    <div class="indicator" data-fig="TEXT" data-fig-name="Indicator">1/5</div>
+  </div>
+
+  <div class="navbar" data-fig="INSTANCE" data-fig-set="NavBar" data-fig-name="NavBar">
+    <div class="nav-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2329" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></div>
+    <div class="nav-title" data-fig="TEXT" data-fig-name="Title">商品详情</div>
+    <div class="nav-right">
+      <div class="nav-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F2329" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg></div>
+      <div class="nav-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F2329" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20.5" r="1.3"/><circle cx="17" cy="20.5" r="1.3"/></svg></div>
+    </div>
+  </div>
+
+  <div class="sale" data-fig="FRAME" data-fig-name="FlashSale 秒杀条">
+    <div class="sale-left">
+      <div class="price-row">
+        <span class="price" data-fig="INSTANCE" data-fig-set="Price" data-fig-props='{"Size":"Large","Tone":"Primary"}' data-fig-name="Price"><span class="s" data-fig="TEXT" data-fig-name="Symbol">¥</span><span class="i" data-fig="TEXT" data-fig-name="Integer">1299</span><span class="d" data-fig="TEXT" data-fig-name="Decimal">.00</span></span>
+        <span class="origin" data-fig="TEXT" data-fig-name="OriginPrice">¥1699</span>
+      </div>
+    </div>
+    <div class="sale-right">
+      <span class="sale-label" data-fig="TEXT" data-fig-name="SaleLabel">限时秒杀</span>
+      <span class="countdown" data-fig="INSTANCE" data-fig-set="CountDown" data-fig-name="CountDown"><span data-fig="TEXT" data-fig-name="Prefix">距结束</span><b>02</b>:<b>18</b>:<b>36</b></span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="info" data-fig="INSTANCE" data-fig-set="Card" data-fig-props='{"Title":"Off"}' data-fig-name="Card / 商品信息">
+      <div class="title-row">
+        <span class="tag solid" data-fig="INSTANCE" data-fig-set="Tag" data-fig-props='{"Tone":"Primary","Variant":"Solid"}' data-fig-name="Tag"><span data-fig="TEXT" data-fig-name="Label">自营</span></span>
+        <span class="ptitle" data-fig="TEXT" data-fig-name="ProductTitle">Aurora Max 头戴式主动降噪蓝牙耳机 2026 款</span>
+      </div>
+      <div class="psub" data-fig="TEXT" data-fig-name="Subtitle">星夜灰 · 50 dB 深度降噪 · 40 小时续航 · 空间音频</div>
+      <div class="chips">
+        <span class="tag light" data-fig="INSTANCE" data-fig-set="Tag" data-fig-props='{"Tone":"Primary","Variant":"Light"}' data-fig-name="Tag"><span data-fig="TEXT" data-fig-name="Label">24 期免息</span></span>
+        <span class="tag green" data-fig="INSTANCE" data-fig-set="Tag" data-fig-props='{"Tone":"Success","Variant":"Light"}' data-fig-name="Tag"><span data-fig="TEXT" data-fig-name="Label">以旧换新</span></span>
+        <span class="tag light" data-fig="INSTANCE" data-fig-set="Tag" data-fig-props='{"Tone":"Primary","Variant":"Light"}' data-fig-name="Tag"><span data-fig="TEXT" data-fig-name="Label">已售 2.3 万</span></span>
+      </div>
+    </div>
+
+    <div class="coupon" data-fig="INSTANCE" data-fig-set="NoticeBar" data-fig-props='{"Tone":"Warning"}' data-fig-name="NoticeBar">
+      <span class="ticket">券</span><span data-fig="TEXT" data-fig-name="Text">店铺券 满 1000 减 100 · 叠加秒杀到手 ¥1199</span><span class="go">领取 ›</span>
+    </div>
+
+    <div class="card" data-fig="INSTANCE" data-fig-set="Card" data-fig-props='{"Title":"Off"}' data-fig-name="Card / 规格配送">
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"On","Label":"Off"}' data-fig-name="Cell"><span class="t" data-fig="TEXT" data-fig-name="Title">已选</span><span class="v" data-fig="TEXT" data-fig-name="Value">星夜灰，标准版，1 件</span><svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="#8F959E" stroke-width="1.5" stroke-linecap="round"><path d="M6 3l5 5-5 5"/></svg></div>
+      <div class="divider" data-fig="INSTANCE" data-fig-set="Divider" data-fig-name="Divider"></div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"On","Label":"Off"}' data-fig-name="Cell"><span class="t" data-fig="TEXT" data-fig-name="Title">配送</span><span class="v" data-fig="TEXT" data-fig-name="Value">上海 浦东新区 · <em>今日 23:00 前下单，明天送达</em></span><svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="#8F959E" stroke-width="1.5" stroke-linecap="round"><path d="M6 3l5 5-5 5"/></svg></div>
+      <div class="divider" data-fig="INSTANCE" data-fig-set="Divider" data-fig-name="Divider"></div>
+      <div class="cell" data-fig="INSTANCE" data-fig-set="Cell" data-fig-props='{"Arrow":"On","Label":"Off"}' data-fig-name="Cell"><span class="t" data-fig="TEXT" data-fig-name="Title">服务</span><span class="v" data-fig="TEXT" data-fig-name="Value">7 天无理由 · 1 年只换不修 · 顺丰包邮</span><svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="#8F959E" stroke-width="1.5" stroke-linecap="round"><path d="M6 3l5 5-5 5"/></svg></div>
+    </div>
+
+    <div class="card pad" data-fig="INSTANCE" data-fig-set="Card" data-fig-props='{"Title":"On"}' data-fig-name="Card / 评价">
+      <div class="rv-head"><span class="rv-title" data-fig="TEXT" data-fig-name="CardTitle">评价 (8,962)</span><span class="rv-more" data-fig="TEXT" data-fig-name="More">好评率 <b>98%</b> ›</span></div>
+      <div class="review" data-fig="FRAME" data-fig-name="Review">
+        <div class="rv-user">
+          <span class="avatar a1" data-fig="INSTANCE" data-fig-set="Avatar" data-fig-props='{"Size":"Small"}' data-fig-name="Avatar"><span data-fig="TEXT" data-fig-name="Initial">林</span></span>
+          <span class="rv-name" data-fig="TEXT" data-fig-name="UserName">林***雨</span>
+          <span class="rate" data-fig="INSTANCE" data-fig-set="Rate" data-fig-props='{"Size":"Small"}' data-fig-name="Rate">
+            <svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFB02E"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFB02E"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFB02E"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFB02E"/></svg><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFB02E"/></svg>
+          </span>
+        </div>
+        <div class="rv-text" data-fig="TEXT" data-fig-name="Comment">降噪效果惊艳，地铁里几乎听不到报站声；佩戴很轻，戴一下午耳朵也不闷。</div>
+        <div class="rv-pics">
+          <div style="background:linear-gradient(135deg,#FCE4E6,#E9E3FB);position:relative;overflow:hidden"><svg viewBox="0 0 72 72" style="position:absolute;inset:0;width:72px;height:72px;transform:rotate(-8deg)"><path d="M18 42 C18 22 26 14 36 14 C46 14 54 22 54 42" fill="none" stroke="#2B2F3A" stroke-width="4" stroke-linecap="round"/><rect x="12" y="38" width="13" height="20" rx="6" fill="#3A3F4B"/><rect x="47" y="38" width="13" height="20" rx="6" fill="#E4572E"/></svg></div>
+          <div style="background:linear-gradient(135deg,#FFE9D6,#FFD1C2);position:relative;overflow:hidden"><svg viewBox="0 0 72 72" style="position:absolute;inset:0;width:72px;height:72px;transform:rotate(6deg)"><path d="M18 42 C18 22 26 14 36 14 C46 14 54 22 54 42" fill="none" stroke="#4A5060" stroke-width="4" stroke-linecap="round"/><rect x="12" y="38" width="13" height="20" rx="6" fill="#23262F"/><rect x="47" y="38" width="13" height="20" rx="6" fill="#23262F"/></svg></div>
+          <div style="background:linear-gradient(135deg,#E3EEFF,#D9D2FF);position:relative;overflow:hidden"><svg viewBox="0 0 72 72" style="position:absolute;inset:0;width:72px;height:72px;transform:rotate(0deg)"><path d="M18 42 C18 22 26 14 36 14 C46 14 54 22 54 42" fill="none" stroke="#2B2F3A" stroke-width="4" stroke-linecap="round"/><rect x="12" y="38" width="13" height="20" rx="6" fill="#E4572E"/><rect x="47" y="38" width="13" height="20" rx="6" fill="#E4572E"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actionbar" data-fig="INSTANCE" data-fig-set="ActionBar" data-fig-name="ActionBar">
+    <div class="ab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#646A73" stroke-width="1.6" stroke-linejoin="round"><path d="M4 9.5L5.5 4h13L20 9.5a2.7 2.7 0 0 1-5.3.6 2.7 2.7 0 0 1-5.4 0A2.7 2.7 0 0 1 4 9.5zM5 12v8h14v-8"/></svg><span data-fig="TEXT" data-fig-name="Shop">店铺</span></div>
+    <div class="ab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#646A73" stroke-width="1.6" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.2 6.4L4 19.5l1-3.3A8 8 0 0 1 4 12z"/><path d="M9 11h.01M12 11h.01M15 11h.01" stroke-linecap="round" stroke-width="2.2"/></svg><span data-fig="TEXT" data-fig-name="Service">客服</span></div>
+    <div class="ab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#646A73" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20.5" r="1.2"/><circle cx="17" cy="20.5" r="1.2"/></svg><span data-fig="TEXT" data-fig-name="Cart">购物车</span></div>
+    <div class="ab-btns">
+      <span class="btn cart" data-fig="INSTANCE" data-fig-set="Button" data-fig-props='{"Type":"Default","Size":"Large"}' data-fig-name="Button"><span data-fig="TEXT" data-fig-name="Label">加入购物车</span></span>
+      <span class="btn buy" data-fig="INSTANCE" data-fig-set="Button" data-fig-props='{"Type":"Primary","Size":"Large"}' data-fig-name="Button"><span data-fig="TEXT" data-fig-name="Label">立即抢购</span></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

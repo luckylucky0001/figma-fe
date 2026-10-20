@@ -340,6 +340,25 @@ EXPECTED[("androidproject", "holdings")] = {
     "买入按钮": AP2_BTN, "卖出按钮": AP2_BTN, "更多按钮": AP2_BTN}
 EXPECTED_TO["androidproject"] = TO(R("TitleBar"), NEW, R("TabLayout", "—"), R("SettingBar"), NEW, R("RegexEditText", "ClearEditText", "EditText", "AppCompatEditText"),
                                    R("SwitchButton"), R("CheckBox", "AppCompatCheckBox", "MaterialCheckBox"), AP2_BTN, R("StatusLayout"))
+# fourth page (design/showcase/figma-export/product-detail): a polished product page with three new
+# components — Swiper (hero carousel), Rate, Avatar. Judged on the large systems and vue-h5-template.
+SHOWCASE = "design/showcase/figma-export/product-detail"
+EXPECTED[("yudao-mall", "product-detail")] = {
+    "Swiper": R("SuSwiper"), "NavBar": R("SuNavbar"), "Price": NEW, "CountDown": R("SCountDown"), "Card": R("Card", "—"), "Tag": R("Tag"),
+    "NoticeBar": R("SuNoticeBar"), "Cell": R("ListItem"), "Divider": RA(["SuSubline"], ["SLineBlock"]), "Avatar": R("—", "Image[uni-app 内置组件]"),
+    "Rate": R("Rate"), "ActionBar": YD_BAR, "Button": UNI_BTN}
+EXPECTED[("gkd", "product-detail")] = {
+    "Swiper": R("HorizontalPager"), "NavBar": R("GkTopAppBar"), "Price": NEW, "CountDown": NEW, "Card": R("Card", "ElevatedCard", "OutlinedCard"),
+    "Tag": GK_TAG, "NoticeBar": RA(["—"], ["GkMatchingBanner"]), "Cell": R("GkSettingItem", "ListItem"), "Divider": R("HorizontalDivider"),
+    "Avatar": NEW, "Rate": NEW, "ActionBar": NEW, "Button": GK_BTN}
+EXPECTED[("androidproject", "product-detail")] = {
+    "Swiper": RA(["—"], ["NestedScrollViewPager", "ViewPager"]), "NavBar": R("TitleBar"), "Price": NEW, "CountDown": AP2_CD, "Card": R("CardView"),
+    "Tag": RA(["—"], ["ShapeTextView"]), "NoticeBar": NEW, "Cell": R("SettingBar"), "Divider": R("1px View 细线", "—"), "Avatar": R("—", "ImageView"),
+    "Rate": R("SimpleRatingBar"), "ActionBar": NEW, "Button": AP2_BTN}
+EXPECTED[("vue-h5-template", "product-detail")] = {
+    "Swiper": R("Swipe"), "NavBar": R("NavBar"), "Price": RA(["—"], ["Price"]), "CountDown": R("CountDown"), "Card": RA(["CellGroup"], ["—"]), "Tag": R("Tag"),
+    "NoticeBar": R("NoticeBar"), "Cell": R("Cell"), "Divider": R("Divider"), "Avatar": RA(["—", "Image"], ["Avatar"]), "Rate": R("Rate"),
+    "ActionBar": R("ActionBar"), "Button": R("Button")}
 for _k, _v in EXPECTED_TO.items():
     EXPECTED[(_k, "trade-order")] = _v
 
@@ -369,14 +388,14 @@ def main():
         if only and name not in only:
             continue
         d = checkout(name, url, commit)
-        for page in ("order-detail", "holdings", "trade-order"):
+        for page in ("order-detail", "holdings", "trade-order", "product-detail"):
             exp = EXPECTED.get((name, page))
             if isinstance(exp, str):
                 exp = globals()[exp]
             if not exp:
                 continue
             with tempfile.TemporaryDirectory() as out:
-                subprocess.run([BIN, "match", "--figma", os.path.join(ROOT, "design/figma-export", page), d, "--platform", pf, "-o", out, "-q"], check=True, capture_output=True)
+                subprocess.run([BIN, "match", "--figma", os.path.join(ROOT, SHOWCASE if page == "product-detail" else "design/figma-export/" + page), d, "--platform", pf, "-o", out, "-q"], check=True, capture_output=True)
                 m = json.load(open(os.path.join(out, pf + ".json")))
             counts = {"✓": 0, "△": 0, "✗": 0}
             lines = []
@@ -402,7 +421,7 @@ def main():
         lines = ["# figmafe match 回归评测（真实开源项目，固定 commit）", "",
                  "由 `python3 experiments/real-match-eval.py` 生成。✓ = 推荐正确，△ = 可用但不是最优，✗ = 推荐错误。",
                  "「留出」= 调规则时没用过、第一次跑完才修问题的项目（第一次的结果见 match-judgement.md 第 3 节）。", "",
-                 "| 项目 | 技术栈 | 订单详情（组件化设计稿） | 我的持仓（未组件化、中文图层） | 买入下单（未组件化、英文图层、新概念） |", "|---|---|---|---|---|"]
+                 "| 项目 | 技术栈 | 订单详情（组件化设计稿） | 我的持仓（未组件化、中文图层） | 买入下单（未组件化、英文图层、新概念） | 商品详情（精修演示稿、新组件） |", "|---|---|---|---|---|---|"]
         stack = {"newbee": "Vue 3 + Vant", "qmui": "XML + QMUI", "nia": "Compose + 自有设计系统", "antdm-template": "React + antd-mobile",
                  "antdm-mobile": "React + antd-mobile", "jetsnack": "Compose + 自有设计系统", "litemall": "Vue 2 + Vant 2",
                  "hello-uniapp": "uni-app + uni-ui", "taro-ui-demo": "Taro + taro-ui", "nutui-vite": "Vue 3 + NutUI",
@@ -417,7 +436,7 @@ def main():
         cell = lambda c: f"✓{c['✓']} △{c['△']} ✗{c['✗']}" if c else "—"
         for name in PROJECTS:
             tag = "（留出）" if name in held else ""
-            lines.append(f"| {name}{tag} | {stack.get(name, '')} | {cell(report.get(name + '/order-detail'))} | {cell(report.get(name + '/holdings'))} | {cell(report.get(name + '/trade-order'))} |")
+            lines.append(f"| {name}{tag} | {stack.get(name, '')} | {cell(report.get(name + '/order-detail'))} | {cell(report.get(name + '/holdings'))} | {cell(report.get(name + '/trade-order'))} | {cell(report.get(name + '/product-detail'))} |")
         lines += ["", f"**合计 ✓{total['✓']} / △{total['△']} / ✗{total['✗']}**", ""]
         open(os.path.join(HERE, "real-match-eval.md"), "w").write("\n".join(lines))
     sys.exit(1 if total["✗"] else 0)

@@ -1,0 +1,72 @@
+# component-map 初稿（figmafe match 自动生成）：人工确认推荐组件、补齐变体 → props 后，合并进 design/component-map.yaml
+version: 1
+components:
+    - figma: Swiper
+      android:
+        component: HorizontalPager
+        import: androidx.compose.foundation.lazy.*.HorizontalPager
+        usage: HorizontalPager(
+        notes: '[confirm 0.65] 同为 carousel，专用组件（pager），项目里已用 1 次；来源 Compose Foundation；备选 VerticalPager'
+    - figma: NavBar
+      android:
+        component: GkTopAppBar
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTopAppBar.kt
+        usage: GkTopAppBar(
+        notes: '[reuse 1.00] 同为 navbar，项目里已用 28 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkTopAppBar.kt；备选 GkMultiSelectionTopAppBar / GkPrivilegeTopBar / GkRuleListHeader'
+    - figma: Card
+      android:
+        component: Card
+        import: androidx.compose.material3.*.Card
+        usage: Card(
+        notes: '[reuse 1.00] 同名，项目里已用 25 次；来源 Compose Material3；备选 GkCopyTextCard / GkExpandableSection / OutlinedCard'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Title：组件没有对应属性，需确认（用插槽 / 自行组合）
+    - figma: Tag
+      android:
+        component: InputChip
+        import: androidx.compose.material3.*.InputChip
+        usage: InputChip(
+        notes: '[confirm 0.69] 同为 tag，专用组件（input），标准组件，项目里已用 1 次；来源 Compose Material3；备选 AssistChip / FilterChip / SuggestionChip'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Tone：Primary / Success 没有对应的枚举属性，需确认（可能要用 color / class 等实现）；Variant：Light / Solid 没有对应的枚举属性，需确认（可能要用 color / class 等实现）
+    - figma: Cell
+      android:
+        component: GkSettingItem
+        import: gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSettingItem.kt
+        usage: GkSettingItem(
+        notes: '[reuse 1.00] 同为 cell，变体轴匹配 1/2，项目里已用 23 次，设计系统组件；来源 gkd-app/src/commonMain/kotlin/li/gkd/app/ui/component/GkSettingItem.kt；备选 GkRuleListItem / GkBatchActionMenuItem / GkTemplateVariableRow'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Arrow：组件没有对应属性，需确认（用插槽 / 自行组合）；Label=On → subtitle = true / 传入内容；Label=Off → 不传
+    - figma: Divider
+      android:
+        component: HorizontalDivider
+        import: androidx.compose.material3.*.HorizontalDivider
+        usage: HorizontalDivider()
+        notes: '[reuse 0.87] 同为 divider，项目里已用 7 次；来源 Compose Material3；备选 GkTwoLineText / Divider'
+    - figma: Button
+      android:
+        component: TextButton
+        import: androidx.compose.material3.*.TextButton
+        usage: TextButton(
+        notes: '[reuse 0.97] 同为 button，项目里已用 72 次；来源 Compose Material3；备选 GkIconButton / Button / OutlinedButton'
+      constraints:
+        - 变体 → 属性建议（确认后写进 props）：Size：Large 没有对应的枚举属性，需确认（可能要用 color / class 等实现）；Type：Default / Primary 没有对应的枚举属性，需确认（可能要用 color / class 等实现）
+gaps:
+    - figma: Price
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: CountDown
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: NoticeBar
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: Avatar
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: Rate
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
+    - figma: ActionBar
+      platform: android
+      decision: TODO：项目和组件库里都没有，确认后新建组件（建议放进组件库而不是页面）
